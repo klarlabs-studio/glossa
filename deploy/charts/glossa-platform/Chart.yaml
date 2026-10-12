@@ -2,13 +2,13 @@ apiVersion: v2
 name: glossa-platform
 description: Glossa's platform (RFC 0002) — glossa-server (control plane and /v1 API), glossa-edge (stateless delivery), Studio and the landing page — against Postgres and S3-compatible object storage, each external or in the release's namespace (a Postgres StatefulSet, MinIO), with nightly backups and a weekly restore drill.
 type: application
-version: 0.4.2
+version: 0.4.3
 # The release the images are tagged with: Kiln pushes :v<appVersion>, which
 # is the chart's default tag. Override per component with <component>.image.tag.
 # The images take their version from the tag (.kiln.yaml's ${kiln.version}),
 # so this is the one version bumped by hand; `ci/check-release-version.sh`
 # checks the tag against it.
-appVersion: "0.5.5"
+appVersion: "0.5.6"
 kubeVersion: ">=1.27.0-0"
 home: https://github.com/klarlabs-studio/glossa
 sources:
