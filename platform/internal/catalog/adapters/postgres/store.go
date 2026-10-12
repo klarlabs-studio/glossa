@@ -486,6 +486,28 @@ func (s *store) SourceRevision(ctx context.Context, id domain.MessageID, n int) 
 	return sourceRevision(row)
 }
 
+func (s *store) SourceRevisionsOf(ctx context.Context, project domain.ProjectID, refs []app.SourceRef) (map[app.SourceRef]domain.SourceRevision, error) {
+	p := catalogsql.GetSourceRevisionsOfParams{
+		ProjectID: project.UUID(), MessageIds: make([]uuid.UUID, len(refs)), Revisions: make([]int32, len(refs)),
+	}
+	for i, r := range refs {
+		p.MessageIds[i], p.Revisions[i] = r.Message.UUID(), int32Of(r.Revision)
+	}
+	rows, err := s.q.GetSourceRevisionsOf(ctx, p)
+	if err != nil {
+		return nil, storeError(err)
+	}
+	out := make(map[app.SourceRef]domain.SourceRevision, len(rows))
+	for _, r := range rows {
+		rev, err := sourceRevision(r)
+		if err != nil {
+			return nil, err
+		}
+		out[app.SourceRef{Message: rev.MessageID, Revision: rev.Number}] = rev
+	}
+	return out, nil
+}
+
 func (s *store) Publish(ctx context.Context, e outbox.Event) error {
 	_, err := outbox.Publish(ctx, s.tx, e)
 	return err

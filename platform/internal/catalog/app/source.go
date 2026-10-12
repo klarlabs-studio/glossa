@@ -101,6 +101,35 @@ func (s *Service) SourceRevisionOf(ctx context.Context, project domain.ProjectID
 	return rev, err
 }
 
+// SourceRef names one revision of a message's source.
+type SourceRef struct {
+	Message  domain.MessageID
+	Revision int
+}
+
+// SourceRevisionsOf is SourceRevisionOf for many revisions in one read:
+// those of refs that exist, of messages in the caller's view. A ref that
+// names no visible message or no such revision is absent, where
+// SourceRevisionOf answers ErrNotFound.
+func (s *Service) SourceRevisionsOf(ctx context.Context, project domain.ProjectID, refs []SourceRef) (map[SourceRef]domain.SourceRevision, error) {
+	view, err := authz.Visible(ctx, authz.CatalogRead, project.UUID())
+	if err != nil {
+		return nil, err
+	}
+	var out map[SourceRef]domain.SourceRevision
+	err = s.tx.InTenant(ctx, func(ctx context.Context, st Store) error {
+		var err error
+		out, err = st.SourceRevisionsOf(ctx, project, refs)
+		return err
+	})
+	for ref := range out {
+		if !view.Message(ref.Message.UUID()) {
+			delete(out, ref)
+		}
+	}
+	return out, err
+}
+
 // notVisible answers a message an assigned member's units are not in
 // as Catalog's own not-found, which the ports that call these already
 // translate.

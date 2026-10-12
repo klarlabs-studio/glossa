@@ -113,6 +113,15 @@ FROM localization_translations t
 LEFT JOIN localization_messages m ON m.message_id = t.message_id
 WHERE t.id = sqlc.arg(id);
 
+-- name: GetTranslationsByIDs :many
+-- GetTranslationByID for several translations of one project; an ID that
+-- is no translation of the project is simply absent.
+SELECT t.*, coalesce(m.source_revision, 0)::integer AS current_source_revision,
+       coalesce(m.key, '')::text AS key, coalesce(m.namespace, '')::text AS namespace
+FROM localization_translations t
+LEFT JOIN localization_messages m ON m.message_id = t.message_id
+WHERE t.project_id = sqlc.arg(project_id) AND t.id = ANY (sqlc.arg(ids)::uuid[]);
+
 -- name: LockTranslation :one
 SELECT * FROM localization_translations
 WHERE message_id = sqlc.arg(message_id) AND locale = sqlc.arg(locale)

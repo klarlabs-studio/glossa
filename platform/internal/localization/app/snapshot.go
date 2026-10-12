@@ -91,6 +91,50 @@ func (s *Service) TranslationWithSource(ctx context.Context, project uuid.UUID, 
 	return out, nil
 }
 
+// TranslationsWithSource is TranslationWithSource for several
+// translations of project, in one read of Localization and one of
+// Catalog (plus Catalog's project), whatever their number: the ones of
+// ids that are translations of project whose source is still there. The
+// rest — deleted with their project — are absent, where
+// TranslationWithSource answers ErrNotFound.
+func (s *Service) TranslationsWithSource(ctx context.Context, project uuid.UUID, ids []domain.TranslationID) (map[domain.TranslationID]TranslationWithSource, error) {
+	if err := authz.RequireIn(ctx, authz.TranslationsRead, project); err != nil {
+		return nil, err
+	}
+	var rows map[domain.TranslationID]NamedTranslationRow
+	err := s.tx.InTenant(ctx, func(ctx context.Context, st Store) error {
+		var err error
+		rows, err = st.TranslationsByID(ctx, project, ids)
+		return err
+	})
+	if err != nil || len(rows) == 0 {
+		return nil, err
+	}
+	p, err := s.catalog.Project(ctx, project)
+	if err != nil {
+		return nil, err
+	}
+	refs := make([]SourceRef, 0, len(rows))
+	for _, r := range rows {
+		refs = append(refs, SourceRef{Message: r.MessageID, Revision: r.SourceRevision})
+	}
+	sources, err := s.catalog.SourcesAt(ctx, project, refs)
+	if err != nil {
+		return nil, err
+	}
+	out := make(map[domain.TranslationID]TranslationWithSource, len(rows))
+	for id, r := range rows {
+		src, ok := sources[SourceRef{Message: r.MessageID, Revision: r.SourceRevision}]
+		if !ok {
+			continue
+		}
+		out[id] = TranslationWithSource{
+			TranslationView: view(r.TranslationRow), Key: r.Key, Namespace: r.Namespace, SourceLocale: p.SourceLocale, Source: src,
+		}
+	}
+	return out, nil
+}
+
 // LocaleInfo is a locale as a release manifest lists it.
 type LocaleInfo struct {
 	Code      bcp47.Tag

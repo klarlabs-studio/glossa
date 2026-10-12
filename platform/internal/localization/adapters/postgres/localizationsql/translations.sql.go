@@ -192,6 +192,83 @@ func (q *Queries) GetTranslationByID(ctx context.Context, id uuid.UUID) (GetTran
 	return i, err
 }
 
+const getTranslationsByIDs = `-- name: GetTranslationsByIDs :many
+SELECT t.id, t.tenant_id, t.project_id, t.message_id, t.locale, t.syntax, t.text, t.model, t.state, t.origin, t.author, t.source_revision, t.warnings, t.revision, t.created_at, t.updated_at, coalesce(m.source_revision, 0)::integer AS current_source_revision,
+       coalesce(m.key, '')::text AS key, coalesce(m.namespace, '')::text AS namespace
+FROM localization_translations t
+LEFT JOIN localization_messages m ON m.message_id = t.message_id
+WHERE t.project_id = $1 AND t.id = ANY ($2::uuid[])
+`
+
+type GetTranslationsByIDsParams struct {
+	ProjectID uuid.UUID
+	Ids       []uuid.UUID
+}
+
+type GetTranslationsByIDsRow struct {
+	ID                    uuid.UUID
+	TenantID              uuid.UUID
+	ProjectID             uuid.UUID
+	MessageID             uuid.UUID
+	Locale                string
+	Syntax                string
+	Text                  string
+	Model                 json.RawMessage
+	State                 string
+	Origin                string
+	Author                string
+	SourceRevision        int32
+	Warnings              json.RawMessage
+	Revision              int32
+	CreatedAt             time.Time
+	UpdatedAt             time.Time
+	CurrentSourceRevision int32
+	Key                   string
+	Namespace             string
+}
+
+// GetTranslationByID for several translations of one project; an ID that
+// is no translation of the project is simply absent.
+func (q *Queries) GetTranslationsByIDs(ctx context.Context, arg GetTranslationsByIDsParams) ([]GetTranslationsByIDsRow, error) {
+	rows, err := q.db.Query(ctx, getTranslationsByIDs, arg.ProjectID, arg.Ids)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetTranslationsByIDsRow
+	for rows.Next() {
+		var i GetTranslationsByIDsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.TenantID,
+			&i.ProjectID,
+			&i.MessageID,
+			&i.Locale,
+			&i.Syntax,
+			&i.Text,
+			&i.Model,
+			&i.State,
+			&i.Origin,
+			&i.Author,
+			&i.SourceRevision,
+			&i.Warnings,
+			&i.Revision,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.CurrentSourceRevision,
+			&i.Key,
+			&i.Namespace,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const insertTranslation = `-- name: InsertTranslation :exec
 
 INSERT INTO localization_translations (id, tenant_id, project_id, message_id, locale, syntax, text, model,

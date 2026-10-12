@@ -105,6 +105,9 @@ type Store interface {
 	// SourceRevisions lists newest first, below the given revision.
 	SourceRevisions(ctx context.Context, id domain.MessageID, before, limit int) ([]domain.SourceRevision, error)
 	SourceRevision(ctx context.Context, id domain.MessageID, revision int) (domain.SourceRevision, error)
+	// SourceRevisionsOf reads the revisions refs name, in one query, of
+	// the project's messages; a ref that names none is absent.
+	SourceRevisionsOf(ctx context.Context, project domain.ProjectID, refs []SourceRef) (map[SourceRef]domain.SourceRevision, error)
 
 	// InsertBranch stores b; inserted is false if the project already has
 	// a branch of that name (a concurrent first push).
