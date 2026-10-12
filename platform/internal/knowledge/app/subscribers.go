@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -58,25 +59,24 @@ func (s *Service) Subscribe(r *outbox.Registry) error {
 // state older than one already applied changes nothing. So duplicates
 // and reordering converge.
 func (s *Service) handleTranslationEvent(ctx context.Context, d outbox.Delivery) error {
-	return s.deriveFor(ctx, []outbox.Delivery{d}, func(err error) error { return err })[0]
+	return s.deriveFor(ctx, []outbox.Delivery{d})[0]
 }
 
 // handleTranslationEvents is handleTranslationEvent for a delivered
 // batch: the translations' current states are read together (a few
-// reads per project, not per translation), then every
-// derivation is applied in one transaction, in translation order (the
-// order the derivation locks are taken in, whoever takes them). Since
-// the current state decides, the order of the events does not matter.
-// A failed transaction fails every derivation in it, never permanently
-// (outbox.BatchFailure), so each is delivered again alone.
+// reads per project, not per translation), then every derivation is
+// written in one transaction and a constant number of statements (#109).
+// Since the current state decides, the order of the events does not
+// matter, and a translation named twice is derived once.
 func (s *Service) handleTranslationEvents(ctx context.Context, ds []outbox.Delivery) []error {
-	return s.deriveFor(ctx, ds, outbox.BatchFailure)
+	return s.deriveFor(ctx, ds)
 }
 
-// deriveFor derives the TM for ds' translations in one transaction. A
-// delivery that cannot be read fails alone; if the transaction fails,
-// every delivery in it reports failed(err).
-func (s *Service) deriveFor(ctx context.Context, ds []outbox.Delivery, failed func(error) error) []error {
+// deriveFor derives the TM for ds' translations. A delivery that cannot
+// be read fails alone. Several translations are written set-based in one
+// transaction; if that fails — one of them cannot be derived, say — each
+// is derived on its own, so that only the one at fault fails.
+func (s *Service) deriveFor(ctx context.Context, ds []outbox.Delivery) []error {
 	errs := make([]error, len(ds))
 	bg, err := authz.Background(ctx, subscriberDeriveTM, authz.TranslationsRead, authz.CatalogRead)
 	if err != nil {
@@ -89,29 +89,38 @@ func (s *Service) deriveFor(ctx context.Context, ds []outbox.Delivery, failed fu
 	if len(todo) == 0 {
 		return errs
 	}
+	// Translation order is the order the derivation locks are taken in,
+	// whoever takes them.
 	slices.SortStableFunc(todo, func(a, b pending) int {
 		return slices.Compare(a.cur.TranslationID[:], b.cur.TranslationID[:])
 	})
 	p, _ := authz.From(bg)
-	err = s.tx.InTenant(ctx, func(ctx context.Context, st Store) error {
-		for _, t := range todo {
-			if err := s.derive(ctx, st, t.cur, p.Actor.String()); err != nil {
-				return err
-			}
+	by := p.Actor.String()
+	if len(todo) > 1 {
+		err := s.tx.InTenant(ctx, func(ctx context.Context, st Store) error {
+			return s.deriveAll(ctx, st, todo, by)
+		})
+		if err == nil {
+			return errs
 		}
-		return nil
-	})
-	if err != nil {
-		for _, t := range todo {
-			errs[t.at] = failed(err)
+		s.logger.WarnContext(ctx, "knowledge: batch derivation failed, deriving one by one",
+			"translations", len(todo), "error", err)
+	}
+	for _, t := range todo {
+		err := s.tx.InTenant(ctx, func(ctx context.Context, st Store) error {
+			return s.derive(ctx, st, t.cur, by)
+		})
+		for _, i := range t.at {
+			errs[i] = err
 		}
 	}
 	return errs
 }
 
-// pending is a delivery whose translation is to be derived.
+// pending is a translation to be derived, and the deliveries that name
+// it.
 type pending struct {
-	at  int
+	at  []int
 	cur CurrentTranslation
 }
 
@@ -120,7 +129,8 @@ type pending struct {
 // delivery that cannot be decoded, or whose project cannot be read,
 // gets its error in errs[i] and the rest are unaffected; a translation
 // that no longer exists is skipped (deleted with its project;
-// knowledge.drop_project erases the rest).
+// knowledge.drop_project erases the rest). A translation several
+// deliveries name is listed once.
 func (s *Service) currentOf(bg context.Context, ds []outbox.Delivery, errs []error) []pending {
 	var projects []uuid.UUID
 	byProject := map[uuid.UUID][]int{}
@@ -138,6 +148,7 @@ func (s *Service) currentOf(bg context.Context, ds []outbox.Delivery, errs []err
 		ids[i] = translation
 	}
 	var todo []pending
+	listed := map[uuid.UUID]int{}
 	for _, project := range projects {
 		at := byProject[project]
 		want := make([]uuid.UUID, len(at))
@@ -151,8 +162,13 @@ func (s *Service) currentOf(bg context.Context, ds []outbox.Delivery, errs []err
 		for _, i := range at {
 			if err != nil {
 				errs[i] = err
-			} else if cur, ok := found[ids[i]]; ok {
-				todo = append(todo, pending{at: i, cur: cur})
+			} else if cur, ok := found[ids[i]]; !ok {
+				continue
+			} else if n, dup := listed[ids[i]]; dup {
+				todo[n].at = append(todo[n].at, i)
+			} else {
+				listed[ids[i]] = len(todo)
+				todo = append(todo, pending{at: []int{i}, cur: cur})
 			}
 		}
 	}
@@ -191,14 +207,11 @@ func (s *Service) derive(ctx context.Context, st Store, cur CurrentTranslation, 
 	if err != nil {
 		return err
 	}
-	d, err := domain.Reconcile(active, cur.ApprovedText, cur.Approved, now)
+	d, err := settle(active, cur, by, now)
 	if err != nil {
-		return outbox.Permanent(err)
+		return err
 	}
 	if d.Retire != "" {
-		if err := active.Retire(d.Retire, by, now); err != nil {
-			return err
-		}
 		if err := st.RetireUnit(ctx, *active); err != nil {
 			return err
 		}
@@ -214,6 +227,93 @@ func (s *Service) derive(ctx context.Context, st Store, cur CurrentTranslation, 
 		}
 	}
 	return st.SetDerivation(ctx, cur.TranslationID, cur.Revision, now)
+}
+
+// settle is what domain.Reconcile decides for a translation's current
+// state, with the retirement it calls for already applied to active.
+func settle(active *domain.TMUnit, cur CurrentTranslation, by string, now time.Time) (domain.Derivation, error) {
+	d, err := domain.Reconcile(active, cur.ApprovedText, cur.Approved, now)
+	if err != nil {
+		return d, outbox.Permanent(err)
+	}
+	if d.Retire != "" {
+		if err := active.Retire(d.Retire, by, now); err != nil {
+			return d, err
+		}
+	}
+	return d, nil
+}
+
+// deriveAll is derive for translations (in translation order, each
+// once) in a constant number of statements: it locks their derivations
+// and active units, decides each as derive would, and writes the
+// retirements, confirmations, new units and revisions together.
+func (s *Service) deriveAll(ctx context.Context, st Store, todo []pending, by string) error {
+	now := s.now()
+	refs := make([]DerivationRef, len(todo))
+	for i, t := range todo {
+		refs[i] = DerivationRef{Translation: t.cur.TranslationID, Project: t.cur.ProjectID}
+	}
+	applied, err := st.LockDerivations(ctx, refs, now)
+	if err != nil {
+		return err
+	}
+	var stale []pending
+	var ids []uuid.UUID
+	for _, t := range todo {
+		if applied[t.cur.TranslationID] < t.cur.Revision {
+			stale = append(stale, t)
+			ids = append(ids, t.cur.TranslationID)
+		}
+	}
+	if len(stale) == 0 {
+		return nil
+	}
+	active, err := st.LockActiveUnits(ctx, ids)
+	if err != nil {
+		return err
+	}
+	var (
+		retire, create []domain.TMUnit
+		touch          []UnitTouch
+		set            []DerivationRevision
+	)
+	for _, t := range stale {
+		var unit *domain.TMUnit
+		if u, ok := active[t.cur.TranslationID]; ok {
+			unit = &u
+		}
+		d, err := settle(unit, t.cur, by, now)
+		if err != nil {
+			return err
+		}
+		if d.Retire != "" {
+			retire = append(retire, *unit)
+		}
+		if d.Touch {
+			touch = append(touch, UnitTouch{Unit: unit.ID, Revision: t.cur.Revision})
+		}
+		if d.Create != nil {
+			create = append(create, *d.Create)
+		}
+		set = append(set, DerivationRevision{Translation: t.cur.TranslationID, Revision: t.cur.Revision})
+	}
+	if len(retire) > 0 {
+		if err := st.RetireUnits(ctx, retire); err != nil {
+			return err
+		}
+	}
+	if len(touch) > 0 {
+		if err := st.TouchUnits(ctx, touch, now); err != nil {
+			return err
+		}
+	}
+	if len(create) > 0 {
+		if err := st.InsertUnits(ctx, create); err != nil {
+			return err
+		}
+	}
+	return st.SetDerivations(ctx, set, now)
 }
 
 // handleProjectDeleted erases a deleted project's knowledge: its TM
