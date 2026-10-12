@@ -178,15 +178,7 @@ func (s *store) LockActiveUnit(ctx context.Context, translation uuid.UUID) (*dom
 }
 
 func (s *store) InsertUnit(ctx context.Context, u domain.TMUnit) error {
-	model, err := json.Marshal(u.Target)
-	if err != nil {
-		return fmt.Errorf("knowledge: encode unit %s: %w", u.ID, err)
-	}
-	vars := u.SourceNorm.Vars
-	if vars == nil {
-		vars = []string{}
-	}
-	varsJSON, err := json.Marshal(vars)
+	model, varsJSON, err := encodeUnit(u)
 	if err != nil {
 		return err
 	}
@@ -225,6 +217,139 @@ func (s *store) RetireUnit(ctx context.Context, u domain.TMUnit) error {
 		return app.ErrNotFound
 	}
 	return nil
+}
+
+// The set-based writes of a delivered batch (#109): a statement each,
+// whatever the number of translations.
+
+func (s *store) LockDerivations(ctx context.Context, refs []app.DerivationRef, at time.Time) (map[uuid.UUID]int, error) {
+	ids := make([]uuid.UUID, len(refs))
+	projects := make([]uuid.UUID, len(refs))
+	for i, r := range refs {
+		ids[i], projects[i] = r.Translation, r.Project
+	}
+	if err := s.q.EnsureDerivations(ctx, knowledgesql.EnsureDerivationsParams{
+		TranslationIds: ids, ProjectIds: projects, UpdatedAt: at,
+	}); err != nil {
+		return nil, storeError(err)
+	}
+	rows, err := s.q.LockDerivations(ctx, ids)
+	if err != nil {
+		return nil, storeError(err)
+	}
+	out := make(map[uuid.UUID]int, len(rows))
+	for _, r := range rows {
+		out[r.TranslationID] = int(r.Revision)
+	}
+	return out, nil
+}
+
+func (s *store) LockActiveUnits(ctx context.Context, translations []uuid.UUID) (map[uuid.UUID]domain.TMUnit, error) {
+	rows, err := s.q.LockActiveUnitsOfTranslations(ctx, translations)
+	if err != nil {
+		return nil, storeError(err)
+	}
+	out := make(map[uuid.UUID]domain.TMUnit, len(rows))
+	for _, r := range rows {
+		u, err := unit(r)
+		if err != nil {
+			return nil, err
+		}
+		out[r.TranslationID.UUID] = u
+	}
+	return out, nil
+}
+
+func (s *store) InsertUnits(ctx context.Context, us []domain.TMUnit) error {
+	p := knowledgesql.InsertTMUnitsParams{}
+	for _, u := range us {
+		model, vars, err := encodeUnit(u)
+		if err != nil {
+			return err
+		}
+		p.Ids = append(p.Ids, u.ID)
+		p.ProjectIds = append(p.ProjectIds, derefUUID(u.ProjectID))
+		p.Origins = append(p.Origins, string(u.Origin))
+		p.TranslationIds = append(p.TranslationIds, derefUUID(u.TranslationID))
+		p.TranslationRevisions = append(p.TranslationRevisions, int32Of(max(u.TranslationRevision, 0)))
+		p.MessageIds = append(p.MessageIds, derefUUID(u.MessageID))
+		p.MessageKeys = append(p.MessageKeys, u.MessageKey)
+		p.Namespaces = append(p.Namespaces, u.Namespace)
+		p.SourceLocales = append(p.SourceLocales, u.SourceLocale.String())
+		p.TargetLocales = append(p.TargetLocales, u.TargetLocale.String())
+		p.SourceMf2s = append(p.SourceMf2s, u.SourceMF2)
+		p.TargetMf2s = append(p.TargetMf2s, u.TargetMF2)
+		p.TargetModels = append(p.TargetModels, string(model))
+		p.SourceNormalizeds = append(p.SourceNormalizeds, u.SourceNorm.Text)
+		p.TargetNormalizeds = append(p.TargetNormalizeds, u.TargetNorm.Text)
+		p.SourceHashes = append(p.SourceHashes, u.SourceNorm.Hash)
+		p.Signatures = append(p.Signatures, u.SourceNorm.Signature)
+		p.SourceVars = append(p.SourceVars, string(vars))
+		p.CreatedBys = append(p.CreatedBys, u.CreatedBy)
+		p.CreatedAts = append(p.CreatedAts, u.CreatedAt)
+		p.UpdatedAts = append(p.UpdatedAts, u.UpdatedAt)
+	}
+	return storeError(s.q.InsertTMUnits(ctx, p))
+}
+
+func (s *store) TouchUnits(ctx context.Context, ts []app.UnitTouch, at time.Time) error {
+	p := knowledgesql.TouchTMUnitsParams{UpdatedAt: at}
+	for _, t := range ts {
+		p.Ids = append(p.Ids, t.Unit)
+		p.Revisions = append(p.Revisions, int32Of(t.Revision))
+	}
+	return storeError(s.q.TouchTMUnits(ctx, p))
+}
+
+func (s *store) RetireUnits(ctx context.Context, us []domain.TMUnit) error {
+	p := knowledgesql.RetireTMUnitsParams{}
+	for _, u := range us {
+		if u.RetiredAt == nil {
+			return fmt.Errorf("knowledge: unit %s is not retired", u.ID)
+		}
+		p.Ids = append(p.Ids, u.ID)
+		p.RetiredAts = append(p.RetiredAts, *u.RetiredAt)
+		p.Reasons = append(p.Reasons, string(u.RetiredReason))
+		p.Bys = append(p.Bys, u.RetiredBy)
+	}
+	n, err := s.q.RetireTMUnits(ctx, p)
+	if err != nil {
+		return storeError(err)
+	}
+	if int(n) != len(us) {
+		return app.ErrNotFound
+	}
+	return nil
+}
+
+func (s *store) SetDerivations(ctx context.Context, ds []app.DerivationRevision, at time.Time) error {
+	p := knowledgesql.SetDerivationsParams{UpdatedAt: at}
+	for _, d := range ds {
+		p.TranslationIds = append(p.TranslationIds, d.Translation)
+		p.Revisions = append(p.Revisions, int32Of(d.Revision))
+	}
+	return storeError(s.q.SetDerivations(ctx, p))
+}
+
+func derefUUID(id *uuid.UUID) uuid.UUID {
+	if id == nil {
+		return uuid.Nil
+	}
+	return *id
+}
+
+// encodeUnit is u's target model and source variables as JSON.
+func encodeUnit(u domain.TMUnit) (model, vars []byte, err error) {
+	model, err = json.Marshal(u.Target)
+	if err != nil {
+		return nil, nil, fmt.Errorf("knowledge: encode unit %s: %w", u.ID, err)
+	}
+	names := u.SourceNorm.Vars
+	if names == nil {
+		names = []string{}
+	}
+	vars, err = json.Marshal(names)
+	return model, vars, err
 }
 
 func (s *store) HasActiveUnit(ctx context.Context, u domain.TMUnit) (bool, error) {
