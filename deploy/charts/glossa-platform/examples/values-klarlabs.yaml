@@ -61,6 +61,12 @@ server:
   image:
     digest: ""
   replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 34Mi, peak 61Mi per pod.
+  resources:
+    requests:
+      memory: 96Mi
   webauthn:
     # Passkeys belong to the product domain, so they work on every
     # glossa.klarlabs.de host. It can't change later without re-enrolling
@@ -76,6 +82,12 @@ edge:
   image:
     digest: ""
   replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 17Mi, peak 19Mi per pod.
+  resources:
+    requests:
+      memory: 32Mi
   autoscaling:
     enabled: false
   otel:
@@ -85,6 +97,12 @@ studio:
   image:
     digest: ""
   replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 10Mi, peak 12Mi per pod; the 16Mi default sat close to it.
+  resources:
+    requests:
+      memory: 32Mi
 
 # The Klarlabs Postgres pattern (owner decision; README.md, "In-namespace
 # Postgres"): glossa-postgres, Postgres 16 like v0.3's, on longhorn. The
@@ -181,6 +199,12 @@ objectStorage:
 
 minio:
   enabled: true
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 261Mi: it ran at 102% of the 256Mi default request.
+  resources:
+    requests:
+      memory: 352Mi
   rootCredentials:
     secretName: glossa-minio-root    # keys MINIO_ROOT_USER, MINIO_ROOT_PASSWORD
   persistence:
