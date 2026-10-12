@@ -185,6 +185,24 @@ type StyleGuideVersion struct {
 	CreatedAt time.Time
 }
 
+// DerivationRef names a translation whose TM derivation is to be
+// recorded, and its project.
+type DerivationRef struct {
+	Translation, Project uuid.UUID
+}
+
+// DerivationRevision is the revision a translation's units now reflect.
+type DerivationRevision struct {
+	Translation uuid.UUID
+	Revision    int
+}
+
+// UnitTouch confirms a unit against a translation revision.
+type UnitTouch struct {
+	Unit     uuid.UUID
+	Revision int
+}
+
 // Store is Knowledge's persistence in tenant scope.
 type Store interface {
 	// EnsureDerivation creates a translation's derivation record (at
@@ -196,6 +214,23 @@ type Store interface {
 	// LockActiveUnit returns the translation's active unit, nil if none.
 	LockActiveUnit(ctx context.Context, translation uuid.UUID) (*domain.TMUnit, error)
 	InsertUnit(ctx context.Context, u domain.TMUnit) error
+	// The set-based forms of the derivation writes (#109): each is one
+	// statement (two for LockDerivations) however many translations it
+	// names, for a delivered batch.
+	//
+	// LockDerivations creates the missing records and locks them all, in
+	// translation order — the order every writer takes them in — and
+	// returns the revision each translation's units reflect.
+	LockDerivations(ctx context.Context, refs []DerivationRef, at time.Time) (map[uuid.UUID]int, error)
+	// LockActiveUnits returns the active unit of each of the translations
+	// that has one, keyed by translation, locked in translation order.
+	LockActiveUnits(ctx context.Context, translations []uuid.UUID) (map[uuid.UUID]domain.TMUnit, error)
+	InsertUnits(ctx context.Context, us []domain.TMUnit) error
+	TouchUnits(ctx context.Context, ts []UnitTouch, at time.Time) error
+	// RetireUnits stores the retirement of each of us (ErrNotFound if one
+	// is already retired).
+	RetireUnits(ctx context.Context, us []domain.TMUnit) error
+	SetDerivations(ctx context.Context, ds []DerivationRevision, at time.Time) error
 	// HasActiveUnit reports whether an active unit in u's scope and
 	// locale pair has exactly u's source and target.
 	HasActiveUnit(ctx context.Context, u domain.TMUnit) (bool, error)

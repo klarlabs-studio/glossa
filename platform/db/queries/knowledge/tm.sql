@@ -25,6 +25,36 @@ SELECT * FROM knowledge_tm_units
 WHERE translation_id = sqlc.arg(translation_id) AND retired_at IS NULL
 FOR UPDATE;
 
+-- Set-based forms of the above for a delivered batch (#109). Rows are
+-- written and locked in translation order, the order every writer takes
+-- them in, so concurrent batches cannot deadlock.
+
+-- name: EnsureDerivations :exec
+INSERT INTO knowledge_tm_derivations (translation_id, tenant_id, project_id, revision, updated_at)
+SELECT v.translation_id, app_current_tenant(), v.project_id, 0, sqlc.arg(updated_at)
+FROM (SELECT unnest(sqlc.arg(translation_ids)::uuid[]) AS translation_id,
+             unnest(sqlc.arg(project_ids)::uuid[]) AS project_id) v
+ORDER BY v.translation_id
+ON CONFLICT (translation_id) DO NOTHING;
+
+-- name: LockDerivations :many
+SELECT translation_id, revision FROM knowledge_tm_derivations
+WHERE translation_id = ANY (sqlc.arg(translation_ids)::uuid[])
+ORDER BY translation_id
+FOR UPDATE;
+
+-- name: SetDerivations :exec
+UPDATE knowledge_tm_derivations d SET revision = v.revision, updated_at = sqlc.arg(updated_at)
+FROM (SELECT unnest(sqlc.arg(translation_ids)::uuid[]) AS translation_id,
+             unnest(sqlc.arg(revisions)::int[]) AS revision) v
+WHERE d.translation_id = v.translation_id;
+
+-- name: LockActiveUnitsOfTranslations :many
+SELECT * FROM knowledge_tm_units
+WHERE translation_id = ANY (sqlc.arg(translation_ids)::uuid[]) AND retired_at IS NULL
+ORDER BY translation_id
+FOR UPDATE;
+
 -- ── units ──────────────────────────────────────────────────────────
 
 -- name: InsertTMUnit :exec
@@ -49,6 +79,56 @@ UPDATE knowledge_tm_units
 SET retired_at = sqlc.arg(retired_at), retired_reason = sqlc.arg(retired_reason), retired_by = sqlc.arg(retired_by),
     updated_at = sqlc.arg(retired_at)
 WHERE id = sqlc.arg(id) AND retired_at IS NULL;
+
+-- name: InsertTMUnits :exec
+-- Zero ids stand for NULL in the nullable uuid columns, as does revision
+-- 0 (arrays carry no NULLs through the driver).
+INSERT INTO knowledge_tm_units (id, tenant_id, project_id, origin, translation_id, translation_revision, message_id,
+                                message_key, namespace, source_locale, target_locale, source_mf2, target_mf2,
+                                target_model, source_normalized, target_normalized, source_hash, signature,
+                                source_vars, hit_count, last_hit_at, created_by, created_at, updated_at)
+SELECT v.id, app_current_tenant(), NULLIF(v.project_id, '00000000-0000-0000-0000-000000000000'::uuid), v.origin,
+       NULLIF(v.translation_id, '00000000-0000-0000-0000-000000000000'::uuid), NULLIF(v.translation_revision, 0),
+       NULLIF(v.message_id, '00000000-0000-0000-0000-000000000000'::uuid), v.message_key, v.namespace,
+       v.source_locale, v.target_locale, v.source_mf2, v.target_mf2, v.target_model::jsonb, v.source_normalized,
+       v.target_normalized, v.source_hash, v.signature, v.source_vars::jsonb, 0, NULL, v.created_by, v.created_at,
+       v.updated_at
+FROM (SELECT unnest(sqlc.arg(ids)::uuid[]) AS id,
+             unnest(sqlc.arg(project_ids)::uuid[]) AS project_id,
+             unnest(sqlc.arg(origins)::text[]) AS origin,
+             unnest(sqlc.arg(translation_ids)::uuid[]) AS translation_id,
+             unnest(sqlc.arg(translation_revisions)::int[]) AS translation_revision,
+             unnest(sqlc.arg(message_ids)::uuid[]) AS message_id,
+             unnest(sqlc.arg(message_keys)::text[]) AS message_key,
+             unnest(sqlc.arg(namespaces)::text[]) AS namespace,
+             unnest(sqlc.arg(source_locales)::text[]) AS source_locale,
+             unnest(sqlc.arg(target_locales)::text[]) AS target_locale,
+             unnest(sqlc.arg(source_mf2s)::text[]) AS source_mf2,
+             unnest(sqlc.arg(target_mf2s)::text[]) AS target_mf2,
+             unnest(sqlc.arg(target_models)::text[]) AS target_model,
+             unnest(sqlc.arg(source_normalizeds)::text[]) AS source_normalized,
+             unnest(sqlc.arg(target_normalizeds)::text[]) AS target_normalized,
+             unnest(sqlc.arg(source_hashes)::text[]) AS source_hash,
+             unnest(sqlc.arg(signatures)::text[]) AS signature,
+             unnest(sqlc.arg(source_vars)::text[]) AS source_vars,
+             unnest(sqlc.arg(created_bys)::text[]) AS created_by,
+             unnest(sqlc.arg(created_ats)::timestamptz[]) AS created_at,
+             unnest(sqlc.arg(updated_ats)::timestamptz[]) AS updated_at) v;
+
+-- name: TouchTMUnits :exec
+UPDATE knowledge_tm_units u
+SET translation_revision = v.revision, updated_at = sqlc.arg(updated_at)
+FROM (SELECT unnest(sqlc.arg(ids)::uuid[]) AS id, unnest(sqlc.arg(revisions)::int[]) AS revision) v
+WHERE u.id = v.id;
+
+-- name: RetireTMUnits :execrows
+UPDATE knowledge_tm_units u
+SET retired_at = v.retired_at, retired_reason = v.reason, retired_by = v.by, updated_at = v.retired_at
+FROM (SELECT unnest(sqlc.arg(ids)::uuid[]) AS id,
+             unnest(sqlc.arg(retired_ats)::timestamptz[]) AS retired_at,
+             unnest(sqlc.arg(reasons)::text[]) AS reason,
+             unnest(sqlc.arg(bys)::text[]) AS by) v
+WHERE u.id = v.id AND u.retired_at IS NULL;
 
 -- name: GetTMUnit :one
 SELECT * FROM knowledge_tm_units WHERE id = sqlc.arg(id);

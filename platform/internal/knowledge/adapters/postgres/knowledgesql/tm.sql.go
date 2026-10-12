@@ -246,6 +246,30 @@ func (q *Queries) EnsureDerivation(ctx context.Context, arg EnsureDerivationPara
 	return err
 }
 
+const ensureDerivations = `-- name: EnsureDerivations :exec
+
+INSERT INTO knowledge_tm_derivations (translation_id, tenant_id, project_id, revision, updated_at)
+SELECT v.translation_id, app_current_tenant(), v.project_id, 0, $1
+FROM (SELECT unnest($2::uuid[]) AS translation_id,
+             unnest($3::uuid[]) AS project_id) v
+ORDER BY v.translation_id
+ON CONFLICT (translation_id) DO NOTHING
+`
+
+type EnsureDerivationsParams struct {
+	UpdatedAt      time.Time
+	TranslationIds []uuid.UUID
+	ProjectIds     []uuid.UUID
+}
+
+// Set-based forms of the above for a delivered batch (#109). Rows are
+// written and locked in translation order, the order every writer takes
+// them in, so concurrent batches cannot deadlock.
+func (q *Queries) EnsureDerivations(ctx context.Context, arg EnsureDerivationsParams) error {
+	_, err := q.db.Exec(ctx, ensureDerivations, arg.UpdatedAt, arg.TranslationIds, arg.ProjectIds)
+	return err
+}
+
 const exactTMMatches = `-- name: ExactTMMatches :many
 
 SELECT id, tenant_id, project_id, origin, translation_id, translation_revision, message_id, message_key, namespace, source_locale, target_locale, source_mf2, target_mf2, target_model, source_normalized, target_normalized, source_hash, signature, source_vars, hit_count, last_hit_at, created_by, created_at, updated_at, retired_at, retired_reason, retired_by FROM knowledge_tm_units
@@ -551,6 +575,93 @@ func (q *Queries) InsertTMUnit(ctx context.Context, arg InsertTMUnitParams) erro
 	return err
 }
 
+const insertTMUnits = `-- name: InsertTMUnits :exec
+INSERT INTO knowledge_tm_units (id, tenant_id, project_id, origin, translation_id, translation_revision, message_id,
+                                message_key, namespace, source_locale, target_locale, source_mf2, target_mf2,
+                                target_model, source_normalized, target_normalized, source_hash, signature,
+                                source_vars, hit_count, last_hit_at, created_by, created_at, updated_at)
+SELECT v.id, app_current_tenant(), NULLIF(v.project_id, '00000000-0000-0000-0000-000000000000'::uuid), v.origin,
+       NULLIF(v.translation_id, '00000000-0000-0000-0000-000000000000'::uuid), NULLIF(v.translation_revision, 0),
+       NULLIF(v.message_id, '00000000-0000-0000-0000-000000000000'::uuid), v.message_key, v.namespace,
+       v.source_locale, v.target_locale, v.source_mf2, v.target_mf2, v.target_model::jsonb, v.source_normalized,
+       v.target_normalized, v.source_hash, v.signature, v.source_vars::jsonb, 0, NULL, v.created_by, v.created_at,
+       v.updated_at
+FROM (SELECT unnest($1::uuid[]) AS id,
+             unnest($2::uuid[]) AS project_id,
+             unnest($3::text[]) AS origin,
+             unnest($4::uuid[]) AS translation_id,
+             unnest($5::int[]) AS translation_revision,
+             unnest($6::uuid[]) AS message_id,
+             unnest($7::text[]) AS message_key,
+             unnest($8::text[]) AS namespace,
+             unnest($9::text[]) AS source_locale,
+             unnest($10::text[]) AS target_locale,
+             unnest($11::text[]) AS source_mf2,
+             unnest($12::text[]) AS target_mf2,
+             unnest($13::text[]) AS target_model,
+             unnest($14::text[]) AS source_normalized,
+             unnest($15::text[]) AS target_normalized,
+             unnest($16::text[]) AS source_hash,
+             unnest($17::text[]) AS signature,
+             unnest($18::text[]) AS source_vars,
+             unnest($19::text[]) AS created_by,
+             unnest($20::timestamptz[]) AS created_at,
+             unnest($21::timestamptz[]) AS updated_at) v
+`
+
+type InsertTMUnitsParams struct {
+	Ids                  []uuid.UUID
+	ProjectIds           []uuid.UUID
+	Origins              []string
+	TranslationIds       []uuid.UUID
+	TranslationRevisions []int32
+	MessageIds           []uuid.UUID
+	MessageKeys          []string
+	Namespaces           []string
+	SourceLocales        []string
+	TargetLocales        []string
+	SourceMf2s           []string
+	TargetMf2s           []string
+	TargetModels         []string
+	SourceNormalizeds    []string
+	TargetNormalizeds    []string
+	SourceHashes         []string
+	Signatures           []string
+	SourceVars           []string
+	CreatedBys           []string
+	CreatedAts           []time.Time
+	UpdatedAts           []time.Time
+}
+
+// Zero ids stand for NULL in the nullable uuid columns, as does revision
+// 0 (arrays carry no NULLs through the driver).
+func (q *Queries) InsertTMUnits(ctx context.Context, arg InsertTMUnitsParams) error {
+	_, err := q.db.Exec(ctx, insertTMUnits,
+		arg.Ids,
+		arg.ProjectIds,
+		arg.Origins,
+		arg.TranslationIds,
+		arg.TranslationRevisions,
+		arg.MessageIds,
+		arg.MessageKeys,
+		arg.Namespaces,
+		arg.SourceLocales,
+		arg.TargetLocales,
+		arg.SourceMf2s,
+		arg.TargetMf2s,
+		arg.TargetModels,
+		arg.SourceNormalizeds,
+		arg.TargetNormalizeds,
+		arg.SourceHashes,
+		arg.Signatures,
+		arg.SourceVars,
+		arg.CreatedBys,
+		arg.CreatedAts,
+		arg.UpdatedAts,
+	)
+	return err
+}
+
 const listTMUnits = `-- name: ListTMUnits :many
 SELECT id, tenant_id, project_id, origin, translation_id, translation_revision, message_id, message_key, namespace, source_locale, target_locale, source_mf2, target_mf2, target_model, source_normalized, target_normalized, source_hash, signature, source_vars, hit_count, last_hit_at, created_by, created_at, updated_at, retired_at, retired_reason, retired_by FROM knowledge_tm_units
 WHERE id > $1
@@ -679,6 +790,61 @@ func (q *Queries) LockActiveUnitOfTranslation(ctx context.Context, translationID
 	return i, err
 }
 
+const lockActiveUnitsOfTranslations = `-- name: LockActiveUnitsOfTranslations :many
+SELECT id, tenant_id, project_id, origin, translation_id, translation_revision, message_id, message_key, namespace, source_locale, target_locale, source_mf2, target_mf2, target_model, source_normalized, target_normalized, source_hash, signature, source_vars, hit_count, last_hit_at, created_by, created_at, updated_at, retired_at, retired_reason, retired_by FROM knowledge_tm_units
+WHERE translation_id = ANY ($1::uuid[]) AND retired_at IS NULL
+ORDER BY translation_id
+FOR UPDATE
+`
+
+func (q *Queries) LockActiveUnitsOfTranslations(ctx context.Context, translationIds []uuid.UUID) ([]KnowledgeTmUnit, error) {
+	rows, err := q.db.Query(ctx, lockActiveUnitsOfTranslations, translationIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []KnowledgeTmUnit
+	for rows.Next() {
+		var i KnowledgeTmUnit
+		if err := rows.Scan(
+			&i.ID,
+			&i.TenantID,
+			&i.ProjectID,
+			&i.Origin,
+			&i.TranslationID,
+			&i.TranslationRevision,
+			&i.MessageID,
+			&i.MessageKey,
+			&i.Namespace,
+			&i.SourceLocale,
+			&i.TargetLocale,
+			&i.SourceMf2,
+			&i.TargetMf2,
+			&i.TargetModel,
+			&i.SourceNormalized,
+			&i.TargetNormalized,
+			&i.SourceHash,
+			&i.Signature,
+			&i.SourceVars,
+			&i.HitCount,
+			&i.LastHitAt,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.RetiredAt,
+			&i.RetiredReason,
+			&i.RetiredBy,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const lockDerivation = `-- name: LockDerivation :one
 SELECT revision FROM knowledge_tm_derivations WHERE translation_id = $1 FOR UPDATE
 `
@@ -688,6 +854,38 @@ func (q *Queries) LockDerivation(ctx context.Context, translationID uuid.UUID) (
 	var revision int32
 	err := row.Scan(&revision)
 	return revision, err
+}
+
+const lockDerivations = `-- name: LockDerivations :many
+SELECT translation_id, revision FROM knowledge_tm_derivations
+WHERE translation_id = ANY ($1::uuid[])
+ORDER BY translation_id
+FOR UPDATE
+`
+
+type LockDerivationsRow struct {
+	TranslationID uuid.UUID
+	Revision      int32
+}
+
+func (q *Queries) LockDerivations(ctx context.Context, translationIds []uuid.UUID) ([]LockDerivationsRow, error) {
+	rows, err := q.db.Query(ctx, lockDerivations, translationIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []LockDerivationsRow
+	for rows.Next() {
+		var i LockDerivationsRow
+		if err := rows.Scan(&i.TranslationID, &i.Revision); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const lockTMUnit = `-- name: LockTMUnit :one
@@ -756,6 +954,36 @@ func (q *Queries) RetireTMUnit(ctx context.Context, arg RetireTMUnitParams) (int
 	return result.RowsAffected(), nil
 }
 
+const retireTMUnits = `-- name: RetireTMUnits :execrows
+UPDATE knowledge_tm_units u
+SET retired_at = v.retired_at, retired_reason = v.reason, retired_by = v.by, updated_at = v.retired_at
+FROM (SELECT unnest($1::uuid[]) AS id,
+             unnest($2::timestamptz[]) AS retired_at,
+             unnest($3::text[]) AS reason,
+             unnest($4::text[]) AS by) v
+WHERE u.id = v.id AND u.retired_at IS NULL
+`
+
+type RetireTMUnitsParams struct {
+	Ids        []uuid.UUID
+	RetiredAts []time.Time
+	Reasons    []string
+	Bys        []string
+}
+
+func (q *Queries) RetireTMUnits(ctx context.Context, arg RetireTMUnitsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, retireTMUnits,
+		arg.Ids,
+		arg.RetiredAts,
+		arg.Reasons,
+		arg.Bys,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const setDerivation = `-- name: SetDerivation :exec
 UPDATE knowledge_tm_derivations SET revision = $1, updated_at = $2
 WHERE translation_id = $3
@@ -769,6 +997,24 @@ type SetDerivationParams struct {
 
 func (q *Queries) SetDerivation(ctx context.Context, arg SetDerivationParams) error {
 	_, err := q.db.Exec(ctx, setDerivation, arg.Revision, arg.UpdatedAt, arg.TranslationID)
+	return err
+}
+
+const setDerivations = `-- name: SetDerivations :exec
+UPDATE knowledge_tm_derivations d SET revision = v.revision, updated_at = $1
+FROM (SELECT unnest($2::uuid[]) AS translation_id,
+             unnest($3::int[]) AS revision) v
+WHERE d.translation_id = v.translation_id
+`
+
+type SetDerivationsParams struct {
+	UpdatedAt      time.Time
+	TranslationIds []uuid.UUID
+	Revisions      []int32
+}
+
+func (q *Queries) SetDerivations(ctx context.Context, arg SetDerivationsParams) error {
+	_, err := q.db.Exec(ctx, setDerivations, arg.UpdatedAt, arg.TranslationIds, arg.Revisions)
 	return err
 }
 
@@ -797,5 +1043,23 @@ type TouchTMUnitParams struct {
 
 func (q *Queries) TouchTMUnit(ctx context.Context, arg TouchTMUnitParams) error {
 	_, err := q.db.Exec(ctx, touchTMUnit, arg.TranslationRevision, arg.UpdatedAt, arg.ID)
+	return err
+}
+
+const touchTMUnits = `-- name: TouchTMUnits :exec
+UPDATE knowledge_tm_units u
+SET translation_revision = v.revision, updated_at = $1
+FROM (SELECT unnest($2::uuid[]) AS id, unnest($3::int[]) AS revision) v
+WHERE u.id = v.id
+`
+
+type TouchTMUnitsParams struct {
+	UpdatedAt time.Time
+	Ids       []uuid.UUID
+	Revisions []int32
+}
+
+func (q *Queries) TouchTMUnits(ctx context.Context, arg TouchTMUnitsParams) error {
+	_, err := q.db.Exec(ctx, touchTMUnits, arg.UpdatedAt, arg.Ids, arg.Revisions)
 	return err
 }
