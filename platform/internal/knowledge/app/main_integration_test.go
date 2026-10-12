@@ -52,6 +52,10 @@ func TestMain(m *testing.M) {
 // Localization; it is the identity unless a test sets it.
 var wrapTranslations = func(t app.Translations) app.Translations { return t }
 
+// wrapTransactor lets a test observe or fail the writes Knowledge makes;
+// it is the identity unless a test sets it.
+var wrapTransactor = func(t app.Transactor) app.Transactor { return t }
+
 // harness wires Catalog, Localization and Knowledge the way the
 // composition root does, plus an outbox dispatcher the test drives.
 type harness struct {
@@ -83,7 +87,7 @@ func harnessFor(t *testing.T, slug string) *harness {
 	cat := catalogapp.New(catalogpg.NewTransactor(uow))
 	loc := localizationapp.New(localizationpg.NewTransactor(uow), catalogport.New(cat),
 		localizationapp.WithReviewers(localizationidentity.NewReviewers(identitypg.NewTransactor(uow, nil))))
-	svc := app.New(knowledgepg.NewTransactor(uow), wrapTranslations(sources.NewTranslations(loc, cat)), sources.NewProjects(cat), app.WithMessages(sources.NewMessages(cat)))
+	svc := app.New(wrapTransactor(knowledgepg.NewTransactor(uow)), wrapTranslations(sources.NewTranslations(loc, cat)), sources.NewProjects(cat), app.WithMessages(sources.NewMessages(cat)))
 	reg := outbox.NewRegistry()
 	if err := loc.Subscribe(reg); err != nil {
 		t.Fatal(err)
