@@ -79,6 +79,11 @@ type Translations interface {
 	// Current answers ErrNotFound for a translation that no longer
 	// exists (its project was deleted).
 	Current(ctx context.Context, project, translation uuid.UUID) (CurrentTranslation, error)
+	// Currents is Current for several translations of one project in a
+	// constant number of reads, whatever their number: by translation ID,
+	// those that exist. The rest (deleted with their project) are absent,
+	// where Current answers ErrNotFound.
+	Currents(ctx context.Context, project uuid.UUID, translations []uuid.UUID) (map[uuid.UUID]CurrentTranslation, error)
 	// ProjectTranslations reads a page of a project's translations of
 	// active messages with their messages' current source: one read of
 	// Localization and one of Catalog, whatever the page size.

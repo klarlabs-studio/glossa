@@ -209,6 +209,51 @@ func (q *Queries) GetSourceRevision(ctx context.Context, arg GetSourceRevisionPa
 	return i, err
 }
 
+const getSourceRevisionsOf = `-- name: GetSourceRevisionsOf :many
+SELECT r.tenant_id, r.message_id, r.revision, r.syntax, r.text, r.model, r.author, r.created_at FROM catalog_source_revisions r
+JOIN catalog_messages m ON m.id = r.message_id AND m.project_id = $1
+JOIN (SELECT unnest($2::uuid[]) AS message_id,
+             unnest($3::int[]) AS revision) w
+  ON w.message_id = r.message_id AND w.revision = r.revision
+`
+
+type GetSourceRevisionsOfParams struct {
+	ProjectID  uuid.UUID
+	MessageIds []uuid.UUID
+	Revisions  []int32
+}
+
+// The revisions of the project's messages named by parallel arrays (one
+// element per wanted revision); a pair with no row is simply absent.
+func (q *Queries) GetSourceRevisionsOf(ctx context.Context, arg GetSourceRevisionsOfParams) ([]CatalogSourceRevision, error) {
+	rows, err := q.db.Query(ctx, getSourceRevisionsOf, arg.ProjectID, arg.MessageIds, arg.Revisions)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []CatalogSourceRevision
+	for rows.Next() {
+		var i CatalogSourceRevision
+		if err := rows.Scan(
+			&i.TenantID,
+			&i.MessageID,
+			&i.Revision,
+			&i.Syntax,
+			&i.Text,
+			&i.Model,
+			&i.Author,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const insertMessage = `-- name: InsertMessage :execrows
 
 INSERT INTO catalog_messages (id, tenant_id, project_id, key, namespace, description, max_length,

@@ -328,6 +328,31 @@ func (s *store) TranslationByID(ctx context.Context, id domain.TranslationID) (a
 	return tr, r.Key, r.Namespace, err
 }
 
+func (s *store) TranslationsByID(ctx context.Context, project uuid.UUID, ids []domain.TranslationID) (map[domain.TranslationID]app.NamedTranslationRow, error) {
+	uuids := make([]uuid.UUID, len(ids))
+	for i, id := range ids {
+		uuids[i] = id.UUID()
+	}
+	rows, err := s.q.GetTranslationsByIDs(ctx, localizationsql.GetTranslationsByIDsParams{ProjectID: project, Ids: uuids})
+	if err != nil {
+		return nil, storeError(err)
+	}
+	out := make(map[domain.TranslationID]app.NamedTranslationRow, len(rows))
+	for _, r := range rows {
+		tr, err := row(localizationsql.LocalizationTranslation{
+			ID: r.ID, TenantID: r.TenantID, ProjectID: r.ProjectID, MessageID: r.MessageID, Locale: r.Locale,
+			Syntax: r.Syntax, Text: r.Text, Model: r.Model, State: r.State, Origin: r.Origin, Author: r.Author,
+			SourceRevision: r.SourceRevision, Warnings: r.Warnings, Revision: r.Revision,
+			CreatedAt: r.CreatedAt, UpdatedAt: r.UpdatedAt,
+		}, r.CurrentSourceRevision)
+		if err != nil {
+			return nil, err
+		}
+		out[tr.ID] = app.NamedTranslationRow{TranslationRow: tr, Key: r.Key, Namespace: r.Namespace}
+	}
+	return out, nil
+}
+
 func (s *store) LockTranslation(ctx context.Context, message uuid.UUID, loc bcp47.Tag) (domain.Translation, bool, error) {
 	r, err := s.q.LockTranslation(ctx, localizationsql.LockTranslationParams{MessageID: message, Locale: loc.String()})
 	if errors.Is(err, pgx.ErrNoRows) {

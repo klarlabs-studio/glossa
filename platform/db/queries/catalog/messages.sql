@@ -100,6 +100,15 @@ LIMIT sqlc.arg(max_rows);
 SELECT * FROM catalog_source_revisions
 WHERE message_id = sqlc.arg(message_id) AND revision = sqlc.arg(revision);
 
+-- name: GetSourceRevisionsOf :many
+-- The revisions of the project's messages named by parallel arrays (one
+-- element per wanted revision); a pair with no row is simply absent.
+SELECT r.* FROM catalog_source_revisions r
+JOIN catalog_messages m ON m.id = r.message_id AND m.project_id = sqlc.arg(project_id)
+JOIN (SELECT unnest(sqlc.arg(message_ids)::uuid[]) AS message_id,
+             unnest(sqlc.arg(revisions)::int[]) AS revision) w
+  ON w.message_id = r.message_id AND w.revision = r.revision;
+
 -- ── bulk writes ────────────────────────────────────────────────────
 -- A bulk upsert writes all its rows in one statement per table instead
 -- of one round trip per message (#77). Each takes parallel arrays, one

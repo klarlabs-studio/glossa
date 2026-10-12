@@ -62,7 +62,8 @@ func (s *Service) handleTranslationEvent(ctx context.Context, d outbox.Delivery)
 }
 
 // handleTranslationEvents is handleTranslationEvent for a delivered
-// batch: each translation's current state is read as before, then every
+// batch: the translations' current states are read together (a few
+// reads per project, not per translation), then every
 // derivation is applied in one transaction, in translation order (the
 // order the derivation locks are taken in, whoever takes them). Since
 // the current state decides, the order of the events does not matter.
@@ -84,27 +85,7 @@ func (s *Service) deriveFor(ctx context.Context, ds []outbox.Delivery, failed fu
 		}
 		return errs
 	}
-	type pending struct {
-		at  int
-		cur CurrentTranslation
-	}
-	var todo []pending
-	for i, d := range ds {
-		project, translation, err := translationOf(d)
-		if err != nil {
-			errs[i] = err
-			continue
-		}
-		cur, err := s.translations.Current(bg, project, translation)
-		if errors.Is(err, ErrNotFound) || errors.Is(err, ErrProjectNotFound) {
-			continue // deleted with its project; knowledge.drop_project erases the rest
-		}
-		if err != nil {
-			errs[i] = err
-			continue
-		}
-		todo = append(todo, pending{at: i, cur: cur})
-	}
+	todo := s.currentOf(bg, ds, errs)
 	if len(todo) == 0 {
 		return errs
 	}
@@ -126,6 +107,56 @@ func (s *Service) deriveFor(ctx context.Context, ds []outbox.Delivery, failed fu
 		}
 	}
 	return errs
+}
+
+// pending is a delivery whose translation is to be derived.
+type pending struct {
+	at  int
+	cur CurrentTranslation
+}
+
+// currentOf reads the current state of the translations ds name, one
+// bulk read per project, in the order the projects first appear. A
+// delivery that cannot be decoded, or whose project cannot be read,
+// gets its error in errs[i] and the rest are unaffected; a translation
+// that no longer exists is skipped (deleted with its project;
+// knowledge.drop_project erases the rest).
+func (s *Service) currentOf(bg context.Context, ds []outbox.Delivery, errs []error) []pending {
+	var projects []uuid.UUID
+	byProject := map[uuid.UUID][]int{}
+	ids := make([]uuid.UUID, len(ds))
+	for i, d := range ds {
+		project, translation, err := translationOf(d)
+		if err != nil {
+			errs[i] = err
+			continue
+		}
+		if _, ok := byProject[project]; !ok {
+			projects = append(projects, project)
+		}
+		byProject[project] = append(byProject[project], i)
+		ids[i] = translation
+	}
+	var todo []pending
+	for _, project := range projects {
+		at := byProject[project]
+		want := make([]uuid.UUID, len(at))
+		for j, i := range at {
+			want[j] = ids[i]
+		}
+		found, err := s.translations.Currents(bg, project, want)
+		if errors.Is(err, ErrProjectNotFound) {
+			continue
+		}
+		for _, i := range at {
+			if err != nil {
+				errs[i] = err
+			} else if cur, ok := found[ids[i]]; ok {
+				todo = append(todo, pending{at: i, cur: cur})
+			}
+		}
+	}
+	return todo
 }
 
 func translationOf(d outbox.Delivery) (project, translation uuid.UUID, err error) {

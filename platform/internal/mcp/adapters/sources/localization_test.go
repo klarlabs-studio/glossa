@@ -175,6 +175,20 @@ func (c locCatalog) SourceAt(
 	return m.Content, err
 }
 
+func (c locCatalog) SourcesAt(
+	ctx context.Context, project uuid.UUID, refs []localizationapp.SourceRef,
+) (map[localizationapp.SourceRef]mfcontent.Content, error) {
+	out := map[localizationapp.SourceRef]mfcontent.Content{}
+	for _, r := range refs {
+		content, err := c.SourceAt(ctx, project, r.Message, r.Revision)
+		if err != nil {
+			return nil, err
+		}
+		out[r] = content
+	}
+	return out, nil
+}
+
 // messageID is the one message these tests translate.
 var messageID = uuid.New()
 

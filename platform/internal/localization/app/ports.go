@@ -62,6 +62,14 @@ type SourceMessage struct {
 	MaxLength *int
 }
 
+// NamedTranslationRow is a translation row with its message's key and
+// namespace from the projection ("" while unknown).
+type NamedTranslationRow struct {
+	TranslationRow
+	Key       string
+	Namespace string
+}
+
 // SourceCatalog is Catalog's application port, as Localization uses it.
 // Every method answers ErrNotFound for an unknown project or message.
 type SourceCatalog interface {
@@ -71,6 +79,15 @@ type SourceCatalog interface {
 	MessagesByKeys(ctx context.Context, project uuid.UUID, keys []string) (map[string]SourceMessage, error)
 	// SourceAt returns revision n of a message's source.
 	SourceAt(ctx context.Context, project, message uuid.UUID, n int) (mfcontent.Content, error)
+	// SourcesAt is SourceAt for many revisions in one read: those of
+	// refs that exist; a ref that names none is absent.
+	SourcesAt(ctx context.Context, project uuid.UUID, refs []SourceRef) (map[SourceRef]mfcontent.Content, error)
+}
+
+// SourceRef names one revision of a message's source.
+type SourceRef struct {
+	Message  uuid.UUID
+	Revision int
 }
 
 // Transactor runs units of work scoped to the tenant on ctx.
@@ -145,6 +162,10 @@ type Store interface {
 	// TranslationByID returns a translation with its message's key and
 	// namespace from the projection ("" while unknown).
 	TranslationByID(ctx context.Context, id domain.TranslationID) (row TranslationRow, key, namespace string, err error)
+	// TranslationsByID is TranslationByID for several translations of
+	// project, in one query, by ID; an ID that is no translation of the
+	// project is absent.
+	TranslationsByID(ctx context.Context, project uuid.UUID, ids []domain.TranslationID) (map[domain.TranslationID]NamedTranslationRow, error)
 	LockTranslation(ctx context.Context, message uuid.UUID, locale bcp47.Tag) (domain.Translation, bool, error)
 	InsertTranslation(ctx context.Context, t domain.Translation) error
 	// UpdateTranslation saves t if the stored revision is expected.

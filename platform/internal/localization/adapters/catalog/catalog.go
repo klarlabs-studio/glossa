@@ -73,6 +73,23 @@ func (p *Port) MessagesByKeys(ctx context.Context, project uuid.UUID, keys []str
 	return out, nil
 }
 
+// SourcesAt implements app.SourceCatalog.
+func (p *Port) SourcesAt(ctx context.Context, project uuid.UUID, refs []app.SourceRef) (map[app.SourceRef]mfcontent.Content, error) {
+	want := make([]catalogapp.SourceRef, len(refs))
+	for i, r := range refs {
+		want[i] = catalogapp.SourceRef{Message: catalogdomain.MessageID(r.Message), Revision: r.Revision}
+	}
+	found, err := p.svc.SourceRevisionsOf(ctx, catalogdomain.ProjectID(project), want)
+	if err != nil {
+		return nil, notFound(err)
+	}
+	out := make(map[app.SourceRef]mfcontent.Content, len(found))
+	for r, rev := range found {
+		out[app.SourceRef{Message: r.Message.UUID(), Revision: r.Revision}] = rev.Content
+	}
+	return out, nil
+}
+
 // SourceAt implements app.SourceCatalog.
 func (p *Port) SourceAt(ctx context.Context, project, id uuid.UUID, n int) (mfcontent.Content, error) {
 	rev, err := p.svc.SourceRevisionOf(ctx, catalogdomain.ProjectID(project), catalogdomain.MessageID(id), n)

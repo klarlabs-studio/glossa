@@ -62,6 +62,10 @@ func (t *Translations) Current(ctx context.Context, project, translation uuid.UU
 	if err != nil {
 		return app.CurrentTranslation{}, err
 	}
+	return current(tr), nil
+}
+
+func current(tr localizationapp.TranslationWithSource) app.CurrentTranslation {
 	return app.CurrentTranslation{
 		ApprovedText: domain.ApprovedText{
 			TranslationID: tr.ID.UUID(), ProjectID: tr.ProjectID, MessageID: tr.MessageID, Revision: tr.Revision,
@@ -69,7 +73,28 @@ func (t *Translations) Current(ctx context.Context, project, translation uuid.UU
 			Source: tr.Source.Model, Target: tr.Content.Model, By: tr.By,
 		},
 		Approved: tr.State == localizationdomain.StateApproved,
-	}, nil
+	}
+}
+
+// Currents implements app.Translations: Localization's bulk read, which
+// takes the translations' sources from Catalog in one read too.
+func (t *Translations) Currents(ctx context.Context, project uuid.UUID, translations []uuid.UUID) (map[uuid.UUID]app.CurrentTranslation, error) {
+	ids := make([]localizationdomain.TranslationID, len(translations))
+	for i, id := range translations {
+		ids[i] = localizationdomain.TranslationID(id)
+	}
+	found, err := t.svc.TranslationsWithSource(ctx, project, ids)
+	if errors.Is(err, localizationapp.ErrNotFound) {
+		return nil, nil // the project is gone, and its translations with it
+	}
+	if err != nil {
+		return nil, err
+	}
+	out := make(map[uuid.UUID]app.CurrentTranslation, len(found))
+	for id, tr := range found {
+		out[id.UUID()] = current(tr)
+	}
+	return out, nil
 }
 
 // ProjectTranslations implements app.Translations: Localization's bulk
