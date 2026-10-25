@@ -34,7 +34,7 @@
     "openapi-fetch": "0.17.0",
     "vue": "3.5.43",
     "vue-router": "4.6.4",
-    "zod": "4.6.5"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -43,7 +43,7 @@
     "@types/node": "22.20.4",
     "@vitejs/plugin-vue": "6.0.9",
     "@vue/test-utils": "2.5.1",
-    "happy-dom": "20.14.5",
+    "happy-dom": "21.0.4",
     "openapi-typescript": "7.13.0",
     "testcontainers": "12.1.0",
     "typescript": "5.9.3",
