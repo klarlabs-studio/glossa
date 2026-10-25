@@ -36,6 +36,7 @@ spec:
     {{- include "gp.np.dnsEgress" . | nindent 4 }}
     {{- include "gp.np.postgresEgress" . | nindent 4 }}
     {{- include "gp.np.backupRemoteEgress" . | nindent 4 }}
+    {{- include "gp.np.backupAgeDownloadEgress" . | nindent 4 }}
 {{- end }}
 ---
 # Nightly: pg_dump as the read-only backup role, verified (files/postgres-dump.sh),
@@ -73,6 +74,7 @@ spec:
             {{- include "gp.podSecurityContext" $uid | nindent 12 }}
           {{- with (include "gp.scheduling" (dict "root" $ "values" $pg) | trim) }}{{ . | nindent 10 }}{{ end }}
           initContainers:
+            {{- include "gp.backup.ageFetch" . | nindent 12 }}
             - name: dump
               # The server's image: pg_dump's major version is the server's.
               image: {{ include "gp.externalImage" (dict "image" $pg.image) }}
@@ -88,6 +90,12 @@ spec:
                   value: /work
                 - name: PREFIX
                   value: {{ $pg.database | quote }}
+                - name: AGE_RECOVERY_RECIPIENT
+                  value: {{ $b.age.recoveryRecipient | quote }}
+                - name: TOOLS
+                  value: /tools
+                - name: DRILL_IDENTITY
+                  value: /etc/backup-age/identity
               resources:
                 {{- toYaml $b.postgres.resources | nindent 16 }}
               volumeMounts:
@@ -95,6 +103,12 @@ spec:
                   mountPath: /work
                 - name: tmp
                   mountPath: /tmp
+                - name: tools
+                  mountPath: /tools
+                  readOnly: true
+                - name: backup-age
+                  mountPath: /etc/backup-age
+                  readOnly: true
           containers:
             - name: upload
               image: {{ include "gp.externalImage" (dict "image" $b.rclone.image) }}
@@ -132,6 +146,7 @@ spec:
             - name: tmp
               emptyDir:
                 sizeLimit: 64Mi
+            {{- include "gp.backup.ageVolumes" . | nindent 12 }}
             {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
 {{- end }}
 {{- if include "gp.backup.minio.enabled" . }}
@@ -226,6 +241,12 @@ spec:
                   value: {{ $remote | quote }}
                 - name: DELETED_RETENTION_DAYS
                   value: {{ $b.minio.deletedRetentionDays | quote }}
+                # The encrypted mirror: the crypt remote "vault" over REMOTE. The
+                # passwords come from the minio-crypt volume (obscured by the script).
+                - name: RCLONE_CONFIG_VAULT_TYPE
+                  value: crypt
+                - name: RCLONE_CONFIG_VAULT_REMOTE
+                  value: {{ $remote | quote }}
               resources:
                 {{- toYaml $b.minio.resources | nindent 16 }}
               volumeMounts:
@@ -234,10 +255,14 @@ spec:
                 - name: rclone-config
                   mountPath: /etc/rclone
                   readOnly: true
+                - name: minio-crypt
+                  mountPath: /etc/minio-crypt
+                  readOnly: true
           volumes:
             - name: tmp
               emptyDir:
                 sizeLimit: 256Mi
+            {{- include "gp.backup.minioCryptVolume" . | nindent 12 }}
             {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
 {{- end }}
 {{- if include "gp.backup.restoreTest.enabled" . }}
@@ -263,6 +288,7 @@ spec:
   egress:
     {{- include "gp.np.dnsEgress" . | nindent 4 }}
     {{- include "gp.np.backupRemoteEgress" . | nindent 4 }}
+    {{- include "gp.np.backupAgeDownloadEgress" . | nindent 4 }}
 {{- end }}
 ---
 # Weekly: the newest dump restored into a throwaway Postgres and checked
@@ -300,6 +326,7 @@ spec:
             {{- include "gp.podSecurityContext" $uid | nindent 12 }}
           {{- with (include "gp.scheduling" (dict "root" $ "values" $pg) | trim) }}{{ . | nindent 10 }}{{ end }}
           initContainers:
+            {{- include "gp.backup.ageFetch" . | nindent 12 }}
             - name: fetch
               image: {{ include "gp.externalImage" (dict "image" $b.rclone.image) }}
               imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -318,6 +345,10 @@ spec:
                   value: {{ $pg.database | quote }}
                 - name: MAX_AGE_HOURS
                   value: {{ $t.maxDumpAgeHours | quote }}
+                - name: TOOLS
+                  value: /tools
+                - name: DRILL_IDENTITY
+                  value: /etc/backup-age/identity
               resources:
                 {{- toYaml $b.postgres.resources | nindent 16 }}
               volumeMounts:
@@ -327,6 +358,12 @@ spec:
                   mountPath: /tmp
                 - name: rclone-config
                   mountPath: /etc/rclone
+                  readOnly: true
+                - name: tools
+                  mountPath: /tools
+                  readOnly: true
+                - name: backup-age
+                  mountPath: /etc/backup-age
                   readOnly: true
           containers:
             - name: restore
@@ -367,5 +404,6 @@ spec:
             - name: run
               emptyDir:
                 sizeLimit: 1Mi
+            {{- include "gp.backup.ageVolumes" . | nindent 12 }}
             {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
 {{- end }}

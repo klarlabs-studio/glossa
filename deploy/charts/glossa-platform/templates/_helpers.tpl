@@ -436,6 +436,52 @@ affinity:
     defaultMode: 0440
 {{- end -}}
 
+{{/* age for the dumps, in an init container: no backup image installs
+     anything at runtime (restricted profile, read-only root filesystem), so
+     fetch-age downloads the pinned release into /tools and checks its
+     SHA-256. (include "gp.backup.ageFetch" $) */}}
+{{- define "gp.backup.ageFetch" -}}
+- name: fetch-age
+  image: {{ .Values.backup.age.image | quote }}
+  imagePullPolicy: {{ .Values.image.pullPolicy }}
+  command: ["/bin/sh", "-c"]
+  args:
+    - {{ .Files.Get "files/fetch-age.sh" | quote }}
+  securityContext:
+    {{- include "gp.containerSecurityContext" . | nindent 4 }}
+  env:
+    - name: AGE_VERSION
+      value: {{ .Values.backup.age.version | quote }}
+    - name: AGE_SHA256
+      value: {{ .Values.backup.age.sha256 | quote }}
+  volumeMounts:
+    - name: tools
+      mountPath: /tools
+    - name: tmp
+      mountPath: /tmp
+{{- end -}}
+
+{{/* The volumes of age: the fetched binaries and the drill identity (the
+     Secret's key "identity", mounted at /etc/backup-age). */}}
+{{- define "gp.backup.ageVolumes" -}}
+- name: tools
+  emptyDir:
+    sizeLimit: 64Mi
+- name: backup-age
+  secret:
+    secretName: {{ required "backup.age.drillSecretName is required with backup.postgres.enabled (Secret with the drill identity under the key identity)" .Values.backup.age.drillSecretName }}
+    defaultMode: 0440
+{{- end -}}
+
+{{/* The MinIO mirror's crypt passwords (keys password and password2),
+     mounted at /etc/minio-crypt. */}}
+{{- define "gp.backup.minioCryptVolume" -}}
+- name: minio-crypt
+  secret:
+    secretName: {{ required "backup.minio.cryptSecretName is required with backup.minio.enabled (Secret with the keys password and password2)" .Values.backup.minio.cryptSecretName }}
+    defaultMode: 0440
+{{- end -}}
+
 {{/* ── NetworkPolicy fragments ──────────────────────────────────── */}}
 
 {{- define "gp.np.dnsEgress" -}}
@@ -498,6 +544,11 @@ affinity:
 {{/* Egress to the rclone remote of the backups (outside the cluster). */}}
 {{- define "gp.np.backupRemoteEgress" -}}
 {{- include "gp.np.egressRule" .Values.networkPolicy.egress.backupRemote -}}
+{{- end -}}
+
+{{/* Egress to GitHub's release downloads, for fetch-age (the backup and restore pods). */}}
+{{- define "gp.np.backupAgeDownloadEgress" -}}
+{{- include "gp.np.egressRule" .Values.networkPolicy.egress.backupAgeDownload -}}
 {{- end -}}
 
 {{/* A NetworkPolicy for a hook pod: no ingress; egress to DNS plus the

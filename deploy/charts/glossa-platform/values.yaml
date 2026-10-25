@@ -439,6 +439,21 @@ backup:
     # known_hosts). The chart never creates it.
     configSecretName: ""
     configKey: rclone.conf
+  # Encryption before anything leaves the cluster (README.md, "Backups"):
+  # the dumps are age files, the MinIO mirror is an rclone crypt remote.
+  age:
+    # -- The offline recovery key's public half (the same for every Klarlabs
+    # tenant). Each dump is encrypted to it and to the drill key.
+    recoveryRecipient: age1jczmrtfzlqlxxvuwmkljr4qeeq5wphmdqpu7jltqrvmtxwnn4dhqgfckdc
+    # -- REQUIRED with backup.postgres.enabled. Existing Secret with key
+    # `identity` (an age identity file): the drill key. The restore drill
+    # decrypts with it; the backup derives its recipient from it.
+    drillSecretName: ""
+    # -- The age release fetched by an init container, verified against sha256.
+    version: v1.3.2
+    sha256: cbe24006683f8eb669266162894b9a522a1af52f2665fbc63a4bb032ed26ac10
+    # -- Runs the fetch (busybox sh, wget, tar, sha256sum); pinned by digest.
+    image: alpine:3.22@sha256:2e0b81d60597f449baa56dc25d355367869d2dca4cd57e866f1e2b52af3eb55f
   # -- History kept per CronJob.
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -475,10 +490,15 @@ backup:
     # -- Nightly mirror of the MinIO bucket (needs minio.enabled).
     enabled: true
     schedule: "50 3 * * *"
-    # -- REQUIRED. rclone remote path, e.g. storagebox:minio/glossa-platform.
-    # The bucket is mirrored to <remote>/current; objects deleted or
-    # overwritten since the last run move to <remote>/deleted/<timestamp>.
+    # -- REQUIRED. rclone remote path, e.g. storagebox:minio-crypt/glossa-platform.
+    # Encrypted (an rclone crypt remote over this path): the bucket is
+    # mirrored to <remote> as crypt objects under current/; objects deleted
+    # or overwritten since the last run move to deleted/<timestamp>/.
+    # Use a path no plaintext mirror uses.
     remote: ""
+    # -- REQUIRED. Existing Secret with keys `password` and `password2`: the
+    # rclone crypt passwords (never printed; obscured by the Job at runtime).
+    cryptSecretName: ""
     # -- How long <remote>/deleted/ keeps them.
     deletedRetentionDays: 30
     backoffLimit: 2
@@ -831,6 +851,14 @@ networkPolicy:
       to: []
       ports:
         - port: 23
+          protocol: TCP
+    # -- The backup and restore-drill Jobs → GitHub's release downloads (443):
+    # fetch-age downloads the pinned age release on each run. An empty `to`
+    # allows 443 to any destination, for the backup pods only.
+    backupAgeDownload:
+      to: []
+      ports:
+        - port: 443
           protocol: TCP
   # -- Extra ingress rules (NetworkPolicyIngressRule) per component.
   extraIngress:

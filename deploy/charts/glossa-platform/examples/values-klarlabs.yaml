@@ -132,6 +132,12 @@ backup:
   enabled: true
   rclone:
     configSecretName: rclone-config
+  # Encrypted before it leaves the cluster: the dumps to the offline recovery
+  # key and the drill key (Secret backup-age-drill, key identity, created from
+  # the drill identity); the MinIO mirror through rclone crypt (Secret
+  # minio-backup-crypt, keys password and password2).
+  age:
+    drillSecretName: backup-age-drill
   postgres:
     # 03:40 UTC, after v0.3's 03:20 dump. The db/<product>/ convention of
     # every Klarlabs product; retention stays at 30 days (Brotwerk's own
@@ -143,12 +149,13 @@ backup:
       username: glossa_backup
       secretName: glossa-pg-backup   # key password
   minio:
+    cryptSecretName: minio-backup-crypt
     # Deliberately not under minio/: Brotwerk `rclone sync`s its bucket to
     # storagebox:minio/, which would delete a sibling directory there if it
     # shares the box's root. TODO(infra): confirm the path (and whether each
     # product has its own Storage Box sub-account).
     schedule: "50 3 * * *"
-    remote: storagebox:glossa-platform/minio
+    remote: storagebox:minio-crypt/glossa-platform
   restoreTest:
     # Sundays 05:40 UTC, offset from v0.3's 05:20 drill.
     schedule: "40 5 * * 0"

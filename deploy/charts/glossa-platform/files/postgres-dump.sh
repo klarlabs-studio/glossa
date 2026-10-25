@@ -8,10 +8,17 @@
 # pipe, and a job that ships 20 bytes every night reports success until
 # the day it is needed.
 #
+# Then it is encrypted (age, to the offline recovery key and to the drill
+# key) and the drill key must open the encrypted file to the same bytes,
+# before the plaintext is removed. What is uploaded is <name>.age.
+#
 # Environment (set by the chart):
 #   PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD   the backup role's connection
 #   OUT_DIR     the scratch volume shared with the upload container
 #   PREFIX      dump file prefix: <PREFIX>-<UTC timestamp>.sql.gz
+#   AGE_RECOVERY_RECIPIENT   the offline recovery key's public half
+#   TOOLS       the directory with age and age-keygen (fetch-age)
+#   DRILL_IDENTITY           the drill key's identity file
 set -euo pipefail
 
 log() { printf 'postgres-dump: %s\n' "$*"; }
@@ -54,6 +61,13 @@ live=$(psql -X -At -v ON_ERROR_STOP=1 -c \
 ((ddl >= 1)) || fail "the dump has no CREATE TABLE statements"
 ((ddl == live)) || fail "the dump has $ddl CREATE TABLE statements, the database $live tables"
 
-mv "$partial" "$OUT_DIR/$name"
+# 4. Encrypt to both recipients, then prove the drill key reads back exactly
+#    the dump. A backup that cannot be decrypted is not a backup.
+drill=$("$TOOLS/age-keygen" -y "$DRILL_IDENTITY") || fail "the drill identity does not load"
+"$TOOLS/age" -r "$AGE_RECOVERY_RECIPIENT" -r "$drill" -o "$OUT_DIR/$name.age" "$partial"
+[[ $("$TOOLS/age" -d -i "$DRILL_IDENTITY" "$OUT_DIR/$name.age" | sha256sum) == "$(sha256sum <"$partial")" ]] ||
+  fail "$name.age does not decrypt to the dump"
+rm -f "$partial"
+name="$name.age"
 printf '%s\n' "$name" >"$OUT_DIR/dump.name"
-log "$name: $(stat -c %s "$OUT_DIR/$name") bytes, $ddl tables"
+log "$name: $(stat -c %s "$OUT_DIR/$name") bytes, encrypted, $ddl tables"

@@ -474,15 +474,33 @@ outside the cluster. Klarlabs: the shared Hetzner Storage Box over SFTP
 `id_storagebox`, `known_hosts`) copied into the namespace; it is mounted
 at `/etc/rclone`, where `rclone.conf`'s `key_file` points.
 
+**Everything leaves the cluster encrypted.** The dumps are
+[age](https://age-encryption.org) files (`<database>-<timestamp>.sql.gz.age`),
+each encrypted to two recipients: the offline recovery key
+(`backup.age.recoveryRecipient`, the public half, the same for every
+Klarlabs tenant; its private half is kept offline) and the drill key.
+The drill key is the Secret `backup.age.drillSecretName`, with the age
+identity under the key `identity`; the backup derives its recipient from
+it, and the restore drill decrypts with it. The MinIO mirror goes through
+an rclone `crypt` remote (standard names and content) over
+`backup.minio.remote`, with the passwords from the Secret
+`backup.minio.cryptSecretName` (keys `password` and `password2`). Keep the
+mirror's remote path separate from any plaintext mirror of the bucket.
+
 | CronJob | Default schedule | What |
 |---|---|---|
-| `<fullname>-postgres-backup` | `40 3 * * *` | `pg_dump` → verify → upload to `backup.postgres.remote` → retention |
-| `<fullname>-minio-backup` | `50 3 * * *` | the release bucket → `backup.minio.remote/current`, changes kept in `…/deleted/<timestamp>` |
+| `<fullname>-postgres-backup` | `40 3 * * *` | `pg_dump` → verify → encrypt (age) → upload to `backup.postgres.remote` → retention |
+| `<fullname>-minio-backup` | `50 3 * * *` | the release bucket → `backup.minio.remote/current` (encrypted, rclone crypt), changes kept in `…/deleted/<timestamp>` |
 | `<fullname>-postgres-restore-test` | `40 5 * * 0` | the newest dump restored into a throwaway Postgres and checked |
 
 No image installs anything at runtime (v0.3 ran `apk add rclone` as root):
 each pod pairs `postgres.image` with the pinned `docker.io/rclone/rclone`
-image, sharing an `emptyDir`, under the restricted profile.
+image, sharing an `emptyDir`, under the restricted profile. The dump and
+the drill need age, which an init container fetches (`fetch-age`: the
+release pinned in `backup.age.version`, checked against
+`backup.age.sha256`), so those pods reach GitHub on 443
+(`networkPolicy.egress.backupAgeDownload`; with NetworkPolicies on, an
+empty `to` allows 443 to any destination, for the backup pods only).
 
 **postgres-backup** (`files/postgres-dump.sh`, then
 `files/postgres-upload.sh`). The dump container runs `postgres.image`, so
@@ -492,16 +510,22 @@ against the 16 server wrote `SET transaction_timeout`, which 16 cannot
 parse, so every dump restored **zero tables** under `ON_ERROR_STOP` while
 looking perfect from the backup side. Before anything is uploaded the dump
 must pass `gzip -t`, end with `pg_dump`'s completion trailer, and hold
-one `CREATE TABLE` per table of the live database. The upload is checked
-by size; then dumps older than `retentionDays` are deleted, only this
-release's own files (`<database>-<timestamp>.sql.gz`) in that one
-directory, and only after a verified upload, so the newest dump always
-survives.
+one `CREATE TABLE` per table of the live database. Then the dump is
+encrypted to both recipients, and the drill key must decrypt the encrypted
+file to the same bytes before the plaintext is removed. The upload is
+checked by size; then dumps older than `retentionDays` are deleted, only
+this release's own files (`<database>-<timestamp>.sql.gz.age`, and the
+plaintext ones from before encryption) in that one directory, and only
+after a verified upload, so the newest dump always survives. The scratch
+volume holds the dump twice for a moment (plaintext and encrypted):
+`scratchSize` must cover twice the compressed dump.
 
 **minio-backup** (`files/minio-backup.sh`). Brotwerk's pattern (`mc
 mirror` to scratch, then `rclone sync`) in one step: rclone reads MinIO
 directly with glossa-edge's **read-only** user, so there is no scratch
-copy of the bucket and no root. A plain sync would carry an accidental
+copy of the bucket and no root. The sync writes through the crypt remote,
+and the mirror must then hold the bucket's object count and bytes, or the
+Job fails. A plain sync would carry an accidental
 delete, or an empty bucket on a freshly lost volume, into the backup the
 next night; here what a run removes or overwrites moves to
 `deleted/<timestamp>/` (kept `deletedRetentionDays`), and an empty bucket
@@ -512,8 +536,9 @@ out of any directory another product `rclone sync`s to (Brotwerk syncs
 **postgres-restore-test** (`files/restore-fetch.sh`,
 `files/postgres-restore-test.sh`). A backup that has never been restored
 is a hypothesis; v0.3's drill is what found its unrestorable dumps. This
-one fetches the newest dump (by this release's file names), fails if it
-is older than `maxDumpAgeHours` (the nightly backup has stopped), starts
+one fetches the newest encrypted dump (by this release's file names),
+decrypts it with the drill key, fails if it is older than `maxDumpAgeHours`
+(the nightly backup has stopped), starts
 a throwaway Postgres of `postgres.image` inside its own pod (it never
 connects to the live database), restores in one transaction under
 `ON_ERROR_STOP`, and asserts the post-state: as many tables as the dump
@@ -540,7 +565,9 @@ failed Jobs of these CronJobs.
 3–4 every week):
 
 1. Stop the writers: `kubectl -n $NS scale deployment/<fullname>-server --replicas=0`.
-2. Fetch a dump: `rclone copy storagebox:db/glossa-platform/glossa-<timestamp>.sql.gz .`
+2. Fetch a dump: `rclone copy storagebox:db/glossa-platform/glossa-<timestamp>.sql.gz.age .`,
+   then decrypt it with the drill key (or the offline recovery key):
+   `age -d -i drill.identity glossa-<timestamp>.sql.gz.age > glossa-<timestamp>.sql.gz`
 3. Recreate the database, and on a **new, empty volume** first run
    `helm upgrade` so postgres-init recreates the owner and the database,
    then the migration roles (as the owner, like the first migration does):
@@ -560,11 +587,13 @@ failed Jobs of these CronJobs.
 5. `helm upgrade` (migrations newer than the dump apply; postgres-app-login
    gives `glossa_app` its login), then scale the server back up.
 
-**Restoring MinIO**: copy `backup.minio.remote/current` back into the
-bucket with the server's read-write user, e.g. `rclone copy
-storagebox:glossa-platform/minio/current :s3,provider=Minio,endpoint=…:glossa`
-through a `kubectl port-forward` to `<fullname>-minio`. Objects deleted
-by mistake are under `…/deleted/<timestamp>/`.
+**Restoring MinIO**: the mirror is an rclone `crypt` remote, so restore
+through a crypt remote with the same two passwords (`rclone config`,
+type `crypt`, remote `storagebox:minio-crypt/glossa-platform`, the
+passwords from the `minio-backup-crypt` Secret), copying `current/` back
+into the bucket with the server's read-write user, through a
+`kubectl port-forward` to `<fullname>-minio`. Objects deleted by mistake
+are under `deleted/<timestamp>/` of the same crypt remote.
 
 ## Deploying with RollOps
 
@@ -1092,6 +1121,9 @@ configuration and no egress.
 | `backup.rclone.image.repository` / `.tag` / `.digest` | `docker.io/rclone/rclone` / `1.75.1` / `sha256:45401a…` | |
 | `backup.rclone.configSecretName` | REQUIRED with `backup.enabled` | Existing Secret mounted at `/etc/rclone`. |
 | `backup.rclone.configKey` | `rclone.conf` | |
+| `backup.age.recoveryRecipient` | the Klarlabs offline recovery key (public) | The second recipient of every dump; the private half is kept offline. |
+| `backup.age.drillSecretName` | REQUIRED with `backup.postgres.enabled` | Existing Secret, key `identity`: the drill key (an age identity). |
+| `backup.age.version` / `.sha256` / `.image` | `v1.3.2` / `cbe240…` / `alpine:3.22@sha256:…` | The age release fetched by `fetch-age`, its checked SHA-256, and the image that runs the fetch. |
 | `backup.successfulJobsHistoryLimit` / `.failedJobsHistoryLimit` | `3` / `3` | Per CronJob. |
 | `backup.postgres.enabled` | `true` | Nightly dump (with `postgres.enabled`). |
 | `backup.postgres.schedule` | `40 3 * * *` | UTC. |
@@ -1104,7 +1136,8 @@ configuration and no egress.
 | `backup.postgres.resources` | 50m / 64Mi, limit 512Mi | Also the drill's fetch container. |
 | `backup.minio.enabled` | `true` | Nightly bucket mirror (with `minio.enabled`). |
 | `backup.minio.schedule` | `50 3 * * *` | UTC. |
-| `backup.minio.remote` | REQUIRED | e.g. `storagebox:glossa-platform/minio`; `current/` and `deleted/<timestamp>/` below it. |
+| `backup.minio.remote` | REQUIRED | e.g. `storagebox:minio-crypt/glossa-platform`; the crypt remote's `current/` and `deleted/<timestamp>/`. |
+| `backup.minio.cryptSecretName` | REQUIRED with `backup.minio.enabled` | Existing Secret, keys `password` and `password2`: the rclone crypt passwords. |
 | `backup.minio.deletedRetentionDays` | `30` | How long `deleted/` keeps a run's removed or overwritten objects. |
 | `backup.minio.backoffLimit` / `.activeDeadlineSeconds` / `.resources` | `2` / `3600` / 50m, 64Mi, limit 512Mi | |
 | `backup.restoreTest.enabled` | `true` | The weekly drill (with the Postgres backup). |
