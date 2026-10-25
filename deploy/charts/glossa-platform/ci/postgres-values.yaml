@@ -41,6 +41,8 @@ backup:
   enabled: true
   rclone:
     configSecretName: rclone-config
+  age:
+    drillSecretName: backup-age-drill
   postgres:
     remote: storagebox:db/glossa-platform
     retentionDays: 14
@@ -48,6 +50,7 @@ backup:
       secretName: glossa-pg-backup
   minio:
     remote: storagebox:glossa-platform/minio
+    cryptSecretName: minio-backup-crypt
   restoreTest:
     nonEmptyTables: [tenants]
 networkPolicy:

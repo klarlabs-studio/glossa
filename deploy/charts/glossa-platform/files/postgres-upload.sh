@@ -6,7 +6,7 @@
 #
 # Environment (set by the chart):
 #   RCLONE_CONFIG    rclone.conf (from backup.rclone.configSecretName)
-#   IN_DIR           the scratch volume with dump.name and the dump
+#   IN_DIR           the scratch volume with dump.name and the dump (encrypted: .sql.gz.age)
 #   REMOTE           <remote>:<directory>, never a remote's root
 #   PREFIX           dump file prefix
 #   RETENTION_DAYS   dumps older than this are deleted
@@ -28,8 +28,9 @@ log "uploaded $REMOTE/$name ($local_size bytes)"
 
 # Retention runs only after a verified upload, so the newest dump always
 # survives it. Anchored to this directory (--max-depth 1) and to this
-# release's file names: the remote may be shared (v0.3's first version
-# deleted every tenant's dumps with an unscoped `rclone delete`).
-rclone delete --max-depth 1 --min-age "${RETENTION_DAYS}d" --include "/$PREFIX-*.sql.gz" "$REMOTE/"
-kept=$(rclone lsf --max-depth 1 --files-only --include "/$PREFIX-*.sql.gz" "$REMOTE/" | wc -l)
+# release's file names, the encrypted dumps (.sql.gz.age) and the plaintext
+# ones from before encryption alike: the remote may be shared (v0.3's first
+# version deleted every tenant's dumps with an unscoped `rclone delete`).
+rclone delete --max-depth 1 --min-age "${RETENTION_DAYS}d" --include "/$PREFIX-*.sql.gz*" "$REMOTE/"
+kept=$(rclone lsf --max-depth 1 --files-only --include "/$PREFIX-*.sql.gz*" "$REMOTE/" | wc -l)
 log "retention ${RETENTION_DAYS}d: $kept dumps kept"
