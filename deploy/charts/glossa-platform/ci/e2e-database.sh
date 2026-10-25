@@ -107,7 +107,9 @@ ALPINE=$(cat "$R/t-postgres-backup.fetch-age.image")
 docker run --rm -v "$TOOLS:/tools" --tmpfs /tmp --env-file "$R/t-postgres-backup.fetch-age.env" \
   --entrypoint /bin/sh "$ALPINE" -c "$(script t-postgres-backup.fetch-age)" >/dev/null ||
   die "fetch-age failed (GitHub unreachable, or the pinned SHA-256 does not match)"
-docker run --rm -v "$TOOLS:/tools:ro" -v "$DRILL:/out" --entrypoint /tools/age-keygen $PG -o /out/identity >/dev/null 2>&1
+# As the invoking user: a root-owned identity cannot be chmod'ed below on a
+# Linux runner (Docker Desktop on macOS maps ownership and hides this).
+docker run --rm --user "$(id -u):$(id -g)" -v "$TOOLS:/tools:ro" -v "$DRILL:/out" --entrypoint /tools/age-keygen $PG -o /out/identity >/dev/null 2>&1
 chmod 644 "$DRILL/identity"
 printf '%s' "$(openssl rand -hex 16)" >"$MCRYPT/password"
 printf '%s' "$(openssl rand -hex 16)" >"$MCRYPT/password2"
