@@ -1,0 +1,18 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "checkout.help", "file": "src/checkout/PaymentFooter.tsx", "line": 14, "column": 15, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "component"},
+    {"key": "checkout.hint", "file": "src/checkout/PaymentFooter.tsx", "line": 7, "column": 25, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "t"},
+    {"key": "checkout.pay", "file": "src/checkout/PaymentFooter.tsx", "line": 6, "column": 34, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "t"},
+    {"key": "checkout.terms", "file": "src/checkout/PaymentFooter.tsx", "line": 11, "column": 14, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "component"},
+    {"key": "layout.card", "file": "src/layout/Header.tsx", "line": 19, "column": 17, "component": "Card", "kind": "component"},
+    {"key": "layout.fallback", "file": "src/layout/Header.tsx", "line": 29, "column": 17, "kind": "component"},
+    {"key": "layout.title", "file": "src/layout/Header.tsx", "line": 5, "column": 13, "kind": "t"},
+    {"key": "legacy.banner", "file": "src/layout/Header.tsx", "line": 24, "column": 19, "component": "LegacyBanner", "kind": "component"},
+    {"key": "nav.home", "file": "src/layout/Header.tsx", "line": 13, "column": 14, "component": "Header", "kind": "component"}
+  ]
+}

@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 type createLocaleReq struct {
@@ -50,12 +50,7 @@ func handleCreateLocale(projects project.Repository, repo locale.Repository) gin
 			ginerr.Send(c, errs.InternalFromErr(err))
 			return
 		}
-		c.JSON(http.StatusCreated, gin.H{
-			"id":      l.ID.String(),
-			"code":    l.Code.String(),
-			"label":   l.Label.String(),
-			"enabled": l.Enabled,
-		})
+		c.JSON(http.StatusCreated, localeJSON(l))
 	}
 }
 
@@ -73,13 +68,66 @@ func handleListLocales(projects project.Repository, repo locale.Repository) gin.
 		}
 		out := make([]gin.H, 0, len(rows))
 		for _, l := range rows {
-			out = append(out, gin.H{
-				"id":      l.ID.String(),
-				"code":    l.Code.String(),
-				"label":   l.Label.String(),
-				"enabled": l.Enabled,
-			})
+			out = append(out, localeJSON(l))
 		}
 		c.JSON(http.StatusOK, out)
 	}
+}
+
+// localeJSON is the wire shape of a locale. Language, script and
+// region are the explicit subtags of the canonical code; direction is
+// derived from the (likely) script so clients can set dir without
+// keeping their own RTL tables.
+func localeJSON(l locale.Locale) gin.H {
+	return gin.H{
+		"id":        l.ID.String(),
+		"code":      l.Code.String(),
+		"language":  l.Code.Language(),
+		"script":    l.Code.Script(),
+		"region":    l.Code.Region(),
+		"direction": string(l.Code.Direction()),
+		"label":     l.Label.String(),
+		"enabled":   l.Enabled,
+	}
+}
+
+// findLocale resolves a locale URL segment against a project's
+// locales by canonical BCP 47 form, so "de-de", "de_DE" and "de-DE"
+// all name the same row.
+func findLocale(all []locale.Locale, raw string) (locale.Locale, bool) {
+	for _, l := range all {
+		if l.Code.Matches(raw) {
+			return l, true
+		}
+	}
+	return locale.Locale{}, false
+}
+
+// localeInScope reports whether a translator's locale scopes cover raw,
+// comparing canonical forms.
+func localeInScope(scopes []string, raw string) bool {
+	for _, s := range scopes {
+		if locale.Code(s).Matches(raw) {
+			return true
+		}
+	}
+	return false
+}
+
+// canonicalLocales validates translator locale scopes and stores them
+// canonically, de-duplicated in input order.
+func canonicalLocales(raw []string) ([]string, error) {
+	out := make([]string, 0, len(raw))
+	seen := make(map[string]bool, len(raw))
+	for _, r := range raw {
+		code, err := locale.NewCode(r)
+		if err != nil {
+			return nil, err
+		}
+		if !seen[code.String()] {
+			seen[code.String()] = true
+			out = append(out, code.String())
+		}
+	}
+	return out, nil
 }

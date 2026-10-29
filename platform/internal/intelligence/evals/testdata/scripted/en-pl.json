@@ -1,0 +1,71 @@
+{
+  "en-pl-files-plural": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} plik}}\\nfew {{{$count} pliki}}\\nmany {{{$count} plików}}\\n* {{{$count} pliku}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-comments-copied-categories": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} komentarz}}\\n* {{{$count} komentarzy}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} komentarz}}\\nfew {{{$count} komentarze}}\\nmany {{{$count} komentarzy}}\\n* {{{$count} komentarza}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-days-left": {
+    "translate": [
+      "{\"message\": \".input {$days :number}\\n.match $days\\none {{Został {$days} dzień}}\\nfew {{Zostały {$days} dni}}\\nmany {{Zostało {$days} dni}}\\n* {{Zostało {$days} dnia}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-invitation-sent": {
+    "translate": [
+      "{\"message\": \"Wysłano zaproszenie do {$email}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-files-invalid-key-repair": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Przesłano {$count} plik}}\\ntwo {{Przesłano {$count} pliki}}\\nmany {{Przesłano {$count} plików}}\\n* {{Przesłano {$count} pliku}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Przesłano {$count} plik}}\\nfew {{Przesłano {$count} pliki}}\\nmany {{Przesłano {$count} plików}}\\n* {{Przesłano {$count} pliku}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-leave-workspace": {
+    "translate": [
+      "{\"message\": \"Opuść obszar roboczy\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-tasks-missing-many-repair": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} otwarte zadanie}}\\nfew {{{$count} otwarte zadania}}\\n* {{{$count} otwartych zadań}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} otwarte zadanie}}\\nfew {{{$count} otwarte zadania}}\\nmany {{{$count} otwartych zadań}}\\n* {{{$count} otwartego zadania}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-pl-files-categories-still-missing": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Wybrano {$count} plik}}\\n* {{Wybrano {$count} plików}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Wybrano {$count} plik}}\\n* {{Wybrano {$count} plików}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Wybrano {$count} plik}}\\n* {{Wybrano {$count} plików}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.6, \"formality_ok\": true, \"issues\": [\"Only two plural forms.\"]}"
+    ]
+  }
+}

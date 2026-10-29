@@ -1,0 +1,248 @@
+{
+  "$comment": "(source, translation) -> structural compatibility findings (product intent §29.1). Each test: `description`; `locale` (the translation's BCP 47 locale, which decides valid plural keys); the source as `source` (MF2 syntax) or `sourceMF1` plus `sourceLocale`; the translation as `translation` (MF2 syntax), `translationMF1` (ICU MF1 in `locale`) or `translationModel` (a data model, for translations that are not valid MF2); `findings`: the expected findings in order, each {code, severity, subject?, detail?} (the human `message` is not compared). Codes: invalid-message (detail: the MF2 error code), invalid-locale, missing-argument, extra-argument, argument-type-changed (detail: '<source type>-><translation type>'; warning when the translation only drops to plain text or swaps number/integer), selector-added / selector-removed (warnings; a plural the target locale cannot distinguish may be dropped silently), selector-changed (detail: the translation's selector), selector-kind-changed (detail: '<source kind>-><translation kind>'), invalid-plural-key (detail: the key), missing-plural-category (warning; detail: the category), markup-unbalanced, markup-missing, markup-extra, markup-renamed (detail: the new name). Order: validity, arguments (missing, extra, type changes), locale, selectors, plural keys, markup.",
+  "tests": [
+    {
+      "description": "identical structure",
+      "locale": "de",
+      "source": "Hello {$name}, you have {$count :number} loaves",
+      "translation": "Hallo {$name}, du hast {$count :number} Brote",
+      "findings": []
+    },
+    {
+      "description": "missing argument",
+      "locale": "de",
+      "source": "Hello {$name}, you have {$count :number} loaves",
+      "translation": "Hallo {$name}!",
+      "findings": [{ "code": "missing-argument", "severity": "error", "subject": "count" }]
+    },
+    {
+      "description": "extra argument",
+      "locale": "de",
+      "source": "Pick up at {$time :time}",
+      "translation": "Abholung um {$time :time} in {$city}",
+      "findings": [{ "code": "extra-argument", "severity": "error", "subject": "city" }]
+    },
+    {
+      "description": "renamed argument is missing plus extra",
+      "locale": "de",
+      "source": "Hello {$firstName}",
+      "translation": "Hallo {$vorname}",
+      "findings": [
+        { "code": "missing-argument", "severity": "error", "subject": "firstName" },
+        { "code": "extra-argument", "severity": "error", "subject": "vorname" }
+      ]
+    },
+    {
+      "description": "changed argument type",
+      "locale": "de",
+      "source": "Due {$due :date}",
+      "translation": "Fällig {$due :number}",
+      "findings": [{ "code": "argument-type-changed", "severity": "error", "subject": "due", "detail": "date->number" }]
+    },
+    {
+      "description": "formatted number dropped to plain text",
+      "locale": "de",
+      "source": "{$points :number} points",
+      "translation": "{$points} Punkte",
+      "findings": [{ "code": "argument-type-changed", "severity": "warning", "subject": "points", "detail": "number->string" }]
+    },
+    {
+      "description": "number and integer are interchangeable with a warning",
+      "locale": "de",
+      "source": "{$kcal :integer} kcal burned",
+      "translation": "{$kcal :number} kcal verbrannt",
+      "findings": [{ "code": "argument-type-changed", "severity": "warning", "subject": "kcal", "detail": "integer->number" }]
+    },
+    {
+      "description": "MF1 source and translation with the same plural",
+      "locale": "de",
+      "sourceMF1": "{count, plural, one {# item in your cart} other {# items in your cart}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count, plural, one {# Artikel im Warenkorb} other {# Artikel im Warenkorb}}",
+      "findings": []
+    },
+    {
+      "description": "Japanese may drop a plural it cannot distinguish",
+      "locale": "ja",
+      "sourceMF1": "{count, plural, one {# result} other {# results}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count, number}件の結果",
+      "findings": []
+    },
+    {
+      "description": "Japanese plain count loses number formatting",
+      "locale": "ja",
+      "sourceMF1": "{count, plural, one {# result} other {# results}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count}件の結果",
+      "findings": [{ "code": "argument-type-changed", "severity": "warning", "subject": "count", "detail": "number->string" }]
+    },
+    {
+      "description": "German drops a plural it needs",
+      "locale": "de",
+      "sourceMF1": "{count, plural, one {# item} other {# items}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count, number} Artikel",
+      "findings": [{ "code": "selector-removed", "severity": "warning", "subject": "count" }]
+    },
+    {
+      "description": "German adds a gender select",
+      "locale": "de",
+      "source": "{$name} confirmed the appointment",
+      "translation": ".input {$gender :string}\n.match $gender\nfemale {{{$name} hat den Termin als Ärztin bestätigt}}\n* {{{$name} hat den Termin bestätigt}}",
+      "findings": [
+        { "code": "extra-argument", "severity": "error", "subject": "gender" },
+        { "code": "selector-added", "severity": "warning", "subject": "gender" }
+      ]
+    },
+    {
+      "description": "selector over a different variable",
+      "locale": "de",
+      "source": ".input {$count :number}\n.match $count\none {{{$name} baked one loaf}}\n* {{{$name} baked {$count} loaves}}",
+      "translation": ".input {$name :string}\n.match $name\nJonas {{Jonas hat {$count :number} Brote gebacken}}\n* {{{$name} hat {$count :number} Brote gebacken}}",
+      "findings": [{ "code": "selector-changed", "severity": "error", "subject": "count", "detail": "name" }]
+    },
+    {
+      "description": "plural became ordinal",
+      "locale": "en",
+      "source": ".input {$n :number}\n.match $n\none {{{$n} order}}\n* {{{$n} orders}}",
+      "translation": ".input {$n :number select=ordinal}\n.match $n\none {{{$n}st order}}\ntwo {{{$n}nd order}}\nfew {{{$n}rd order}}\n* {{{$n}th order}}",
+      "findings": [{ "code": "selector-kind-changed", "severity": "error", "subject": "n", "detail": "plural->ordinal" }]
+    },
+    {
+      "description": "plural key that German does not have",
+      "locale": "de",
+      "source": ".input {$n :number}\n.match $n\none {{one file}}\n* {{{$n} files}}",
+      "translation": ".input {$n :number}\n.match $n\none {{eine Datei}}\nfew {{ein paar Dateien}}\n* {{{$n} Dateien}}",
+      "findings": [{ "code": "invalid-plural-key", "severity": "error", "subject": "n", "detail": "few" }]
+    },
+    {
+      "description": "exact numeric keys are always valid",
+      "locale": "de",
+      "source": ".input {$n :number}\n.match $n\none {{one file}}\n* {{{$n} files}}",
+      "translation": ".input {$n :number}\n.match $n\n0 {{keine Dateien}}\n1 {{genau eine Datei}}\none {{eine Datei}}\n* {{{$n} Dateien}}",
+      "findings": []
+    },
+    {
+      "description": "Polish translation without few and many",
+      "locale": "pl",
+      "sourceMF1": "{count, plural, one {# file} other {# files}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count, plural, one {# plik} other {# plików}}",
+      "findings": [
+        { "code": "missing-plural-category", "severity": "warning", "subject": "count", "detail": "few" },
+        { "code": "missing-plural-category", "severity": "warning", "subject": "count", "detail": "many" }
+      ]
+    },
+    {
+      "description": "Polish translation with every category",
+      "locale": "pl",
+      "sourceMF1": "{count, plural, one {# file} other {# files}}",
+      "sourceLocale": "en",
+      "translationMF1": "{count, plural, one {# plik} few {# pliki} many {# plików} other {# pliku}}",
+      "findings": []
+    },
+    {
+      "description": "French many is a valid category",
+      "locale": "fr",
+      "sourceMF1": "{n, plural, one {# file} other {# files}}",
+      "sourceLocale": "en",
+      "translationMF1": "{n, plural, one {# fichier} many {# de fichiers} other {# fichiers}}",
+      "findings": []
+    },
+    {
+      "description": "English ordinal keys in an English translation",
+      "locale": "en",
+      "source": ".input {$n :number select=ordinal}\n.match $n\n* {{Bestellung Nr. {$n}}}",
+      "translation": ".input {$n :number select=ordinal}\n.match $n\none {{{$n}st order}}\ntwo {{{$n}nd order}}\nfew {{{$n}rd order}}\n* {{{$n}th order}}",
+      "findings": []
+    },
+    {
+      "description": "plural offset in the translation keeps the argument",
+      "locale": "de",
+      "sourceMF1": "{guests, plural, offset:1 =0 {Nobody is coming} one {{host} and # other guest} other {{host} and # other guests}}",
+      "sourceLocale": "en",
+      "translationMF1": "{guests, plural, offset:1 =0 {Niemand kommt} one {{host} und # weitere Person} other {{host} und # weitere Personen}}",
+      "findings": []
+    },
+    {
+      "description": "translation without the required catch-all variant",
+      "locale": "de",
+      "source": ".input {$n :number}\n.match $n\none {{one file}}\n* {{{$n} files}}",
+      "translationModel": {
+        "type": "select",
+        "declarations": [
+          { "type": "input", "name": "n", "value": { "type": "expression", "arg": { "type": "variable", "name": "n" }, "function": { "type": "function", "name": "number" } } }
+        ],
+        "selectors": [{ "type": "variable", "name": "n" }],
+        "variants": [
+          { "keys": [{ "type": "literal", "value": "one" }], "value": ["eine Datei"] },
+          { "keys": [{ "type": "literal", "value": "other" }], "value": [{ "type": "expression", "arg": { "type": "variable", "name": "n" } }, " Dateien"] }
+        ]
+      },
+      "findings": [{ "code": "invalid-message", "severity": "error", "detail": "missing-fallback-variant" }]
+    },
+    {
+      "description": "markup opened but never closed",
+      "locale": "de",
+      "source": "Read the {#link}terms{/link}",
+      "translation": "Lies die {#link}AGB",
+      "findings": [{ "code": "markup-unbalanced", "severity": "error", "subject": "link" }]
+    },
+    {
+      "description": "markup closed without being opened",
+      "locale": "de",
+      "source": "Read the {#link}terms{/link}",
+      "translation": "Lies die AGB{/link}",
+      "findings": [{ "code": "markup-unbalanced", "severity": "error", "subject": "link" }]
+    },
+    {
+      "description": "markup closed out of order",
+      "locale": "de",
+      "source": "{#b}{#i}Achtung{/i}{/b}",
+      "translation": "{#b}{#i}Achtung{/b}{/i}",
+      "findings": [
+        { "code": "markup-unbalanced", "severity": "error", "subject": "b" },
+        { "code": "markup-unbalanced", "severity": "error", "subject": "i" }
+      ]
+    },
+    {
+      "description": "renamed markup",
+      "locale": "de",
+      "source": "This is {#b}important{/b}",
+      "translation": "Das ist {#strong}wichtig{/strong}",
+      "findings": [{ "code": "markup-renamed", "severity": "error", "subject": "b", "detail": "strong" }]
+    },
+    {
+      "description": "missing and extra markup",
+      "locale": "de",
+      "source": "Accept the {#link}terms{/link}{#br/}",
+      "translation": "Akzeptiere die {#em}AGB{/em}{#br/}{#hr/}",
+      "findings": [
+        { "code": "markup-renamed", "severity": "error", "subject": "link", "detail": "em" },
+        { "code": "markup-extra", "severity": "error", "subject": "hr" }
+      ]
+    },
+    {
+      "description": "dropped markup",
+      "locale": "de",
+      "source": "Accept the {#link}terms{/link}",
+      "translation": "Akzeptiere die AGB",
+      "findings": [{ "code": "markup-missing", "severity": "error", "subject": "link" }]
+    },
+    {
+      "description": "balanced markup in every variant",
+      "locale": "de",
+      "source": ".input {$n :number}\n.match $n\none {{{#b}one{/b} loaf}}\n* {{{#b}{$n}{/b} loaves}}",
+      "translation": ".input {$n :number}\n.match $n\none {{{#b}ein{/b} Brot}}\n* {{{#b}{$n}{/b} Brote}}",
+      "findings": []
+    },
+    {
+      "description": "invalid target locale",
+      "locale": "not a locale!",
+      "source": "Hello {$name}",
+      "translation": "Hallo {$name}",
+      "findings": [{ "code": "invalid-locale", "severity": "error", "subject": "not a locale!" }]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+<meta charset="utf-8">
+<title>{{t "tax.doctitle" "year" .Year}}</title>
+</head>
+<body>
+<h1>{{th "tax.title" "year" .Year}}</h1>
+<p>{{th "tax.intro" "taxpayer" .Taxpayer}}</p>
+<p>{{th "tax.status" "status" .FilingStatus}}</p>
+<p>{{th "tax.period" "from" .PeriodStart "to" .PeriodEnd}}</p>
+<table>
+<thead>
+<tr><th>{{t "tax.col.item"}}</th><th>{{t "tax.col.receipts"}}</th><th>{{t "tax.col.eur"}}</th><th>{{t "tax.col.jpy"}}</th></tr>
+</thead>
+<tbody>
+{{- range .Lines}}
+<tr><td>{{th .Item}}</td><td>{{th "tax.receipts" "count" .Receipts}}</td><td class="num">{{money .EUR "EUR"}}</td><td class="num">{{money .JPY "JPY"}}</td></tr>
+{{- end}}
+</tbody>
+<tfoot>
+<tr><td>{{th "tax.total"}}</td><td>{{th "tax.receipts" "count" .TotalReceipts}}</td><td class="num">{{money .TotalEUR "EUR"}}</td><td class="num">{{money .TotalJPY "JPY"}}</td></tr>
+</tfoot>
+</table>
+<p>{{th "tax.due" "due" .Due}}</p>
+<p>{{th "tax.issued" "issued" .Issued}}</p>
+</body>
+</html>

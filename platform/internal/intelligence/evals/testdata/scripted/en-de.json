@@ -1,0 +1,78 @@
+{
+  "en-de-greeting": {
+    "translate": [
+      "{\"message\": \"Willkommen zurück, {$name}!\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-files-plural": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Sie haben {$count} Datei in diesem Arbeitsbereich.}}\\n* {{Sie haben {$count} Dateien in diesem Arbeitsbereich.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-signin-button": {
+    "translate": [
+      "{\"message\": \"Anmelden\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.97, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-invoice-ready": {
+    "translate": [
+      "{\"message\": \"Ihre {#b}Rechnung{/b} für {$month} ist bereit.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.88, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-delete-project": {
+    "translate": [
+      "{\"message\": \"{$project} löschen? Das kann nicht rückgängig gemacht werden.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-terms-link": {
+    "translate": [
+      "{\"message\": \"Wenn du fortfährst, akzeptierst du unsere {#link}Nutzungsbedingungen{/link}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.55, \"formality_ok\": false, \"issues\": [\"Uses informal 'du' although the style guide requires 'Sie'.\"]}"
+    ]
+  },
+  "en-de-invited-select": {
+    "translate": [
+      "{\"message\": \".input {$gender :string}\\n.match $gender\\nfemale {{Sie hat Sie zu {$workspace} eingeladen.}}\\nmale {{Er hat Sie zu {$workspace} eingeladen.}}\\n* {{Sie wurden zu {$workspace} eingeladen.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-save-tm-exact": {
+    "translate": []
+  },
+  "en-de-comment-repair": {
+    "translate": [
+      "{\"message\": \"Neuer Kommentar von {$autor}\", \"notes\": \"\"}",
+      "{\"message\": \"Neuer Kommentar von {$author}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.92, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-de-last-updated": {
+    "translate": [
+      "{\"message\": \"Zuletzt aktualisiert am {$date :datetime dateStyle=medium}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.94, \"formality_ok\": true, \"issues\": []}"
+    ]
+  }
+}

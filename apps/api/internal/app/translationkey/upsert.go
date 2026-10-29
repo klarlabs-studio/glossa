@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translationkey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translationkey"
 )
 
 // ErrInvalidProjectID guards against nil-UUID inputs slipping through

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+# @klarlabs-studio/ui, provided by scripts/klarlabs-ui.mjs
+.klarlabs-ui
+.klarlabs-ui-src/
+# Playwright
+test-results/
+playwright-report/
+e2e/.state/
+# vitest scratch (build/overlay.test.ts)
+.tmp/

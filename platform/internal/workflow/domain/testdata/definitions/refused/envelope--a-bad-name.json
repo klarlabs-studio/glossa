@@ -1,0 +1,53 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "Legal Review!",
+  "subject": "translation",
+  "chart": {
+    "id": "two-step",
+    "initial": "reviewing",
+    "states": {
+      "reviewing": {
+        "type": "atomic",
+        "entry": [
+          "ask"
+        ],
+        "transitions": [
+          {
+            "event": "approval.granted",
+            "target": "done",
+            "guard": "enough",
+            "actions": [
+              "approve"
+            ]
+          },
+          {
+            "event": "approval.denied",
+            "target": "reviewing"
+          }
+        ]
+      },
+      "done": {
+        "type": "final"
+      }
+    }
+  },
+  "guards": {
+    "enough": {
+      "use": "approvals_at_least",
+      "n": 1
+    }
+  },
+  "actions": {
+    "ask": {
+      "use": "request_approval",
+      "n": 1,
+      "from": {
+        "role": "reviewer"
+      }
+    },
+    "approve": {
+      "use": "set_review_state",
+      "state": "approved"
+    }
+  }
+}

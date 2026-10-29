@@ -1,0 +1,34 @@
+# Written by `go generate ./internal/systemtest/m3/...` — change the generator, not this file.
+# The server and the project come from GLOSSA_SERVER and GLOSSA_PROJECT;
+# the base URL from `glossa capture --base-url`.
+version: 1
+server: http://127.0.0.1:1
+project: shop
+source_locale: de
+syntax: mf2
+catalogs:
+  path: locales/{locale}.json
+extract:
+  application: shop
+  include:
+    - "internal/**/*.go"
+  templates:
+    - "templates/**/*.tmpl"
+capture:
+  application: shop
+  base_url: http://127.0.0.1:1
+  locales: [de, ja]
+  locale:
+    query: lang
+  viewports:
+    - { width: 1280, height: 800 }
+    - { width: 390, height: 844, mobile: true }
+  routes:
+    - { route: "/" }
+    - { route: "/produkte" }
+    - { route: "/produkte/[id]", url: "/produkte/sauerteig" }
+    - { route: "/warenkorb" }
+    - { route: "/kasse" }
+    - { route: "/konto" }
+    - { route: "/hilfe" }
+    - { route: "/rechnung" }

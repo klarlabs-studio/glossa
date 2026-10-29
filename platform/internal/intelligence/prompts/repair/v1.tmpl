@@ -1,0 +1,12 @@
+[[- define "user" -]]
+Your translation cannot be used yet: the platform's structural validation of MF2 found these problems (attempt [[.Attempt]] of [[.MaxAttempts]] to fix them):
+[[range .Findings]]
+- [[.Code]][[if .Subject]] ([[.Subject]])[[end]]: [[.Message]]
+[[- end]]
+[[- if .PluralCategories]]
+
+The [[.TargetLocale]] plural categories are: [[join .PluralCategories ", "]] (write `*` for other).
+[[- end]]
+
+Fix these problems and keep everything that was already right. Answer with the complete corrected message in the same JSON format.
+[[- end]]

@@ -1,0 +1,52 @@
+{
+  "schema": "glossa.cli.release.requests/v1",
+  "action": "show",
+  "release_request": {
+    "id": "rr_2",
+    "environment": "production",
+    "release_id": "rel_3",
+    "action": "publish",
+    "requester": "token:1",
+    "approval": {
+      "n": 2,
+      "from": {
+        "role": "reviewer"
+      },
+      "distinct_from_requester": true
+    },
+    "gate": {
+      "met": true
+    },
+    "forced": false,
+    "state": "pending",
+    "created_at": "2026-10-02T09:02:00Z",
+    "release": {
+      "id": "rel_3",
+      "version": 3
+    }
+  },
+  "approval": {
+    "id": "apr_2",
+    "project_id": "prj_1",
+    "instance_id": "wfi_2",
+    "subject": "release_request",
+    "subject_id": "rr_2",
+    "required": 2,
+    "granted": 1,
+    "eligible": {
+      "kind": "role",
+      "role": "reviewer"
+    },
+    "distinct_from_author": true,
+    "state": "pending",
+    "decisions": [
+      {
+        "principal": "person:vera",
+        "decision": "granted",
+        "at": "2026-10-02T10:00:00Z"
+      }
+    ],
+    "created_by": "workflow",
+    "created_at": "2026-10-02T09:02:00Z"
+  }
+}

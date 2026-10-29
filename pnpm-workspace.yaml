@@ -1,3 +1,7 @@
 packages:
-  - "apps/admin"
-  - "packages/*"
+  - "packages/format"
+  - "messageformat/js"
+  - "runtimes/js/*"
+  - "runtimes/js/react/react-18"
+  - "studio"
+  - "site"

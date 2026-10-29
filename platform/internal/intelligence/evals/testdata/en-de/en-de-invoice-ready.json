@@ -1,0 +1,149 @@
+{
+  "id": "en-de-invoice-ready",
+  "source_locale": "en",
+  "target_locale": "de",
+  "source": "Your {#b}invoice{/b} for {$month} is ready.",
+  "context": {
+    "key": "billing.ready",
+    "description": "Notification when a new invoice was issued"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-de",
+            "text": "Workspace",
+            "locale": "de",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-invoice-en",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-signin",
+        "definition": "Authenticating with an account",
+        "terms": [
+          {
+            "id": "t-signin-en",
+            "text": "sign in",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-anmelden",
+            "text": "Anmelden",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-einloggen",
+            "text": "Einloggen",
+            "locale": "de",
+            "status": "deprecated"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-file-en",
+            "text": "file",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-datei",
+            "text": "Datei",
+            "locale": "de",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "de-formal-3",
+      "formality": "formal",
+      "pronoun": "Sie",
+      "tone": [
+        "clear",
+        "friendly"
+      ],
+      "punctuation": {
+        "quotes": "„…“"
+      },
+      "rules": [
+        {
+          "id": "r-buttons",
+          "rule": "Buttons use the infinitive",
+          "rationale": "German UI convention",
+          "good": [
+            "Speichern"
+          ],
+          "bad": [
+            "Speichere"
+          ]
+        }
+      ]
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "Rechnung"
+    ],
+    "formality": {
+      "must_include_any": [
+        "Sie",
+        "Ihr",
+        "Ihre",
+        "Ihnen",
+        "Ihren"
+      ],
+      "must_not_include": [
+        "du",
+        "dich",
+        "dir",
+        "dein",
+        "deine",
+        "deinen"
+      ]
+    }
+  },
+  "references": [
+    "Ihre {#b}Rechnung{/b} für {$month} liegt bereit.",
+    "Ihre {#b}Rechnung{/b} für {$month} ist fertig."
+  ]
+}

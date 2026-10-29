@@ -1,0 +1,43 @@
+{
+  "id": "en-de-pay-tone",
+  "description": "The style guide asks for Sie and the translation uses the informal imperative.",
+  "source_locale": "en",
+  "target_locale": "de",
+  "source": "Pay now",
+  "translation": "Zahl jetzt",
+  "context": {
+    "key": "checkout.pay",
+    "namespace": "checkout",
+    "description": "Primary button in the checkout"
+  },
+  "style": {
+    "version": "de@3",
+    "formality": "formal",
+    "pronoun": "Sie",
+    "tone": [
+      "professional",
+      "calm"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with Sie, never du",
+        "rationale": "the product is used at work",
+        "good": [
+          "Jetzt bezahlen"
+        ],
+        "bad": [
+          "Zahl jetzt"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "tone-mismatch"
+    ],
+    "quotes": [
+      "Zahl jetzt"
+    ]
+  }
+}

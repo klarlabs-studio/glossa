@@ -1,0 +1,346 @@
+---
+import Base from "../layouts/Base.astro";
+
+const GITHUB = "https://github.com/klarlabs-studio/glossa";
+
+const pillars = [
+  {
+    title: "A message is not a string",
+    body: "Each message has an ID, a source, variables, plural and select logic, markup, constraints and context. It keeps its identity whichever format it came from.",
+  },
+  {
+    title: "Standards, not a private format",
+    body: "The Unicode MessageFormat 2 data model, with ICU MessageFormat 1 as an authoring syntax. BCP 47 locale tags. CLDR plural and number rules through Intl and golang.org/x/text.",
+  },
+  {
+    title: "Files are for import and export",
+    body: "JSON, XLIFF and PO come in and go out. They are never the model, so a rename, a review or a rollback never depends on how a file was laid out.",
+  },
+];
+
+const steps = [
+  {
+    title: "Push from your code",
+    body: "The glossa CLI extracts messages and usages from your source and pushes them. In CI it signs in without a stored secret.",
+  },
+  {
+    title: "Translate and review in Studio",
+    body: "AI drafts with your translation memory, terminology and style guide in context. People review what needs judgment.",
+  },
+  {
+    title: "Publish an immutable release",
+    body: "A release is a signed, content-addressed snapshot. Nothing in it changes afterwards, and rolling back means activating an older one.",
+  },
+  {
+    title: "Render anywhere",
+    body: "The edge CDN delivers releases to runtimes for JavaScript, Vue, React, Astro and Go. A runtime keeps rendering from its last good release if the network goes away.",
+  },
+];
+
+const context = [
+  "source message and its structure",
+  "product and visual context",
+  "neighboring messages",
+  "translation memory",
+  "terminology",
+  "style guide",
+  "locale conventions",
+  "earlier human corrections",
+];
+
+const provenance = [
+  "how it was made: human, translation memory, machine translation, AI, import or adaptation",
+  "which model and configuration produced it",
+  "which context, TM matches and terminology it used",
+  "who reviewed it, and when",
+];
+
+const audiences = [
+  {
+    who: "Developers",
+    body: "Integrate once. Typed messages, a CLI that fits CI, runtimes for the stacks you ship, and an in-product editor for preview deployments.",
+  },
+  {
+    who: "Translators",
+    body: "A keyboard-first workspace with translation memory, terms and context next to the text, and a review queue that shows what needs a decision.",
+  },
+  {
+    who: "Localization managers",
+    body: "Coverage, quality checks, review workflows, approvals and releases per environment, with an audit trail behind them.",
+  },
+  {
+    who: "Coding agents",
+    body: "The same capabilities through the API, an MCP server and a CLI whose every command takes --json. Anything that matters is reachable without the UI.",
+  },
+];
+---
+
+<Base
+  title="Glossa: localization infrastructure"
+  description="Open-source localization infrastructure. Typed messages, AI translation grounded in your terminology and translation memory, human review by exception, and immutable releases delivered to every runtime."
+>
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Glossa home">
+        <img src="/favicon.svg" alt="" width="28" height="28" />
+        <span>Glossa</span>
+      </a>
+      <nav aria-label="Page sections" class="sections">
+        <a href="#messages">Messages</a>
+        <a href="#how">How it works</a>
+        <a href="#ai">AI &amp; review</a>
+        <a href="#for">Who it's for</a>
+        <a href="#developers">Developers</a>
+      </nav>
+      <div class="bar-actions">
+        <a class="link-quiet" href="/auth/sign-in">Sign in</a>
+        <a class="btn btn-primary btn-sm" href="/app">Open Studio</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Open-source localization infrastructure</p>
+          <h1>Implement localization once. Make languages configuration.</h1>
+          <p class="lede">
+            Glossa keeps your product's messages as typed, versioned data. AI drafts translations from your
+            terminology and translation memory, people review where it matters, and signed releases reach every
+            runtime.
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="/auth/register">Create an account</a>
+            <a class="btn btn-secondary" href="/auth/sign-in">Sign in</a>
+            <a class="btn btn-ghost" href={GITHUB}>View on GitHub</a>
+          </div>
+        </div>
+
+        <figure class="message-card" aria-labelledby="mc-cap">
+          <figcaption id="mc-cap">One message, three views</figcaption>
+          <div class="mc-head">
+            <code class="mc-id">cart.items</code>
+            <span class="chip">plural</span>
+            <span class="chip">variable: count</span>
+          </div>
+          <dl class="mc-rows">
+            <div>
+              <dt>en <span class="muted">source</span></dt>
+              <dd>
+<pre class="code code-flush" tabindex="0"><code><span class="k">.input</span> {"{"}$count <span class="f">:number</span>{"}"}
+<span class="k">.match</span> $count
+<span class="s">one</span> {"{{"}{"{"}$count{"}"} item{"}}"}
+<span class="s">*</span>   {"{{"}{"{"}$count{"}"} items{"}}"}</code></pre>
+              </dd>
+            </div>
+            <div>
+              <dt>de <span class="muted">translation</span></dt>
+              <dd>
+<pre class="code code-flush" tabindex="0"><code><span class="k">.input</span> {"{"}$count <span class="f">:number</span>{"}"}
+<span class="k">.match</span> $count
+<span class="s">one</span> {"{{"}{"{"}$count{"}"} Produkt{"}}"}
+<span class="s">*</span>   {"{{"}{"{"}$count{"}"} Produkte{"}}"}</code></pre>
+              </dd>
+            </div>
+          </dl>
+          <p class="mc-prov">
+            <span class="chip chip-accent">provenance: AI draft</span>
+            <span class="chip">terminology checked</span>
+            <span class="chip">awaiting review</span>
+          </p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="messages" class="section" aria-labelledby="messages-h">
+      <div class="wrap">
+        <p class="eyebrow">Messages, not files</p>
+        <h2 id="messages-h">The unit of localization is the message.</h2>
+        <p class="section-lede">
+          Most tools manage files full of key-to-string pairs. Glossa manages messages: structured, versioned product
+          data that outlives any one file format.
+        </p>
+        <ul class="cards cards-3">
+          {
+            pillars.map((p) => (
+              <li class="card">
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section id="how" class="section section-tint" aria-labelledby="how-h">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-h">From a commit to a rendered string.</h2>
+        <ol class="steps">
+          {
+            steps.map((s) => (
+              <li class="step">
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="note">
+          Delivery is separate from authoring: a stateless edge serves published releases, so reading translations
+          never goes through the control plane.
+        </p>
+      </div>
+    </section>
+
+    <section id="ai" class="section" aria-labelledby="ai-h">
+      <div class="wrap two-col">
+        <div>
+          <p class="eyebrow">AI with provenance</p>
+          <h2 id="ai-h">Translate meaning in context. Review by exception.</h2>
+          <p class="section-lede">
+            AI is part of the workflow, not a translate button. Glossa gives it everything a good translator would
+            ask for, then sends people the work that needs judgment instead of every segment.
+          </p>
+          <p class="section-lede">
+            Bring your own provider and keys. The model is a setting, not a dependency, and every translation says
+            which one wrote it.
+          </p>
+        </div>
+        <div class="stack">
+          <div class="panel">
+            <h3>What the model gets</h3>
+            <ul class="ticks">
+              {context.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>What every translation records</h3>
+            <ul class="ticks">
+              {provenance.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <p class="note">
+          Translators can also work inside the running product: click localizable text in a preview or staging
+          deployment to inspect, edit and comment on its message, then open the full workspace.
+        </p>
+      </div>
+    </section>
+
+    <section id="for" class="section section-tint" aria-labelledby="for-h">
+      <div class="wrap">
+        <p class="eyebrow">Who it's for</p>
+        <h2 id="for-h">One system for the people and the agents who touch your words.</h2>
+        <ul class="cards cards-4">
+          {
+            audiences.map((a) => (
+              <li class="card">
+                <h3>{a.who}</h3>
+                <p>{a.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section id="developers" class="section" aria-labelledby="dev-h">
+      <div class="wrap">
+        <p class="eyebrow">For developers</p>
+        <h2 id="dev-h">Push from the terminal, render from a release.</h2>
+        <p class="section-lede">Real commands and real runtime calls, as the package READMEs document them.</p>
+        <div class="code-grid">
+          <figure class="snippet">
+            <figcaption>CLI</figcaption>
+<pre class="code" tabindex="0"><code><span class="c"># one-time, in your repo</span>
+glossa init --server https://glossa.klarlabs.de --project my-shop
+glossa login
+
+<span class="c"># on every change</span>
+glossa push &amp;&amp; glossa check &amp;&amp; glossa generate
+
+<span class="c"># for scripts and agents</span>
+glossa check --json</code></pre>
+          </figure>
+          <figure class="snippet">
+            <figcaption>Vue</figcaption>
+<pre class="code" tabindex="0"><code><span class="k">import</span> {"{"} createGlossa {"}"} <span class="k">from</span> <span class="s">"@klarlabs-studio/glossa/vue"</span>;
+
+createApp(App).use(
+  createGlossa({"{"}
+    edge: <span class="s">"https://cdn.glossa.klarlabs.de"</span>,
+    deliveryKey: <span class="s">"glossa_pk_…"</span>,
+    locales: <span class="s">"de"</span>,
+  {"}"}),
+);
+
+<span class="c">// in a component</span>
+<span class="k">const</span> {"{"} t {"}"} = <span class="f">useGlossa</span>();
+t(<span class="s">"cart.items"</span>, {"{"} count: 3 {"}"});</code></pre>
+          </figure>
+          <figure class="snippet">
+            <figcaption>Go</figcaption>
+<pre class="code" tabindex="0"><code>client, err := glossa.<span class="f">New</span>(glossa.Config{"{"}
+    EdgeURL:     <span class="s">"https://cdn.glossa.klarlabs.de"</span>,
+    DeliveryKey: deliveryKey,
+    Environment: <span class="s">"production"</span>,
+    PublicKeys:  []glossa.PublicKey{"{"}signingKey{"}"},
+{"}"})
+<span class="k">defer</span> client.<span class="f">Close</span>()
+
+subject := client.<span class="f">T</span>(ctx, <span class="s">"invoice.payment_received"</span>, args)</code></pre>
+          </figure>
+        </div>
+        <p class="note">
+          JavaScript, Vue 3, React, Astro and Go share one release format and one conformance suite. Releases are
+          verified against a signature before they activate.
+        </p>
+      </div>
+    </section>
+
+    <section id="open" class="section section-tint" aria-labelledby="open-h">
+      <div class="wrap two-col">
+        <div>
+          <p class="eyebrow">Open source</p>
+          <h2 id="open-h">MIT licensed, and yours to run.</h2>
+          <p class="section-lede">
+            Glossa is open source. A Helm chart deploys the control plane, the delivery edge and Studio against your
+            own Postgres and object storage, and AI runs on your own LLM keys. Your translations stay product data you
+            own.
+          </p>
+        </div>
+        <div class="panel panel-cta">
+          <h3>Start with the hosted Studio</h3>
+          <p>Create an account, add a project, push your first messages.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="/auth/register">Create an account</a>
+            <a class="btn btn-secondary" href="/app">Open Studio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap foot">
+      <p class="brand-sm">
+        <img src="/favicon.svg" alt="" width="20" height="20" />
+        <span>Glossa</span>
+        <span class="muted">Build once. Speak everywhere.</span>
+      </p>
+      <nav aria-label="Footer">
+        <a href={GITHUB}>GitHub</a>
+        <a href={`${GITHUB}/blob/main/docs/product-intent.md`}>Product intent</a>
+        <a href="/auth/sign-in">Sign in</a>
+        <a href="/auth/register">Create an account</a>
+        <a href="https://klarlabs.de">Klarlabs</a>
+      </nav>
+      <p class="muted small">MIT licensed. Built by Klarlabs.</p>
+    </div>
+  </footer>
+</Base>

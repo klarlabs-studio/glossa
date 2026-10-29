@@ -10,9 +10,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 type aiProviderListItem struct {

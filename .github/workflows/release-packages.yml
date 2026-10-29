@@ -1,6 +1,7 @@
 name: Release packages
 
-# Publishes the `@felixgeelhaar/glossa-*` npm packages.
+# Publishes the one `@klarlabs-studio/glossa` npm package (RFC 0002 Amendment 1: the nine rewritten
+# JS packages ship as its subpath exports) and v0.3's `@felixgeelhaar/glossa-*` packages.
 #
 # Flow:
 #   1. PR lands on `main` with a `.changeset/*.md` file describing
@@ -14,13 +15,36 @@ name: Release packages
 #
 # Auth: npm trusted publishing (OIDC). No long-lived token.
 #   On npmjs.com, configure each package as a trusted publisher:
-#     Owner:        felixgeelhaar
+#     Owner:        klarlabs-studio
 #     Repository:   glossa
 #     Workflow:     .github/workflows/release-packages.yml
 #     Environment:  (empty)
+#   Packages (each needs its own trusted-publisher entry; the first
+#   publish of a new name is made once by hand, or the entry is
+#   created on the "Publishing access" page before it exists):
+#     v0.3 line (retired; only glossa-format remains): glossa-format
+#     RFC 0002 rewrite (0.4.0): @klarlabs-studio/glossa (only; the nine
+#       source packages under runtimes/js and messageformat/js are
+#       private, and `changeset publish` skips private packages)
+#   A version already on npm is skipped, so a package whose version
+#   was set to 0.4.0 by hand is published without a changeset.
 #   Setup-node + pnpm exchange the workflow's OIDC token for a
 #   short-lived publish token at runtime. Provenance + signature
 #   are attached automatically.
+#
+# Second registry: @klarlabs-studio/glossa is also published to GitHub
+#   Packages (npm.pkg.github.com) by the last step, with the job's
+#   GITHUB_TOKEN (`packages: write`), because Klarlabs repos route the whole
+#   @klarlabs-studio scope there. An already-published version is tolerated.
+#
+# First publish of a NEW package name (before a trusted publisher can exist):
+#   from the package directory, with a fresh one-time code,
+#     pnpm publish --access public --no-git-checks --provenance=false --otp=<code>
+#   --provenance=false because publishConfig.provenance is true and only
+#   CI can attest (NPM_CONFIG_PROVENANCE does not override publishConfig);
+#   --otp because a non-interactive shell cannot finish the browser 2FA.
+#   A 404 on publish means "not authenticated", not "missing org". Then add
+#   the trusted publisher above. Full steps: docs/releasing.md.
 #
 # Requires:
 #   - `id-token: write` permission on this workflow (declared below).
@@ -41,6 +65,7 @@ permissions:
   contents: write   # let the action open the version PR
   pull-requests: write
   id-token: write   # required for npm publish --provenance
+  packages: write   # publish @klarlabs-studio/glossa to GitHub Packages
 
 concurrency:
   group: release-packages-${{ github.ref }}
@@ -79,10 +104,7 @@ jobs:
       - name: Build workspace packages
         run: |
           pnpm --filter @felixgeelhaar/glossa-format build
-          pnpm --filter @felixgeelhaar/glossa-sdk build
-          pnpm --filter @felixgeelhaar/glossa-ui build
-          pnpm --filter @felixgeelhaar/glossa-elements build
-          pnpm --filter @felixgeelhaar/glossa-cli build
+          pnpm -r --filter ./messageformat/js --filter "./runtimes/js/*" build
 
       - uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         id: changesets
@@ -96,3 +118,32 @@ jobs:
           # No NPM_TOKEN: auth happens via npm trusted publishing.
           # The runner exchanges its OIDC token for a short-lived
           # publish credential automatically when no token is set.
+
+      # @klarlabs-studio/glossa is also published to GitHub Packages. Klarlabs
+      # product repos route the whole `@klarlabs-studio` scope to
+      # npm.pkg.github.com (for @klarlabs-studio/ui), and a scope resolves to
+      # one registry, so without this a plain install there 404s (#80). Runs
+      # on every push to main and is idempotent: a version already on
+      # GitHub Packages is skipped. No provenance: GitHub Packages does not
+      # take npm attestations; the npmjs publish above carries them.
+      - name: Publish @klarlabs-studio/glossa to GitHub Packages
+        working-directory: runtimes/js/glossa
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          npmrc="$RUNNER_TEMP/gpr.npmrc"
+          # shellcheck disable=SC2016  # npm expands ${NODE_AUTH_TOKEN}, not the shell
+          printf '%s\n' \
+            '@klarlabs-studio:registry=https://npm.pkg.github.com' \
+            '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' > "$npmrc"
+          export NPM_CONFIG_USERCONFIG="$npmrc"
+          if out=$(pnpm publish --no-git-checks --provenance=false --registry https://npm.pkg.github.com 2>&1); then
+            echo "$out"
+          elif echo "$out" | grep -Eiq 'cannot publish over|previously published|already exists|E409'; then
+            echo "$out"
+            echo "This version is already on GitHub Packages; nothing to do."
+          else
+            echo "$out"
+            exit 1
+          fi

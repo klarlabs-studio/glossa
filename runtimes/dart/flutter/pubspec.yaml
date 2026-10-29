@@ -1,0 +1,29 @@
+name: glossa_flutter
+description: >-
+  The Flutter layer of the Glossa runtime: GlossaText, MessageFormat 2
+  markup as InlineSpans under the shared safe-tag list, explain(), the
+  error channel, and a release shipped in the app's asset bundle.
+version: 0.1.0
+publish_to: none
+
+environment:
+  # The same Dart SDK the core package pins (see ../pubspec.yaml); Flutter
+  # stable ships it.
+  sdk: ^3.13.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # The core is a separate, pure-Dart package on purpose: it has no
+  # Flutter import, so it is testable with `dart test`, compiles for the
+  # web and is usable off Flutter (RFC 0005 §6.1). This package is the
+  # only place `package:flutter` appears.
+  glossa:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # The same lint set as the core package.
+  lints: ^6.0.0

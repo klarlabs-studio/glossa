@@ -27,10 +27,10 @@ import (
 	tcpostgres "github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/db"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translationkey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/infra/sqlcadapter"
+	"go.klarlabs.de/glossa/apps/api/internal/db"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translationkey"
+	"go.klarlabs.de/glossa/apps/api/internal/infra/sqlcadapter"
 )
 
 type fixture struct {

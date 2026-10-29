@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/db"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
+	"go.klarlabs.de/glossa/apps/api/internal/db"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
 )
 
 // AIProviderRepo is the sqlc-backed adapter for aitranslator.Provider.

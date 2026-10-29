@@ -1,0 +1,409 @@
+{{- /*
+Backups to an rclone remote outside the cluster (README.md, "Backups"):
+  <fullname>-postgres-backup        nightly pg_dump, verified, uploaded, retention
+  <fullname>-minio-backup           nightly mirror of the release bucket
+  <fullname>-postgres-restore-test  weekly restore drill of the newest dump
+No image installs anything at runtime (PodSecurity restricted: non-root,
+read-only root filesystem): a pod pairs the postgres image, whose major
+version is the server's, with the pinned rclone image.
+*/ -}}
+{{- $b := .Values.backup -}}
+{{- $pg := .Values.postgres -}}
+{{- $uid := include "gp.postgres.uid" . | int -}}
+{{- $np := .Values.networkPolicy -}}
+{{- if and $b.enabled (not (include "gp.backup.postgres.enabled" .)) (not (include "gp.backup.minio.enabled" .)) }}
+{{- fail "backup.enabled backs up the in-namespace Postgres and MinIO: enable postgres.enabled (with backup.postgres.enabled) or minio.enabled (with backup.minio.enabled); an external database is backed up by its provider" }}
+{{- end }}
+{{- if include "gp.backup.postgres.enabled" . }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "postgres-backup") -}}
+{{- $remote := include "gp.backup.remote" (dict "value" $b.postgres.remote "name" "backup.postgres.remote") -}}
+{{- if $np.enabled }}
+---
+# The backup pods: out to DNS, Postgres and the rclone remote only.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-backup") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres-backup") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.postgresEgress" . | nindent 4 }}
+    {{- include "gp.np.backupRemoteEgress" . | nindent 4 }}
+    {{- include "gp.np.backupAgeDownloadEgress" . | nindent 4 }}
+{{- end }}
+---
+# Nightly: pg_dump as the read-only backup role, verified (files/postgres-dump.sh),
+# then uploaded with retention (files/postgres-upload.sh). Run one now:
+#   kubectl -n {{ .Release.Namespace }} create job --from=cronjob/{{ $name }} {{ $name }}-manual
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-backup") | nindent 4 }}
+spec:
+  schedule: {{ $b.postgres.schedule | quote }}
+  timeZone: Etc/UTC
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ $b.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ $b.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ $b.postgres.backoffLimit }}
+      activeDeadlineSeconds: {{ $b.postgres.activeDeadlineSeconds }}
+      template:
+        metadata:
+          labels:
+            {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-backup") | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          securityContext:
+            {{- include "gp.podSecurityContext" $uid | nindent 12 }}
+          {{- with (include "gp.scheduling" (dict "root" $ "values" $pg) | trim) }}{{ . | nindent 10 }}{{ end }}
+          initContainers:
+            {{- include "gp.backup.ageFetch" . | nindent 12 }}
+            - name: dump
+              # The server's image: pg_dump's major version is the server's.
+              image: {{ include "gp.externalImage" (dict "image" $pg.image) }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/bash", "-c"]
+              args:
+                - {{ .Files.Get "files/postgres-dump.sh" | quote }}
+              securityContext:
+                {{- include "gp.containerSecurityContext" . | nindent 16 }}
+              env:
+                {{- include "gp.postgres.libpqEnv" (dict "root" $ "user" $b.postgres.role.username "secret" (include "gp.backup.roleSecret" .) "key" $b.postgres.role.passwordKey) | nindent 16 }}
+                - name: OUT_DIR
+                  value: /work
+                - name: PREFIX
+                  value: {{ $pg.database | quote }}
+                - name: AGE_RECOVERY_RECIPIENT
+                  value: {{ $b.age.recoveryRecipient | quote }}
+                - name: TOOLS
+                  value: /tools
+                - name: DRILL_IDENTITY
+                  value: /etc/backup-age/identity
+              resources:
+                {{- toYaml $b.postgres.resources | nindent 16 }}
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                - name: tmp
+                  mountPath: /tmp
+                - name: tools
+                  mountPath: /tools
+                  readOnly: true
+                - name: backup-age
+                  mountPath: /etc/backup-age
+                  readOnly: true
+          containers:
+            - name: upload
+              image: {{ include "gp.externalImage" (dict "image" $b.rclone.image) }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - {{ .Files.Get "files/postgres-upload.sh" | quote }}
+              securityContext:
+                {{- include "gp.containerSecurityContext" . | nindent 16 }}
+              env:
+                {{- include "gp.backup.rcloneEnv" . | nindent 16 }}
+                - name: IN_DIR
+                  value: /work
+                - name: REMOTE
+                  value: {{ $remote | quote }}
+                - name: PREFIX
+                  value: {{ $pg.database | quote }}
+                - name: RETENTION_DAYS
+                  value: {{ $b.postgres.retentionDays | quote }}
+              resources:
+                {{- toYaml $b.postgres.resources | nindent 16 }}
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+                - name: rclone-config
+                  mountPath: /etc/rclone
+                  readOnly: true
+          volumes:
+            - name: work
+              emptyDir:
+                sizeLimit: {{ $b.postgres.scratchSize | quote }}
+            - name: tmp
+              emptyDir:
+                sizeLimit: 64Mi
+            {{- include "gp.backup.ageVolumes" . | nindent 12 }}
+            {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
+{{- end }}
+{{- if include "gp.backup.minio.enabled" . }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "minio-backup") -}}
+{{- $remote := include "gp.backup.remote" (dict "value" $b.minio.remote "name" "backup.minio.remote") -}}
+{{- $edge := include "gp.storage.edgeCreds" . | fromYaml -}}
+{{- if $np.enabled }}
+---
+# The MinIO mirror: out to DNS, MinIO's S3 port and the rclone remote only.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-backup") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio-backup") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.objectStorageEgress" . | nindent 4 }}
+    {{- include "gp.np.backupRemoteEgress" . | nindent 4 }}
+{{- end }}
+---
+# Nightly: the release bucket to <remote>/current, with what changed kept
+# in <remote>/deleted/<timestamp> (files/minio-backup.sh). It reads with
+# glossa-edge's read-only MinIO user. Run one now:
+#   kubectl -n {{ .Release.Namespace }} create job --from=cronjob/{{ $name }} {{ $name }}-manual
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-backup") | nindent 4 }}
+spec:
+  schedule: {{ $b.minio.schedule | quote }}
+  timeZone: Etc/UTC
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ $b.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ $b.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ $b.minio.backoffLimit }}
+      activeDeadlineSeconds: {{ $b.minio.activeDeadlineSeconds }}
+      template:
+        metadata:
+          labels:
+            {{- include "gp.componentLabels" (dict "root" $ "component" "minio-backup") | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          securityContext:
+            {{- include "gp.podSecurityContext" 65532 | nindent 12 }}
+          {{- with (include "gp.scheduling" (dict "root" $ "values" .Values.minio) | trim) }}{{ . | nindent 10 }}{{ end }}
+          containers:
+            - name: mirror
+              image: {{ include "gp.externalImage" (dict "image" $b.rclone.image) }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - {{ .Files.Get "files/minio-backup.sh" | quote }}
+              securityContext:
+                {{- include "gp.containerSecurityContext" . | nindent 16 }}
+              env:
+                {{- include "gp.backup.rcloneEnv" . | nindent 16 }}
+                # The source remote "minio", defined by environment.
+                - name: RCLONE_CONFIG_MINIO_TYPE
+                  value: s3
+                - name: RCLONE_CONFIG_MINIO_PROVIDER
+                  value: Minio
+                - name: RCLONE_CONFIG_MINIO_ENDPOINT
+                  value: {{ include "gp.minio.url" . | quote }}
+                - name: RCLONE_CONFIG_MINIO_REGION
+                  value: {{ .Values.objectStorage.region | quote }}
+                - name: RCLONE_CONFIG_MINIO_FORCE_PATH_STYLE
+                  value: "true"
+                {{- include "gp.secretEnv" (dict "name" "RCLONE_CONFIG_MINIO_ACCESS_KEY_ID" "secret" $edge.secretName "key" $edge.accessKeyIdKey) | nindent 16 }}
+                {{- include "gp.secretEnv" (dict "name" "RCLONE_CONFIG_MINIO_SECRET_ACCESS_KEY" "secret" $edge.secretName "key" $edge.secretAccessKeyKey) | nindent 16 }}
+                - name: BUCKET
+                  value: {{ include "gp.storage.bucket" . | quote }}
+                - name: OBJECT_PREFIX
+                  value: {{ trimAll "/" .Values.objectStorage.prefix | quote }}
+                - name: REMOTE
+                  value: {{ $remote | quote }}
+                - name: DELETED_RETENTION_DAYS
+                  value: {{ $b.minio.deletedRetentionDays | quote }}
+                # The encrypted mirror: the crypt remote "vault" over REMOTE. The
+                # passwords come from the minio-crypt volume (obscured by the script).
+                - name: RCLONE_CONFIG_VAULT_TYPE
+                  value: crypt
+                - name: RCLONE_CONFIG_VAULT_REMOTE
+                  value: {{ $remote | quote }}
+              resources:
+                {{- toYaml $b.minio.resources | nindent 16 }}
+              volumeMounts:
+                - name: tmp
+                  mountPath: /tmp
+                - name: rclone-config
+                  mountPath: /etc/rclone
+                  readOnly: true
+                - name: minio-crypt
+                  mountPath: /etc/minio-crypt
+                  readOnly: true
+          volumes:
+            - name: tmp
+              emptyDir:
+                sizeLimit: 256Mi
+            {{- include "gp.backup.minioCryptVolume" . | nindent 12 }}
+            {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
+{{- end }}
+{{- if include "gp.backup.restoreTest.enabled" . }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "postgres-restore-test") -}}
+{{- $remote := include "gp.backup.remote" (dict "value" $b.postgres.remote "name" "backup.postgres.remote") -}}
+{{- $t := $b.restoreTest -}}
+{{- if $np.enabled }}
+---
+# The restore drill: out to DNS and the rclone remote only. It restores
+# into a Postgres inside its own pod and never reaches the live one.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-restore-test") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres-restore-test") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.backupRemoteEgress" . | nindent 4 }}
+    {{- include "gp.np.backupAgeDownloadEgress" . | nindent 4 }}
+{{- end }}
+---
+# Weekly: the newest dump restored into a throwaway Postgres and checked
+# (files/restore-fetch.sh, files/postgres-restore-test.sh). Run one now:
+#   kubectl -n {{ .Release.Namespace }} create job --from=cronjob/{{ $name }} {{ $name }}-manual
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-restore-test") | nindent 4 }}
+spec:
+  schedule: {{ $t.schedule | quote }}
+  timeZone: Etc/UTC
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ $b.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ $b.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ $t.backoffLimit }}
+      activeDeadlineSeconds: {{ $t.activeDeadlineSeconds }}
+      template:
+        metadata:
+          labels:
+            {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-restore-test") | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          securityContext:
+            {{- include "gp.podSecurityContext" $uid | nindent 12 }}
+          {{- with (include "gp.scheduling" (dict "root" $ "values" $pg) | trim) }}{{ . | nindent 10 }}{{ end }}
+          initContainers:
+            {{- include "gp.backup.ageFetch" . | nindent 12 }}
+            - name: fetch
+              image: {{ include "gp.externalImage" (dict "image" $b.rclone.image) }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - {{ .Files.Get "files/restore-fetch.sh" | quote }}
+              securityContext:
+                {{- include "gp.containerSecurityContext" . | nindent 16 }}
+              env:
+                {{- include "gp.backup.rcloneEnv" . | nindent 16 }}
+                - name: OUT_DIR
+                  value: /work
+                - name: REMOTE
+                  value: {{ $remote | quote }}
+                - name: PREFIX
+                  value: {{ $pg.database | quote }}
+                - name: MAX_AGE_HOURS
+                  value: {{ $t.maxDumpAgeHours | quote }}
+                - name: TOOLS
+                  value: /tools
+                - name: DRILL_IDENTITY
+                  value: /etc/backup-age/identity
+              resources:
+                {{- toYaml $b.postgres.resources | nindent 16 }}
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                - name: tmp
+                  mountPath: /tmp
+                - name: rclone-config
+                  mountPath: /etc/rclone
+                  readOnly: true
+                - name: tools
+                  mountPath: /tools
+                  readOnly: true
+                - name: backup-age
+                  mountPath: /etc/backup-age
+                  readOnly: true
+          containers:
+            - name: restore
+              # The server's image: the throwaway Postgres is the server's major.
+              image: {{ include "gp.externalImage" (dict "image" $pg.image) }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/bash", "-c"]
+              args:
+                - {{ .Files.Get "files/postgres-restore-test.sh" | quote }}
+              securityContext:
+                {{- include "gp.containerSecurityContext" . | nindent 16 }}
+              env:
+                - name: IN_DIR
+                  value: /work
+                - name: OWNER
+                  value: {{ $pg.owner.username | quote }}
+                - name: ROLES
+                  value: {{ printf "%s glossa_app glossa_system" $pg.owner.username | quote }}
+                - name: NON_EMPTY_TABLES
+                  value: {{ join " " $t.nonEmptyTables | quote }}
+              resources:
+                {{- toYaml $t.resources | nindent 16 }}
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                - name: tmp
+                  mountPath: /tmp
+                # The throwaway server's lock file (read-only root filesystem).
+                - name: run
+                  mountPath: /var/run/postgresql
+          volumes:
+            - name: work
+              emptyDir:
+                sizeLimit: {{ $t.scratchSize | quote }}
+            - name: tmp
+              emptyDir:
+                sizeLimit: 64Mi
+            - name: run
+              emptyDir:
+                sizeLimit: 1Mi
+            {{- include "gp.backup.ageVolumes" . | nindent 12 }}
+            {{- include "gp.backup.rcloneVolume" . | nindent 12 }}
+{{- end }}

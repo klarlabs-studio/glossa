@@ -1,0 +1,13 @@
+{
+  "athlete": "Kim Nakamura",
+  "from": "2026-08-03T05:30:00Z",
+  "to": "2026-08-28T17:10:00Z",
+  "exportedAt": "2026-09-01T06:15:00Z",
+  "rows": [
+    { "date": "2026-08-03T05:30:00Z", "sessions": 1, "reps": 480, "completion": "1", "distance": "5.2", "load": "980.5" },
+    { "date": "2026-08-10T05:45:00Z", "sessions": 2, "reps": 1234, "completion": "0.925", "distance": "12.5", "load": "1520" },
+    { "date": "2026-08-17T16:00:00Z", "sessions": 3, "reps": 2150, "completion": "0.8", "distance": "21.1", "load": "12345.5" },
+    { "date": "2026-08-28T17:10:00Z", "sessions": 1, "reps": 360, "completion": "0.456", "distance": "0.8", "load": "450" }
+  ],
+  "totalSessions": 7
+}

@@ -1,0 +1,36 @@
+{
+  "id": "en-ja-welcome-clean",
+  "description": "A sound translation: nothing to report.",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Welcome back",
+  "translation": "おかえりなさい",
+  "context": {
+    "key": "home.welcome",
+    "namespace": "home",
+    "description": "Greeting on the dashboard"
+  },
+  "style": {
+    "version": "ja@1",
+    "formality": "formal",
+    "tone": [
+      "polite"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Use the polite です・ます form",
+        "rationale": "house style",
+        "good": [
+          "もう一度お試しください。"
+        ],
+        "bad": [
+          "もう一度やれ。"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": []
+  }
+}

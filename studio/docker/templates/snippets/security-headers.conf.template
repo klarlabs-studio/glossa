@@ -1,0 +1,22 @@
+# Security headers for every Studio response. Included from each location
+# that sets headers of its own, because nginx drops the server-level
+# add_header directives in any location that has one.
+#
+# CSP: Studio is a same-origin SPA. Scripts, styles and fonts come from its
+# own origin only, no inline script or style, no eval. The API is /v1 on
+# the same origin; GLOSSA_STUDIO_CSP_CONNECT_SRC adds origins (space
+# separated) if Studio is pointed at an API or edge on another host.
+# HSTS is set where TLS terminates (the chart's ingress middleware).
+add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ${GLOSSA_STUDIO_CSP_CONNECT_SRC}; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "same-origin" always;
+add_header Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()" always;
+# COOP is same-origin everywhere but the in-product editor's authorization
+# popup: a popup served with same-origin COOP that a cross-origin page
+# opened is put in its own browsing-context group, which severs
+# window.opener — and window.opener.postMessage is the whole flow
+# (RFC 0004 §5.2). $glossa_coop is set to same-origin on the server block
+# and to unsafe-none on that one location.
+add_header Cross-Origin-Opener-Policy $glossa_coop always;
+add_header Cross-Origin-Resource-Policy "same-origin" always;

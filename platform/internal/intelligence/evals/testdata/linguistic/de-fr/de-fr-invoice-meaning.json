@@ -1,0 +1,42 @@
+{
+  "id": "de-fr-invoice-meaning",
+  "description": "The invoice is due; the translation says it is paid.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Ihre Rechnung ist fällig.",
+  "translation": "Votre facture a été payée.",
+  "context": {
+    "key": "billing.due",
+    "namespace": "billing",
+    "description": "Banner on the billing page"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "meaning-divergence"
+    ],
+    "quotes": [
+      "a été payée"
+    ]
+  }
+}

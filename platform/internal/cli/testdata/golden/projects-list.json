@@ -1,0 +1,16 @@
+{
+  "schema": "glossa.cli.projects.list/v1",
+  "tenant": "0192a000-0000-7000-8000-000000000001",
+  "projects": [
+    {
+      "id": "prj_1",
+      "slug": "shop",
+      "name": "Shop",
+      "source_locale": "de",
+      "locales": [
+        "de",
+        "en"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+# Every optional feature on, so CI renders every template and branch.
+# Hostnames, addresses and names are placeholders (RFC 2606 / RFC 5737).
+fullnameOverride: glossa
+hosts:
+  studio: app.example.com
+  api: api.example.com
+  cdn: cdn.example.com
+deploymentAnnotations:
+  example.com/owner: platform
+commonLabels:
+  klarlabs.de/product: glossa
+# The digest-pinned shape a release deploys with: every Glossa image is
+# pinned and the chart refuses to render one that is not. The digests are
+# placeholders; a real deployment gets them from the release run
+# (README.md, "Cutting a release").
+image:
+  requireDigest: true
+server:
+  image:
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  webauthn:
+    rpId: example.com
+    origins: [https://app.example.com]
+  otel:
+    endpoint: http://otel-collector.observability:4318
+  mcp:
+    enabled: true
+    sessionTimeout: 15m
+    rate: 60
+    burst: 120
+  github:
+    inbox:
+      workers: 4
+      pollInterval: 2s
+      timeout: 20s
+      lease: 90s
+      depthInterval: 15s
+    checks:
+      workers: 4
+      pollInterval: 2s
+      timeout: 45s
+      lease: 4m
+      depthInterval: 15s
+  extraEnv:
+    - name: GLOSSA_OUTBOX_BATCH_SIZE
+      value: "100"
+edge:
+  image:
+    digest: sha256:1111111111111111111111111111111111111111111111111111111111111111
+  autoscaling:
+    enabled: true
+  otel:
+    endpoint: http://otel-collector.observability:4318
+studio:
+  image:
+    digest: sha256:2222222222222222222222222222222222222222222222222222222222222222
+  runtimeConfig:
+    cspConnectSrc: https://cdn.example.com
+site:
+  image:
+    digest: sha256:3333333333333333333333333333333333333333333333333333333333333333
+database:
+  app:
+    secretName: glossa-db-app
+  migration:
+    secretName: glossa-db-owner
+auth:
+  secretName: glossa-auth
+release:
+  signingKeys:
+    secretName: glossa-release-signing
+  retiredKeys: "k0=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+mail:
+  from: "Glossa <no-reply@example.com>"
+  smtp:
+    addr: smtp.example.com:587
+    secretName: glossa-smtp
+github:
+  appId: "123456"
+  appSlug: glossa
+  clientId: Iv1.0000000000000000
+  # A GHES base, so the non-default branch of both URL values renders too.
+  apiUrl: https://github.example.com/api/v3
+  webUrl: https://github.example.com
+  # GHES issues its Actions ID tokens itself, so CI's OIDC exchange has
+  # to be pointed at that issuer (RFC 0004 §6.3).
+  oidc:
+    issuer: https://github.example.com/_services/token
+    audience: glossa
+    maxStale: 12h
+  credentials:
+    secretName: glossa-github
+objectStorage:
+  endpoint: objects.example.com
+  bucket: glossa
+  prefix: prod/
+  server:
+    secretName: glossa-s3-rw
+  edge:
+    secretName: glossa-s3-ro
+ingress:
+  tlsSecretNames:
+    studio: app-example-com-tls
+  extraMiddlewares:
+    api:
+      - name: glossa-ratelimit
+networkPolicy:
+  egress:
+    postgres:
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: databases
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: postgresql
+    objectStorage:
+      to:
+        - ipBlock:
+            cidr: 192.0.2.0/24
+    smtp:
+      to:
+        - ipBlock:
+            cidr: 198.51.100.10/32
+    github:
+      to:
+        - ipBlock:
+            cidr: 203.0.113.0/24
+    otlp:
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+metrics:
+  allowFrom:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: monitoring
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kube-prometheus-stack

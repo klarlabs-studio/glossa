@@ -1,0 +1,4649 @@
+{
+  "$comment": "ICU MessageFormat 1 -> canonical MF2 data model. Each test: `description`; `locale` (BCP 47, drives MF1 plural-key validation); `src` (MF1 source). A conversion case adds `mf2` (the expected message in MF2 syntax, for humans), `exp` (the expected canonical data model, shaped by ../unicode/data-model/message.schema.json and equal to `mf2` parsed) and `samples` ([{params, exp}]: `params` uses the Unicode suite's param shape, `exp` is the MF1 reference output, which the MF2 message must reproduce). A sample may carry `mf2Exp` (MF2 output, or null when the MF2 reference reports errors) for a known divergence explained by the case's `divergence`. An error case has `expErrors` ([{type}] with `mf1-syntax-error` or `mf1-unsupported`) instead. Mapping rules (Glossa decision, RFC 0002 §5): standard MF2 functions wherever they reproduce MF1 output; `mf1:`-namespaced functions with `mf1:argType`/`mf1:argStyle` attributes otherwise. Verified by gen/verify-mf1.mjs (see README.md); `exp` and sample outputs are derived with `npm run write`, everything else is authored.",
+  "tests": [
+    {
+      "description": "plain text",
+      "locale": "en",
+      "src": "Save changes",
+      "mf2": "Save changes",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Save changes"
+        ]
+      },
+      "samples": [
+        {
+          "exp": "Save changes"
+        }
+      ]
+    },
+    {
+      "description": "empty message",
+      "locale": "en",
+      "src": "",
+      "mf2": "",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": []
+      },
+      "samples": [
+        {
+          "exp": ""
+        }
+      ]
+    },
+    {
+      "description": "Brotwerk greeting with one argument",
+      "locale": "de",
+      "src": "Hallo {name}, schön, dass du da bist!",
+      "mf2": "Hallo {$name}, schön, dass du da bist!",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Hallo ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "name"
+            }
+          },
+          ", schön, dass du da bist!"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "name",
+              "value": "Anna"
+            }
+          ],
+          "exp": "Hallo Anna, schön, dass du da bist!"
+        }
+      ]
+    },
+    {
+      "description": "two arguments",
+      "locale": "en",
+      "src": "{baker} baked {product} for you",
+      "mf2": "{$baker} baked {$product} for you",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "baker"
+            }
+          },
+          " baked ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "product"
+            }
+          },
+          " for you"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "baker",
+              "value": "Jonas"
+            },
+            {
+              "name": "product",
+              "value": "sourdough"
+            }
+          ],
+          "exp": "Jonas baked sourdough for you"
+        }
+      ]
+    },
+    {
+      "description": "apostrophe before a letter is literal",
+      "locale": "en",
+      "src": "It's {name}'s turn",
+      "mf2": "It's {$name}'s turn",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "It's ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "name"
+            }
+          },
+          "'s turn"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "name",
+              "value": "Mia"
+            }
+          ],
+          "exp": "It's Mia's turn"
+        }
+      ]
+    },
+    {
+      "description": "doubled apostrophe is one apostrophe",
+      "locale": "de",
+      "src": "Tim''s Bäckerei hat heute geöffnet",
+      "mf2": "Tim's Bäckerei hat heute geöffnet",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Tim's Bäckerei hat heute geöffnet"
+        ]
+      },
+      "samples": [
+        {
+          "exp": "Tim's Bäckerei hat heute geöffnet"
+        }
+      ]
+    },
+    {
+      "description": "quoted braces are text",
+      "locale": "en",
+      "src": "Use '{name}' as a placeholder",
+      "mf2": "Use \\{name\\} as a placeholder",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Use {name} as a placeholder"
+        ]
+      },
+      "samples": [
+        {
+          "exp": "Use {name} as a placeholder"
+        }
+      ]
+    },
+    {
+      "description": "quoted single brace",
+      "locale": "en",
+      "src": "Type '{' to start a placeholder",
+      "mf2": "Type \\{ to start a placeholder",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Type { to start a placeholder"
+        ]
+      },
+      "samples": [
+        {
+          "exp": "Type { to start a placeholder"
+        }
+      ]
+    },
+    {
+      "description": "hash outside a plural is text",
+      "locale": "de",
+      "src": "Bestellung #{id} ist unterwegs",
+      "mf2": "Bestellung #{$id} ist unterwegs",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Bestellung #",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "id"
+            }
+          },
+          " ist unterwegs"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "id",
+              "value": "10423"
+            }
+          ],
+          "exp": "Bestellung #10423 ist unterwegs"
+        }
+      ]
+    },
+    {
+      "description": "HTML-like tags are not MF1 syntax and stay text",
+      "locale": "de",
+      "src": "Mit dem Absenden akzeptierst du die <a>AGB</a>.",
+      "mf2": "Mit dem Absenden akzeptierst du die <a>AGB</a>.",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Mit dem Absenden akzeptierst du die <a>AGB</a>."
+        ]
+      },
+      "samples": [
+        {
+          "exp": "Mit dem Absenden akzeptierst du die <a>AGB</a>."
+        }
+      ]
+    },
+    {
+      "description": "leading and trailing whitespace is kept",
+      "locale": "en",
+      "src": "  Loading… ",
+      "mf2": "  Loading… ",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "  Loading… "
+        ]
+      },
+      "samples": [
+        {
+          "exp": "  Loading… "
+        }
+      ]
+    },
+    {
+      "description": "text starting with a dot needs a quoted MF2 pattern",
+      "locale": "en",
+      "src": ".env file for {project}",
+      "mf2": "{{.env file for {$project}}}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          ".env file for ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "project"
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "project",
+              "value": "brotwerk"
+            }
+          ],
+          "exp": ".env file for brotwerk"
+        }
+      ]
+    },
+    {
+      "description": "backslash and pipe in text",
+      "locale": "en",
+      "src": "Path: C:\\Temp | {file}",
+      "mf2": "Path: C:\\\\Temp | {$file}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Path: C:\\Temp | ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "file"
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "file",
+              "value": "export.csv"
+            }
+          ],
+          "exp": "Path: C:\\Temp | export.csv"
+        }
+      ]
+    },
+    {
+      "description": "Brotwerk cart count: plural with #",
+      "locale": "de",
+      "src": "{count, plural, one {# Brot im Warenkorb} other {# Brote im Warenkorb}}",
+      "mf2": ".input {$count :number}\n.match $count\none {{{$count} Brot im Warenkorb}}\n* {{{$count} Brote im Warenkorb}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Brot im Warenkorb"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Brote im Warenkorb"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "1 Brot im Warenkorb"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 3
+            }
+          ],
+          "exp": "3 Brote im Warenkorb"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1500
+            }
+          ],
+          "exp": "1.500 Brote im Warenkorb"
+        }
+      ]
+    },
+    {
+      "description": "plural with exact zero (German notifications)",
+      "locale": "de",
+      "src": "{count, plural, =0 {Keine neuen Nachrichten} one {Eine neue Nachricht} other {# neue Nachrichten}}",
+      "mf2": ".input {$count :number}\n.match $count\n0 {{Keine neuen Nachrichten}}\none {{Eine neue Nachricht}}\n* {{{$count} neue Nachrichten}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "0"
+              }
+            ],
+            "value": [
+              "Keine neuen Nachrichten"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Eine neue Nachricht"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " neue Nachrichten"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 0
+            }
+          ],
+          "exp": "Keine neuen Nachrichten"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "Eine neue Nachricht"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 12
+            }
+          ],
+          "exp": "12 neue Nachrichten"
+        }
+      ]
+    },
+    {
+      "description": "plural with exact zero (English cart)",
+      "locale": "en",
+      "src": "{count, plural, =0 {Your cart is empty} one {# item in your cart} other {# items in your cart}}",
+      "mf2": ".input {$count :number}\n.match $count\n0 {{Your cart is empty}}\none {{{$count} item in your cart}}\n* {{{$count} items in your cart}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "0"
+              }
+            ],
+            "value": [
+              "Your cart is empty"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " item in your cart"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " items in your cart"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 0
+            }
+          ],
+          "exp": "Your cart is empty"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "1 item in your cart"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 42
+            }
+          ],
+          "exp": "42 items in your cart"
+        }
+      ]
+    },
+    {
+      "description": "several exact keys sort before categories",
+      "locale": "en",
+      "src": "{count, plural, other {# reviews} =1 {one review} =2 {a couple of reviews}}",
+      "mf2": ".input {$count :number}\n.match $count\n1 {{one review}}\n2 {{a couple of reviews}}\n* {{{$count} reviews}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "1"
+              }
+            ],
+            "value": [
+              "one review"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "2"
+              }
+            ],
+            "value": [
+              "a couple of reviews"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " reviews"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "one review"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 2
+            }
+          ],
+          "exp": "a couple of reviews"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 7
+            }
+          ],
+          "exp": "7 reviews"
+        }
+      ]
+    },
+    {
+      "description": "Pet Medical vaccination reminder: plural inside a sentence",
+      "locale": "de",
+      "src": "{pet} hat in {days, plural, one {einem Tag} other {# Tagen}} einen Impftermin.",
+      "mf2": ".input {$days :number}\n.match $days\none {{{$pet} hat in einem Tag einen Impftermin.}}\n* {{{$pet} hat in {$days} Tagen einen Impftermin.}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "days",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "days"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "days"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "pet"
+                }
+              },
+              " hat in einem Tag einen Impftermin."
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "pet"
+                }
+              },
+              " hat in ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "days"
+                }
+              },
+              " Tagen einen Impftermin."
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "pet",
+              "value": "Bello"
+            },
+            {
+              "name": "days",
+              "value": 1
+            }
+          ],
+          "exp": "Bello hat in einem Tag einen Impftermin."
+        },
+        {
+          "params": [
+            {
+              "name": "pet",
+              "value": "Minka"
+            },
+            {
+              "name": "days",
+              "value": 14
+            }
+          ],
+          "exp": "Minka hat in 14 Tagen einen Impftermin."
+        }
+      ]
+    },
+    {
+      "description": "magic-link email body with newlines",
+      "locale": "de",
+      "src": "Hallo {firstName},\n\ndein Anmeldelink ist {minutes, plural, one {eine Minute} other {# Minuten}} gültig.",
+      "mf2": ".input {$minutes :number}\n.match $minutes\none {{Hallo {$firstName},\n\ndein Anmeldelink ist eine Minute gültig.}}\n* {{Hallo {$firstName},\n\ndein Anmeldelink ist {$minutes} Minuten gültig.}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "minutes",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "minutes"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "minutes"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Hallo ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "firstName"
+                }
+              },
+              ",\n\ndein Anmeldelink ist eine Minute gültig."
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Hallo ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "firstName"
+                }
+              },
+              ",\n\ndein Anmeldelink ist ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "minutes"
+                }
+              },
+              " Minuten gültig."
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "firstName",
+              "value": "Lea"
+            },
+            {
+              "name": "minutes",
+              "value": 1
+            }
+          ],
+          "exp": "Hallo Lea,\n\ndein Anmeldelink ist eine Minute gültig."
+        },
+        {
+          "params": [
+            {
+              "name": "firstName",
+              "value": "Lea"
+            },
+            {
+              "name": "minutes",
+              "value": 15
+            }
+          ],
+          "exp": "Hallo Lea,\n\ndein Anmeldelink ist 15 Minuten gültig."
+        }
+      ]
+    },
+    {
+      "description": "KraftSport sets × reps: two top-level plurals become two selectors",
+      "locale": "de",
+      "src": "{sets, plural, one {# Satz} other {# Sätze}} × {reps, plural, one {# Wiederholung} other {# Wiederholungen}}",
+      "mf2": ".input {$sets :number}\n.input {$reps :number}\n.match $sets $reps\none one {{{$sets} Satz × {$reps} Wiederholung}}\none * {{{$sets} Satz × {$reps} Wiederholungen}}\n* one {{{$sets} Sätze × {$reps} Wiederholung}}\n* * {{{$sets} Sätze × {$reps} Wiederholungen}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "sets",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "sets"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "reps",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "reps"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "sets"
+          },
+          {
+            "type": "variable",
+            "name": "reps"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sets"
+                }
+              },
+              " Satz × ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "reps"
+                }
+              },
+              " Wiederholung"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sets"
+                }
+              },
+              " Satz × ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "reps"
+                }
+              },
+              " Wiederholungen"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sets"
+                }
+              },
+              " Sätze × ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "reps"
+                }
+              },
+              " Wiederholung"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sets"
+                }
+              },
+              " Sätze × ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "reps"
+                }
+              },
+              " Wiederholungen"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "sets",
+              "value": 1
+            },
+            {
+              "name": "reps",
+              "value": 1
+            }
+          ],
+          "exp": "1 Satz × 1 Wiederholung"
+        },
+        {
+          "params": [
+            {
+              "name": "sets",
+              "value": 3
+            },
+            {
+              "name": "reps",
+              "value": 12
+            }
+          ],
+          "exp": "3 Sätze × 12 Wiederholungen"
+        },
+        {
+          "params": [
+            {
+              "name": "sets",
+              "value": 1
+            },
+            {
+              "name": "reps",
+              "value": 8
+            }
+          ],
+          "exp": "1 Satz × 8 Wiederholungen"
+        }
+      ]
+    },
+    {
+      "description": "gender select around a shared suffix",
+      "locale": "de",
+      "src": "{gender, select, female {Sie hat} male {Er hat} other {Sie haben}} den Termin bestätigt.",
+      "mf2": ".input {$gender :string}\n.match $gender\nfemale {{Sie hat den Termin bestätigt.}}\nmale {{Er hat den Termin bestätigt.}}\n* {{Sie haben den Termin bestätigt.}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "gender",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "gender"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "gender"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              }
+            ],
+            "value": [
+              "Sie hat den Termin bestätigt."
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "male"
+              }
+            ],
+            "value": [
+              "Er hat den Termin bestätigt."
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Sie haben den Termin bestätigt."
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "female"
+            }
+          ],
+          "exp": "Sie hat den Termin bestätigt."
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "male"
+            }
+          ],
+          "exp": "Er hat den Termin bestätigt."
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "diverse"
+            }
+          ],
+          "exp": "Sie haben den Termin bestätigt."
+        }
+      ]
+    },
+    {
+      "description": "role select (Senat OS)",
+      "locale": "en",
+      "src": "{role, select, owner {You own this workspace} admin {You manage this workspace} other {You are a member of this workspace}}",
+      "mf2": ".input {$role :string}\n.match $role\nowner {{You own this workspace}}\nadmin {{You manage this workspace}}\n* {{You are a member of this workspace}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "role",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "role"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "role"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "owner"
+              }
+            ],
+            "value": [
+              "You own this workspace"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "admin"
+              }
+            ],
+            "value": [
+              "You manage this workspace"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "You are a member of this workspace"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "role",
+              "value": "owner"
+            }
+          ],
+          "exp": "You own this workspace"
+        },
+        {
+          "params": [
+            {
+              "name": "role",
+              "value": "admin"
+            }
+          ],
+          "exp": "You manage this workspace"
+        },
+        {
+          "params": [
+            {
+              "name": "role",
+              "value": "viewer"
+            }
+          ],
+          "exp": "You are a member of this workspace"
+        }
+      ]
+    },
+    {
+      "description": "Pet Medical: plural nested in every select case",
+      "locale": "de",
+      "src": "{gender, select, female {{count, plural, one {Sie hat # Haustier} other {Sie hat # Haustiere}}} male {{count, plural, one {Er hat # Haustier} other {Er hat # Haustiere}}} other {{count, plural, one {Sie haben # Haustier} other {Sie haben # Haustiere}}}}",
+      "mf2": ".input {$gender :string}\n.input {$count :number}\n.match $gender $count\nfemale one {{Sie hat {$count} Haustier}}\nfemale * {{Sie hat {$count} Haustiere}}\nmale one {{Er hat {$count} Haustier}}\nmale * {{Er hat {$count} Haustiere}}\n* one {{Sie haben {$count} Haustier}}\n* * {{Sie haben {$count} Haustiere}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "gender",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "gender"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "gender"
+          },
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Sie hat ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustier"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Sie hat ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustiere"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "male"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Er hat ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustier"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "male"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Er hat ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustiere"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Sie haben ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustier"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Sie haben ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Haustiere"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "female"
+            },
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "Sie hat 1 Haustier"
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "male"
+            },
+            {
+              "name": "count",
+              "value": 2
+            }
+          ],
+          "exp": "Er hat 2 Haustiere"
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "other"
+            },
+            {
+              "name": "count",
+              "value": 5
+            }
+          ],
+          "exp": "Sie haben 5 Haustiere"
+        }
+      ]
+    },
+    {
+      "description": "plural nested in one select case only, with a percent",
+      "locale": "en",
+      "src": "{hasDiscount, select, yes {{percent, number, percent} off {count, plural, one {# item} other {# items}}} other {Full price}}",
+      "mf2": ".input {$hasDiscount :string}\n.input {$count :number}\n.match $hasDiscount $count\nyes one {{{$percent :percent} off {$count} item}}\nyes * {{{$percent :percent} off {$count} items}}\n* one {{Full price}}\n* * {{Full price}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "hasDiscount",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "hasDiscount"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "hasDiscount"
+          },
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "yes"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "percent"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "percent"
+                }
+              },
+              " off ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " item"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "yes"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "percent"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "percent"
+                }
+              },
+              " off ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " items"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Full price"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Full price"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "hasDiscount",
+              "value": "yes"
+            },
+            {
+              "name": "percent",
+              "value": 0.2
+            },
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "20% off 1 item"
+        },
+        {
+          "params": [
+            {
+              "name": "hasDiscount",
+              "value": "yes"
+            },
+            {
+              "name": "percent",
+              "value": 0.15
+            },
+            {
+              "name": "count",
+              "value": 3
+            }
+          ],
+          "exp": "15% off 3 items"
+        },
+        {
+          "params": [
+            {
+              "name": "hasDiscount",
+              "value": "no"
+            },
+            {
+              "name": "percent",
+              "value": 0
+            },
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "Full price"
+        }
+      ]
+    },
+    {
+      "description": "# refers to the enclosing plural through a nested select",
+      "locale": "de",
+      "src": "{count, plural, one {{type, select, bread {# Brot} other {# Artikel}}} other {{type, select, bread {# Brote} other {# Artikel}}}}",
+      "mf2": ".input {$count :number}\n.input {$type :string}\n.match $count $type\none bread {{{$count} Brot}}\none * {{{$count} Artikel}}\n* bread {{{$count} Brote}}\n* * {{{$count} Artikel}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "type",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "type"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          },
+          {
+            "type": "variable",
+            "name": "type"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "literal",
+                "value": "bread"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Brot"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Artikel"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "bread"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Brote"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Artikel"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            },
+            {
+              "name": "type",
+              "value": "bread"
+            }
+          ],
+          "exp": "1 Brot"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 4
+            },
+            {
+              "name": "type",
+              "value": "bread"
+            }
+          ],
+          "exp": "4 Brote"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 4
+            },
+            {
+              "name": "type",
+              "value": "cake"
+            }
+          ],
+          "exp": "4 Artikel"
+        }
+      ]
+    },
+    {
+      "description": "select in plural in select lifts three selectors",
+      "locale": "en",
+      "src": "{gender, select, female {{count, plural, one {{mode, select, pickup {She picks up # loaf} other {She gets # loaf delivered}}} other {She orders # loaves}}} other {{count, plural, one {They order # loaf} other {They order # loaves}}}}",
+      "mf2": ".input {$gender :string}\n.input {$count :number}\n.input {$mode :string}\n.match $gender $count $mode\nfemale one pickup {{She picks up {$count} loaf}}\nfemale one * {{She gets {$count} loaf delivered}}\nfemale * pickup {{She orders {$count} loaves}}\nfemale * * {{She orders {$count} loaves}}\n* one pickup {{They order {$count} loaf}}\n* one * {{They order {$count} loaf}}\n* * pickup {{They order {$count} loaves}}\n* * * {{They order {$count} loaves}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "gender",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "gender"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          },
+          {
+            "type": "input",
+            "name": "mode",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "mode"
+              },
+              "function": {
+                "type": "function",
+                "name": "string"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "gender"
+          },
+          {
+            "type": "variable",
+            "name": "count"
+          },
+          {
+            "type": "variable",
+            "name": "mode"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "literal",
+                "value": "pickup"
+              }
+            ],
+            "value": [
+              "She picks up ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaf"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "She gets ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaf delivered"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "pickup"
+              }
+            ],
+            "value": [
+              "She orders ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaves"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "female"
+              },
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "She orders ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaves"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "literal",
+                "value": "pickup"
+              }
+            ],
+            "value": [
+              "They order ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaf"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "They order ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaf"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "pickup"
+              }
+            ],
+            "value": [
+              "They order ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaves"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "They order ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " loaves"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "female"
+            },
+            {
+              "name": "count",
+              "value": 1
+            },
+            {
+              "name": "mode",
+              "value": "pickup"
+            }
+          ],
+          "exp": "She picks up 1 loaf"
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "female"
+            },
+            {
+              "name": "count",
+              "value": 1
+            },
+            {
+              "name": "mode",
+              "value": "delivery"
+            }
+          ],
+          "exp": "She gets 1 loaf delivered"
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "female"
+            },
+            {
+              "name": "count",
+              "value": 6
+            },
+            {
+              "name": "mode",
+              "value": "pickup"
+            }
+          ],
+          "exp": "She orders 6 loaves"
+        },
+        {
+          "params": [
+            {
+              "name": "gender",
+              "value": "male"
+            },
+            {
+              "name": "count",
+              "value": 2
+            },
+            {
+              "name": "mode",
+              "value": "pickup"
+            }
+          ],
+          "exp": "They order 2 loaves"
+        }
+      ]
+    },
+    {
+      "description": "Brotwerk event: plural offset becomes :offset",
+      "locale": "de",
+      "src": "{guests, plural, offset:1 =0 {Niemand kommt} =1 {{host} kommt} one {{host} und # weitere Person kommen} other {{host} und # weitere Personen kommen}}",
+      "mf2": ".input {$guests :number}\n.local $guests_minus_1 = {$guests :offset subtract=1}\n.match $guests $guests_minus_1\n0 one {{Niemand kommt}}\n0 * {{Niemand kommt}}\n1 one {{{$host} kommt}}\n1 * {{{$host} kommt}}\n* one {{{$host} und {$guests_minus_1} weitere Person kommen}}\n* * {{{$host} und {$guests_minus_1} weitere Personen kommen}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "guests",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "guests"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          },
+          {
+            "type": "local",
+            "name": "guests_minus_1",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "guests"
+              },
+              "function": {
+                "type": "function",
+                "name": "offset",
+                "options": {
+                  "subtract": {
+                    "type": "literal",
+                    "value": "1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "guests"
+          },
+          {
+            "type": "variable",
+            "name": "guests_minus_1"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "0"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Niemand kommt"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "0"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Niemand kommt"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "1"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "host"
+                }
+              },
+              " kommt"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "1"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "host"
+                }
+              },
+              " kommt"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "host"
+                }
+              },
+              " und ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "guests_minus_1"
+                }
+              },
+              " weitere Person kommen"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              },
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "host"
+                }
+              },
+              " und ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "guests_minus_1"
+                }
+              },
+              " weitere Personen kommen"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "guests",
+              "value": 0
+            },
+            {
+              "name": "host",
+              "value": "Jonas"
+            }
+          ],
+          "exp": "Niemand kommt"
+        },
+        {
+          "params": [
+            {
+              "name": "guests",
+              "value": 1
+            },
+            {
+              "name": "host",
+              "value": "Jonas"
+            }
+          ],
+          "exp": "Jonas kommt"
+        },
+        {
+          "params": [
+            {
+              "name": "guests",
+              "value": 2
+            },
+            {
+              "name": "host",
+              "value": "Jonas"
+            }
+          ],
+          "exp": "Jonas und 1 weitere Person kommen"
+        },
+        {
+          "params": [
+            {
+              "name": "guests",
+              "value": 5
+            },
+            {
+              "name": "host",
+              "value": "Jonas"
+            }
+          ],
+          "exp": "Jonas und 4 weitere Personen kommen"
+        }
+      ]
+    },
+    {
+      "description": "likes with offset and no exact keys",
+      "locale": "en",
+      "src": "{likes, plural, offset:2 one {{name}, {other} and # more liked this} other {{name}, {other} and # others liked this}}",
+      "mf2": ".input {$likes :number}\n.local $likes_minus_2 = {$likes :offset subtract=2}\n.match $likes_minus_2\none {{{$name}, {$other} and {$likes_minus_2} more liked this}}\n* {{{$name}, {$other} and {$likes_minus_2} others liked this}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "likes",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "likes"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          },
+          {
+            "type": "local",
+            "name": "likes_minus_2",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "likes"
+              },
+              "function": {
+                "type": "function",
+                "name": "offset",
+                "options": {
+                  "subtract": {
+                    "type": "literal",
+                    "value": "2"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "likes_minus_2"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "name"
+                }
+              },
+              ", ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "other"
+                }
+              },
+              " and ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "likes_minus_2"
+                }
+              },
+              " more liked this"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "name"
+                }
+              },
+              ", ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "other"
+                }
+              },
+              " and ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "likes_minus_2"
+                }
+              },
+              " others liked this"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "likes",
+              "value": 3
+            },
+            {
+              "name": "name",
+              "value": "Ana"
+            },
+            {
+              "name": "other",
+              "value": "Ben"
+            }
+          ],
+          "exp": "Ana, Ben and 1 more liked this"
+        },
+        {
+          "params": [
+            {
+              "name": "likes",
+              "value": 10
+            },
+            {
+              "name": "name",
+              "value": "Ana"
+            },
+            {
+              "name": "other",
+              "value": "Ben"
+            }
+          ],
+          "exp": "Ana, Ben and 8 others liked this"
+        }
+      ]
+    },
+    {
+      "description": "English ordinals",
+      "locale": "en",
+      "src": "This is your {n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} order",
+      "mf2": ".input {$n :number select=ordinal}\n.match $n\none {{This is your {$n}st order}}\ntwo {{This is your {$n}nd order}}\nfew {{This is your {$n}rd order}}\n* {{This is your {$n}th order}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "n",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "n"
+              },
+              "function": {
+                "type": "function",
+                "name": "number",
+                "options": {
+                  "select": {
+                    "type": "literal",
+                    "value": "ordinal"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "n"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "This is your ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              "st order"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "two"
+              }
+            ],
+            "value": [
+              "This is your ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              "nd order"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "few"
+              }
+            ],
+            "value": [
+              "This is your ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              "rd order"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "This is your ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              "th order"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1
+            }
+          ],
+          "exp": "This is your 1st order"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 2
+            }
+          ],
+          "exp": "This is your 2nd order"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 3
+            }
+          ],
+          "exp": "This is your 3rd order"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 4
+            }
+          ],
+          "exp": "This is your 4th order"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 11
+            }
+          ],
+          "exp": "This is your 11th order"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 22
+            }
+          ],
+          "exp": "This is your 22nd order"
+        }
+      ]
+    },
+    {
+      "description": "German ordinal has only the other category",
+      "locale": "de",
+      "src": "Das ist deine {n, selectordinal, other {#.}} Bestellung",
+      "mf2": ".input {$n :number select=ordinal}\n.match $n\n* {{Das ist deine {$n}. Bestellung}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "n",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "n"
+              },
+              "function": {
+                "type": "function",
+                "name": "number",
+                "options": {
+                  "select": {
+                    "type": "literal",
+                    "value": "ordinal"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "n"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Das ist deine ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              ". Bestellung"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1
+            }
+          ],
+          "exp": "Das ist deine 1. Bestellung"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 42
+            }
+          ],
+          "exp": "Das ist deine 42. Bestellung"
+        }
+      ]
+    },
+    {
+      "description": "number",
+      "locale": "de",
+      "src": "Noch {km, number} km bis zur Filiale",
+      "mf2": "Noch {$km :number} km bis zur Filiale",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Noch ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "km"
+            },
+            "function": {
+              "type": "function",
+              "name": "number"
+            }
+          },
+          " km bis zur Filiale"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "km",
+              "value": 2.5
+            }
+          ],
+          "exp": "Noch 2,5 km bis zur Filiale"
+        },
+        {
+          "params": [
+            {
+              "name": "km",
+              "value": 1234
+            }
+          ],
+          "exp": "Noch 1.234 km bis zur Filiale"
+        }
+      ]
+    },
+    {
+      "description": "KraftSport calories: number, integer",
+      "locale": "de",
+      "src": "{kcal, number, integer} kcal verbrannt",
+      "mf2": "{$kcal :integer} kcal verbrannt",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "kcal"
+            },
+            "function": {
+              "type": "function",
+              "name": "integer"
+            }
+          },
+          " kcal verbrannt"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "kcal",
+              "value": 512
+            }
+          ],
+          "exp": "512 kcal verbrannt"
+        },
+        {
+          "params": [
+            {
+              "name": "kcal",
+              "value": 1234
+            }
+          ],
+          "exp": "1.234 kcal verbrannt"
+        }
+      ]
+    },
+    {
+      "description": "number, percent",
+      "locale": "de",
+      "src": "{rate, number, percent} Rabatt auf alles",
+      "mf2": "{$rate :percent} Rabatt auf alles",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "rate"
+            },
+            "function": {
+              "type": "function",
+              "name": "percent"
+            }
+          },
+          " Rabatt auf alles"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "rate",
+              "value": 0.2
+            }
+          ],
+          "exp": "20 % Rabatt auf alles"
+        },
+        {
+          "params": [
+            {
+              "name": "rate",
+              "value": 0.125
+            }
+          ],
+          "exp": "13 % Rabatt auf alles"
+        }
+      ]
+    },
+    {
+      "description": "currency skeleton, euro",
+      "locale": "de",
+      "src": "Gesamt: {total, number, ::currency/EUR}",
+      "mf2": "Gesamt: {$total :currency currency=EUR}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Gesamt: ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "total"
+            },
+            "function": {
+              "type": "function",
+              "name": "currency",
+              "options": {
+                "currency": {
+                  "type": "literal",
+                  "value": "EUR"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "total",
+              "value": 12.5
+            }
+          ],
+          "exp": "Gesamt: 12,50 €"
+        },
+        {
+          "params": [
+            {
+              "name": "total",
+              "value": 1234
+            }
+          ],
+          "exp": "Gesamt: 1.234,00 €"
+        }
+      ]
+    },
+    {
+      "description": "currency skeleton, US dollar",
+      "locale": "en",
+      "src": "Total due: {amount, number, ::currency/USD}",
+      "mf2": "Total due: {$amount :currency currency=USD}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Total due: ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "amount"
+            },
+            "function": {
+              "type": "function",
+              "name": "currency",
+              "options": {
+                "currency": {
+                  "type": "literal",
+                  "value": "USD"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "amount",
+              "value": 9.99
+            }
+          ],
+          "exp": "Total due: $9.99"
+        },
+        {
+          "params": [
+            {
+              "name": "amount",
+              "value": 1500
+            }
+          ],
+          "exp": "Total due: $1,500.00"
+        }
+      ]
+    },
+    {
+      "description": "percent skeleton with scale/100",
+      "locale": "en",
+      "src": "{share, number, ::percent scale/100} of your plan used",
+      "mf2": "{$share :percent} of your plan used",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "share"
+            },
+            "function": {
+              "type": "function",
+              "name": "percent"
+            }
+          },
+          " of your plan used"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "share",
+              "value": 0.456
+            }
+          ],
+          "exp": "46% of your plan used"
+        },
+        {
+          "params": [
+            {
+              "name": "share",
+              "value": 1
+            }
+          ],
+          "exp": "100% of your plan used"
+        }
+      ]
+    },
+    {
+      "description": "date without style is medium",
+      "locale": "de",
+      "src": "Bestellt am {date, date}",
+      "mf2": "Bestellt am {$date :date}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Bestellt am ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "date"
+            },
+            "function": {
+              "type": "function",
+              "name": "date"
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "date",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Bestellt am 19. Sept. 2026"
+        }
+      ]
+    },
+    {
+      "description": "date, short",
+      "locale": "de",
+      "src": "Lieferung am {d, date, short}",
+      "mf2": "Lieferung am {$d :date length=short}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Lieferung am ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "d"
+            },
+            "function": {
+              "type": "function",
+              "name": "date",
+              "options": {
+                "length": {
+                  "type": "literal",
+                  "value": "short"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "d",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Lieferung am 19.9.2026"
+        }
+      ]
+    },
+    {
+      "description": "date, long",
+      "locale": "en",
+      "src": "Your subscription renews on {renewal, date, long}.",
+      "mf2": "Your subscription renews on {$renewal :date length=long}.",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Your subscription renews on ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "renewal"
+            },
+            "function": {
+              "type": "function",
+              "name": "date",
+              "options": {
+                "length": {
+                  "type": "literal",
+                  "value": "long"
+                }
+              }
+            }
+          },
+          "."
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "renewal",
+              "type": "datetime",
+              "value": "2026-10-01T09:00:00Z"
+            }
+          ],
+          "exp": "Your subscription renews on October 1, 2026."
+        }
+      ]
+    },
+    {
+      "description": "date, full",
+      "locale": "de",
+      "src": "Termin am {day, date, full}",
+      "mf2": "Termin am {$day :date fields=year-month-day-weekday length=long}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Termin am ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "day"
+            },
+            "function": {
+              "type": "function",
+              "name": "date",
+              "options": {
+                "fields": {
+                  "type": "literal",
+                  "value": "year-month-day-weekday"
+                },
+                "length": {
+                  "type": "literal",
+                  "value": "long"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "day",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Termin am Samstag, 19. September 2026"
+        }
+      ]
+    },
+    {
+      "description": "time without style is medium",
+      "locale": "en",
+      "src": "Last sync at {t, time}",
+      "mf2": "Last sync at {$t :time precision=second}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Last sync at ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "t"
+            },
+            "function": {
+              "type": "function",
+              "name": "time",
+              "options": {
+                "precision": {
+                  "type": "literal",
+                  "value": "second"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "t",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Last sync at 2:05:09 PM"
+        }
+      ]
+    },
+    {
+      "description": "Brotwerk pickup window: date medium and two short times",
+      "locale": "de",
+      "src": "Abholung am {day, date, medium} zwischen {from, time, short} und {to, time, short} Uhr",
+      "mf2": "Abholung am {$day :date length=medium} zwischen {$from :time precision=minute} und {$to :time precision=minute} Uhr",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Abholung am ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "day"
+            },
+            "function": {
+              "type": "function",
+              "name": "date",
+              "options": {
+                "length": {
+                  "type": "literal",
+                  "value": "medium"
+                }
+              }
+            }
+          },
+          " zwischen ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "from"
+            },
+            "function": {
+              "type": "function",
+              "name": "time",
+              "options": {
+                "precision": {
+                  "type": "literal",
+                  "value": "minute"
+                }
+              }
+            }
+          },
+          " und ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "to"
+            },
+            "function": {
+              "type": "function",
+              "name": "time",
+              "options": {
+                "precision": {
+                  "type": "literal",
+                  "value": "minute"
+                }
+              }
+            }
+          },
+          " Uhr"
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "day",
+              "type": "datetime",
+              "value": "2026-09-19T00:00:00Z"
+            },
+            {
+              "name": "from",
+              "type": "datetime",
+              "value": "2026-09-19T07:30:00Z"
+            },
+            {
+              "name": "to",
+              "type": "datetime",
+              "value": "2026-09-19T11:00:00Z"
+            }
+          ],
+          "exp": "Abholung am 19. Sept. 2026 zwischen 07:30 und 11:00 Uhr"
+        }
+      ]
+    },
+    {
+      "description": "time, long",
+      "locale": "en",
+      "src": "Starts at {t, time, long}",
+      "mf2": "Starts at {$t :time precision=second timeZoneStyle=short}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Starts at ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "t"
+            },
+            "function": {
+              "type": "function",
+              "name": "time",
+              "options": {
+                "precision": {
+                  "type": "literal",
+                  "value": "second"
+                },
+                "timeZoneStyle": {
+                  "type": "literal",
+                  "value": "short"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "t",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Starts at 2:05:09 PM UTC"
+        }
+      ]
+    },
+    {
+      "description": "time, full",
+      "locale": "de",
+      "src": "Beginn um {t, time, full}",
+      "mf2": "Beginn um {$t :time precision=second timeZoneStyle=short}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Beginn um ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "t"
+            },
+            "function": {
+              "type": "function",
+              "name": "time",
+              "options": {
+                "precision": {
+                  "type": "literal",
+                  "value": "second"
+                },
+                "timeZoneStyle": {
+                  "type": "literal",
+                  "value": "short"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "t",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Beginn um 14:05:09 UTC"
+        }
+      ]
+    },
+    {
+      "description": "number placeholder inside a plural",
+      "locale": "de",
+      "src": "{points, plural, one {{points, number} Punkt} other {{points, number} Punkte}}",
+      "mf2": ".input {$points :number}\n.match $points\none {{{$points :number} Punkt}}\n* {{{$points :number} Punkte}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "points",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "points"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "points"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "points"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "number"
+                }
+              },
+              " Punkt"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "points"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "number"
+                }
+              },
+              " Punkte"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "points",
+              "value": 1
+            }
+          ],
+          "exp": "1 Punkt"
+        },
+        {
+          "params": [
+            {
+              "name": "points",
+              "value": 2500
+            }
+          ],
+          "exp": "2.500 Punkte"
+        }
+      ]
+    },
+    {
+      "description": "plain argument of a plural variable",
+      "locale": "de",
+      "src": "{count, plural, one {{count} Datei} other {{count} Dateien}}",
+      "mf2": ".input {$count :number}\n.match $count\none {{{$count} Datei}}\n* {{{$count} Dateien}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Datei"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " Dateien"
+            ]
+          }
+        ]
+      },
+      "divergence": "MF1 prints a plain {count} argument with String(value), so 2500 stays 2500. In MF2 the selector's .input {$count :number} applies to every {$count}, so it is locale-formatted (2.500). Values below 1000 without fractions format identically; the MF2 output is the correctly localized one.",
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "1 Datei"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 5
+            }
+          ],
+          "exp": "5 Dateien"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 2500
+            }
+          ],
+          "exp": "2500 Dateien",
+          "mf2Exp": "2.500 Dateien"
+        }
+      ]
+    },
+    {
+      "description": "French plural uses many (Armada)",
+      "locale": "fr",
+      "src": "{n, plural, one {# fichier} many {# de fichiers} other {# fichiers}}",
+      "mf2": ".input {$n :number}\n.match $n\none {{{$n} fichier}}\nmany {{{$n} de fichiers}}\n* {{{$n} fichiers}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "n",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "n"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "n"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              " fichier"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "many"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              " de fichiers"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              " fichiers"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1
+            }
+          ],
+          "exp": "1 fichier"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 2
+            }
+          ],
+          "exp": "2 fichiers"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1000000
+            }
+          ],
+          "exp": "1 000 000 de fichiers"
+        }
+      ]
+    },
+    {
+      "description": "Spanish plural (Armada)",
+      "locale": "es",
+      "src": "{count, plural, one {# tarea pendiente} other {# tareas pendientes}}",
+      "mf2": ".input {$count :number}\n.match $count\none {{{$count} tarea pendiente}}\n* {{{$count} tareas pendientes}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " tarea pendiente"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " tareas pendientes"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "1 tarea pendiente"
+        },
+        {
+          "params": [
+            {
+              "name": "count",
+              "value": 4
+            }
+          ],
+          "exp": "4 tareas pendientes"
+        }
+      ]
+    },
+    {
+      "description": "Japanese plural has only other (Armada)",
+      "locale": "ja",
+      "src": "{n, plural, other {#件の結果}}",
+      "mf2": ".input {$n :number}\n.match $n\n* {{{$n}件の結果}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "n",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "n"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "n"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              },
+              "件の結果"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1
+            }
+          ],
+          "exp": "1件の結果"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 12000
+            }
+          ],
+          "exp": "12,000件の結果"
+        }
+      ]
+    },
+    {
+      "description": "Brotwerk push notification with emoji",
+      "locale": "de",
+      "src": "{baker} hat {count, plural, one {ein neues Brot} other {# neue Brote}} gebacken 🍞",
+      "mf2": ".input {$count :number}\n.match $count\none {{{$baker} hat ein neues Brot gebacken 🍞}}\n* {{{$baker} hat {$count} neue Brote gebacken 🍞}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "count",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "count"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "count"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "baker"
+                }
+              },
+              " hat ein neues Brot gebacken 🍞"
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "baker"
+                }
+              },
+              " hat ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "count"
+                }
+              },
+              " neue Brote gebacken 🍞"
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "baker",
+              "value": "Jonas"
+            },
+            {
+              "name": "count",
+              "value": 1
+            }
+          ],
+          "exp": "Jonas hat ein neues Brot gebacken 🍞"
+        },
+        {
+          "params": [
+            {
+              "name": "baker",
+              "value": "Jonas"
+            },
+            {
+              "name": "count",
+              "value": 6
+            }
+          ],
+          "exp": "Jonas hat 6 neue Brote gebacken 🍞"
+        }
+      ]
+    },
+    {
+      "description": "plural alongside a currency (Nexa invoice)",
+      "locale": "de",
+      "src": "{items, plural, one {# Position} other {# Positionen}}, Summe {sum, number, ::currency/EUR}",
+      "mf2": ".input {$items :number}\n.match $items\none {{{$items} Position, Summe {$sum :currency currency=EUR}}}\n* {{{$items} Positionen, Summe {$sum :currency currency=EUR}}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "items",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "items"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "items"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "items"
+                }
+              },
+              " Position, Summe ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sum"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "currency",
+                  "options": {
+                    "currency": {
+                      "type": "literal",
+                      "value": "EUR"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "items"
+                }
+              },
+              " Positionen, Summe ",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "sum"
+                },
+                "function": {
+                  "type": "function",
+                  "name": "currency",
+                  "options": {
+                    "currency": {
+                      "type": "literal",
+                      "value": "EUR"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "items",
+              "value": 1
+            },
+            {
+              "name": "sum",
+              "value": 19.9
+            }
+          ],
+          "exp": "1 Position, Summe 19,90 €"
+        },
+        {
+          "params": [
+            {
+              "name": "items",
+              "value": 12
+            },
+            {
+              "name": "sum",
+              "value": 2480.5
+            }
+          ],
+          "exp": "12 Positionen, Summe 2.480,50 €"
+        }
+      ]
+    },
+    {
+      "description": "apostrophe-quoted hash inside a plural is text",
+      "locale": "en",
+      "src": "{n, plural, one {Ticket '#'#} other {Tickets '#'1 to '#'#}}",
+      "mf2": ".input {$n :number}\n.match $n\none {{Ticket #{$n}}}\n* {{Tickets #1 to #{$n}}}",
+      "exp": {
+        "type": "select",
+        "declarations": [
+          {
+            "type": "input",
+            "name": "n",
+            "value": {
+              "type": "expression",
+              "arg": {
+                "type": "variable",
+                "name": "n"
+              },
+              "function": {
+                "type": "function",
+                "name": "number"
+              }
+            }
+          }
+        ],
+        "selectors": [
+          {
+            "type": "variable",
+            "name": "n"
+          }
+        ],
+        "variants": [
+          {
+            "keys": [
+              {
+                "type": "literal",
+                "value": "one"
+              }
+            ],
+            "value": [
+              "Ticket #",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              }
+            ]
+          },
+          {
+            "keys": [
+              {
+                "type": "*"
+              }
+            ],
+            "value": [
+              "Tickets #1 to #",
+              {
+                "type": "expression",
+                "arg": {
+                  "type": "variable",
+                  "name": "n"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 1
+            }
+          ],
+          "exp": "Ticket #1"
+        },
+        {
+          "params": [
+            {
+              "name": "n",
+              "value": 3
+            }
+          ],
+          "exp": "Tickets #1 to #3"
+        }
+      ]
+    },
+    {
+      "description": "duration keeps a non-standard mf1: function",
+      "locale": "en",
+      "src": "Video length: {secs, duration}",
+      "mf2": "Video length: {$secs :mf1:duration @mf1:argType=duration}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Video length: ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "secs"
+            },
+            "function": {
+              "type": "function",
+              "name": "mf1:duration"
+            },
+            "attributes": {
+              "mf1:argType": {
+                "type": "literal",
+                "value": "duration"
+              }
+            }
+          }
+        ]
+      },
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "secs",
+              "value": 135
+            }
+          ],
+          "exp": "Video length: 2:15"
+        },
+        {
+          "params": [
+            {
+              "name": "secs",
+              "value": 3725
+            }
+          ],
+          "exp": "Video length: 1:02:05"
+        }
+      ]
+    },
+    {
+      "description": "date skeleton has no standard equivalent",
+      "locale": "en",
+      "src": "Due {d, date, ::yyyyMMMd}",
+      "mf2": "Due {$d :mf1:date mf1:argStyle=|::yyyyMMMd| @mf1:argType=date @mf1:argStyle=|::yyyyMMMd|}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Due ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "d"
+            },
+            "function": {
+              "type": "function",
+              "name": "mf1:date",
+              "options": {
+                "mf1:argStyle": {
+                  "type": "literal",
+                  "value": "::yyyyMMMd"
+                }
+              }
+            },
+            "attributes": {
+              "mf1:argType": {
+                "type": "literal",
+                "value": "date"
+              },
+              "mf1:argStyle": {
+                "type": "literal",
+                "value": "::yyyyMMMd"
+              }
+            }
+          }
+        ]
+      },
+      "divergence": "MF2 :date only knows fields/length, not ICU date skeletons. The argument keeps its MF1 type and style in mf1: attributes so it can be exported back to MF1 unchanged, but standard MF2 runtimes cannot reproduce it (the reference reports bad-option).",
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "d",
+              "type": "datetime",
+              "value": "2026-09-19T14:05:09Z"
+            }
+          ],
+          "exp": "Due Sep 19, 26",
+          "mf2Exp": null
+        }
+      ]
+    },
+    {
+      "description": "number, currency without a currency code",
+      "locale": "en",
+      "src": "Price: {price, number, currency}",
+      "mf2": "Price: {$price :mf1:currency @mf1:argType=number @mf1:argStyle=currency}",
+      "exp": {
+        "type": "message",
+        "declarations": [],
+        "pattern": [
+          "Price: ",
+          {
+            "type": "expression",
+            "arg": {
+              "type": "variable",
+              "name": "price"
+            },
+            "function": {
+              "type": "function",
+              "name": "mf1:currency"
+            },
+            "attributes": {
+              "mf1:argType": {
+                "type": "literal",
+                "value": "number"
+              },
+              "mf1:argStyle": {
+                "type": "literal",
+                "value": "currency"
+              }
+            }
+          }
+        ]
+      },
+      "divergence": "MF1 takes the currency from the formatter's configuration (USD by default); MF2 :currency requires the currency in the message or the operand. Kept as mf1:currency so the source round-trips; pass a currency-annotated value or rewrite the message with ::currency/XXX.",
+      "samples": [
+        {
+          "params": [
+            {
+              "name": "price",
+              "value": 4.5
+            }
+          ],
+          "exp": "Price: $4.50",
+          "mf2Exp": null
+        }
+      ]
+    },
+    {
+      "description": "unclosed argument",
+      "locale": "en",
+      "src": "Hello {name",
+      "expErrors": [
+        {
+          "type": "mf1-syntax-error"
+        }
+      ]
+    },
+    {
+      "description": "few is not a German plural category",
+      "locale": "de",
+      "src": "{n, plural, few {x} other {y}}",
+      "expErrors": [
+        {
+          "type": "mf1-syntax-error"
+        }
+      ]
+    },
+    {
+      "description": "zero is not an English plural category",
+      "locale": "en",
+      "src": "{n, plural, zero {none} other {#}}",
+      "expErrors": [
+        {
+          "type": "mf1-syntax-error"
+        }
+      ]
+    },
+    {
+      "description": "exact keys are not valid in select",
+      "locale": "en",
+      "src": "{x, select, =1 {a} other {b}}",
+      "expErrors": [
+        {
+          "type": "mf1-syntax-error"
+        }
+      ]
+    },
+    {
+      "description": "unknown plural key",
+      "locale": "en",
+      "src": "{n, plural, lots {x} other {y}}",
+      "expErrors": [
+        {
+          "type": "mf1-syntax-error"
+        }
+      ]
+    },
+    {
+      "description": "one argument as both select and plural",
+      "locale": "en",
+      "src": "{x, select, a {A} other {B}} {x, plural, one {one} other {many}}",
+      "expErrors": [
+        {
+          "type": "mf1-unsupported"
+        }
+      ]
+    },
+    {
+      "description": "positional argument names are not MF2 variable names",
+      "locale": "de",
+      "src": "{0} Einträge gefunden",
+      "expErrors": [
+        {
+          "type": "mf1-unsupported"
+        }
+      ]
+    },
+    {
+      "description": "one argument with and without a plural offset",
+      "locale": "en",
+      "src": "{n, plural, offset:1 one {a} other {b}} {n, plural, one {c} other {d}}",
+      "expErrors": [
+        {
+          "type": "mf1-unsupported"
+        }
+      ]
+    }
+  ]
+}

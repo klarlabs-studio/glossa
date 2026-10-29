@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS intelligence_disclosures;
+DROP TABLE IF EXISTS intelligence_suggestions;
+DROP TABLE IF EXISTS intelligence_jobs;
+DROP TABLE IF EXISTS intelligence_fills;
+DROP TABLE IF EXISTS intelligence_spend;
+DROP TABLE IF EXISTS intelligence_routing_policies;
+DROP TABLE IF EXISTS intelligence_project_settings;
+DROP TABLE IF EXISTS intelligence_settings;
+DROP TABLE IF EXISTS intelligence_providers;

@@ -1,0 +1,305 @@
+{
+  "description": "A candidate whose artifact fails integrity is never half-activated: the installation gets the stable view of the same manifest, not the release it had before",
+  "publicKeys": [
+    {
+      "keyId": "k_test",
+      "key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg"
+    }
+  ],
+  "installationId": "e56569efb77a68930c4817af70197f0b",
+  "steps": [
+    {
+      "description": "release 1, no rollout",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m1\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "w3jGw0oAQKmTb2JJhqJVuUqXrHON3LccAtjnvilVYVTAxV5PYs9MnrwJzJaKL_7WEPfzBRU62loSxSjhIwYBCg"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_1",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v1",
+      "expRollout": null
+    },
+    {
+      "description": "rel_2 published with a rollout of rel_3 at 10 %; rel_3's artifacts are corrupt",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m2\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_2",
+              "version": 2,
+              "createdAt": "2026-09-02T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                  "size": 148
+                }
+              }
+            },
+            "rollout": {
+              "id": "ro_fixture",
+              "percent": 10,
+              "salt": "c3RhZ2VkLXJvbGxvdXQtMQ",
+              "candidate": {
+                "release": {
+                  "id": "rel_3",
+                  "version": 3,
+                  "createdAt": "2026-09-03T08:00:00Z"
+                },
+                "locales": [
+                  {
+                    "code": "en",
+                    "direction": "ltr"
+                  },
+                  {
+                    "code": "de",
+                    "direction": "ltr"
+                  }
+                ],
+                "fallback": {},
+                "artifacts": {
+                  "en": {
+                    "default": {
+                      "sha256": "d230b1fd92b8af0048023e505b7e9799b6750b3c6148467746b3a2ac6d6edfc8",
+                      "size": 148
+                    }
+                  },
+                  "de": {
+                    "default": {
+                      "sha256": "694bdc9cfe4a4b9cadb8923b9c9f42884f3a4868829d17c1b3a2e47d21cde00c",
+                      "size": 148
+                    }
+                  }
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "vYK3FIZke7bigYStzpTGzehx3AN22wPea8NtHe5IsApWsB4mgPs9YMSJd1udihh-4GJKDY8pYNytaND6-lgjAw"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "d230b1fd92b8af0048023e505b7e9799b6750b3c6148467746b3a2ac6d6edfc8": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello vX\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "694bdc9cfe4a4b9cadb8923b9c9f42884f3a4868829d17c1b3a2e47d21cde00c": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo vX\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_2",
+      "expSource": "network",
+      "expErrors": [
+        "integrity"
+      ],
+      "exp": "Hello v2",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 10,
+        "cohort": 390,
+        "side": "stable"
+      }
+    },
+    {
+      "description": "the same manifest, rel_3 served correctly",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m2b\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_2",
+              "version": 2,
+              "createdAt": "2026-09-02T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                  "size": 148
+                }
+              }
+            },
+            "rollout": {
+              "id": "ro_fixture",
+              "percent": 10,
+              "salt": "c3RhZ2VkLXJvbGxvdXQtMQ",
+              "candidate": {
+                "release": {
+                  "id": "rel_3",
+                  "version": 3,
+                  "createdAt": "2026-09-03T08:00:00Z"
+                },
+                "locales": [
+                  {
+                    "code": "en",
+                    "direction": "ltr"
+                  },
+                  {
+                    "code": "de",
+                    "direction": "ltr"
+                  }
+                ],
+                "fallback": {},
+                "artifacts": {
+                  "en": {
+                    "default": {
+                      "sha256": "d230b1fd92b8af0048023e505b7e9799b6750b3c6148467746b3a2ac6d6edfc8",
+                      "size": 148
+                    }
+                  },
+                  "de": {
+                    "default": {
+                      "sha256": "694bdc9cfe4a4b9cadb8923b9c9f42884f3a4868829d17c1b3a2e47d21cde00c",
+                      "size": 148
+                    }
+                  }
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "vYK3FIZke7bigYStzpTGzehx3AN22wPea8NtHe5IsApWsB4mgPs9YMSJd1udihh-4GJKDY8pYNytaND6-lgjAw"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "d230b1fd92b8af0048023e505b7e9799b6750b3c6148467746b3a2ac6d6edfc8": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v3\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "694bdc9cfe4a4b9cadb8923b9c9f42884f3a4868829d17c1b3a2e47d21cde00c": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v3\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_3",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v3",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 10,
+        "cohort": 390,
+        "side": "candidate"
+      }
+    }
+  ]
+}

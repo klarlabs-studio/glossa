@@ -8,16 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	aitranslatorapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/aitranslator"
-	translationapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translation"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/audit"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translation"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/user"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	aitranslatorapp "go.klarlabs.de/glossa/apps/api/internal/app/aitranslator"
+	translationapp "go.klarlabs.de/glossa/apps/api/internal/app/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/audit"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/user"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 // handleListBundle returns the full (project, locale) message map.
@@ -41,14 +41,8 @@ func handleListBundle(
 			ginerr.Send(c, errs.InternalFromErr(err))
 			return
 		}
-		var found locale.Locale
-		for _, l := range all {
-			if l.Code.String() == code {
-				found = l
-				break
-			}
-		}
-		if found.ID == uuid.Nil {
+		found, ok := findLocale(all, code)
+		if !ok {
 			ginerr.Send(c, errs.LocaleNotFoundForProject)
 			return
 		}
@@ -76,13 +70,15 @@ func handleListBundle(
 				TenantID:  tenantID,
 				ProjectID: &pid,
 				Kind:      analytics.KindConsumerRequest,
-				Metadata:  map[string]any{"locale": code},
+				Metadata:  map[string]any{"locale": found.Code.String()},
 			})
 		}
 
+		// The canonical code, whatever spelling was requested, so
+		// clients can key caches on it and match SSE events.
 		c.JSON(http.StatusOK, gin.H{
 			"project":  p.Slug.String(),
-			"locale":   code,
+			"locale":   found.Code.String(),
 			"messages": messages,
 			"statuses": statuses,
 		})
@@ -125,7 +121,7 @@ func handlePatchTranslation(
 		// Translator locale scoping. API-key callers carry no role
 		// so they're treated as service-level and skip this check.
 		if role, ok := c.Get(ctxKeyUserRole); ok && role == string(user.RoleTranslator) {
-			if !sliceContains(authedUserLocales(c), localeCode) {
+			if !localeInScope(authedUserLocales(c), localeCode) {
 				ginerr.Send(c, errs.TranslatorOutOfScopeLocale)
 				return
 			}
@@ -142,17 +138,14 @@ func handlePatchTranslation(
 			ginerr.Send(c, errs.InternalFromErr(err))
 			return
 		}
-		var l locale.Locale
-		for _, candidate := range allLocales {
-			if candidate.Code.String() == localeCode {
-				l = candidate
-				break
-			}
-		}
-		if l.ID == uuid.Nil {
+		l, ok := findLocale(allLocales, localeCode)
+		if !ok {
 			ginerr.Send(c, errs.LocaleNotFound)
 			return
 		}
+		// From here on the canonical code, so SSE events, audit rows
+		// and the source-locale check never see "de-de" for "de-DE".
+		localeCode = l.Code.String()
 
 		k, err := keys.FindByName(contextOf(c), p.ID, keyName)
 		if err != nil {
@@ -228,7 +221,7 @@ func handlePatchTranslation(
 		// Source-locale write → fan out AI translations to every other
 		// enabled locale that doesn't already have a reviewer-touched
 		// entry. Fire-and-forget; the response returns immediately.
-		if fanOut != nil && localeCode == p.DefaultLocale {
+		if fanOut != nil && l.Code.Matches(p.DefaultLocale) {
 			fanOut.Trigger(aitranslatorapp.FanOutInput{
 				TenantID:       tenantID.(uuid.UUID),
 				ProjectID:      p.ID,
@@ -246,15 +239,6 @@ func handlePatchTranslation(
 			"status": string(out.Status),
 		})
 	}
-}
-
-func sliceContains(haystack []string, needle string) bool {
-	for _, v := range haystack {
-		if v == needle {
-			return true
-		}
-	}
-	return false
 }
 
 // keysFinder resolves a (project, key name) pair to a key UUID.

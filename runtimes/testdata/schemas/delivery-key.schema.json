@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glossa.dev/schemas/delivery-key/v1.json",
+  "title": "Glossa delivery key index object v1 (runtimes/SPEC.md §2.1), stored at v1/keys/<sha256(key)>.json",
+  "type": "object",
+  "required": ["schema", "project", "key_id"],
+  "properties": {
+    "schema": { "const": "glossa.delivery-key/v1" },
+    "project": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "key_id": { "type": "string" },
+    "environments": {
+      "description": "The environments the key may read by name. Absent in objects written before scopes existed: they read as development, preview, staging and production.",
+      "type": "array",
+      "maxItems": 50,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]{0,62}$",
+        "not": { "anyOf": [{ "const": "a" }, { "pattern": "^(pr-[1-9][0-9]{0,17}|br-[0-9a-f]{8})$" }] }
+      }
+    },
+    "branches": {
+      "description": "A preview key: it also reads every branch environment (pr-<number>, br-<8 hex>).",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

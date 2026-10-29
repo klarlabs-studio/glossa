@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glossa.dev/schemas/finding/v1.json",
+  "title": "Glossa finding v1: one quality finding, from any layer (RFC 0005 §2.1)",
+  "description": "The one shape a finding has, everywhere: in `glossa check`, in the Glossa pull-request check, in the server's stored check runs, in Studio and over MCP. A layer says what is wrong with which message in which locale; Context fills the locus's file, line, route, component, capture and region in at report time. Go: platform/internal/quality/domain.Finding.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "fingerprint", "layer", "code", "severity", "locus", "message"],
+  "properties": {
+    "schema": { "const": "glossa.finding/v1" },
+    "fingerprint": {
+      "description": "Identifies the finding across re-runs and across surfaces. sha256 of the layer, the code, the message (its catalog ID where the caller has one, its key otherwise), the locale and the normalized subject — and of nothing else, so a reformatted file, a new source revision or a reworded explanation never re-opens a waiver.",
+      "type": "string",
+      "pattern": "^f_[0-9a-f]{16}$"
+    },
+    "layer": {
+      "description": "Which layer found it (RFC 0005 §3). Selectable by name in the policy and on the command line.",
+      "enum": ["structure", "parity", "completeness", "terminology", "style", "length", "locale", "source", "visual", "linguistic"]
+    },
+    "code": {
+      "description": "The rule. Stable, and shared with the CLI and the pull-request check; the MessageFormat kernel's codes keep their spelling (missing-argument, markup-renamed), as do Knowledge's (term_missing, term_forbidden).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+    },
+    "severity": {
+      "description": "error or warning, plus waived — which is a rendering of a finding and not a third rank a layer may emit. A waived finding is still computed and still reported, counted on its own, and can never fail a check.",
+      "enum": ["error", "warning", "waived"]
+    },
+    "locus": { "$ref": "#/$defs/locus" },
+    "message": {
+      "description": "The explanation for a person. Its wording is not stable and it is deliberately not part of the fingerprint.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "subject": {
+      "description": "What the finding names: the argument, the markup element, the term used. Part of the fingerprint, because two missing arguments in one message are two findings.",
+      "type": "string",
+      "maxLength": 500
+    },
+    "detail": {
+      "description": "Qualifies the code — the MessageFormat kernel's Detail, e.g. 'missing-fallback-variant' or 'number->string'.",
+      "type": "string",
+      "maxLength": 500
+    },
+    "evidence": {
+      "description": "What the layer measured. RFC 0005 §2.1 spells this `detail`; it is `evidence` here so the kernel's string `detail` — which every conversion before M4 dropped — keeps its own name and both survive. Free-form per code.",
+      "type": "object"
+    },
+    "fix": { "$ref": "#/$defs/fix" },
+    "source_revision": {
+      "description": "The source revision the finding was computed against. A waiver dies when it changes (RFC 0005 §2.3).",
+      "type": "integer",
+      "minimum": 0
+    },
+    "waiver": {
+      "description": "The waiver that accepted this finding. Present exactly when severity is 'waived'.",
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "allOf": [
+    {
+      "description": "A waived finding names its waiver, and only a waived finding does.",
+      "if": { "properties": { "severity": { "const": "waived" } }, "required": ["severity"] },
+      "then": { "required": ["waiver"] },
+      "else": { "not": { "required": ["waiver"] } }
+    }
+  ],
+  "$defs": {
+    "locus": {
+      "description": "Everything that locates a finding. Every field is optional and every field means the same thing in every layer.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "description": "The catalog message's ID. Absent where the caller has only the key, which is the case for an offline `glossa check`.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "key": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/key" },
+        "locale": {
+          "description": "The locale the finding is about (BCP 47); absent for a finding about the project rather than a translation.",
+          "type": "string",
+          "maxLength": 35,
+          "pattern": "^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$"
+        },
+        "revision": {
+          "description": "The translation revision the finding was computed against.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "namespace": {
+          "description": "The message's namespace.",
+          "type": "string",
+          "maxLength": 200,
+          "pattern": "^[a-z0-9_-]+(?:\\.[a-z0-9_-]+)*$"
+        },
+        "file": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/file" },
+        "line": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/line" },
+        "column": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/column" },
+        "route": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/route" },
+        "component": { "$ref": "https://glossa.dev/schemas/usages/v1.json#/$defs/usage/properties/component" },
+        "capture": {
+          "description": "The capture a visual finding is about.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "region": {
+          "description": "The region on that capture.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^\\S+$"
+        },
+        "span": { "$ref": "#/$defs/span" }
+      },
+      "dependentRequired": {
+        "line": ["file"],
+        "column": ["line"],
+        "region": ["capture"]
+      }
+    },
+    "span": {
+      "description": "The offending words in the source or the target, in bytes. It is what lets Studio and the overlay underline them instead of the whole string.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["side", "start", "end"],
+      "properties": {
+        "side": { "enum": ["source", "target"] },
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "fix": {
+      "description": "A hint, never an action: nothing applies one without a person or an explicit --fix.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["replace", "shorten", "use-term", "adopt-source-change"] },
+        "to": { "description": "The length 'shorten' asks for.", "type": "integer", "minimum": 0 },
+        "term": { "description": "The preferred term's ID, for 'use-term'.", "type": "string", "format": "uuid" },
+        "hint": { "description": "The suggested text, where the layer can produce one.", "type": "string", "maxLength": 4000 }
+      }
+    }
+  }
+}

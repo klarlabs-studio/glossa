@@ -1,0 +1,70 @@
+{{- if and .Values.minio.enabled .Values.minio.bootstrap.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "minio-test") -}}
+{{- $v := .Values.minio -}}
+{{- if .Values.networkPolicy.enabled }}
+# `helm test`: out to DNS and MinIO's S3 port only.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-test") | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio-test") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.objectStorageEgress" . | nindent 4 }}
+---
+{{- end }}
+# `helm test <release>`: glossa-edge's credentials reach and read the
+# bucket but can neither write nor delete; glossa-server's can do both
+# (files/minio-test.sh). A failed Pod stays for `kubectl logs`.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-test") | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "0"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+  securityContext:
+    {{- include "gp.podSecurityContext" 65532 | nindent 4 }}
+  {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 2 }}{{ end }}
+  containers:
+    - name: test
+      image: {{ include "gp.externalImage" (dict "image" $v.bootstrap.image) }}
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      command: ["/bin/bash", "-c"]
+      args:
+        - {{ .Files.Get "files/minio-test.sh" | quote }}
+      securityContext:
+        {{- include "gp.containerSecurityContext" . | nindent 8 }}
+      env:
+        {{- include "gp.minio.mcEnv" . | nindent 8 }}
+      # Not the bootstrap Job's 128Mi: `mc pipe` buffers multipart upload
+      # parts, and the test was killed (137) at its first write.
+      resources:
+        requests: { cpu: 50m, memory: 64Mi }
+        limits: { memory: 256Mi }
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 16Mi
+{{- end }}

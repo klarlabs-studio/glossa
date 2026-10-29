@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 // handleProjectMetrics — GET /api/v1/admin/projects/:slug/metrics

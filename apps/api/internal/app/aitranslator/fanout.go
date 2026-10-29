@@ -12,11 +12,11 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/audit"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/audit"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translation"
 )
 
 // FanOutInput describes one source-locale write that may need to

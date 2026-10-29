@@ -1,0 +1,69 @@
+{
+  "id": "en-de-signout-phrasing",
+  "description": "The glossary says this product signs people out with Abmelden.",
+  "source_locale": "en",
+  "target_locale": "de",
+  "source": "Sign out",
+  "translation": "Ausloggen",
+  "context": {
+    "key": "nav.sign_out",
+    "namespace": "nav",
+    "description": "Menu item in the account menu"
+  },
+  "style": {
+    "version": "de@3",
+    "formality": "formal",
+    "pronoun": "Sie",
+    "tone": [
+      "professional",
+      "calm"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with Sie, never du",
+        "rationale": "the product is used at work",
+        "good": [
+          "Jetzt bezahlen"
+        ],
+        "bad": [
+          "Zahl jetzt"
+        ]
+      }
+    ]
+  },
+  "terms": [
+    {
+      "concept_id": "c_signout",
+      "definition": "ending a session",
+      "source": {
+        "id": "t_c_signout_src",
+        "text": "sign out",
+        "locale": "en",
+        "status": "preferred"
+      },
+      "targets": [
+        {
+          "id": "t_c_signout_use_0",
+          "text": "Abmelden",
+          "locale": "de",
+          "status": "preferred"
+        },
+        {
+          "id": "t_c_signout_no_0",
+          "text": "Ausloggen",
+          "locale": "de",
+          "status": "forbidden"
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "codes": [
+      "inconsistent-phrasing"
+    ],
+    "quotes": [
+      "Ausloggen"
+    ]
+  }
+}

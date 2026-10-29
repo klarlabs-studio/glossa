@@ -9,10 +9,10 @@ import (
 
 	"github.com/google/uuid"
 
-	projectapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/apikey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
+	projectapp "go.klarlabs.de/glossa/apps/api/internal/app/project"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
 )
 
 // stubLocaleRepo captures Save calls so the test can assert the
@@ -212,5 +212,49 @@ func TestCreateProject_PropagatesRepoFailure(t *testing.T) {
 	})
 	if err == nil {
 		t.Fatal("expected repo error to bubble")
+	}
+}
+
+// The default locale is the project's source locale, so it gets the
+// same BCP 47 canonicalization as every other locale. Before, an
+// invalid default was stored as-is and the seed step silently
+// skipped it, leaving a project whose source locale didn't exist.
+func TestCreateProject_CanonicalizesDefaultLocale(t *testing.T) {
+	repo := newInMemoryRepo()
+	locales := &stubLocaleRepo{}
+	uc := projectapp.NewCreateProject(repo, locales, &stubAPIKeyRepo{}, nil)
+
+	out, err := uc.Execute(context.Background(), projectapp.CreateInput{
+		TenantID:      uuid.New(),
+		Slug:          "x",
+		Name:          "X",
+		DefaultLocale: "zh_hant_tw",
+	})
+	if err != nil {
+		t.Fatalf("Execute: %v", err)
+	}
+	if out.Project.DefaultLocale != "zh-Hant-TW" {
+		t.Errorf("DefaultLocale = %q, want zh-Hant-TW", out.Project.DefaultLocale)
+	}
+	if len(locales.saved) != 1 || locales.saved[0].Code.String() != "zh-Hant-TW" {
+		t.Errorf("seeded locales = %+v, want one zh-Hant-TW row", locales.saved)
+	}
+}
+
+func TestCreateProject_RejectsInvalidDefaultLocale(t *testing.T) {
+	repo := newInMemoryRepo()
+	uc, _ := newCreate(repo)
+
+	_, err := uc.Execute(context.Background(), projectapp.CreateInput{
+		TenantID:      uuid.New(),
+		Slug:          "x",
+		Name:          "X",
+		DefaultLocale: "not a locale",
+	})
+	if !errors.Is(err, locale.ErrInvalidCode) {
+		t.Fatalf("expected locale.ErrInvalidCode, got %v", err)
+	}
+	if len(repo.projects) != 0 {
+		t.Error("project was saved despite an invalid default locale")
 	}
 }

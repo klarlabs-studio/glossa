@@ -1,0 +1,43 @@
+{
+  "id": "en-de-delete-meaning",
+  "description": "The translation says the account is archived, not deleted.",
+  "source_locale": "en",
+  "target_locale": "de",
+  "source": "Delete your account permanently.",
+  "translation": "Ihr Konto wird archiviert.",
+  "context": {
+    "key": "account.delete",
+    "namespace": "account",
+    "description": "Confirmation shown before an irreversible deletion"
+  },
+  "style": {
+    "version": "de@3",
+    "formality": "formal",
+    "pronoun": "Sie",
+    "tone": [
+      "professional",
+      "calm"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with Sie, never du",
+        "rationale": "the product is used at work",
+        "good": [
+          "Jetzt bezahlen"
+        ],
+        "bad": [
+          "Zahl jetzt"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "meaning-divergence"
+    ],
+    "quotes": [
+      "archiviert"
+    ]
+  }
+}

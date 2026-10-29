@@ -1,0 +1,118 @@
+{
+  "id": "de-fr-cancel-tm-exact",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Abbrechen",
+  "context": {
+    "key": "common.cancel",
+    "description": "Button in dialogs"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-facture",
+            "text": "facture",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-espace",
+            "text": "espace de travail",
+            "locale": "fr",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-fr",
+            "text": "workspace",
+            "locale": "fr",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-compte",
+            "text": "compte",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-datei",
+            "text": "Datei",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-fichier",
+            "text": "fichier",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "fr-formal-2",
+      "formality": "formal",
+      "pronoun": "vous",
+      "punctuation": {
+        "spacing": "a space before ! ? : and ;"
+      }
+    },
+    "tm": [
+      {
+        "id": "tm-cancel",
+        "key": "common.cancel",
+        "source": "Abbrechen",
+        "target": "Annuler",
+        "pair": {
+          "source": "de",
+          "target": "fr"
+        }
+      }
+    ]
+  },
+  "expect": {
+    "origin": "translation_memory"
+  },
+  "references": [
+    "Annuler"
+  ]
+}

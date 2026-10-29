@@ -1,0 +1,1021 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tmx version="1.4">
+  <header creationtool="LegacyCAT" creationtoolversion="3.2" segtype="sentence" o-tmf="Glossa" adminlang="en" srclang="de" datatype="plaintext"/>
+  <body>
+    <tu tuid="legacy-es-001" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} Einladung ausgewählt}}
+* {{{$count} Einladungen ausgewählt}}</seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} invitación seleccionada}}
+many {{{$count} de invitaciones seleccionadas}}
+* {{{$count} invitaciones seleccionadas}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-es-002" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Sie haben noch keine Passkeys.</seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <seg>Todavía no tiene llaves de acceso.</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-es-003" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Anzahl der Passwörter: <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <seg>Número de contraseñas: <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-es-004" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Sitzung beenden</seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <seg>Cerrar sesión</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-es-005" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Aufgabe bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <seg>Editar tarea</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-es-006" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Webhook löschen</seg>
+      </tuv>
+      <tuv xml:lang="es">
+        <seg>Eliminar webhook</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-007" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>API-Schlüssel löschen</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Supprimer la clé API</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-008" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Neuer Passkey</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Nouvelle clé d’accès</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-009" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Sie haben noch keine Rechnungen.</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Vous n’avez encore aucune facture.</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-010" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rechnung exportieren</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Exporter la facture</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-011" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Neuer Tarif</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Nouveau forfait</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-012" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Anzahl der Tarife: <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Nombre de forfaits : <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-013" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Integrationen erstellen.}}
+* {{Nur Administratoren können Integrationen erstellen.}}</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{En tant qu’administrateur, vous pouvez créer les intégrations.}}
+* {{Seuls les administrateurs peuvent créer les intégrations.}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-014" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Alle Mitglieder</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Tous les membres</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-015" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Mehr über Mitglieder erfahren Sie in der <bpt i="1" x="1">{#link}</bpt>Hilfe<ept i="1">{/link}</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>En savoir plus sur les membres dans le <bpt i="1" x="1">{#link}</bpt>centre d’aide<ept i="1">{/link}</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-fr-016" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Webhook aktualisieren</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Mettre à jour le webhook</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-017" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Einladung widerrufen.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんが招待状を無効化しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-018" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Neue Sitzung</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>新しい接続</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-019" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Tarif exportieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>料金体系をエクスポート</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-020" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Das Projekt wurde erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>案件を作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-021" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Datei herunterladen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>書類をダウンロード</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-022" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Datei geteilt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんが書類を共有しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-023" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Integration erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>統合を作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-024" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Rollen erstellen.}}
+* {{Nur Administratoren können Rollen erstellen.}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{管理者は役割を作成できます。}}
+* {{役割を作成できるのは管理者のみです。}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-025" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Anzahl der API-Schlüssel: <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>APIキーの数: <ph x="1">{$total :number}</ph></seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-026" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Passkey erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>パスキーを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-027" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat den Passkey erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんがパスキーを作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-028" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Der Passkey wurde erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>パスキーを作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-029" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Sitzung wurde widerrufen.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>セッションを無効化しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-030" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Wiederholen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>もう一度試す</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-031" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rabattcode erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>割引コードを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-032" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Rechnung gelöscht.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんが請求書を削除しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-033" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Zahlungsmethode wurde gelöscht.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>支払い方法を削除しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-034" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Zahlungsmethode bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>支払い方法を編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-035" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Möchten Sie diesen Tarif wirklich archivieren?</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>このプランをアーカイブしてもよろしいですか？</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-036" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Der Tarif wurde archiviert.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>プランをアーカイブしました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-037" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Neuer Tarif</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>新しいプラン</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-038" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Abonnement löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>サブスクリプションを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-039" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Das Abonnement wurde gelöscht.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>サブスクリプションを削除しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-040" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} Abonnement ausgewählt}}
+* {{{$count} Abonnements ausgewählt}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+* {{{$count}件のサブスクリプションを選択中}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-041" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Weiter</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>次へ</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-042" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Diagramm teilen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>グラフを共有</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-043" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Möchten Sie dieses Projekt wirklich löschen?</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>このプロジェクトを削除してもよろしいですか？</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-044" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Neues Projekt</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>新しいプロジェクト</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-045" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat den Bericht exportiert.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんがレポートをエクスポートしました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-046" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Widget löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>ウィジェットを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-047" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Der Filter konnte nicht erstellt werden.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>フィルターを作成できませんでした。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-048" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Das Passwort konnte nicht zurückgesetzt werden.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>パスワードをリセットできませんでした。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-049" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Erinnerung wurde nicht gefunden.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>リマインダーが見つかりません。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-050" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Rolle wurde nicht gefunden.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>ロールが見つかりません。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-051" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Zurück</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>戻る</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-052" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Datei heruntergeladen.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんがファイルをダウンロードしました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-053" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Dateien herunterladen.}}
+* {{Nur Administratoren können Dateien herunterladen.}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$role :string}
+.match $role
+admin {{管理者はファイルをダウンロードできます。}}
+* {{ファイルをダウンロードできるのは管理者のみです。}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-054" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Mehr über Dateien erfahren Sie in der <bpt i="1" x="1">{#link}</bpt>Hilfe<ept i="1">{/link}</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>ファイルについて詳しくは<bpt i="1" x="1">{#link}</bpt>ヘルプセンター<ept i="1">{/link}</ept>をご覧ください。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-055" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Datei wurde geteilt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>ファイルを共有しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-056" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Möchten Sie diese Benachrichtigung wirklich löschen?</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>この通知を削除してもよろしいですか？</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-057" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} Erinnerung}}
+* {{{$count} Erinnerungen}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+* {{{$count}件のリマインダー}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-058" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Die Erinnerung wurde erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>リマインダーを作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-059" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Alle Integrationen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>連携一覧</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-060" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} Integration}}
+* {{{$count} Integrationen}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+* {{{$count}件の連携}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-061" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Das Mitglied wurde entfernt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>メンバーを削除しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-062" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+one {{{$count} Rolle}}
+* {{{$count} Rollen}}</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$count :number}
+.match $count
+* {{{$count}件のロール}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-063" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Rolle erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんがロールを作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-064" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg><ph x="1">{$name}</ph> hat die Rolle bearbeitet.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg><ph x="1">{$name}</ph>さんがロールを編集しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-065" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Der Webhook wurde erstellt.</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>Webhookを作成しました。</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-066" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Möchten Sie diesen Arbeitsbereich wirklich löschen?</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>このワークスペースを削除してもよろしいですか？</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-067" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>API-Schlüssel jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐAPIキーを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-068" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>API-Schlüssel jetzt aktualisieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐAPIキーを更新</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-069" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Passkey jetzt widerrufen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐパスキーを無効化</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-070" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Passwort jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐパスワードを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-071" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Passwort jetzt zurücksetzen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐパスワードをリセット</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-072" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Sitzung jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐセッションを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-073" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Sitzung jetzt beenden</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐセッションを終了</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-074" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rabattcode jetzt teilen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ割引コードを共有</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-075" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rechnung jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ請求書を削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-076" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rechnung jetzt herunterladen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ請求書をダウンロード</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-077" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rechnung jetzt exportieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ請求書をエクスポート</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-078" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Zahlungsmethode jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ支払い方法を作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-079" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Zahlungsmethode jetzt aktualisieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ支払い方法を更新</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-080" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Tarif jetzt archivieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐプランをアーカイブ</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-081" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Diagramm jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐグラフを編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-082" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Diagramm jetzt exportieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐグラフをエクスポート</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-083" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Filter jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐフィルターを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-084" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Projekt jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐプロジェクトを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-085" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Projekt jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐプロジェクトを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-086" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Projekt jetzt teilen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐプロジェクトを共有</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-087" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Bericht jetzt herunterladen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐレポートをダウンロード</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-088" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Widget jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐウィジェットを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-089" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Kommentar jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐコメントを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-090" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Datei jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐファイルを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-091" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Benachrichtigung jetzt archivieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ通知をアーカイブ</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-092" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Benachrichtigung jetzt stummschalten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ通知をミュート</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-093" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Erinnerung jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐリマインダーを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-094" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Erinnerung jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐリマインダーを編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-095" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Aufgabe jetzt archivieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐタスクをアーカイブ</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-096" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Aufgabe jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐタスクを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-097" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Integration jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ連携を削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-098" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Integration jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ連携を編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-099" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Integration jetzt aktualisieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐ連携を更新</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-100" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Mitglied jetzt entfernen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐメンバーを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-101" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Rolle jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐロールを編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-102" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Webhook jetzt erstellen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐWebhookを作成</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-103" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Webhook jetzt löschen</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐWebhookを削除</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-104" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Webhook jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐWebhookを編集</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-105" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Arbeitsbereich jetzt archivieren</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐワークスペースをアーカイブ</seg>
+      </tuv>
+    </tu>
+    <tu tuid="legacy-ja-106" srclang="de">
+      <note>Brotwerk Cloud v3 translation memory</note>
+      <tuv xml:lang="de">
+        <seg>Arbeitsbereich jetzt bearbeiten</seg>
+      </tuv>
+      <tuv xml:lang="ja">
+        <seg>今すぐワークスペースを編集</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

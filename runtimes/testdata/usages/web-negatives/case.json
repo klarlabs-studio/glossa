@@ -1,0 +1,5 @@
+{
+  "description": "What is NOT a usage in web sources: dynamic keys (variables, concatenation, template literals with substitutions, conditionals, bound expressions), literals that aren't valid keys, calls to other functions, anything inside comments, strings, JSX or template text, HTML comments and escaped text, other components and elements, and the DOM `id` of a custom element. Each file keeps one real usage (nav.home, nav.static) as a control.",
+  "implementations": ["unplugin"],
+  "keys": []
+}

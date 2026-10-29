@@ -1,0 +1,887 @@
+# Default values for glossa-platform. Every value is documented in
+# README.md. Values marked REQUIRED have no usable default: the chart
+# refuses to render until they are set (see examples/).
+
+# -- Overrides the chart name in labels.
+nameOverride: ""
+# -- Prefix of every resource name (default: the release name).
+fullnameOverride: ""
+
+## ── Hostnames ─────────────────────────────────────────────────────
+## Studio and the public API share one host by default (the API under /v1,
+## so the session cookie stays first-party); cdn.<domain> is glossa-edge.
+## hosts.studio and hosts.cdn are REQUIRED; hosts.api is optional.
+hosts:
+  # -- Studio. Its /v1 is routed to glossa-server, so the session cookie
+  # stays first-party (studio/README.md).
+  studio: ""
+  # -- OPTIONAL separate host for the public /v1 API (CLI, API tokens) on
+  # glossa-server. Empty: the API is served on hosts.studio under /v1.
+  api: ""
+  # -- glossa-edge: runtimes fetch manifests and artifacts here.
+  cdn: ""
+
+## ── Images ────────────────────────────────────────────────────────
+image:
+  registry: ghcr.io
+  pullPolicy: IfNotPresent
+  # -- Refuse to render unless server, edge, studio and (when enabled) site are each pinned by
+  # digest. A release run emits the three digests it published as a values
+  # file that sets this and the digests together, so a deployment either
+  # pins exactly what CI built or fails loudly (README.md, "Cutting a
+  # release"). Off by default so the chart renders from a tag alone.
+  requireDigest: false
+  # -- imagePullSecrets for all pods (GHCR packages are public for this repo).
+  pullSecrets: []
+
+## ── Common pod settings ───────────────────────────────────────────
+# -- Labels added to every resource.
+commonLabels: {}
+# -- Annotations on every Deployment.
+deploymentAnnotations: {}
+# -- Annotations on every pod.
+podAnnotations: {}
+
+## ── glossa-server ─────────────────────────────────────────────────
+server:
+  image:
+    repository: klarlabs-studio/glossa-server
+    # -- Defaults to v<.Chart.AppVersion>, the tag Kiln pushes.
+    tag: ""
+    # -- sha256:… pins the image by digest (tag is kept for readability).
+    digest: ""
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+  logLevel: info
+  # -- GLOSSA_SHUTDOWN_TIMEOUT; keep it below terminationGracePeriodSeconds.
+  shutdownTimeout: 25s
+  terminationGracePeriodSeconds: 35
+  # -- GLOSSA_SESSION_TTL.
+  sessionTTL: 336h
+  outbox:
+    # -- GLOSSA_OUTBOX_ENABLED: run the dispatcher in the server pods.
+    enabled: true
+  ai:
+    # -- GLOSSA_AI_WORKERS_ENABLED: run AI translation job workers in the server pods.
+    workersEnabled: true
+    # -- GLOSSA_AI_WORKERS per pod.
+    workers: 2
+    # -- GLOSSA_AI_PROVIDER_CONCURRENCY: in-flight calls per provider, per pod.
+    providerConcurrency: 4
+  integration:
+    # -- GLOSSA_INTEGRATION_WORKERS_ENABLED: run import/export workers (and the retention sweep).
+    workersEnabled: true
+    # -- GLOSSA_INTEGRATION_WORKERS per pod.
+    workers: 1
+    # -- GLOSSA_INTEGRATION_MAX_UPLOAD_BYTES (default 64 MiB).
+    maxUploadBytes: 67108864
+    # -- GLOSSA_INTEGRATION_RETENTION: how long import/export files are kept.
+    retention: 168h
+  # The daily purge job (RFC 0004 §2.3): Context's builds beyond
+  # retention — the latest 3 per application, branch and source, plus
+  # every current one, and a closed branch's after 7 days — their
+  # captures, the images no capture references any more, and Catalog's
+  # separate proposal sweep (14 days, RFC 0004 §4.1). A lease picks one
+  # replica per run, so this stays on with several replicas.
+  purge:
+    # -- GLOSSA_PURGE_ENABLED: run the retention jobs. Off, builds and their images accumulate.
+    enabled: true
+    # -- GLOSSA_PURGE_INTERVAL: how often the jobs run across the deployment.
+    interval: 24h
+    # -- GLOSSA_PURGE_TIMEOUT: bounds one run of one job.
+    timeout: 30m
+    # -- GLOSSA_PURGE_LEASE: how long a run reserves its job; must exceed the timeout.
+    lease: 35m
+    # -- GLOSSA_PURGE_POLL_INTERVAL: how often a replica asks whether a job is due.
+    pollInterval: 5m
+    # -- GLOSSA_PURGE_JITTER: fraction of pollInterval each poll is spread by (0–1).
+    jitter: 0.2
+    # -- GLOSSA_PURGE_BATCH_SIZE: object-store deletes issued at a time.
+    batchSize: 100
+  # Workflow (RFC 0006 §2.5): a finished instance keeps its transition log
+  # this long; the daily workflow.retention job (one of the purge jobs
+  # above) then deletes it. Running instances are never deleted.
+  workflow:
+    # -- GLOSSA_WORKFLOW_INSTANCE_RETENTION: at least 24h.
+    instanceRetention: 4320h
+  context:
+    # -- GLOSSA_CONTEXT_STORAGE_QUOTA_BYTES: capture images one tenant may keep in
+    # object storage (2 GiB). A capture upload whose new pixels would pass it is
+    # refused with `storage_quota_exceeded` (413); retention frees space again.
+    storageQuotaBytes: 2147483648
+  # MCP (RFC 0005 §7): glossa-server serves the Model Context Protocol at
+  # /mcp over streamable HTTP, in this same process, behind the same
+  # middleware, tenancy and row-level security as the REST API.
+  #
+  # It is off by default. An MCP session authenticates with an ordinary
+  # tenant API token — no new credential is minted — so turning it on
+  # lets every existing token that carries `read` drive an agent against
+  # the tenant's catalog. Turn it on deliberately, and read the MCP
+  # section of the README first.
+  mcp:
+    # -- GLOSSA_MCP_ENABLED: serve MCP at /mcp. Off: the path is not
+    # registered at all.
+    enabled: false
+    # -- GLOSSA_MCP_SESSION_TIMEOUT: close a session idle this long, so an
+    # agent that walks away does not hold one open.
+    sessionTimeout: 30m
+    # -- GLOSSA_MCP_RATE: tool calls a minute per tenant.
+    rate: 120
+    # -- GLOSSA_MCP_BURST: tool calls a tenant may make at once.
+    burst: 240
+  # The branch publisher: it publishes a branch's preview environment once
+  # its debounced request is due. A publish is keyed by its request, so
+  # every replica may run it. (The proposal sweep is a purge job above.)
+  branches:
+    # -- GLOSSA_BRANCH_PUBLISHER_ENABLED: publish branch preview environments when
+    # their debounced request is due.
+    publisherEnabled: true
+    # -- GLOSSA_BRANCH_PUBLISH_INTERVAL: how often due publishes are looked for.
+    publishInterval: 5s
+  # The webhook inbox (RFC 0004 §6.2): the endpoint verifies the
+  # signature, stores the delivery and answers 202 well inside GitHub's
+  # 10 s limit, and this worker processes the inbox afterwards — claimed
+  # with a lease, at least once, idempotent handlers, like the outbox.
+  # Whether the integration exists at all is decided by the `github`
+  # block further down; without an App these settings are inert.
+  github:
+    inbox:
+      # -- GLOSSA_GITHUB_INBOX_ENABLED: process stored deliveries in these
+      # pods. Off, deliveries are still stored and acknowledged — nothing
+      # acts on them until a process with it on comes along.
+      enabled: true
+      # -- GLOSSA_GITHUB_INBOX_WORKERS: deliveries handled at once, per pod (1–64).
+      workers: 2
+      # -- GLOSSA_GITHUB_INBOX_POLL_INTERVAL: how long a worker waits when the inbox is empty.
+      pollInterval: 1s
+      # -- GLOSSA_GITHUB_INBOX_TIMEOUT: bounds one attempt at one delivery.
+      timeout: 30s
+      # -- GLOSSA_GITHUB_INBOX_LEASE: how long a claimed delivery is reserved
+      # against the other replicas; must exceed the timeout, or the server
+      # refuses to start.
+      lease: 2m
+      # -- GLOSSA_GITHUB_INBOX_DEPTH_INTERVAL: how often the inbox-depth metric is sampled.
+      depthInterval: 30s
+    # The Glossa PR check (RFC 0004 §6.4): a second queue worker that
+    # renders a pull request's report and writes its check run and its
+    # one sticky comment. A pull request's check is queued by the webhook
+    # whatever this says, so turning it off everywhere makes checks wait
+    # rather than lose them.
+    checks:
+      # -- GLOSSA_GITHUB_CHECKS_ENABLED: render and report pull requests'
+      # Glossa checks in these pods.
+      enabled: true
+      # -- GLOSSA_GITHUB_CHECK_WORKERS: checks rendered at once, per pod (1–64).
+      workers: 2
+      # -- GLOSSA_GITHUB_CHECK_POLL_INTERVAL: how long a worker waits when the queue is empty.
+      pollInterval: 1s
+      # -- GLOSSA_GITHUB_CHECK_TIMEOUT: bounds one attempt at one check.
+      timeout: 1m
+      # -- GLOSSA_GITHUB_CHECK_LEASE: how long a claimed check is reserved
+      # against the other replicas; must exceed the timeout, or the server
+      # refuses to start. It is also what keeps one job per pull request,
+      # and so one writer of the sticky comment.
+      lease: 5m
+      # -- GLOSSA_GITHUB_CHECK_DEPTH_INTERVAL: how often the check queue's depth is sampled.
+      depthInterval: 30s
+  webauthn:
+    # -- GLOSSA_WEBAUTHN_RP_ID (registrable domain). Default: hosts.studio.
+    rpId: ""
+    rpName: Glossa
+    # -- GLOSSA_WEBAUTHN_ORIGINS. Default: https://<hosts.studio>.
+    origins: []
+  otel:
+    # -- OTEL_EXPORTER_OTLP_ENDPOINT; empty disables trace export.
+    endpoint: ""
+  # -- Extra env vars (a list of EnvVar) for the server container.
+  extraEnv: []
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # -- Replaces the default soft spread across nodes.
+  topologySpreadConstraints: []
+  migrations:
+    # -- Run `glossa-server -migrate=only` as a pre-install/pre-upgrade hook Job.
+    enabled: true
+    # -- Retries absorb a slow NetworkPolicy sync on a fresh pod; a failed
+    # migration leaves golang-migrate dirty, so retries fail fast then.
+    backoffLimit: 3
+    activeDeadlineSeconds: 600
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+
+## ── glossa-edge ───────────────────────────────────────────────────
+edge:
+  image:
+    repository: klarlabs-studio/glossa-edge
+    tag: ""
+    digest: ""
+  replicas: 2
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    # Leave room above cache.bytes for the Go heap.
+    limits:
+      memory: 256Mi
+  logLevel: info
+  shutdownTimeout: 25s
+  terminationGracePeriodSeconds: 35
+  cache:
+    # -- GLOSSA_EDGE_CACHE_BYTES.
+    bytes: 67108864
+    # -- GLOSSA_EDGE_KEY_TTL: the longest a revoked delivery key keeps working.
+    keyTTL: 30s
+    # -- GLOSSA_EDGE_MANIFEST_TTL: the delay of a publish at one edge.
+    manifestTTL: 5s
+  otel:
+    endpoint: ""
+  extraEnv: []
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
+
+## ── Studio ────────────────────────────────────────────────────────
+studio:
+  image:
+    repository: klarlabs-studio/glossa-studio
+    tag: ""
+    digest: ""
+  replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 16Mi
+    limits:
+      memory: 64Mi
+  # Rendered into /config.json and the CSP at container start.
+  runtimeConfig:
+    # -- GLOSSA_STUDIO_API_BASE_URL. Empty: /v1 on Studio's own origin.
+    apiBaseUrl: ""
+    # -- GLOSSA_STUDIO_EDGE_URL. Default: https://<hosts.cdn>.
+    edgeUrl: ""
+    # -- GLOSSA_STUDIO_ENVIRONMENT.
+    environment: production
+    # -- GLOSSA_STUDIO_CSP_CONNECT_SRC: extra connect-src origins, space separated.
+    cspConnectSrc: ""
+  extraEnv: []
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
+
+## ── Site ──────────────────────────────────────────────────────────
+## The landing page (site/). Served at the exact "/" of hosts.studio and its
+## /_astro/ assets; Studio keeps every other path, its home at /app.
+site:
+  # -- Deploy the landing page. Off: Studio's host sends "/" to Studio, which
+  # redirects to /app.
+  enabled: true
+  image:
+    repository: klarlabs-studio/glossa-site
+    tag: ""
+    digest: ""
+  replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 16Mi
+    limits:
+      memory: 64Mi
+  extraEnv: []
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
+
+## ── Database DSNs ─────────────────────────────────────────────────
+## Klarlabs standard §2: the server connects as the non-superuser
+## glossa_app (FORCE RLS); the owner (CREATEROLE, never superuser) only
+## runs migrations. An external Postgres: each DSN comes from an existing
+## Secret. With postgres.enabled both default to the in-namespace Postgres
+## (built from the passwords in postgres.owner/postgres.app); setting a
+## Secret here still overrides that.
+database:
+  app:
+    # -- REQUIRED unless postgres.enabled. Secret holding the glossa_app DSN (DATABASE_URL).
+    secretName: ""
+    secretKey: DATABASE_URL
+  migration:
+    # -- REQUIRED when server.migrations.enabled, unless postgres.enabled.
+    # Secret holding the owner DSN.
+    secretName: ""
+    secretKey: MIGRATION_DATABASE_URL
+
+## ── In-namespace Postgres ─────────────────────────────────────────
+## The Klarlabs pattern: one plain single-replica Postgres StatefulSet
+## per product namespace on a Longhorn volume, with nightly dumps (see
+## backup below). No operator. See README.md, "In-namespace Postgres".
+postgres:
+  # -- Run Postgres in the release's namespace and point the DSNs at it.
+  enabled: false
+  # -- The server's major version is also the pg_dump/psql major of every
+  # Job (they all use this image): a newer pg_dump writes dumps an older
+  # server cannot restore (README.md, "Backups").
+  image:
+    repository: docker.io/library/postgres
+    tag: 16.15-alpine
+    digest: sha256:3c5c8892d184f738f4fe282d14ddaa613a38f00f4189d2d94725ebe6f2909ddb
+  # -- The application database; the bootstrap Job creates it, owned by
+  # postgres.owner.username.
+  database: glossa
+  superuser:
+    # -- The image's superuser (POSTGRES_USER at initdb).
+    username: postgres
+    # -- REQUIRED with postgres.enabled. Existing Secret with its password;
+    # read by Postgres (initdb) and the bootstrap Jobs only.
+    secretName: ""
+    passwordKey: password
+  owner:
+    # -- The schema owner that runs migrations: LOGIN CREATEROLE, never a
+    # superuser. The bootstrap Job creates it and the database.
+    username: glossa_owner
+    # -- REQUIRED with postgres.enabled. Existing Secret with its password.
+    secretName: ""
+    passwordKey: password
+  app:
+    # -- REQUIRED with postgres.enabled. Existing Secret with glossa_app's
+    # password; the bootstrap Job gives glossa_app (created by the first
+    # migration) LOGIN with it.
+    secretName: ""
+    passwordKey: password
+    # -- pool_max_conns in the server's DSN, per server pod.
+    poolMaxConns: 20
+  persistence:
+    # -- `longhorn` keeps 3 replicas across the nodes (the v0.3 lesson: a
+    # one-node volume took the database down with that node). Immutable
+    # after install (a volumeClaimTemplate).
+    storageClassName: longhorn
+    # -- Immutable in the template after install; grow the PVC itself.
+    size: 5Gi
+    # -- Labels on the PVC, e.g. a Longhorn recurring-job group.
+    labels: {}
+    annotations: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+  # -- Room for a fast shutdown (SIGINT, the image's STOPSIGNAL) to
+  # checkpoint.
+  terminationGracePeriodSeconds: 60
+  pdb:
+    # -- maxUnavailable 1 lets a node drain evict the single pod (the
+    # server is unavailable until it is back); 0 blocks drains.
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  bootstrap:
+    # -- Hook Jobs around the migration: <fullname>-postgres-init (owner
+    # role, database, backup role) before it and <fullname>-postgres-app-login
+    # (glossa_app LOGIN + password) after it. Idempotent; they re-apply
+    # rotated passwords on every upgrade.
+    enabled: true
+    # -- How long the init Job waits for Postgres (volume attach, initdb).
+    waitSeconds: 600
+    backoffLimit: 3
+    activeDeadlineSeconds: 900
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+
+## ── Backups ───────────────────────────────────────────────────────
+## Nightly CronJobs to an rclone remote outside the cluster (Klarlabs: the
+## shared Hetzner Storage Box over SFTP): a pg_dump of the in-namespace
+## Postgres, a mirror of the MinIO bucket, and a weekly restore drill of
+## the newest dump. See README.md, "Backups".
+backup:
+  enabled: false
+  rclone:
+    image:
+      repository: docker.io/rclone/rclone
+      tag: 1.75.1
+      digest: sha256:45401ad7410db1d67ffdb58e19059ad20b0d8e0285a60e38bbec55cc1019c7a5
+    # -- REQUIRED with backup.enabled. Existing Secret mounted at
+    # /etc/rclone: rclone.conf plus the files it references there (SSH key,
+    # known_hosts). The chart never creates it.
+    configSecretName: ""
+    configKey: rclone.conf
+  # Encryption before anything leaves the cluster (README.md, "Backups"):
+  # the dumps are age files, the MinIO mirror is an rclone crypt remote.
+  age:
+    # -- The offline recovery key's public half (the same for every Klarlabs
+    # tenant). Each dump is encrypted to it and to the drill key.
+    recoveryRecipient: age1jczmrtfzlqlxxvuwmkljr4qeeq5wphmdqpu7jltqrvmtxwnn4dhqgfckdc
+    # -- REQUIRED with backup.postgres.enabled. Existing Secret with key
+    # `identity` (an age identity file): the drill key. The restore drill
+    # decrypts with it; the backup derives its recipient from it.
+    drillSecretName: ""
+    # -- The age release fetched by an init container, verified against sha256.
+    version: v1.3.2
+    sha256: cbe24006683f8eb669266162894b9a522a1af52f2665fbc63a4bb032ed26ac10
+    # -- Runs the fetch (busybox sh, wget, tar, sha256sum); pinned by digest.
+    image: alpine:3.22@sha256:2e0b81d60597f449baa56dc25d355367869d2dca4cd57e866f1e2b52af3eb55f
+  # -- History kept per CronJob.
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  postgres:
+    # -- Nightly pg_dump of the in-namespace Postgres (needs postgres.enabled).
+    enabled: true
+    schedule: "40 3 * * *"
+    # -- REQUIRED. rclone remote path for the dumps, e.g.
+    # storagebox:db/glossa-platform. Never a remote's root: retention
+    # deletes old dumps in it.
+    remote: ""
+    # -- Dumps older than this are deleted from the remote after each
+    # successful upload (only this release's own dump files).
+    retentionDays: 30
+    # -- A dedicated read-only role for pg_dump: LOGIN BYPASSRLS, member of
+    # pg_read_all_data, created by the bootstrap Job. (The owner cannot
+    # dump: FORCE ROW LEVEL SECURITY applies to it.)
+    role:
+      username: glossa_backup
+      # -- REQUIRED with backups on. Existing Secret with its password.
+      secretName: ""
+      passwordKey: password
+    backoffLimit: 2
+    activeDeadlineSeconds: 3600
+    # -- emptyDir for the compressed dump.
+    scratchSize: 2Gi
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
+  minio:
+    # -- Nightly mirror of the MinIO bucket (needs minio.enabled).
+    enabled: true
+    schedule: "50 3 * * *"
+    # -- REQUIRED. rclone remote path, e.g. storagebox:minio-crypt/glossa-platform.
+    # Encrypted (an rclone crypt remote over this path): the bucket is
+    # mirrored to <remote> as crypt objects under current/; objects deleted
+    # or overwritten since the last run move to deleted/<timestamp>/.
+    # Use a path no plaintext mirror uses.
+    remote: ""
+    # -- REQUIRED. Existing Secret with keys `password` and `password2`: the
+    # rclone crypt passwords (never printed; obscured by the Job at runtime).
+    cryptSecretName: ""
+    # -- How long <remote>/deleted/ keeps them.
+    deletedRetentionDays: 30
+    backoffLimit: 2
+    activeDeadlineSeconds: 3600
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
+  restoreTest:
+    # -- Weekly drill: restore the newest dump into a throwaway Postgres in
+    # the Job's own pod and check it (never touches the live database).
+    enabled: true
+    schedule: "40 5 * * 0"
+    # -- Tables that must come back with at least one row. Empty: only
+    # schema checks (a new installation has no data yet).
+    nonEmptyTables: []
+    # -- The drill fails when the newest dump is older than this: the
+    # nightly backup has stopped.
+    maxDumpAgeHours: 48
+    backoffLimit: 1
+    activeDeadlineSeconds: 3600
+    # -- emptyDir for the dump and the throwaway data directory.
+    scratchSize: 4Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
+
+## ── Secrets of glossa-server ──────────────────────────────────────
+auth:
+  # -- REQUIRED. Secret holding GLOSSA_AUTH_SECRET (base64 of ≥ 32 random bytes).
+  secretName: ""
+  secretKey: GLOSSA_AUTH_SECRET
+
+release:
+  signingKeys:
+    # -- REQUIRED. Secret holding GLOSSA_RELEASE_SIGNING_KEYS (keyId=base64 seed,…).
+    secretName: ""
+    secretKey: GLOSSA_RELEASE_SIGNING_KEYS
+  # -- GLOSSA_RELEASE_RETIRED_KEYS: keyId=base64(public key),… (public, not secret).
+  retiredKeys: ""
+
+## Audit exports (RFC 0006 §6.2) are signed with their own key — never the
+## release key. Off until a key is configured; enabling them without one
+## fails to render (and the server would refuse to start).
+audit:
+  exports:
+    # -- GLOSSA_AUDIT_EXPORTS_ENABLED.
+    enabled: false
+  signingKey:
+    # -- Secret holding GLOSSA_AUDIT_SIGNING_KEY (exactly one keyId=base64 seed).
+    # Required when audit.exports.enabled.
+    secretName: ""
+    secretKey: GLOSSA_AUDIT_SIGNING_KEY
+  # -- GLOSSA_AUDIT_RETIRED_KEYS: keyId=base64(public key),… older exports
+  # still verify with (public, not secret).
+  retiredKeys: ""
+
+## Optional. With no SMTP server configured the chart sets none of the
+## GLOSSA_MAIL_*/GLOSSA_SMTP_* variables and opens no SMTP egress; what the
+## server does without a mailer is the server's call (see README.md, "Mail").
+mail:
+  # -- GLOSSA_MAIL_DRIVER. Empty: `smtp` when mail.smtp.addr is set,
+  # otherwise unset. `log` is development only (sign-in links go to the log).
+  driver: ""
+  # -- GLOSSA_MAIL_FROM, e.g. "Glossa <no-reply@example.com>".
+  from: ""
+  smtp:
+    # -- GLOSSA_SMTP_ADDR (host:587, STARTTLS required). Setting it turns SMTP on.
+    addr: ""
+    # -- Secret with the SMTP AUTH credentials; empty: no AUTH.
+    secretName: ""
+    usernameKey: GLOSSA_SMTP_USERNAME
+    passwordKey: GLOSSA_SMTP_PASSWORD
+
+## Optional. The GitHub App (RFC 0004 §6.1). With github.appId empty the
+## chart sets no GLOSSA_GITHUB_* App variable, needs no Secret and opens
+## no egress to GitHub; the GitHub endpoints answer `github_not_configured`
+## (503) and nothing else changes. Setting it makes the rest required, so
+## a half-configured chart fails to render rather than at pod start.
+## The App's private key, webhook secret and OAuth client secret are
+## platform configuration, never tenant data: one Secret in this
+## namespace, read through env, exactly like the release signing key
+## (RFC 0004 §14.1). See README.md, "GitHub App".
+github:
+  # -- GLOSSA_GITHUB_APP_ID: the App's numeric id. Empty turns the whole
+  # integration off; set, it turns it on for every tenant that installs it.
+  appId: ""
+  # -- GLOSSA_GITHUB_APP_SLUG: the App's name in its own URL (lowercase
+  # letters, digits and hyphens). The install link is built from it —
+  # <web url>/apps/<slug>/installations/new. REQUIRED with appId.
+  appSlug: ""
+  # -- GLOSSA_GITHUB_CLIENT_ID: the App's OAuth client id. Public, unlike
+  # the client secret below. REQUIRED with appId.
+  clientId: ""
+  # -- GLOSSA_GITHUB_API_URL: the REST base. Default https://api.github.com;
+  # GitHub Enterprise Server: https://HOST/api/v3.
+  apiUrl: ""
+  # -- GLOSSA_GITHUB_WEB_URL: where people are sent to authorize the App.
+  # Default https://github.com; GHES: https://HOST.
+  webUrl: ""
+  ## How CI authenticates: a GitHub Actions run presents an OIDC ID
+  ## token instead of a stored secret (RFC 0004 §6.3). github.com needs
+  ## none of these.
+  oidc:
+    # -- GLOSSA_GITHUB_OIDC_ISSUER: the exact `iss` of the ID tokens.
+    # Default https://token.actions.githubusercontent.com; GHES:
+    # https://HOST/_services/token.
+    issuer: ""
+    # -- GLOSSA_GITHUB_OIDC_AUDIENCE: the `aud` a run must ask GitHub
+    # for. Default `glossa`. Change it only if another service already
+    # uses that name on your runners: GitHub's own default audience is
+    # the repository owner's URL, which any service could be handed.
+    audience: ""
+    # -- GLOSSA_GITHUB_OIDC_MAX_STALE: how long a cached key set keeps
+    # verifying while refetches fail (the issuer is unreachable). Past
+    # it, exchanges fail closed until a refetch succeeds, so a key
+    # GitHub revoked cannot stay trusted. Default 24h.
+    maxStale: ""
+  credentials:
+    # -- REQUIRED with appId. One existing Secret holding all three secret
+    # values; the chart never creates it, so there is nowhere here to paste
+    # a private key. `kubectl create secret generic` — see README.md.
+    secretName: ""
+    # -- The App's RSA private key, PEM (PKCS#1 or PKCS#8). It signs the
+    # App JWT that mints installation tokens.
+    privateKeyKey: GLOSSA_GITHUB_APP_PRIVATE_KEY
+    # -- The webhook HMAC secret, checked (constant-time) before a delivery
+    # body is parsed.
+    webhookSecretKey: GLOSSA_GITHUB_WEBHOOK_SECRET
+    # -- The App's OAuth client secret. Used once per installation, to
+    # redeem the callback's `code` for the person's own token.
+    clientSecretKey: GLOSSA_GITHUB_CLIENT_SECRET
+
+## ── Object storage (S3-compatible) ────────────────────────────────
+## Release artifacts, manifests and delivery keys. glossa-server writes,
+## glossa-edge only reads. External storage, or the in-namespace MinIO
+## below (minio.enabled).
+objectStorage:
+  # -- host[:port] without a scheme. REQUIRED unless minio.enabled, which
+  # defaults it to the in-namespace MinIO (<fullname>-minio:9000).
+  endpoint: ""
+  # -- REQUIRED. With minio.enabled the bootstrap Job creates it.
+  bucket: ""
+  region: us-east-1
+  # -- Lets several deployments share one bucket. With minio.enabled the
+  # users' object permissions are scoped to it.
+  prefix: ""
+  # -- Path-style requests (MinIO and some providers). Always on with minio.enabled.
+  pathStyle: false
+  # -- Plain HTTP. Never outside a local cluster. Always on with
+  # minio.enabled (in-namespace, NetworkPolicy-restricted traffic).
+  insecure: false
+  timeout: 10s
+  server:
+    # -- REQUIRED. Secret with read-write credentials. With minio.enabled
+    # the bootstrap Job creates a MinIO user with exactly these.
+    secretName: ""
+    accessKeyIdKey: GLOSSA_S3_ACCESS_KEY_ID
+    secretAccessKeyKey: GLOSSA_S3_SECRET_ACCESS_KEY
+  edge:
+    # -- Secret with read-only credentials. Empty: the server's (not
+    # recommended; REQUIRED with minio.enabled, whose bootstrap Job creates
+    # a read-only MinIO user with exactly these).
+    secretName: ""
+    accessKeyIdKey: GLOSSA_S3_ACCESS_KEY_ID
+    secretAccessKeyKey: GLOSSA_S3_SECRET_ACCESS_KEY
+
+## ── In-namespace MinIO ────────────────────────────────────────────
+## One single-replica MinIO per product namespace (the Klarlabs pattern),
+## on a Longhorn volume. glossa-edge serves every published release from
+## this bucket, so the delivery plane's availability depends on it; see
+## README.md, "In-namespace MinIO".
+minio:
+  # -- Run MinIO in the release's namespace and point objectStorage at it.
+  enabled: false
+  # -- Chainguard's MinIO build (uid 65532), since MinIO withdrew its own
+  # OSS images in September 2026. Chainguard's free tier publishes
+  # `latest` only and garbage-collects the digests behind it, so refresh
+  # this pin periodically; README.md, "In-namespace MinIO" → Images.
+  image:
+    repository: cgr.dev/chainguard/minio
+    tag: latest
+    digest: sha256:6a1d0b45c8669726bba580ced0bfa4cb9fdeed1ed636dfabd81d1577beb6937b
+  rootCredentials:
+    # -- REQUIRED with minio.enabled. Existing Secret with MinIO's root
+    # user and password; the chart never creates it.
+    secretName: ""
+    userKey: MINIO_ROOT_USER
+    passwordKey: MINIO_ROOT_PASSWORD
+  persistence:
+    # -- `longhorn` keeps 3 replicas across edge-1..3, so the published
+    # releases survive a node loss. `longhorn-r1` (1 replica) is fine for
+    # development. Immutable after install (a volumeClaimTemplate).
+    storageClassName: longhorn
+    # -- Immutable in the template after install; grow the PVC itself
+    # (Longhorn allows expansion).
+    size: 5Gi
+    # -- Labels on the PVC, e.g. a Longhorn recurring-job group for backups.
+    labels: {}
+    annotations: {}
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  terminationGracePeriodSeconds: 30
+  pdb:
+    # -- A PodDisruptionBudget for the single pod. maxUnavailable 1 lets a
+    # node drain evict it (edges keep serving from their cache meanwhile);
+    # 0 blocks drains until MinIO is moved by hand.
+    enabled: true
+    maxUnavailable: 1
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  bootstrap:
+    # -- post-install/post-upgrade hook Job: bucket, a read-write user for
+    # glossa-server and a read-only user for glossa-edge (idempotent).
+    enabled: true
+    # -- Chainguard's `mc` build (uid 65532); same refresh caveat as
+    # minio.image above.
+    image:
+      repository: cgr.dev/chainguard/minio-client
+      tag: latest
+      digest: sha256:b2bd7824d23d3e3b15bedd7e87fbc3be29d2e213307b4f901e4a1d92356dc20f
+    # -- How long the Job waits for MinIO to answer (volume attach, pull).
+    waitSeconds: 600
+    backoffLimit: 3
+    activeDeadlineSeconds: 900
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+
+## ── Ingress (traefik IngressRoute + cert-manager) ─────────────────
+## Routes:
+##   https://<studio>/v1/*  → glossa-server     https://<studio>/*  → Studio
+##   https://<api>/v1/*     → glossa-server     (only when hosts.api is set)
+##   https://<studio|api>/.well-known/glossa-audit-keys.json → glossa-server
+##   https://<cdn>/v1/*     → glossa-edge        (/metrics and the probes
+##                                                stay internal)
+ingress:
+  enabled: true
+  entryPoints:
+    web: web
+    websecure: websecure
+  # -- Permanent redirect from http to https (ACME HTTP-01 paths excepted).
+  httpsRedirect: true
+  # -- Traefik compress middleware per host. The edge's strong ETags hash the
+  # uncompressed bytes, so compression there is left to a CDN by default.
+  compress:
+    studio: true
+    api: true
+    cdn: false
+  hsts:
+    enabled: true
+    maxAge: 31536000
+    includeSubdomains: false
+    preload: false
+  certManager:
+    # -- Create a Certificate per host.
+    enabled: true
+    issuerName: letsencrypt-prod
+    issuerKind: ClusterIssuer
+  # -- TLS Secret per host. Default: <fullname>-<studio|api|cdn>-tls.
+  tlsSecretNames:
+    studio: ""
+    api: ""
+    cdn: ""
+  # -- Extra traefik middlewares per host, as {name, namespace} refs.
+  extraMiddlewares:
+    studio: []
+    api: []
+    cdn: []
+
+## ── NetworkPolicies ───────────────────────────────────────────────
+## One policy per component, Ingress and Egress: everything not listed is
+## denied. Egress to a destination outside the cluster is matched by IP
+## (NetworkPolicy has no hostnames): set `to` to ipBlock peers. An empty
+## `to` allows the ports to ANY destination — acceptable only until the
+## provider's address ranges are known.
+networkPolicy:
+  enabled: true
+  # -- Where the ingress controller runs (k3s: traefik in kube-system).
+  ingressController:
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: kube-system
+    podSelector:
+      matchLabels:
+        app.kubernetes.io/name: traefik
+  # -- Cluster DNS, reachable from every pod that dials out.
+  dns:
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: kube-system
+    podSelector:
+      matchLabels:
+        k8s-app: kube-dns
+  egress:
+    # -- glossa-server and the migration Job → an external Postgres.
+    # Ignored with postgres.enabled: they get a podSelector rule to the
+    # in-namespace Postgres on 5432 instead.
+    postgres:
+      to: []
+      ports:
+        - port: 5432
+          protocol: TCP
+    # -- glossa-server and glossa-edge → object storage. Ignored with
+    # minio.enabled: they get a podSelector rule to MinIO on 9000 instead.
+    objectStorage:
+      to: []
+      ports:
+        - port: 443
+          protocol: TCP
+    # -- glossa-server → SMTP submission (only when SMTP is configured).
+    smtp:
+      to: []
+      ports:
+        - port: 587
+          protocol: TCP
+    # -- glossa-server → the GitHub API (only when github.appId is set):
+    # installation tokens, check runs and the PR comment all leave the
+    # cluster. GitHub publishes its address ranges (the `hooks` and `api`
+    # lists of https://api.github.com/meta) and changes them, so pin `to`
+    # only if you are prepared to follow them; an empty `to` allows 443 to
+    # any destination meanwhile.
+    github:
+      to: []
+      ports:
+        - port: 443
+          protocol: TCP
+    # -- glossa-server and glossa-edge → OTLP collector (only when an endpoint is set).
+    otlp:
+      to: []
+      ports:
+        - port: 4318
+          protocol: TCP
+    # -- The backup Jobs → the rclone remote (only with backup.enabled).
+    # 23 is the Hetzner Storage Box's SFTP port.
+    backupRemote:
+      to: []
+      ports:
+        - port: 23
+          protocol: TCP
+    # -- The backup and restore-drill Jobs → GitHub's release downloads (443):
+    # fetch-age downloads the pinned age release on each run. An empty `to`
+    # allows 443 to any destination, for the backup pods only.
+    backupAgeDownload:
+      to: []
+      ports:
+        - port: 443
+          protocol: TCP
+  # -- Extra ingress rules (NetworkPolicyIngressRule) per component.
+  extraIngress:
+    server: []
+    edge: []
+    postgres: []
+    studio: []
+    site: []
+    minio: []
+  # -- Extra egress rules (NetworkPolicyEgressRule) per component.
+  extraEgress:
+    server: []
+    edge: []
+
+## ── Metrics ───────────────────────────────────────────────────────
+## glossa-server and glossa-edge serve Prometheus metrics on /metrics of
+## their HTTP port.
+metrics:
+  # -- Peers (NetworkPolicyPeer) allowed to scrape server and edge.
+  allowFrom: []
+  serviceMonitor:
+    # -- Needs the Prometheus Operator CRDs.
+    enabled: false
+    interval: 30s
+    scrapeTimeout: 10s
+    labels: {}

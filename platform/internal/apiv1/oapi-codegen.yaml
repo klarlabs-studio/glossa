@@ -1,0 +1,12 @@
+# oapi-codegen configuration for the /v1 contract (api/openapi.yaml).
+# The generator version is pinned by the `tool` directive in go.mod;
+# regenerate with `go generate ./internal/apiv1/...`.
+package: apiv1
+output: apiv1.gen.go
+generate:
+  models: true
+  std-http-server: true
+  strict-server: true
+  embedded-spec: true
+output-options:
+  skip-prune: false

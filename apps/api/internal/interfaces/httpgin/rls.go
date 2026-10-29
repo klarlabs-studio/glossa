@@ -8,9 +8,9 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/db"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	"go.klarlabs.de/glossa/apps/api/internal/db"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 // rlsTxMiddleware enforces Postgres row-level-security tenant

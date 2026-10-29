@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	translationapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translation"
+	translationapp "go.klarlabs.de/glossa/apps/api/internal/app/translation"
 )
 
 func TestHub_PublishFansOutToSubscribers(t *testing.T) {

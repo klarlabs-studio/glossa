@@ -1,0 +1,73 @@
+{
+  "schema": "glossa.cli.approve/v1",
+  "action": "list",
+  "project_id": "prj_1",
+  "release_requests": [
+    {
+      "id": "rr_1",
+      "environment": "production",
+      "release_id": "rel_2",
+      "action": "publish",
+      "requester": "token:1",
+      "approval": {
+        "n": 2,
+        "from": {
+          "role": "reviewer"
+        },
+        "distinct_from_requester": true
+      },
+      "gate": {
+        "met": true
+      },
+      "forced": false,
+      "state": "pending",
+      "created_at": "2026-10-02T09:01:00Z",
+      "release": {
+        "id": "rel_2",
+        "version": 2
+      }
+    }
+  ],
+  "approvals": [
+    {
+      "id": "apr_2",
+      "project_id": "prj_1",
+      "instance_id": "wfi_2",
+      "subject": "translation",
+      "subject_id": "msg_checkout.pay",
+      "message": "checkout.pay",
+      "locale": "de",
+      "required": 2,
+      "granted": 0,
+      "eligible": {
+        "kind": "role",
+        "role": "reviewer"
+      },
+      "distinct_from_author": true,
+      "state": "pending",
+      "decisions": [],
+      "created_by": "workflow",
+      "created_at": "2026-10-02T09:02:00Z"
+    },
+    {
+      "id": "apr_3",
+      "project_id": "prj_1",
+      "instance_id": "wfi_3",
+      "subject": "translation",
+      "subject_id": "msg_cart.items",
+      "message": "cart.items",
+      "locale": "ja",
+      "required": 1,
+      "granted": 0,
+      "eligible": {
+        "kind": "role",
+        "role": "reviewer"
+      },
+      "distinct_from_author": true,
+      "state": "pending",
+      "decisions": [],
+      "created_by": "workflow",
+      "created_at": "2026-10-02T09:03:00Z"
+    }
+  ]
+}

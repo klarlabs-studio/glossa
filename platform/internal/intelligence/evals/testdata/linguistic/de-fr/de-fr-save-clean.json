@@ -1,0 +1,37 @@
+{
+  "id": "de-fr-save-clean",
+  "description": "A short, sound translation.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Speichern",
+  "translation": "Enregistrer",
+  "context": {
+    "key": "dialog.save",
+    "namespace": "dialog",
+    "description": "Primary button in every dialog"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": []
+  }
+}

@@ -9,8 +9,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/db"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/db"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/apikey"
 )
 
 // APIKeyRepo is the sqlc-backed adapter for apikey.Repository.

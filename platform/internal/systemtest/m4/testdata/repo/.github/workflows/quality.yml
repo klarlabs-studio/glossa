@@ -1,0 +1,54 @@
+# The fixture product's own CI (RFC 0005 §12.1). This is the job the M4
+# exit test runs the commands of, against a real glossa-server: a
+# product that adopts Glossa gates its pull requests on `glossa check`,
+# and the exit test has to run what a product runs rather than an
+# approximation of it.
+#
+# It is a fixture, not one of Glossa's own workflows: it lives inside
+# testdata/repo, which is the M3 fixture application plus what M4 adds.
+name: Localization
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    name: glossa check
+    runs-on: ubuntu-latest
+    env:
+      GLOSSA_SERVER: ${{ secrets.GLOSSA_SERVER }}
+      GLOSSA_TOKEN: ${{ secrets.GLOSSA_TOKEN }}
+      GLOSSA_TENANT: ${{ secrets.GLOSSA_TENANT }}
+      GLOSSA_PROJECT: ${{ secrets.GLOSSA_PROJECT }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      # The catalogs this commit ships, and where its messages are used.
+      - name: push the catalogs
+        run: glossa push --translations --commit "$GITHUB_SHA"
+      - name: upload the build's usages
+        run: glossa context push usages.json --commit "$GITHUB_SHA"
+
+      # The gate. Exit 1 is the only code CI branches on (RFC 0005 §4.4);
+      # the JSON document is kept whatever the exit code, because a
+      # check that only reports when it passes reports nothing.
+      - name: check
+        id: check
+        run: glossa check --json > check.json
+      - name: keep the findings
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: glossa-check
+          path: check.json
+
+      # Visual QA runs where capture runs: in the product's CI, against
+      # the product's own preview build (RFC 0005 §5.1). Glossa never
+      # navigates to this URL itself.
+      - name: capture and check
+        run: |
+          glossa capture --check --upload \
+            --base-url "http://127.0.0.1:4173" \
+            --commit "$GITHUB_SHA" --json > capture.json

@@ -1,0 +1,330 @@
+name: Release platform images
+
+# Publishes the RFC 0002 platform images — glossa-server, glossa-edge and
+# glossa-studio — to GHCR, and emits the digests that
+# deploy/charts/glossa-platform is meant to be pinned to.
+#
+# Pipeline shape:
+#
+#   publish (matrix) — build the image WITHOUT registry credentials, run
+#   the same gates as the pull-request build (runs as non-root, size
+#   ceiling), and only then log in and push. The push step is a cache
+#   replay of the build the gates inspected: same context, same build
+#   args, same cache scope, so a bad image cannot reach GHCR. The pushed
+#   digest is signed (cosign, keyless) and carries a signed SLSA
+#   provenance attestation on top of BuildKit's own provenance and SBOM.
+#
+#   values — collects the three digests into values-images.yaml, renders
+#   the chart with it to prove the pins hold, and uploads it as the run's
+#   artifact. Operators deploy with that file (chart README, "Cutting a
+#   release"); nothing is committed back to the repository.
+#
+# Triggers: a v*.*.* tag push, or workflow_dispatch naming an existing
+# tag. Never a branch push — the images a deployment pins must come from
+# a tag. Pull requests build the same images without pushing
+# (.github/workflows/platform.yml).
+#
+# Cut a release: bump deploy/charts/glossa-platform/Chart.yaml's
+# appVersion, then `git tag v0.4.0 && git push origin v0.4.0`.
+
+# Kiln publishes releases now (.kiln.yaml, owner decision 2026-10-05): a
+# tag no longer triggers this workflow, so the two never both publish one
+# version. It stays as a manual fallback for when no Kiln box is available.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Existing tag to build and publish, e.g. v0.4.0"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  # One publish per version at a time; never cancel one half-way.
+  group: release-platform-${{ inputs.version || github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  CHART: deploy/charts/glossa-platform
+
+jobs:
+  publish:
+    name: Publish ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # push the image and its attestations to GHCR
+      id-token: write # cosign keyless signing (Fulcio) and the attestation's OIDC token
+      attestations: write # actions/attest-build-provenance
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: glossa-server
+            dockerfile: platform/Dockerfile.server
+            # Size ceiling in MB, roughly twice what the image measures
+            # today (60 MB): distroless/static plus one static Go binary.
+            # Headroom for growth, but a base-image or vendoring mistake
+            # that doubles the image stops the release.
+            maxSizeMB: 120
+          - image: glossa-edge
+            dockerfile: platform/Dockerfile.edge
+            maxSizeMB: 60   # 22 MB today
+          - image: glossa-studio
+            dockerfile: studio/Dockerfile
+            # nginx-unprivileged plus the built SPA and the overlay
+            # bundle: 58 MB today.
+            maxSizeMB: 120
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ inputs.version || github.ref }}
+          persist-credentials: false
+
+      - name: Resolve the version
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          ref="${INPUT_VERSION:-$GITHUB_REF_NAME}"
+          # Strictly three numeric parts. The tag glob above also matches
+          # v0.4.0-rc.1, but `latest` and the chart's appVersion both mean
+          # a plain release, so a pre-release stops here rather than
+          # publishing itself as the current version.
+          if ! printf '%s' "$ref" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::expected a v<major>.<minor>.<patch> release tag with no suffix, got '$ref'"
+            exit 1
+          fi
+          semver="${ref#v}"
+          {
+            echo "tag=$ref"
+            echo "semver=$semver"
+            echo "majorminor=${semver%.*}"
+          } >> "$GITHUB_OUTPUT"
+
+      # The chart's appVersion is the tag every <component>.image.tag
+      # defaults to, so a release whose chart says something else would
+      # deploy an image that does not exist.
+      - name: Chart appVersion agrees with the tag
+        env:
+          SEMVER: ${{ steps.version.outputs.semver }}
+        run: |
+          set -euo pipefail
+          got=$(sed -nE 's/^appVersion:[[:space:]]*"?([^"[:space:]]+)"?.*/\1/p' "$CHART/Chart.yaml" | head -1)
+          if [ "$got" != "$SEMVER" ]; then
+            echo "::error file=$CHART/Chart.yaml::appVersion is '$got' but the release tag is '$SEMVER'; bump it and re-tag"
+            exit 1
+          fi
+          echo "appVersion $got matches the tag"
+
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      # ── The candidate, built with no way to push ────────────────────
+      # No registry login has happened yet, and this build has neither
+      # `push` nor attestations (the docker exporter cannot carry them).
+      # It exists to be inspected by the gates below.
+      - name: Build the candidate
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: false
+          load: true
+          tags: ${{ matrix.image }}:candidate
+          build-args: |
+            VERSION=${{ steps.version.outputs.semver }}
+            REVISION=${{ github.sha }}
+          provenance: false
+          sbom: false
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,scope=${{ matrix.image }},mode=max
+          # CX33 is amd64. Add linux/arm64 if the host changes.
+          platforms: linux/amd64
+
+      # Same gates as platform.yml's pull-request build, here as
+      # prerequisites of the push.
+      - name: Gate — runs as non-root
+        run: |
+          user=$(docker image inspect "${{ matrix.image }}:candidate" --format '{{.Config.User}}')
+          echo "user=$user"
+          case "$user" in ""|0|0:*|root|root:*) echo "::error::${{ matrix.image }} runs as root"; exit 1 ;; esac
+
+      - name: Gate — size
+        env:
+          MAX_MB: ${{ matrix.maxSizeMB }}
+        run: |
+          set -euo pipefail
+          bytes=$(docker image inspect "${{ matrix.image }}:candidate" --format '{{.Size}}')
+          mb=$(( bytes / 1000 / 1000 ))
+          echo "${{ matrix.image }} is ${mb} MB (ceiling ${MAX_MB} MB)" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$mb" -gt "$MAX_MB" ]; then
+            echo "::error::${{ matrix.image }} is ${mb} MB, over the ${MAX_MB} MB ceiling"
+            exit 1
+          fi
+
+      # ── Publish ─────────────────────────────────────────────────────
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
+          # Written out rather than type=semver so a workflow_dispatch of
+          # v0.4.0 produces exactly what pushing the tag would. `latest`
+          # on a release tag matches the release tag.
+          tags: |
+            type=raw,value=${{ steps.version.outputs.semver }}
+            type=raw,value=${{ steps.version.outputs.majorminor }}
+            type=raw,value=latest
+          labels: |
+            org.opencontainers.image.version=${{ steps.version.outputs.semver }}
+
+      - name: Push
+        id: push
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ steps.version.outputs.semver }}
+            REVISION=${{ github.sha }}
+            CREATED=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+          # BuildKit's own SLSA provenance and an SBOM, as registry
+          # attestations beside the image.
+          provenance: mode=max
+          sbom: true
+          # Read-only: every layer is already in the local cache from the
+          # gated build, so this re-exports what was checked.
+          cache-from: type=gha,scope=${{ matrix.image }}
+          platforms: linux/amd64
+
+      # Keyless: the signature is bound to this workflow's OIDC identity
+      # and logged in Rekor, so `cosign verify` needs no key.
+      #
+      #   cosign verify ghcr.io/<owner>/glossa-server@sha256:… \
+      #     --certificate-identity-regexp \
+      #       '^https://github.com/<owner>/glossa/.github/workflows/release-platform.yml@' \
+      #     --certificate-oidc-issuer https://token.actions.githubusercontent.com
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Sign the digest
+        env:
+          DIGEST: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}@${{ steps.push.outputs.digest }}
+        run: cosign sign --yes "$DIGEST"
+
+      # BuildKit's provenance above is unsigned. This is the signed SLSA
+      # v1 statement GitHub verifies, pushed to GHCR beside the image and
+      # checkable with `gh attestation verify oci://…`.
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Record the digest
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          set -euo pipefail
+          mkdir -p digests
+          printf '%s\n' "$DIGEST" > "digests/${{ matrix.image }}"
+          echo "published \`$IMAGE@$DIGEST\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: image-digest-${{ matrix.image }}
+          path: digests/${{ matrix.image }}
+          if-no-files-found: error
+          retention-days: 90
+
+  values:
+    name: Digest-pinned values file
+    needs: publish
+    runs-on: ubuntu-latest
+    outputs:
+      server: ${{ steps.compose.outputs.server }}
+      edge: ${{ steps.compose.outputs.edge }}
+      studio: ${{ steps.compose.outputs.studio }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ inputs.version || github.ref }}
+          persist-credentials: false
+
+      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          pattern: image-digest-*
+          merge-multiple: true
+          path: digests
+
+      - name: Compose values-images.yaml
+        id: compose
+        env:
+          TAG_REF: ${{ inputs.version || github.ref_name }}
+        run: |
+          set -euo pipefail
+          semver="${TAG_REF#v}"
+          {
+            echo "# Generated by .github/workflows/release-platform.yml for ${TAG_REF}."
+            echo "# The exact images that release published, by digest. Deploy with"
+            echo "# this file last, after the values file that carries the hosts:"
+            echo "#"
+            echo "#   helm upgrade --install glossa-platform deploy/charts/glossa-platform \\"
+            echo "#     --namespace glossa-platform \\"
+            echo "#     -f deploy/charts/glossa-platform/examples/values-klarlabs.yaml \\"
+            echo "#     -f values-images.yaml"
+            echo "image:"
+            echo "  requireDigest: true"
+          } > values-images.yaml
+          for component in server edge studio; do
+            digest=$(cat "digests/glossa-${component}")
+            case "$digest" in
+              sha256:*) ;;
+              *) echo "::error::glossa-${component} digest looks wrong: '$digest'"; exit 1 ;;
+            esac
+            {
+              echo "${component}:"
+              echo "  image:"
+              echo "    tag: \"${semver}\""
+              echo "    digest: ${digest}"
+            } >> values-images.yaml
+            echo "${component}=${digest}" >> "$GITHUB_OUTPUT"
+          done
+          {
+            echo '### Digest-pinned values'
+            echo '```yaml'
+            cat values-images.yaml
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.16.0
+
+      # The file is only useful if it renders. With requireDigest on, this
+      # also proves all three pins are there.
+      - name: The chart renders with it
+        run: |
+          set -euo pipefail
+          helm template glossa-platform "$CHART" --namespace glossa-platform \
+            -f "$CHART/examples/values-klarlabs.yaml" -f values-images.yaml \
+            | grep -E '^ +image: ghcr\.io/.*@sha256:'
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: values-images
+          path: values-images.yaml
+          if-no-files-found: error
+          retention-days: 90

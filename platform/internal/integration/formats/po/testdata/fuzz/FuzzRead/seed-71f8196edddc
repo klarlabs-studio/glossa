@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("msgid\"0\"\nmsgstr\"0\"\nmsgid\"\\0\"\nmsgstr\"\\0\"\nmsgid\"1\"\nmsgstr\"Ö\"\nmsgid\"2\"\nmsgstr\"ö\"")

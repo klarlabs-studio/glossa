@@ -1,0 +1,81 @@
+{
+  "id": "en-pl-leave-workspace",
+  "source_locale": "en",
+  "target_locale": "pl",
+  "source": "Leave workspace",
+  "context": {
+    "key": "workspace.leave",
+    "description": "Menu item"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-obszar",
+            "text": "obszar roboczy",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-file-en",
+            "text": "file",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-plik",
+            "text": "plik",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-comment",
+        "definition": "A remark on a document",
+        "terms": [
+          {
+            "id": "t-comment-en",
+            "text": "comment",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-komentarz",
+            "text": "komentarz",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "pl-1",
+      "formality": "informal",
+      "pronoun": "ty"
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "obszar roboczy"
+    ]
+  },
+  "references": [
+    "Opuść obszar roboczy"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "export.footer": [
+    {
+      "Text": "Exportiert am 1. Sept. 2026, 08:15",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "export.note": [
+    {
+      "Text": "Hinweis:",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " Strecken sind ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "GPS-Schätzungen",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    },
+    {
+      "Text": "; die Gesamtlast wird ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "ohne",
+      "Bold": false,
+      "Italic": false,
+      "Underline": true
+    },
+    {
+      "Text": " Körpergewicht berechnet.",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary": [
+    {
+      "Text": "7 Einheiten",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " vom 3. Aug. 2026 bis 28. Aug. 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary one": [
+    {
+      "Text": "1 Einheit",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " vom 3. Aug. 2026 bis 3. Aug. 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.title": [
+    {
+      "Text": "Trainingsexport",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " – Kim Nakamura",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.due": [
+    {
+      "Text": "Zahlbar bis ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "1. Juni 2026",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.intro": [
+    {
+      "Text": "Diese Übersicht fasst die ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Einkommensteuererklärung",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " von Erika Mustermann zusammen. ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Alle Beträge sind vorläufig.",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "tax.status joint": [
+    {
+      "Text": "Veranlagungsart: ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Zusammenveranlagung",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.status single": [
+    {
+      "Text": "Veranlagungsart: ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Einzelveranlagung",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.title": [
+    {
+      "Text": "Steuerübersicht",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " 2025",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.total": [
+    {
+      "Text": "Summe",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ]
+}

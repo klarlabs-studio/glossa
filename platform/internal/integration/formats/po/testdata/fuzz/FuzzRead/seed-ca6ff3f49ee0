@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("msgid\"\"\nmsgstr\"PlurAl-Forms:nplurals=0A00000000\"\nmsgid\"0\"\nmsgid_plural\"\"\nmsgstr[0]\"0\"")

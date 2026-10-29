@@ -3,7 +3,7 @@ package auth
 import (
 	"context"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/user"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/user"
 )
 
 // DiscoverTenants resolves an email to the tenants that user

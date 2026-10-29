@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glossa.dev/schemas/artifact/v1.json",
+  "title": "Glossa release artifact v1 (runtimes/SPEC.md §1.2)",
+  "type": "object",
+  "required": ["schema", "locale", "namespace", "messages"],
+  "properties": {
+    "schema": { "const": "glossa.artifact/v1" },
+    "locale": { "type": "string", "maxLength": 35 },
+    "namespace": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,62}$" },
+    "messages": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9_-]+(\\.[a-z0-9_-]+)*$" },
+      "additionalProperties": {
+        "description": "A MessageFormat 2 data-model message: messageformat/testdata/unicode/data-model/message.schema.json",
+        "type": "object",
+        "required": ["type"]
+      }
+    }
+  }
+}

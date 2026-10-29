@@ -1,0 +1,59 @@
+{
+  "name": "@klarlabs-studio/glossa-runtime",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa's JS runtime: release loader, locale resolver, explain and a minimal MessageFormat 2 interpreter over precompiled messages, on Intl and WebCrypto only.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./idb": {
+      "types": "./dist/idb.d.ts",
+      "import": "./dist/idb.js"
+    },
+    "./apierr": {
+      "types": "./dist/apierr.d.ts",
+      "import": "./dist/apierr.js"
+    },
+    "./dev": {
+      "types": "./dist/dev.d.ts",
+      "import": "./dist/dev.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "devDependencies": {
+    "@klarlabs-studio/glossa-messageformat": "workspace:*",
+    "@types/node": "^22.0.0",
+    "fake-indexeddb": "6.2.5",
+    "jsdom": "25.0.1",
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.0"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/runtime"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/runtime#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

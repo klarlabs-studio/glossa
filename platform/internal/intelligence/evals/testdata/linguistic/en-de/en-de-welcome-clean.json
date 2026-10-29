@@ -1,0 +1,38 @@
+{
+  "id": "en-de-welcome-clean",
+  "description": "A short, sound translation with a style guide in force.",
+  "source_locale": "en",
+  "target_locale": "de",
+  "source": "Welcome back",
+  "translation": "Willkommen zurück",
+  "context": {
+    "key": "home.welcome",
+    "namespace": "home",
+    "description": "Greeting on the dashboard"
+  },
+  "style": {
+    "version": "de@3",
+    "formality": "formal",
+    "pronoun": "Sie",
+    "tone": [
+      "professional",
+      "calm"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with Sie, never du",
+        "rationale": "the product is used at work",
+        "good": [
+          "Jetzt bezahlen"
+        ],
+        "bad": [
+          "Zahl jetzt"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": []
+  }
+}

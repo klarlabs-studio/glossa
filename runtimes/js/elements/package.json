@@ -1,0 +1,61 @@
+{
+  "name": "@klarlabs-studio/glossa-elements",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa's web components on @klarlabs-studio/glossa-runtime: <glossa-provider>, <glossa-text|rich|plural|select> and <glossa-selector>, compatible with the v0.3 element API.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "./dist/index.js",
+    "./dist/glossa-*.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./ssr": {
+      "types": "./dist/ssr.d.ts",
+      "import": "./dist/ssr.js"
+    },
+    "./parts": {
+      "types": "./dist/parts.d.ts",
+      "import": "./dist/parts.js"
+    }
+  },
+  "files": [
+    "dist",
+    "MIGRATION.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa-runtime": "workspace:^",
+    "@lit/context": "1.1.6",
+    "lit": "3.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "jsdom": "25.0.1",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/elements"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/elements#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

@@ -1,6 +1,6 @@
 {
   "project_id": "Glossa",
-  "version": 48,
+  "version": 110,
   "task_states": {
     "task-a11y": {
       "status": "done",
@@ -25,11 +25,15 @@
       "elapsed_minutes": 19
     },
     "task-analytics": {
-      "status": "in_progress",
+      "status": "done",
       "path": "",
       "owner": "ai-agent",
+      "evidence": [
+        "3cc418b — schema + repo + project_created emit + GET /admin/projects/:slug/metrics + GET /admin/metrics. Handler-level emits for translation_edited / consumer_request / ai_translation + admin Metrics tab deferred to follow-up."
+      ],
       "started_at": "2026-05-25T08:45:11.921574+02:00",
-      "elapsed_minutes": 0
+      "completed_at": "2026-05-25T08:52:32.616036+02:00",
+      "elapsed_minutes": 7
     },
     "task-audit-filter": {
       "status": "done",
@@ -119,6 +123,11 @@
       "completed_at": "2026-05-25T08:40:57.582186+02:00",
       "elapsed_minutes": 6
     },
+    "task-dogfood-product-fixes": {
+      "status": "pending",
+      "path": "",
+      "elapsed_minutes": 0
+    },
     "task-elements": {
       "status": "done",
       "path": "",
@@ -179,6 +188,281 @@
       "completed_at": "2026-05-25T08:20:48.145216+02:00",
       "elapsed_minutes": 2
     },
+    "task-m0-identity": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "0a9fb1f..ce6a1de: Identity context on auth-go (magic link, passkeys, password+TOTP, sessions, logout-everywhere), tenants/members/tokens with RLS + system-scope policies; 152 tests incl. integration"
+      ],
+      "started_at": "2026-09-19T10:43:45.418887+02:00",
+      "completed_at": "2026-09-19T11:38:05.859767+02:00",
+      "elapsed_minutes": 54
+    },
+    "task-m0-kernel": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "platform/ kernel: config, bolt+OTel+Prometheus, net/http server with probes, pgx+migrate+sqlc, tenant/system UoW, FORCE RLS + generic RLS guard, transactional outbox with at-least-once dispatcher and dead-letter; 51 unit + 23 integration tests green"
+      ],
+      "started_at": "2026-09-19T08:54:19.537127+02:00",
+      "completed_at": "2026-09-19T10:39:19.078034+02:00",
+      "elapsed_minutes": 104
+    },
+    "task-m0-layout": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "d0c9451 + 6128d88: messageformat/ and platform/ Go modules, vendored Unicode MF2 suite and data-model schema, Makefile/pnpm/warden/CI wiring"
+      ],
+      "started_at": "2026-09-19T08:54:10.363284+02:00",
+      "completed_at": "2026-09-19T08:54:13.788603+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m0-mf-go": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "messageformat/ Go kernel (ParseMF2/ParseMF1/Validate/Stringify/Format/Arguments/MarkupElements/CheckCompat, ports over messageformat-go); Unicode suite 462/462; fixtures mf1-to-mf2 (55 cases, reference-verified), arguments (21), compat (30); 93% coverage"
+      ],
+      "started_at": "2026-09-19T08:54:15.759242+02:00",
+      "completed_at": "2026-09-19T10:39:13.368581+02:00",
+      "elapsed_minutes": 104
+    },
+    "task-m0-mf-ts": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "@glossa/messageformat (MF2 over messageformat v4, zod schemas vs JSON Schema) + @glossa/runtime interpreter (3.13 kB brotli, Unicode suite 301 runtime cases, 0 skips); runtime renders all Go-converted MF1 models like MF1 (103 samples); single MF1 converter decision in 0b2d0fe"
+      ],
+      "started_at": "2026-09-19T08:54:17.473249+02:00",
+      "completed_at": "2026-09-19T10:39:16.628071+02:00",
+      "elapsed_minutes": 104
+    },
+    "task-m0-openapi": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "platform/api/openapi.yaml /v1 with enforced conventions (cursor pagination, RFC 9457, ETag/If-Match, Idempotency-Key), oapi-codegen v2.8.0 strict server with staleness test, 28 endpoints"
+      ],
+      "started_at": "2026-09-19T10:43:47.686637+02:00",
+      "completed_at": "2026-09-19T11:38:08.457147+02:00",
+      "elapsed_minutes": 54
+    },
+    "task-m1-catalog": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "Catalog + Localization contexts: messages with source revisions (MF1/MF2 in, canonical MF2), locales/fallback graph, translations with append-only revisions + provenance, derived outdated, structural QA gate, 31 endpoints incl. bulk upsert/import, release read ports; unit + 21 integration tests"
+      ],
+      "started_at": "2026-09-19T11:38:12.843278+02:00",
+      "completed_at": "2026-09-19T12:28:38.320077+02:00",
+      "elapsed_minutes": 50
+    },
+    "task-m1-cli": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "glossa CLI: init/login/push/pull/extract/generate(TS, Vue, Go)/check/status/diff/locales/messages/import --from v0 + release publish/list/show/diff/promote/rollback/environments/keys and pull --release (SPEC §3.4 bundles); integration: push→import→publish→pull→Go runtime offline→promote→rollback on Postgres+MinIO"
+      ],
+      "started_at": "2026-09-19T13:24:57.535784+02:00",
+      "completed_at": "2026-09-19T13:55:12.958439+02:00",
+      "elapsed_minutes": 30
+    },
+    "task-m1-contract": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "914a58b runtimes/SPEC.md + schemas + generated fixtures (5 scenarios, 5 loading sequences) + CI drift check"
+      ],
+      "started_at": "2026-09-19T11:22:52.670023+02:00",
+      "completed_at": "2026-09-19T11:22:55.57619+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m1-core-loop": {
+      "status": "pending",
+      "path": "",
+      "elapsed_minutes": 0
+    },
+    "task-m1-edge": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "glossa-edge: stateless, object-store only (import-graph test forbids db/pgx), SPEC §2 routes with Cache-Control/ETag/304/CORS, LRU; survives glossa-server + Postgres being stopped (outage test)"
+      ],
+      "started_at": "2026-09-19T13:24:53.320604+02:00",
+      "completed_at": "2026-09-19T13:24:54.788434+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m1-go-runtime": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "runtimes/go (package glossa): T/For/Localizer/Explain, resolver chain + net/http middleware, template FuncMaps, persisted last-good + embedded bundles, Ed25519/JCS + SHA-256, fortify retry/breaker; 18/18 scenarios + 5/5 loading sequences, 95.6% coverage"
+      ],
+      "started_at": "2026-09-19T11:38:10.80484+02:00",
+      "completed_at": "2026-09-19T12:00:26.280696+02:00",
+      "elapsed_minutes": 22
+    },
+    "task-m1-js-runtime": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "@glossa/runtime createRuntime (5.99 kB, 18/18 scenarios + 5/5 loading), @glossa/elements (v0.3-compatible, 3.2 kB own), @glossa/vue (SSR/hydration tested), @glossa/astro (astro build fixture, translated static HTML)"
+      ],
+      "started_at": "2026-09-19T11:22:58.431953+02:00",
+      "completed_at": "2026-09-19T12:28:40.499381+02:00",
+      "elapsed_minutes": 65
+    },
+    "task-m1-release": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "Release context: immutable signed releases (JCS/Ed25519, deterministic artifacts), environments with policy, promote/rollback via deployment log, delivery keys, S3/MinIO + dir + memory stores; 58 tests incl. control-plane outage e2e"
+      ],
+      "started_at": "2026-09-19T12:28:42.004644+02:00",
+      "completed_at": "2026-09-19T13:24:52.03357+02:00",
+      "elapsed_minutes": 56
+    },
+    "task-m1-studio": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "Studio v0: auth (magic link/passkeys/password+TOTP), projects, locales + fallback graph, keyboard-first translator workspace with live MF2 preview and QA, Releases (environments, publish/promote/rollback, diffs, history) and delivery keys with runtime snippets; 175 unit tests, Playwright e2e vs real server incl. release loop, axe clean, 87 kB gzip"
+      ],
+      "started_at": "2026-09-19T13:24:56.123664+02:00",
+      "completed_at": "2026-09-19T14:08:44.173248+02:00",
+      "elapsed_minutes": 43
+    },
+    "task-m2-formats": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "platform/internal/integration/formats: XLIFF 2.1 (XSD-validated), TMX 1.4b, TBX-Basic (+TBX 2008 read), JSON flat/nested, PO read with CLDR plural mapping; round-trip property tests, fuzz targets with seed corpora, XXE/billion-laughs refused; found and fixed a kernel Stringify quoting bug"
+      ],
+      "started_at": "2026-09-19T15:09:55.346506+02:00",
+      "completed_at": "2026-09-19T16:16:07.500586+02:00",
+      "elapsed_minutes": 66
+    },
+    "task-m2-intelligence-core": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "platform/internal/intelligence: provider port + Anthropic (SDK, no env creds)/OpenAI-compatible/Gemini adapters with fortify resilience, routing/pricing/budget, agent-go translation agent with axi-go tools and structural gate, confidence + explanation + review routing, versioned prompts, evals on cassettes (52 cases: structural 1.00, terminology 0.96, formality 0.89)"
+      ],
+      "started_at": "2026-09-19T15:09:44.185034+02:00",
+      "completed_at": "2026-09-19T16:03:38.46374+02:00",
+      "elapsed_minutes": 53
+    },
+    "task-m2-intelligence-wiring": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "AI jobs/suggestions/review queue/providers/budgets/privacy (33 endpoints) + async import/export jobs (XLIFF/JSON/PO/TMX/TBX, merge never downgrades approved, dry-run, streaming to object storage, retention) — all Go unit+integration and TS checks green; chart settings added"
+      ],
+      "started_at": "2026-09-19T16:16:08.988602+02:00",
+      "completed_at": "2026-09-19T18:08:20.620673+02:00",
+      "elapsed_minutes": 112
+    },
+    "task-m2-knowledge": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "Knowledge context: TM derived from approvals via idempotent subscriber (exact 100/101 + pg_trgm fuzzy; 30/30 near-miss top-1, 0/8 false matches), termbase with locale-aware recognition and terminology QA (de/en/fr/es/ja), stacked versioned style guides, Reader port for Intelligence, 12 endpoints; migration 0007 (pg_trgm)"
+      ],
+      "started_at": "2026-09-19T15:09:42.738352+02:00",
+      "completed_at": "2026-09-19T16:08:12.640378+02:00",
+      "elapsed_minutes": 58
+    },
+    "task-m2-knowledge-ai": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "1ff59e2: CI run 35463907041 green incl. platform-system M2 exit test; REPORT.md es 6.6% / fr 6.1% / ja 5.9% review"
+      ],
+      "started_at": "2026-09-19T19:56:41.180936+02:00",
+      "completed_at": "2026-09-19T21:24:39.740914+02:00",
+      "elapsed_minutes": 87
+    },
+    "task-m2-surfaces": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "d4a3ef7 (Studio M2, Studio import/export, Studio sync, CLI M2, CLI import/export)"
+      ],
+      "started_at": "2026-09-19T18:08:21.93944+02:00",
+      "completed_at": "2026-09-19T19:56:39.569117+02:00",
+      "elapsed_minutes": 108
+    },
+    "task-m3-context": {
+      "status": "done",
+      "path": "",
+      "owner": "Felix Geelhaar",
+      "started_at": "2026-09-20T14:33:29.699858+02:00",
+      "completed_at": "2026-09-20T14:33:29.729063+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m3-context-plane": {
+      "status": "done",
+      "path": "",
+      "owner": "Felix Geelhaar",
+      "started_at": "2026-09-20T14:31:33.542617+02:00",
+      "completed_at": "2026-09-20T14:31:33.587877+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m3-exit": {
+      "status": "done",
+      "path": "",
+      "owner": "Felix Geelhaar",
+      "started_at": "2026-09-20T14:31:33.720151+02:00",
+      "completed_at": "2026-09-20T14:31:33.781185+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m3-github": {
+      "status": "done",
+      "path": "",
+      "owner": "Felix Geelhaar",
+      "started_at": "2026-09-20T14:31:33.645125+02:00",
+      "completed_at": "2026-09-20T14:31:33.683814+02:00",
+      "elapsed_minutes": 0
+    },
+    "task-m4-quality": {
+      "status": "in_progress",
+      "path": "",
+      "owner": "ai-agent",
+      "started_at": "2026-09-29T21:29:42.604235+02:00",
+      "elapsed_minutes": 0,
+      "lease": {
+        "holder": "ai-agent",
+        "session": "9a71bb36-7ad1-42dc-be12-2ad635e46d44",
+        "expires_at": "2026-09-29T23:29:42.604235+02:00",
+        "renewed_at": "2026-09-29T21:29:42.604235+02:00"
+      }
+    },
+    "task-m5-operations": {
+      "status": "pending",
+      "path": "",
+      "elapsed_minutes": 0
+    },
     "task-microcopy": {
       "status": "done",
       "path": "",
@@ -189,6 +473,17 @@
       "started_at": "2026-05-25T08:10:00.855235+02:00",
       "completed_at": "2026-05-25T08:10:10.21297+02:00",
       "elapsed_minutes": 0
+    },
+    "task-p1-locale-identity": {
+      "status": "done",
+      "path": "",
+      "owner": "ai-agent",
+      "evidence": [
+        "BCP 47 parse/canonicalize (x/text BCP47), migration 0006 VARCHAR(35), language/script/region/direction on the wire, canonical matching for URL segments and translator scopes, SDK describeLocale + canonical cache keys, admin RTL editing. Go unit + Postgres integration + TS tests green."
+      ],
+      "started_at": "2026-09-19T08:31:38.688414+02:00",
+      "completed_at": "2026-09-19T08:38:51.974171+02:00",
+      "elapsed_minutes": 7
     },
     "task-positioning": {
       "status": "done",
@@ -262,5 +557,5 @@
       "elapsed_minutes": 0
     }
   },
-  "updated_at": "2026-05-25T08:45:11.921574+02:00"
+  "updated_at": "2026-09-29T21:29:42.604235+02:00"
 }

@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/felixgeelhaar/glossa/apierr"
-	"github.com/felixgeelhaar/glossa/apierr/httperr"
+	"go.klarlabs.de/glossa/apierr"
+	"go.klarlabs.de/glossa/apierr/httperr"
 )
 
 func TestSend_WritesEnvelopeAndStatus(t *testing.T) {

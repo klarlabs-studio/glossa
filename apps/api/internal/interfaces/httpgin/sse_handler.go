@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	translationapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translation"
+	translationapp "go.klarlabs.de/glossa/apps/api/internal/app/translation"
 )
 
 // defaultHeartbeat is how often a comment frame is written to keep

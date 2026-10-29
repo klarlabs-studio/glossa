@@ -1,0 +1,180 @@
+{
+  "export.footer": [
+    {
+      "Text": "Exported Sep 1, 2026, 8:15 AM",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "export.note": [
+    {
+      "Text": "Note:",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " distances are ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "GPS estimates",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    },
+    {
+      "Text": "; total load is calculated ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "without",
+      "Bold": false,
+      "Italic": false,
+      "Underline": true
+    },
+    {
+      "Text": " body weight.",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary": [
+    {
+      "Text": "7 sessions",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " from Aug 3, 2026 to Aug 28, 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary one": [
+    {
+      "Text": "1 session",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " from Aug 3, 2026 to Aug 3, 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.title": [
+    {
+      "Text": "Training export",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " – Kim Nakamura",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.due": [
+    {
+      "Text": "Payment due by ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "June 1, 2026",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.intro": [
+    {
+      "Text": "This summary covers the ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "income tax return",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " of Erika Mustermann. ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "All amounts are provisional.",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "tax.status joint": [
+    {
+      "Text": "Filing status: ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Married filing jointly",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.status single": [
+    {
+      "Text": "Filing status: ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Single",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.title": [
+    {
+      "Text": "Tax summary",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " 2025",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.total": [
+    {
+      "Text": "Total",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ]
+}

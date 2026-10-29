@@ -51,6 +51,256 @@ jobs:
         # testcontainers needs Docker, which the GitHub runner has.
         run: go test -tags=integration -timeout=300s ./internal/infra/sqlcadapter/...
 
+  platform:
+    name: Platform (${{ matrix.module }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Go modules of the rewrite (RFC 0002). Keep in sync with
+        # PLATFORM_MODULES in the Makefile.
+        module: [messageformat, platform, runtimes/go, runtimes/go/examples/pdf]
+    defaults:
+      run:
+        working-directory: ${{ matrix.module }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: ${{ matrix.module }}/go.mod
+          cache-dependency-path: ${{ matrix.module }}/go.sum
+      - name: gofmt
+        run: |
+          diff=$(gofmt -l .)
+          if [ -n "$diff" ]; then
+            echo "::error::gofmt: files need formatting"
+            echo "$diff"
+            exit 1
+          fi
+      - name: go vet
+        run: go vet ./...
+      - name: go test (unit)
+        run: go test -race ./...
+      # `glossa capture`'s browser tests start Chrome themselves and
+      # attach to it (platform/README.md, "scout follow-ups"): this
+      # runner's kernel denies the sandbox Chrome wants, so they pass
+      # --no-sandbox, which scout's launcher can't. CI=true makes a
+      # missing Chrome fail the job instead of skipping the tests.
+      - name: Chrome for the capture tests
+        if: matrix.module == 'platform'
+        run: |
+          chrome=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)
+          "$chrome" --version
+          echo "GLOSSA_TEST_CHROME=$chrome" >> "$GITHUB_ENV"
+      - name: go test (integration)
+        # Postgres and object storage via testcontainers; the runner has Docker.
+        run: go test -tags=integration -timeout=900s ./...
+
+  platform-system:
+    name: Platform M2 exit test
+    # The whole-platform scenario (RFC 0003 §1): runs once the platform
+    # module's unit and integration tests are green, so a broken build
+    # fails fast and cheaply first.
+    needs: platform
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: platform/go.mod
+          cache-dependency-path: platform/go.sum
+      - name: go vet (system)
+        run: go vet -tags=system ./internal/systemtest/...
+      - name: go test (system)
+        # Postgres and MinIO via testcontainers, glossa-server built from
+        # this module, a fake provider on loopback; writes REPORT.md.
+        run: go test -tags=system -timeout=600s -count=1 -v ./internal/systemtest/m2/...
+      - name: keep the report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: m2-report
+          path: platform/internal/systemtest/m2/REPORT.md
+          if-no-files-found: ignore
+          retention-days: 14
+
+  platform-system-m3:
+    name: Platform M3 exit test
+    # Context, the pull-request flow, the overlay guards and the
+    # documents (RFC 0004 §12). Runs after the M2 scenario, so the two
+    # Docker-heavy jobs don't compete for one runner's resources.
+    needs: platform-system
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: platform/go.mod
+          cache-dependency-path: platform/go.sum
+      - name: find Chrome
+        # `glossa capture` attaches to a browser the test starts, the way
+        # the capture integration tests do (platform/README.md).
+        run: |
+          chrome=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)
+          "$chrome" --version
+          echo "GLOSSA_TEST_CHROME=$chrome" >> "$GITHUB_ENV"
+      - name: go vet (system)
+        run: go vet -tags=system ./internal/systemtest/...
+      - name: go test (system)
+        # Postgres and MinIO via testcontainers, glossa-server and the
+        # glossa CLI built from this module, a fake GitHub on loopback,
+        # headless Chrome for the captures; writes REPORT.md.
+        run: go test -tags=system -timeout=900s -count=1 -v ./internal/systemtest/m3/...
+      - name: keep the report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: m3-report
+          path: platform/internal/systemtest/m3/REPORT.md
+          if-no-files-found: ignore
+          retention-days: 14
+
+  contracts:
+    name: Runtime contract fixtures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - run: pip install jsonschema==4.26.0 cryptography==46.0.3
+      - name: fixtures match their generator (runtimes/SPEC.md §7)
+        run: python3 runtimes/testdata/gen/generate.py --check
+      - name: usage fixtures and context schemas agree (RFC 0004 §2.1)
+        run: python3 runtimes/testdata/gen/check_usages.py
+
+  runtimes-dart:
+    name: Dart runtime
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: runtimes/dart
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+        with:
+          # Pinned, like the Go toolchains: the package's environment
+          # constraint in runtimes/dart/pubspec.yaml matches.
+          sdk: "3.13.4"
+      - run: dart pub get
+      - name: dart format
+        run: dart format --output=none --set-exit-if-changed .
+      - name: dart analyze
+        run: dart analyze --fatal-infos
+      # Reads runtimes/testdata and messageformat/testdata from the
+      # checkout: the Dart runtime is a driver over the shared fixtures
+      # (RFC 0005 §6.3), never a copy of them.
+      - name: dart test (shared conformance fixtures)
+        run: dart test
+      # RFC 0005 §6.4, the AOT-and-web third of the budgets. `dart test`
+      # runs on the JIT VM, which forgives what neither of these does: a
+      # `dart:io` import that crept into the core breaks the first, and
+      # reflection breaks both. test/purity_test.dart names the offending
+      # import; these prove the whole package actually builds.
+      - name: dart compile js (the package builds for the web)
+        run: dart compile js -o "$RUNNER_TEMP/web_compile.js" tool/web_compile.dart
+      - name: dart compile exe (the package builds for AOT)
+        run: dart compile exe tool/startup_budget.dart -o "$RUNNER_TEMP/startup_budget"
+      # The §6.4 startup numbers. AOT, because AOT is what ships. It
+      # fails on the two properties that hold on any machine and records
+      # the wall clock, which on this runner is not the mid-range Android
+      # device §6.4 names — see the tool's own preamble.
+      - name: §6.4 startup budgets
+        run: '"$RUNNER_TEMP/startup_budget" --report "$RUNNER_TEMP/startup-budget.txt"'
+      - name: keep the startup numbers
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dart-startup-budget
+          path: ${{ runner.temp }}/startup-budget.txt
+          if-no-files-found: ignore
+          retention-days: 14
+      # `glossa generate --lang dart` emits code against this runtime, and
+      # TestGeneratedDartAnalyzes checks that it resolves, analyses and
+      # survives `dart format`. The Go jobs have no Dart SDK, so it used
+      # to skip silently everywhere; this job has one and asks for it by
+      # name, so a missing SDK fails here and nowhere else.
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: platform/go.mod
+          cache-dependency-path: platform/go.sum
+      - name: the generated Dart compiles against this runtime
+        working-directory: platform
+        env:
+          GLOSSA_REQUIRE_DART: "1"
+        run: go test -run TestGeneratedDart -count=1 -v ./internal/cli/codegen/...
+
+  runtimes-flutter:
+    name: Flutter runtime
+    runs-on: ubuntu-latest
+    # Three release builds of a fixture app; the rest is seconds.
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: runtimes/dart/flutter
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          # Pinned like every other toolchain here. This release carries
+          # Dart 3.13.4, the SDK runtimes-dart pins and the one both
+          # pubspecs constrain to, so the two jobs compile the same code.
+          flutter-version: "3.47.5"
+          channel: stable
+          cache: true
+      # `flutter build linux` is the release build this runner can make
+      # without a second SDK, and unlike macOS it is a single
+      # architecture, so the numbers below are per-architecture as they
+      # stand. The measurement is of Dart AOT code; glossa_flutter ships
+      # no native code and no assets, so there is nothing platform-shaped
+      # for a desktop target to miss.
+      - name: Linux desktop toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev libstdc++-12-dev
+      - run: flutter pub get
+      - name: dart format
+        run: dart format --output=none --set-exit-if-changed .
+      # `flutter analyze`, not `dart analyze`: this package needs the
+      # Flutter SDK to resolve (RFC 0005 §6.1), which is why the core's
+      # analysis_options.yaml excludes it and why it gets a job of its own.
+      - name: flutter analyze
+        run: flutter analyze --fatal-infos
+      - name: flutter test
+        run: flutter test
+      # RFC 0005 §6.4: the package's contribution to a release build,
+      # from a fixture app built with and without it — which is the
+      # section's own method, so it is the thing gated. The number is the
+      # delta over a baseline that already has package:intl and an HTTP
+      # client, against 400 kB (150 kB was the original figure; nothing
+      # meets it by this method, and wave 4 replaced it). The bare-app
+      # delta, package:intl and the per-library decomposition are printed
+      # beside it, because §6.4 asks for them by name.
+      - name: §6.4 size budget
+        run: dart run tool/size_budget.dart --platform linux --report "$RUNNER_TEMP/size-budget.txt"
+      - name: keep the size numbers
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: flutter-size-budget
+          path: ${{ runner.temp }}/size-budget.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
   packages:
     name: JS workspaces
     runs-on: ubuntu-latest
@@ -63,18 +313,82 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile=false
       # Workspace deps need to be built before consumers can lint.
-      # Order matters: ui ships its own .d.ts that admin consumes;
-      # elements depends on sdk; admin depends on all four.
-      - name: build packages (in dep order)
-        run: |
-          pnpm --filter @felixgeelhaar/glossa-format build
-          pnpm --filter @felixgeelhaar/glossa-sdk build
-          pnpm --filter @felixgeelhaar/glossa-ui build
-          pnpm --filter @felixgeelhaar/glossa-elements build
-          pnpm --filter @felixgeelhaar/glossa-cli build
+      # v0.3's formatter is the one v0.3 package left: `glossa import --from
+      # v0 --verify` and the M5 exit test render with it (RFC 0006 §7.3).
+      - name: build v0.3's formatter
+        run: pnpm --filter @felixgeelhaar/glossa-format build
+      - name: build rewrite packages (topological)
+        run: pnpm -r --filter "./messageformat/js" --filter "./runtimes/js/*" build
       - name: lint (tsc --noEmit)
         run: pnpm -r lint
       - name: test
         run: pnpm -r test
-      - name: admin build (vite)
-        run: pnpm --filter @felixgeelhaar/glossa-admin build
+      # Capture-mode geometry needs a real layout engine (RFC 0004 §3.1).
+      - name: install Chromium
+        run: pnpm --filter @klarlabs-studio/glossa-capture exec playwright install --with-deps chromium
+      - name: capture mode in Chromium (Playwright)
+        run: pnpm --filter @klarlabs-studio/glossa-capture test:browser
+      # Alt+click targeting, live override, axe, the preview CSP, and the
+      # loader's guards against production releases (RFC 0004 §5).
+      - name: in-product editor in Chromium (Playwright)
+        run: pnpm --filter @klarlabs-studio/glossa-overlay test:browser
+
+  site:
+    name: Site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile=false
+      # Links @klarlabs-studio/ui (as Studio does), type-checks with
+      # `astro check` and builds the static page.
+      - name: build the site
+        run: pnpm --filter @glossa/site build
+      - name: check the built page
+        run: pnpm --filter @glossa/site test
+
+  studio-e2e:
+    name: Studio e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: platform/go.mod
+          cache-dependency-path: platform/go.sum
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile=false
+      # Studio imports @klarlabs-studio/glossa/messageformat and publishes the
+      # overlay bundle (@klarlabs-studio/glossa/overlay/bundle) at /overlay/v1/overlay.js.
+      - name: build @klarlabs-studio/glossa (and the source packages it assembles)
+        run: pnpm --filter "@klarlabs-studio/glossa..." build
+      # Also clones and builds @klarlabs-studio/ui at the commit pinned in
+      # studio/package.json (see studio/README.md, "Design system").
+      - name: build Studio
+        run: pnpm --filter @glossa/studio build
+      - name: initial bundle size (budget 250 kB gzip)
+        run: pnpm --filter @glossa/studio size
+      - name: install Chromium
+        run: pnpm --filter @glossa/studio exec playwright install --with-deps chromium
+      # Postgres via testcontainers and glossa-server built from platform/;
+      # the runner has Docker.
+      - name: Playwright against glossa-server
+        run: pnpm --filter @glossa/studio test:e2e
+      - name: keep the report and server log
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: studio-e2e
+          path: |
+            studio/playwright-report
+            studio/test-results
+            studio/e2e/.state/server.log
+          retention-days: 7

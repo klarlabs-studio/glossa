@@ -1,0 +1,159 @@
+{{- $name := include "gp.componentName" (dict "root" $ "component" "edge") -}}
+{{- $v := .Values.edge -}}
+{{- $creds := include "gp.storage.edgeCreds" . | fromYaml -}}
+{{- $secret := $creds.secretName -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+  ports:
+    - name: http
+      port: 8081
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not $v.autoscaling.enabled }}
+  replicas: {{ $v.replicas }}
+  {{- end }}
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "edge") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: {{ $v.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- include "gp.podSecurityContext" 65532 | nindent 8 }}
+      topologySpreadConstraints:
+        {{- include "gp.topologySpread" (dict "root" $ "values" $v "component" "edge") | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: edge
+          image: {{ include "gp.image" (dict "root" $ "component" "edge" "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          env:
+            - name: GLOSSA_HTTP_ADDR
+              value: ":8081"
+            - name: GLOSSA_LOG_LEVEL
+              value: {{ $v.logLevel | quote }}
+            - name: GLOSSA_SHUTDOWN_TIMEOUT
+              value: {{ $v.shutdownTimeout | quote }}
+            - name: GLOSSA_EDGE_CACHE_BYTES
+              value: {{ $v.cache.bytes | int64 | quote }}
+            - name: GLOSSA_EDGE_KEY_TTL
+              value: {{ $v.cache.keyTTL | quote }}
+            - name: GLOSSA_EDGE_MANIFEST_TTL
+              value: {{ $v.cache.manifestTTL | quote }}
+            {{- with $v.otel.endpoint }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ . | quote }}
+            {{- end }}
+            {{- include "gp.storageEnv" (dict "root" $ "creds" $creds "secretName" $secret) | nindent 12 }}
+            {{- with $v.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          # /readyz ignores storage on purpose: a storage outage must not
+          # pull every edge out of the load balancer (it serves stale).
+          startupProbe:
+            httpGet:
+              path: /livez
+              port: http
+            periodSeconds: 2
+            failureThreshold: 15
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2
+          resources:
+            {{- toYaml $v.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 16Mi
+{{- if $v.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $name }}
+  minReplicas: {{ $v.autoscaling.minReplicas }}
+  maxReplicas: {{ $v.autoscaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ $v.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}
+{{- if $v.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+spec:
+  maxUnavailable: {{ $v.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "edge") | nindent 6 }}
+{{- end }}

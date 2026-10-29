@@ -1,0 +1,5 @@
+{
+  "description": "Vue SFC: t() and $t() in script and template, <GlossaText id> (literal, multi-line, bound literal), <glossa-text message>, and useTypedMessages() accessors. Component is the SFC's file name.",
+  "implementations": ["unplugin"],
+  "keys": ["cart.checkout", "cart.items", "checkout.footer.label", "checkout.help", "checkout.pay", "checkout.payment-failed", "checkout.secure", "checkout.terms"]
+}

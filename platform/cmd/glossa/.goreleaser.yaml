@@ -1,0 +1,41 @@
+# Static glossa binaries for darwin/linux/windows × amd64/arm64.
+# Builds only; nothing is published (release: disabled). From platform/:
+#
+#   goreleaser build --snapshot --clean --config cmd/glossa/.goreleaser.yaml   # binaries in dist/
+#   goreleaser release --snapshot --clean --config cmd/glossa/.goreleaser.yaml # + archives, checksums
+version: 2
+project_name: glossa
+
+builds:
+  - id: glossa
+    main: ./cmd/glossa
+    binary: glossa
+    env:
+      - CGO_ENABLED=0 # one static binary, no libc
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: glossa
+    ids: [glossa]
+    name_template: "glossa_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-dev+{{ .ShortCommit }}"
+
+changelog:
+  disable: true
+
+release:
+  disable: true

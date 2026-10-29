@@ -1,0 +1,15 @@
+---
+import Footer from "../components/Footer.astro";
+import { getGlossa } from "@klarlabs-studio/glossa/astro/server";
+
+const { t, locale, dir } = getGlossa(Astro);
+---
+<html lang={locale} dir={dir}>
+  <head>
+    <title>{t("home.title", {}, { default: "Willkommen" })}</title>
+  </head>
+  <body>
+    <glossa-text key="home.hero.title">Frisches Brot</glossa-text>
+    <Footer />
+  </body>
+</html>

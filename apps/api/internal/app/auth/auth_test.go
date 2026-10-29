@@ -2,13 +2,14 @@ package auth_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/app/auth"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/user"
+	"go.klarlabs.de/glossa/apps/api/internal/app/auth"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/user"
 )
 
 // fakeUserRepo is a tiny in-memory implementation. The auth tests
@@ -85,6 +86,24 @@ func TestHMACIssuer_RejectsTamperedToken(t *testing.T) {
 	bad := tok[:len(tok)-1] + string(replacement)
 	if _, err := iss.Verify(bad); err == nil {
 		t.Fatal("expected verify to reject tampered token")
+	}
+}
+
+// A 32-byte HS256 signature is 43 base64url characters; the last one
+// carries 4 signature bits and 2 padding bits. A lenient decoder ignores
+// the padding bits, so a token with them set decodes to the same
+// signature and would verify. Only the canonical encoding may.
+func TestHMACIssuer_RejectsNonCanonicalSignature(t *testing.T) {
+	iss, _ := auth.NewHMACIssuer([]byte("01234567890123456789012345678901"), "glossa", time.Hour)
+	tok, _ := iss.Issue(auth.Claims{UserID: uuid.New(), TenantID: uuid.New(), Role: user.RoleAdmin})
+	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+	last := strings.IndexByte(alphabet, tok[len(tok)-1])
+	if last < 0 || last&0b11 != 0 {
+		t.Fatalf("issued signature is not canonical: %q", tok[len(tok)-1:])
+	}
+	bad := tok[:len(tok)-1] + string(alphabet[last|0b01])
+	if _, err := iss.Verify(bad); err == nil {
+		t.Fatal("expected verify to reject a non-canonical signature encoding")
 	}
 }
 

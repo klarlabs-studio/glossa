@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
 )
 
 func TestNewSlug(t *testing.T) {

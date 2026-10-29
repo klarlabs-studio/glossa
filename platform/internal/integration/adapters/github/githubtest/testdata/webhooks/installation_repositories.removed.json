@@ -1,0 +1,15 @@
+{
+  "action": "removed",
+  "installation": {
+    "id": 4242,
+    "app_id": 99001,
+    "account": { "login": "acme", "id": 424200, "type": "Organization" },
+    "repository_selection": "selected"
+  },
+  "repository_selection": "selected",
+  "repositories_added": [],
+  "repositories_removed": [
+    { "id": 10102, "node_id": "R_kgDOAAAnlg", "name": "docs", "full_name": "acme/docs", "private": false }
+  ],
+  "sender": { "login": "octocat", "id": 583231, "type": "User" }
+}

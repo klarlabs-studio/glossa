@@ -17,15 +17,15 @@
 //
 // Field roles:
 //   - code:    stable identifier for log filters / alerting — never
-//              renamed once shipped
+//     renamed once shipped
 //   - message: the canonical English literal; what gets logged + what
-//              non-glossa-aware clients render
+//     non-glossa-aware clients render
 //   - key:     glossa translation key the web frontend resolves via
-//              `<glossa-text>` or `glossa.resolveError(...)`
+//     `<glossa-text>` or `glossa.resolveError(...)`
 //   - params:  interpolation values for the key (`{field}` etc.) — keeps
-//              the server free of locale-specific string concat
+//     the server free of locale-specific string concat
 //   - status:  HTTP status echoed in the body for clients that don't
-//              read headers (mobile SDKs, browser fetch wrappers)
+//     read headers (mobile SDKs, browser fetch wrappers)
 //
 // Importers in other Go services (ascend, brotwerk, pet-medical) should
 // declare a single registry of errors at startup:

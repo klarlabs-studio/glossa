@@ -1,0 +1,69 @@
+{
+  "name": "@klarlabs-studio/glossa-overlay",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa's in-product editor (RFC 0004 §5): a Lit web component that finds the message under an Alt+click, shows its source, translation, history, terminology and AI suggestions, saves edits as ordinary translation revisions and previews them live through the runtime's override. Served from Studio to preview deployments, never imported by applications, never in production.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "./dist/index.js",
+    "./dist/overlay.js",
+    "./dist/standalone.js",
+    "./dist/bundle/overlay.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./bundle": "./dist/bundle/overlay.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/bundle.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "playwright test",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa-capture": "workspace:^",
+    "lit": "3.3.3"
+  },
+  "peerDependencies": {
+    "@klarlabs-studio/glossa-runtime": "workspace:^"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@klarlabs-studio/glossa-elements": "workspace:*",
+    "@klarlabs-studio/glossa-messageformat": "workspace:*",
+    "@klarlabs-studio/glossa-runtime": "workspace:*",
+    "@klarlabs-studio/glossa-unplugin": "workspace:*",
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.19.19",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2",
+    "jsdom": "25.0.1",
+    "typescript": "5.9.3",
+    "vite": "8.3.0",
+    "vitest": "4.1.0",
+    "yaml": "2.9.1"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/overlay"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/overlay#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

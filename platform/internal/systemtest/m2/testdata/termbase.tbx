@@ -1,0 +1,1446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tbx xmlns="urn:iso:std:iso:30042:ed-2" type="TBX-Basic" style="dca" xml:lang="en">
+  <tbxHeader>
+    <fileDesc>
+      <sourceDesc>
+        <p>Exported from Glossa</p>
+      </sourceDesc>
+    </fileDesc>
+  </tbxHeader>
+  <text>
+    <body>
+      <conceptEntry id="invoice">
+        <descrip type="subjectField">billing</descrip>
+        <descrip type="definition">A bill for a period of a subscription.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Rechnung</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Rechnungen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>invoice</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>invoices</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>bill</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>bills</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>factura</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>facturas</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>recibo</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>recibos</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>facture</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>factures</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>note</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>notes</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>請求書</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>勘定書</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="subscription">
+        <descrip type="subjectField">billing</descrip>
+        <descrip type="definition">A recurring paid plan of a workspace.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Abonnement</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Abonnements</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>subscription</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>subscriptions</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>membership</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>memberships</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>suscripción</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>suscripciones</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>abono</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>abonos</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>abonnement</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>abonnements</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>souscription</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>souscriptions</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>サブスクリプション</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>定期購読</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="payment_method">
+        <descrip type="subjectField">billing</descrip>
+        <descrip type="definition">A card or account that pays invoices.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Zahlungsmethode</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Zahlungsmethoden</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>payment method</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>payment methods</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>payment option</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>payment options</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>método de pago</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>métodos de pago</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>forma de pago</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>formas de pago</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>moyen de paiement</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>moyens de paiement</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>mode de règlement</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>modes de règlement</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>支払い方法</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>決済手段</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="discount_code">
+        <descrip type="subjectField">billing</descrip>
+        <descrip type="definition">A code that lowers the price of a plan.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Rabattcode</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Rabattcodes</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>discount code</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>discount codes</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>coupon</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>coupons</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>código de descuento</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>códigos de descuento</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>cupón</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>cupones</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>code promo</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>codes promo</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>coupon</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>coupons</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>割引コード</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>クーポン</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="plan">
+        <descrip type="subjectField">billing</descrip>
+        <descrip type="definition">A price tier with its limits.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Tarif</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Tarife</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>plan</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>plans</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>tier</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>tiers</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>plan</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>planes</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>tarifa</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>tarifas</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>forfait</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>forfaits</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>formule</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>formules</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>プラン</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>料金体系</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="password">
+        <descrip type="subjectField">security</descrip>
+        <descrip type="definition">The secret a person signs in with.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Passwort</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Passwörter</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>password</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>passwords</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>passcode</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>passcodes</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>contraseña</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>contraseñas</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>clave</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>claves</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>mot de passe</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>mots de passe</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>code secret</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>codes secrets</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>パスワード</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>暗証番号</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="session">
+        <descrip type="subjectField">security</descrip>
+        <descrip type="definition">A signed-in browser or device.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Sitzung</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Sitzungen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>session</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>sessions</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>login</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>logins</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>sesión</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>sesiones</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>conexión</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>conexiones</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>session</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>sessions</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>connexion</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>connexions</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>セッション</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>接続</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="api_key">
+        <descrip type="subjectField">security</descrip>
+        <descrip type="definition">A secret that authenticates API requests.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>API-Schlüssel</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>API key</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>API keys</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>API token</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>API tokens</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>clave de API</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>claves de API</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>llave de API</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>llaves de API</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>clé API</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>clés API</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>jeton API</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>jetons API</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>APIキー</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>APIトークン</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="invitation">
+        <descrip type="subjectField">security</descrip>
+        <descrip type="definition">An offer to join a workspace.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Einladung</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Einladungen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>invitation</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>invitations</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>invitación</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>invitaciones</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>convite</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>convites</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>invitation</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>invitations</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>convocation</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>convocations</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>招待</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>招待状</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="report">
+        <descrip type="subjectField">analytics</descrip>
+        <descrip type="definition">A saved view of metrics.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Bericht</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Berichte</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>report</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>reports</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>informe</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>informes</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>reporte</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>reportes</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>rapport</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>rapports</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>compte rendu</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>comptes rendus</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>レポート</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>報告書</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="project">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">A body of work inside a workspace.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Projekt</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Projekte</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>project</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>projects</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>proyecto</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>proyectos</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>encargo</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>encargos</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>projet</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>projets</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>chantier</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>chantiers</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>プロジェクト</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>案件</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="workspace">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">The top-level container of a team.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Arbeitsbereich</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Arbeitsbereiche</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>workspace</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>workspaces</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>espacio de trabajo</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>espacios de trabajo</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>área de trabajo</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>áreas de trabajo</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>espace de travail</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>espaces de travail</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>zone de travail</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>zones de travail</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>ワークスペース</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>作業スペース</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="member">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">A person with access to a workspace.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Mitglied</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Mitglieder</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>member</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>members</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>miembro</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>miembros</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>socio</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>socios</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>membre</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>membres</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>adhérent</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>adhérents</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>メンバー</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>会員</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="role">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">A named set of permissions.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Rolle</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Rollen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>role</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>roles</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>rol</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>roles</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>papel</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>papeles</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>rôle</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>rôles</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>fonction</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>fonctions</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>ロール</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>役割</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="integration">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">A connection to another product.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Integration</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Integrationen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>integration</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>integrations</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>integración</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>integraciones</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>conector</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>conectores</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>intégration</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>intégrations</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>connecteur</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>connecteurs</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>連携</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>統合</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="webhook">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">An HTTP callback for events.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Webhook</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Webhooks</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>webhook</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>webhooks</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>webhook</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>webhooks</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>gancho web</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>ganchos web</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>webhook</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>webhooks</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>crochet web</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>crochets web</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>Webhook</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>ウェブフック</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="notification">
+        <descrip type="subjectField">messaging</descrip>
+        <descrip type="definition">A message about activity.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Benachrichtigung</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Benachrichtigungen</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>notification</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>notifications</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>notificación</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>notificaciones</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>aviso</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>avisos</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>notification</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>notifications</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>avis</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>通知</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>お知らせ</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="file">
+        <descrip type="subjectField">messaging</descrip>
+        <descrip type="definition">An uploaded document or attachment.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Datei</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Dateien</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>file</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>files</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>archivo</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>archivos</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>fichero</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>ficheros</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>fichier</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>fichiers</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>document</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>documents</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>ファイル</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>書類</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="administrator">
+        <descrip type="subjectField">workspace</descrip>
+        <descrip type="definition">A member who manages the workspace.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Administrator</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>Administratoren</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>administrator</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>administrators</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>administrador</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>administradores</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>gestor</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>gestores</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>administrateur</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>administrateurs</term>
+            <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>gestionnaire</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>gestionnaires</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>管理者</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>アドミン</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+      <conceptEntry id="help_center">
+        <descrip type="subjectField">support</descrip>
+        <descrip type="definition">The product's documentation site.</descrip>
+        <langSec xml:lang="de">
+          <termSec>
+            <term>Hilfe</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="en">
+          <termSec>
+            <term>help center</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="es">
+          <termSec>
+            <term>centro de ayuda</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>centro de soporte</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="fr">
+          <termSec>
+            <term>centre d’aide</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>centre de support</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+        <langSec xml:lang="ja">
+          <termSec>
+            <term>ヘルプセンター</term>
+            <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+          </termSec>
+          <termSec>
+            <term>サポートセンター</term>
+            <termNote type="administrativeStatus">supersededTerm-admn-sts</termNote>
+          </termSec>
+        </langSec>
+      </conceptEntry>
+    </body>
+  </text>
+</tbx>

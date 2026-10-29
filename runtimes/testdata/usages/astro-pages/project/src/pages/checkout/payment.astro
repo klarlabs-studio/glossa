@@ -1,0 +1,10 @@
+---
+import { getGlossa } from "@klarlabs-studio/glossa/astro/server";
+
+const { t } = getGlossa(Astro);
+const heading = t("checkout.title");
+---
+<main>
+  <h1>{heading}</h1>
+  <glossa-text key="checkout.pay">Bezahlen</glossa-text>
+</main>

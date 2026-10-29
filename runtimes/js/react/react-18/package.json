@@ -1,0 +1,22 @@
+{
+  "name": "@glossa/react-test-react-18",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Test-only: runs @klarlabs-studio/glossa-react's test suite against React 18.3, the oldest React it supports.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@klarlabs-studio/glossa-react": "workspace:*",
+    "@types/node": "22.19.19",
+    "jsdom": "25.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "vitest": "4.1.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

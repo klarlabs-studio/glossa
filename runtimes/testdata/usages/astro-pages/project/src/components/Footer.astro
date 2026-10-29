@@ -1,0 +1,9 @@
+---
+import { getGlossa } from "@klarlabs-studio/glossa/astro/server";
+
+const { t } = getGlossa(Astro);
+---
+<footer>
+  <small>{t("footer.imprint")}</small>
+  <glossa-text message="footer.copyright"></glossa-text>
+</footer>

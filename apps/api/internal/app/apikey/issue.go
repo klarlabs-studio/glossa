@@ -12,7 +12,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/apikey"
 )
 
 // ErrInvalidLabel is the belt-and-suspender guard for labels that

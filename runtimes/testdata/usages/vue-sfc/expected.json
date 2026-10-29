@@ -1,0 +1,17 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "cart.checkout", "file": "src/checkout/PaymentFooter.vue", "line": 17, "column": 21, "component": "PaymentFooter", "kind": "component"},
+    {"key": "cart.items", "file": "src/checkout/PaymentFooter.vue", "line": 16, "column": 15, "component": "PaymentFooter", "kind": "t"},
+    {"key": "checkout.footer.label", "file": "src/checkout/PaymentFooter.vue", "line": 15, "column": 28, "component": "PaymentFooter", "kind": "t"},
+    {"key": "checkout.help", "file": "src/checkout/PaymentFooter.vue", "line": 22, "column": 23, "component": "PaymentFooter", "kind": "component"},
+    {"key": "checkout.pay", "file": "src/checkout/PaymentFooter.vue", "line": 10, "column": 36, "component": "PaymentFooter", "kind": "t"},
+    {"key": "checkout.payment-failed", "file": "src/checkout/PaymentFooter.vue", "line": 11, "column": 33, "component": "PaymentFooter", "kind": "accessor"},
+    {"key": "checkout.secure", "file": "src/checkout/PaymentFooter.vue", "line": 23, "column": 27, "component": "PaymentFooter", "kind": "element"},
+    {"key": "checkout.terms", "file": "src/checkout/PaymentFooter.vue", "line": 19, "column": 11, "component": "PaymentFooter", "kind": "component"}
+  ]
+}

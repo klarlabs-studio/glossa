@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" version="2.1" srcLang="en" trgLang="de" xml:space="preserve">
+  <file id="f1" original="checkout">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="checkout.title" name="checkout.title" slr:sizeRestriction="20">
+      <notes>
+        <note category="description">Page title</note>
+      </notes>
+      <segment state="final">
+        <source>Checkout</source>
+        <target>Kasse</target>
+      </segment>
+    </unit>
+    <unit id="checkout.greeting" name="checkout.greeting">
+      <originalData>
+        <data id="d1">{#b}</data>
+        <data id="d2">{$name}</data>
+        <data id="d3">{/b}</data>
+        <data id="d4">{$count :number}</data>
+        <data id="d5">{#br /}</data>
+        <data id="d6">{#i}</data>
+      </originalData>
+      <segment state="translated">
+        <source>Hello <pc id="1" dataRefStart="d1" dataRefEnd="d3" dispStart="{#b}" dispEnd="{/b}"><ph id="2" dataRef="d2" disp="{$name}"/></pc>, <ph id="3" dataRef="d4" disp="{$count :number}"/> items<ph id="4" dataRef="d5" disp="{#br /}"/> <sc id="5" dataRef="d6" disp="{#i}" isolated="yes"/>open</source>
+        <target><ph id="3" dataRef="d4" disp="{$count :number}"/> Artikel<ph id="4" dataRef="d5" disp="{#br /}"/> für <pc id="1" dataRefStart="d1" dataRefEnd="d3" dispStart="{#b}" dispEnd="{/b}"><ph id="2" dataRef="d2" disp="{$name}"/></pc> <sc id="5" dataRef="d6" disp="{#i}" isolated="yes"/>offen</target>
+      </segment>
+    </unit>
+    <unit id="checkout.items" name="checkout.items" type="glossa:mf2">
+      <notes>
+        <note category="location">src/cart.ts:12</note>
+      </notes>
+      <segment state="initial">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} item}}
+* {{{$count} items}}</source>
+        <target>.input {$count :number} .match $count one {{{$count} Artikel}} * {{{$count} Artikel}}</target>
+      </segment>
+    </unit>
+    <unit id="glossa-u1" name="legacy key/with space">
+      <segment state="initial" subState="glossa:rejected">
+        <source>Tab	here, bell <cp hex="0007"/> and {braces}</source>
+        <target>Tab	here, bell <cp hex="0007"/> and {braces}</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f2">
+    <unit id="app.name" name="app.name">
+      <notes>
+        <note>Brand name, do not translate.</note>
+      </notes>
+      <segment>
+        <source>Glossa</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

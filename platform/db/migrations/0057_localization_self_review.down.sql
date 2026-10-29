@@ -1,0 +1,1 @@
+ALTER TABLE localization_translation_revisions DROP COLUMN self_review;

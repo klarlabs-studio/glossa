@@ -1,0 +1,82 @@
+{
+  "name": "@klarlabs-studio/glossa-astro",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa for Astro 5: static pages rendered with the release at build time, islands and <glossa-*> elements sharing one runtime with the same release, and locale routing helpers.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js"
+    },
+    "./elements": {
+      "types": "./dist/elements.d.ts",
+      "import": "./dist/elements.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    },
+    "./testing": {
+      "types": "./dist/test-support.d.ts",
+      "import": "./dist/test-support.js"
+    },
+    "./translate": {
+      "types": "./dist/translate.d.ts",
+      "import": "./dist/translate.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "peerDependencies": {
+    "astro": "^6.4.0 || ^7.0.0"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa-elements": "workspace:^",
+    "@klarlabs-studio/glossa-runtime": "workspace:^",
+    "@klarlabs-studio/glossa-unplugin": "workspace:^",
+    "@klarlabs-studio/glossa-vue": "workspace:^"
+  },
+  "devDependencies": {
+    "@astrojs/vue": "7.0.3",
+    "@types/node": "22.19.19",
+    "astro": "7.3.3",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0",
+    "vue": "3.5.43"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/astro"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/astro#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

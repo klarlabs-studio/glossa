@@ -1,0 +1,14 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "cart.checkout", "file": "src/cart/summary.ts", "line": 10, "column": 14, "kind": "accessor"},
+    {"key": "checkout.pay", "file": "src/cart/summary.ts", "line": 11, "column": 7, "kind": "accessor"},
+    {"key": "checkout.payment-failed", "file": "src/cart/summary.ts", "line": 12, "column": 7, "kind": "accessor"},
+    {"key": "nav.home.title", "file": "src/cart/summary.ts", "line": 13, "column": 14, "kind": "accessor"},
+    {"key": "title", "file": "src/cart/summary.ts", "line": 14, "column": 14, "kind": "accessor"}
+  ]
+}

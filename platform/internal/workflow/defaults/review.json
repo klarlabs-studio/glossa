@@ -1,0 +1,107 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "review",
+  "subject": "translation",
+  "chart": {
+    "id": "review",
+    "initial": "current",
+    "states": {
+      "current": {
+        "id": "current",
+        "type": "atomic",
+        "transitions": [
+          {
+            "event": "translation.outdated",
+            "target": "reviewing",
+            "actions": [
+              "back_to_review"
+            ]
+          },
+          {
+            "event": "translation.revised",
+            "target": "done"
+          },
+          {
+            "event": "suggestion.created",
+            "target": "done"
+          }
+        ]
+      },
+      "reviewing": {
+        "id": "reviewing",
+        "type": "atomic",
+        "entry": [
+          "ask_a_reviewer"
+        ],
+        "transitions": [
+          {
+            "event": "approval.granted",
+            "target": "done",
+            "guard": "one_approval",
+            "actions": [
+              "approve"
+            ]
+          },
+          {
+            "event": "approval.denied",
+            "target": "done",
+            "actions": [
+              "reject"
+            ]
+          },
+          {
+            "event": "translation.reviewed",
+            "target": "done",
+            "guard": "decided"
+          },
+          {
+            "event": "translation.outdated",
+            "target": "reviewing",
+            "actions": [
+              "back_to_review"
+            ]
+          }
+        ]
+      },
+      "done": {
+        "id": "done",
+        "type": "final"
+      }
+    }
+  },
+  "guards": {
+    "one_approval": {
+      "use": "approvals_at_least",
+      "n": 1,
+      "distinct_from_author": true
+    },
+    "decided": {
+      "use": "review_state_in",
+      "states": [
+        "approved",
+        "rejected"
+      ]
+    }
+  },
+  "actions": {
+    "back_to_review": {
+      "use": "set_review_state",
+      "state": "needs_review"
+    },
+    "ask_a_reviewer": {
+      "use": "request_approval",
+      "n": 1,
+      "from": {
+        "role": "reviewer"
+      }
+    },
+    "approve": {
+      "use": "set_review_state",
+      "state": "approved"
+    },
+    "reject": {
+      "use": "set_review_state",
+      "state": "rejected"
+    }
+  }
+}

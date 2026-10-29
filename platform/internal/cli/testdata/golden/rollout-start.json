@@ -1,0 +1,29 @@
+{
+  "schema": "glossa.cli.release.rollout/v1",
+  "action": "start",
+  "environment": "production",
+  "idempotency_key": "ro-1",
+  "etag": "\"1\"",
+  "rollout": {
+    "id": "ro_1",
+    "environment": "production",
+    "release_id": "rel_2",
+    "stable_release_id": "rel_1",
+    "percent": 10,
+    "status": "active",
+    "max_duration_seconds": 604800,
+    "expires_at": "2026-10-09T09:01:00Z",
+    "forced": false,
+    "started_by": "token:1",
+    "started_at": "2026-10-02T09:01:00Z",
+    "updated_at": "2026-10-02T09:01:00Z",
+    "release": {
+      "id": "rel_2",
+      "version": 2
+    },
+    "stable_release": {
+      "id": "rel_1",
+      "version": 1
+    }
+  }
+}

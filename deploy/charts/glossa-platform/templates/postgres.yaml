@@ -1,0 +1,171 @@
+{{- if .Values.postgres.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "postgres") -}}
+{{- $v := .Values.postgres -}}
+{{- $uid := include "gp.postgres.uid" . | int -}}
+# Postgres on 5432 for glossa-server, the migration and bootstrap Jobs,
+# the backup Job and the `helm test` Pod (NetworkPolicy).
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+      protocol: TCP
+---
+# The StatefulSet's governing Service (stable pod DNS).
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}-headless
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+spec:
+  clusterIP: None
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+spec:
+  serviceName: {{ $name }}-headless
+  # One Postgres per product namespace. More replicas would need
+  # replication, not a bigger number here.
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  revisionHistoryLimit: 5
+  updateStrategy:
+    type: RollingUpdate
+  # The volume outlives the StatefulSet: uninstalling or scaling to 0
+  # keeps the database.
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.statefulPodLabels" (dict "root" $ "component" "postgres") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: {{ $v.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- include "gp.podSecurityContext" $uid | nindent 8 }}
+        fsGroupChangePolicy: OnRootMismatch
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: postgres
+          image: {{ include "gp.externalImage" (dict "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # The image's entrypoint runs initdb on an empty volume (creating
+          # only the superuser); roles and the database are the bootstrap
+          # Job's. As uid 70 it skips its root-only chown steps.
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+              protocol: TCP
+          env:
+            # A subdirectory: the volume's root holds lost+found and is not
+            # owned by the postgres user, which initdb requires.
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_USER
+              value: {{ $v.superuser.username | quote }}
+            {{- include "gp.secretEnv" (dict "name" "POSTGRES_PASSWORD" "secret" (include "gp.postgres.superuserSecret" .) "key" $v.superuser.passwordKey) | nindent 12 }}
+            # No application database at initdb: the bootstrap Job creates
+            # it owned by the schema owner, not by the superuser.
+            - name: POSTGRES_DB
+              value: postgres
+          startupProbe:
+            exec:
+              command: ["pg_isready", "-h", "127.0.0.1", "-p", "5432"]
+            periodSeconds: 5
+            # initdb, or crash recovery after an unclean stop.
+            failureThreshold: 120
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-h", "127.0.0.1", "-p", "5432"]
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-h", "127.0.0.1", "-p", "5432"]
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            {{- toYaml $v.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            # The unix socket and lock file (read-only root filesystem).
+            - name: run
+              mountPath: /var/run/postgresql
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: run
+          emptyDir:
+            sizeLimit: 1Mi
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 10 }}
+          {{- with $v.persistence.labels }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- with $v.persistence.annotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      spec:
+        accessModes: [ReadWriteOnce]
+        storageClassName: {{ $v.persistence.storageClassName | quote }}
+        resources:
+          requests:
+            storage: {{ $v.persistence.size | quote }}
+{{- if $v.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+spec:
+  maxUnavailable: {{ $v.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 6 }}
+{{- end }}
+{{- end }}

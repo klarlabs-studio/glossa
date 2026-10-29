@@ -1,0 +1,19 @@
+{
+  "action": "deleted",
+  "installation": {
+    "id": 4242,
+    "app_id": 99001,
+    "app_slug": "glossa",
+    "target_type": "Organization",
+    "repository_selection": "selected",
+    "account": { "login": "acme", "id": 424200, "type": "Organization" },
+    "permissions": { "checks": "write", "metadata": "read", "pull_requests": "write" },
+    "events": ["check_run", "pull_request"],
+    "created_at": "2026-09-01T10:00:00Z",
+    "suspended_at": null
+  },
+  "repositories": [
+    { "id": 10101, "name": "shop", "full_name": "acme/shop", "private": true }
+  ],
+  "sender": { "login": "octocat", "id": 583231, "type": "User" }
+}

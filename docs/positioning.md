@@ -1,100 +1,92 @@
 # Glossa positioning brief
 
-Captured 2026-05-25. Authoritative source for README hero copy, GHCR description, npm package descriptions, and the README of every consumer package. Reflect changes here in those surfaces within the same PR.
+Revised 2026-09-19. The first version (2026-05-25) positioned Glossa as a self-hosted translation backend for indie EU SaaS teams. [`docs/product-intent.md`](./product-intent.md) replaces that: Glossa becomes **localization infrastructure**. This brief turns the intent into positioning. Where they disagree, the intent wins.
 
-This brief follows April Dunford's five components: alternatives → capabilities → value → best-fit customer → category.
+This is the authoritative source for the README hero, the GHCR description and the npm package descriptions. Reflect changes here in those surfaces within the same PR.
+
+The brief follows April Dunford's five components: alternatives → capabilities → value → best-fit customer → category.
+
+## Shipped vs direction
+
+Positioning must never claim what doesn't exist yet. Everything below is marked **shipped** (in v0.3) or with the rewrite milestone that delivers it (**M1**, **M2**, …; see [RFC 0002](./rfcs/0002-platform-architecture.md) §13).
 
 ## Early Customer Profile (ECP)
 
-**Solo founders + 2-5 person teams shipping a localized SaaS in the EU, comfortable self-hosting on k3s / single-node Linux, already using one or more of: Caddy / Plausible / Tolgee-adjacent stacks, and unwilling to pay per-translated-word for a tool that hosts strings their consumers will read.**
+**Small product teams (1–10 engineers) that ship one product across more than one surface — a web frontend plus a backend that sends email, PDFs or notifications — in two or more languages, and that have already felt the cost of adding a language by hand.**
 
-Not the ICP yet — Glossa has ~1 paying user (Felix). The ECP is the first 20 paying users; the ICP comes from observed patterns across those 20.
+Glossa has about one paying user (Felix, across Brotwerk and IRI). The ECP is the first 20 teams. The ICP comes from patterns across those 20.
 
-What the ECP has that Maya Voje's frame demands:
-- **Willingness to pay** — they already pay for managed Postgres, managed object storage, or a Hetzner box. Translation management is a known cost line.
-- **Burning pain** — they have copy in their app, they want it in a second language, they don't want to hand-edit `de.json` + `en.json` forever.
-- **Proximity** — reachable via the EU indie-SaaS dev twitter / mastodon / discord scene + the open-source self-hosters community (Tolgee, Plausible, Caddy users).
-- **Willingness to recommend** — this crowd shares tools openly.
+What makes this the ECP:
+- **Burning pain.** Each new locale means re-touching strings across the frontend *and* the backend. Frontend i18n libraries don't cover the backend, and TMS tools don't cover the runtime.
+- **Willingness to pay.** They already pay for infrastructure: a managed database, a Hetzner box, LLM API credits.
+- **Proximity.** Reachable through the open-source and self-hosting communities Glossa already lives in.
+- **Willingness to recommend.** This crowd shares tools openly.
 
-What disqualifies a prospect:
-- **Series A+ companies** — they'll buy Lokalise / Crowdin and pay per word without thinking. Glossa's wedge doesn't matter to them.
-- **Non-self-hosters** — anyone who recoils at "you run the database" is a wrong fit for v0.1. (Managed Glossa is a 2027 option.)
-- **English-only apps** — the AI fan-out + locale management story carries less weight when there's only one locale to manage.
+Not a fit *yet*:
+- **Organizations that need vendor management, SSO/SCIM or configurable approval workflows.** That's intent Phase 4. The architecture leaves room for it (intent §49), but the product doesn't serve them today.
+- **English-only apps.** Nothing to localize.
 
 ## The 5 positioning components (Dunford)
 
 ### 1. Competitive alternatives
 
-What the ECP would do without Glossa:
-
-| Alternative | What they hate about it |
+| Alternative | What the ECP hates about it |
 |---|---|
-| **JSON files in git + PR review** (the default) | Translator can't edit without a PR; every locale change is a deploy; no live preview; no AI fan-out. |
-| **Lokalise / Crowdin / Phrase** | Per-word billing scales with success in the wrong direction. Translator UX is fine; ops + billing are the friction. Cloud-only. |
-| **Tolgee** (the close OSS competitor) | Closest match. Mature. But heavier ops footprint, no built-in AI fan-out with BYO LLM, no first-class web-components SDK. |
-| **Build your own** | Six months of distraction from the product that pays the bills. |
+| **i18n library + JSON files in git** (the default) | Every locale change is a PR and a deploy. Frontend and backend keep separate catalogs. No context for translators. Adding a language is an engineering project. |
+| **Lokalise / Crowdin / Phrase** | File sync bolted onto the repo. Translations are files, not product data. Cloud-only, with per-word or per-seat pricing that grows with success. |
+| **Tolgee** (closest OSS option) | Strong in-context editing, but still a TMS attached to the app, not the runtime. No typed messages, no backend runtime. |
+| **Build your own** | Months away from the product that pays the bills. |
 
 ### 2. Differentiated capabilities
 
-Three capabilities Glossa has that the alternatives don't ship together:
-
-1. **AI translator agents with BYO LLM key + per-row attribution.** OpenAI / Anthropic / Gemini / OpenAI-compatible configured per-tenant. Source-locale writes fan out automatically; every AI row is labeled `actor_kind="ai"` in the audit log. No per-word cost — you pay the LLM provider directly.
-2. **Web components consumer SDK with SSE live updates.** `<glossa-text key="…">fallback</glossa-text>` drops into Vue, React, Svelte, Astro, plain HTML. Edits land in the browser within seconds without a redeploy. Fallback content stays visible offline.
-3. **Self-hosted from day one with scoped read/write API keys.** Helm chart on OCI registry + raw k3s manifests + Docker Compose dev stack. Read-only keys safe to embed in static frontends; write keys live on the trusted server.
+1. **One message model across every runtime.** Typed messages (`messages.checkout.pay({ amount })`) on the web, the same messages through `i18n.T(ctx, …)` in Go. One MessageFormat semantics, one conformance suite. *Shipped: web components and TS SDK. M1: typed accessors, Vue/Astro and the Go runtime.*
+2. **AI translation grounded in your knowledge, with provenance.** BYO provider (OpenAI, Anthropic, Gemini, OpenAI-compatible). *Shipped:* automatic fan-out with per-row attribution. *M2:* translation memory, terminology, structural validation, confidence, and a record of the model, prompt and knowledge used for each translation.
+3. **Immutable releases, resilient delivery.** Publish, promote and roll back per environment. Content-addressed bundles keep serving when the control plane is down. *Shipped:* live updates over SSE and fallback-first rendering. *M1:* releases, environments, delivery plane and fallback graph.
+4. **You own it.** MIT-licensed and self-hostable (Helm chart, Docker Compose). Tenant isolation is enforced by Postgres RLS. Your data, your LLM keys. *Shipped.*
 
 ### 3. Differentiated value
 
-What the capabilities mean for the ECP:
-
-- **Predictable cost.** Two locales × 500 keys × 3 reviewers = $0 marginal cost on Glossa. Same workload on Lokalise: ~$120/mo.
-- **No vendor lock-in.** Postgres dump out, JSON bundles out, every consumer fallback still renders if you turn Glossa off tomorrow.
-- **Localized UX without re-deploys.** Marketing fixes the hero copy at 17:00 Friday; the running app reflects it by 17:00:05. Same flow translators use, no engineer involvement.
-- **DSGVO posture handled.** EU-hosted, no third-party processor, self-managed encryption keys.
+- **The next language is configuration, not a project.** This is the metric that matters (intent §70): the engineering effort to ship one more language should keep falling.
+- **Translators get context engineers never wrote down.** Source locations and usage first. Screenshots and live preview come in Phase 2.
+- **Localization behaves like CI.** `glossa check` fails the build on broken placeholders or missing translations (M1, full policies in M4) instead of users finding them in production.
+- **No lock-in.** Standard formats in and out, and your own database.
 
 ### 4. Best-fit target customer
 
-Concretely:
-
-- **Persona:** German-language indie SaaS founder, 1-3 person team, ships a B2C or low-touch B2B app in DE plus 1-3 other locales.
-- **Where they live:** Hetzner / Netcup / OVH / their own basement. They know how to point an A record + write a values.yaml.
-- **What they read:** indie hackers EU edition, mastodon, the Tolgee + Plausible + Caddy + Coolify discord communities.
-- **What they've already adopted:** at least one of Plausible (analytics), Coolify (PaaS), Tolgee (i18n attempt that fell short).
+- **Persona:** the tech lead of a small product team shipping in two or more languages, who owns both the frontend and the backend that sends localized email.
+- **Trigger:** "we're adding a third language," or "our German invoice email is still in English."
+- **Where they live:** open-source and self-hosting communities, and the dev communities around Go, TypeScript and web components.
 
 ### 5. Market category
 
-**Self-hosted, AI-augmented translation management for indie EU SaaS.**
+**Localization infrastructure.**
 
-Tolgee defined "open-source translation management" — Glossa rides that category. The wedge is **AI fan-out with BYO LLM + web-components SDK + DSGVO-native posture**. Glossa is what Tolgee would be if it started in 2026 with cheap LLM access already on the table.
+Not "translation management," a category defined by files and translator workflows. Glossa sits where Stripe sits for payments or Sentry for errors: infrastructure your code integrates once, with a professional workspace for the humans who work in it.
 
 ## Three sentences to land on
 
-These three sentences should appear verbatim in the README hero, the GHCR image description, and the npm package descriptions:
+These appear verbatim in the README hero, the GHCR image description and the npm package descriptions:
 
-1. **For small EU SaaS teams who want to localize without per-word fees,**
-2. **Glossa is a self-hosted translation backend that ships AI fan-out, live SSE updates, and drop-in web components.**
-3. **Unlike Lokalise or Crowdin which meter on word count, Glossa runs on your own k3s with your own LLM keys — no per-translation cost, no vendor lock-in.**
+1. **For product teams who want every new language to be configuration, not an engineering project,**
+2. **Glossa is open-source localization infrastructure: one typed message model for web and backend, AI translation grounded in your terminology and translation memory, and immutable releases delivered to every runtime.**
+3. **Unlike file-centric translation tools, Glossa treats translations as versioned product data you own: self-hosted, with your own LLM keys.**
 
-## Why these alternatives, not others
+## Out of scope
 
-- **Why Lokalise as the reference paid alternative?** Most-recognized name in indie-SaaS founder mindshare. Crowdin / Phrase have similar shapes; one name keeps the comparison concrete.
-- **Why Tolgee as the OSS reference?** Closest functional match. Other OSS i18n tools (Weblate, Pootle) target translator orgs, not product teams; the wedge is unclear there.
-- **Why not "vs DIY JSON files"?** The DIY path is the real default; the comparison is in the value section. It's not the reference category — Glossa is a tool, not a competitor to git.
+From intent §61. What Glossa is not, even when asked nicely:
 
-## Out of scope (Lochhead category-design discipline)
+- **Not a translation file editor.** Files are how data gets in and out, not the product.
+- **Not an LLM wrapper.** The value is context, memory, terminology, quality and delivery, not the model call.
+- **Not only a CAT tool.** A professional translator workspace is one part of the platform.
+- **Not only a frontend i18n library.** Backend, mobile and generated documents matter equally.
+- **Not a replacement for language experts.** AI handles the predictable work and surfaces uncertainty. Humans own judgment.
+- **Not a standards inventor.** BCP 47, CLDR and MessageFormat first.
 
-What Glossa is NOT, even if asked nicely:
+## Riskiest assumption
 
-- **Not a CAT tool.** No translation memory, no glossary management, no MT post-editing workflow optimization. Trados owns that category.
-- **Not a content-management system.** Strings, not pages. No rich-text editor, no scheduled publishing.
-- **Not enterprise.** No SSO, no SCIM, no SLA, no per-seat pricing. v1 stays self-host-only.
-
-Surfacing these out-of-scope items in the README + docs prevents wrong-fit users from spending evaluation cycles on something we're never going to ship.
-
-## Riskiest assumption (Doshi)
-
-> "Self-hosters who want translation management already picked Tolgee, and the marginal pull of Glossa's AI fan-out / web-components / EU posture isn't enough to switch."
+> "Teams will adopt a new localization runtime (typed messages plus releases) in place of the i18n library and JSON files they already have."
 
 Validation plan:
-1. **Run the second-user usability test** (task-usability-test) against someone currently using Tolgee. Specifically ask: would AI fan-out + the web-components SDK be enough to switch?
-2. **Post a 'Glossa vs Tolgee, what would you pick?' thread** in the relevant communities and watch which dimensions resonate.
-3. **If the answer is no:** category-creation gambit fails; pivot Glossa into a Tolgee plugin (ai-fan-out adapter + web-components SDK) rather than a competitor.
+1. **Dogfood.** Move Brotwerk (the M1 pilot), then KraftSport, frontend *and* backend, onto the new runtime. Measure engineering hours to add one more locale before and after. That number is the headline claim or it's nothing.
+2. **Second-team test.** Onboard one team outside Felix's projects. Time to the first localized environment is the target (intent §66: minutes, not days).
+3. **If adoption stalls at the runtime,** lead with the pieces that don't require a runtime switch (`glossa check` in CI, knowledge-aware AI translation over existing catalogs) and let the runtime follow.

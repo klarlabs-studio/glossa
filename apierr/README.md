@@ -1,4 +1,4 @@
-# `github.com/felixgeelhaar/glossa/apierr`
+# `github.com/klarlabs-studio/glossa/apierr`
 
 Framework-agnostic JSON error envelope for Go HTTP services that want
 to ship error responses both `curl`-friendly and `glossa-text`-friendly.
@@ -42,7 +42,7 @@ This package emits both in one envelope so callers don't have to pick.
 Install:
 
 ```bash
-go get github.com/felixgeelhaar/glossa/apierr
+go get github.com/klarlabs-studio/glossa/apierr
 ```
 
 Declare errors once, in a registry:
@@ -53,7 +53,7 @@ package errs
 
 import (
     "net/http"
-    "github.com/felixgeelhaar/glossa/apierr"
+    "github.com/klarlabs-studio/glossa/apierr"
 )
 
 var (
@@ -75,7 +75,7 @@ var (
 Use at the call site (gin example via the `ginerr` subpackage):
 
 ```go
-import "github.com/felixgeelhaar/glossa/apierr/ginerr"
+import "github.com/klarlabs-studio/glossa/apierr/ginerr"
 
 if email == "" {
     ginerr.Send(c, errs.ValidationEmailRequired.WithParam("field", "email"))
@@ -95,11 +95,11 @@ if err != nil {
 
 ## Client-side resolution
 
-The `@felixgeelhaar/glossa-sdk` npm package exposes `resolveApiError`
-that takes the envelope and returns the localised string:
+The `resolveApiError` helper of the retired v0.3 `@felixgeelhaar/glossa-sdk`
+(see `runtimes/js/elements/MIGRATION.md`) took the envelope and returned the localised string:
 
 ```ts
-import { resolveApiError } from "@felixgeelhaar/glossa-sdk";
+import { resolveApiError } from "<your resolver>";
 
 const res = await fetch("/api/v1/admin/projects", { ... });
 if (!res.ok) {
@@ -129,6 +129,5 @@ throws.
 
 ## Sibling packages
 
-- **Frontend resolver** — `@felixgeelhaar/glossa-sdk` re-exports
-  `resolveApiError` + the matching TypeScript types.
-- **Gin adapter** — `github.com/felixgeelhaar/glossa/apierr/ginerr`.
+- **Frontend resolver** — was `@felixgeelhaar/glossa-sdk` (retired with v0.3).
+- **Gin adapter** — `github.com/klarlabs-studio/glossa/apierr/ginerr`.

@@ -1,0 +1,41 @@
+{
+  "accepted": [
+    { "use": "request_approval_as_required", "params": {} },
+    { "use": "request_approval_as_required", "params": { "due": "P2D" } },
+    { "use": "deploy_release", "params": {} },
+    { "use": "deny_release", "params": {} },
+    { "use": "assign", "params": { "to": { "vendor": "lingua-gmbh" }, "due": "P3D" } },
+    { "use": "assign", "params": { "to": { "role": "translator" } } },
+    { "use": "assign", "params": { "to": { "group": "de-reviewers" }, "due": "P1DT12H" } },
+    { "use": "assign", "params": { "to": { "member": "0b5e4a52-2f8c-4d6e-9d3f-1b2c3d4e5f60" }, "due": "PT4H" } },
+    { "use": "request_approval", "params": { "n": 2, "from": { "role": "reviewer" } } },
+    { "use": "request_approval", "params": { "n": 1, "from": { "group": "brand" }, "due": "P1W" } },
+    { "use": "set_review_state", "params": { "state": "approved" } },
+    { "use": "set_review_state", "params": { "state": "needs_review" } },
+    { "use": "request_fill", "params": {} },
+    { "use": "run_check", "params": {} },
+    { "use": "run_check", "params": { "layers": ["terminology", "length"] } },
+    { "use": "notify", "params": { "to": { "role": "admin" } } }
+  ],
+  "refused": [
+    { "use": "request_approval_as_required", "params": { "n": 1, "from": { "role": "reviewer" } } },
+    { "use": "deploy_release", "params": { "environment": "production" } },
+    { "use": "deny_release", "params": { "reason": "no" } },
+    { "use": "assign", "params": {} },
+    { "use": "assign", "params": { "to": { "role": "legal" } } },
+    { "use": "assign", "params": { "to": { "vendor": "a", "group": "b" } } },
+    { "use": "assign", "params": { "to": { "vendor": "lingua-gmbh" }, "due": "P1M" } },
+    { "use": "assign", "params": { "to": { "vendor": "lingua-gmbh" }, "due": "3 days" } },
+    { "use": "assign", "params": { "to": { "vendor": "lingua-gmbh" }, "due": "PT0M" } },
+    { "use": "assign", "params": { "to": { "vendor": "Lingua GmbH!" } } },
+    { "use": "request_approval", "params": { "n": 0, "from": { "role": "reviewer" } } },
+    { "use": "request_approval", "params": { "n": 1, "from": { "vendor": "lingua-gmbh" } } },
+    { "use": "set_review_state", "params": { "state": "legal_review" } },
+    { "use": "set_review_state", "params": { "state": "approved", "by": "system" } },
+    { "use": "request_fill", "params": { "provider": "openai" } },
+    { "use": "run_check", "params": { "layers": ["linguistic"] } },
+    { "use": "run_check", "params": { "layers": ["spelling"] } },
+    { "use": "notify", "params": { "to": { "url": "https://example.com/hook" } } },
+    { "use": "notify", "params": { "to": { "role": "reviewer" }, "webhook": "https://example.com/hook" } }
+  ]
+}

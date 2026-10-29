@@ -1,0 +1,5 @@
+{
+  "description": "Positions: columns are 1-based Unicode code points (not UTF-8 bytes, not UTF-16 units); a tab is one column; two usages on one line are ordered by column; file names keep non-ASCII characters (NFC, as stored).",
+  "implementations": ["unplugin", "extract"],
+  "keys": []
+}

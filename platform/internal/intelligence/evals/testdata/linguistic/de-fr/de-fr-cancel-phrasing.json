@@ -1,0 +1,68 @@
+{
+  "id": "de-fr-cancel-phrasing",
+  "description": "The glossary says this product cancels with Annuler.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Abbrechen",
+  "translation": "Interrompre",
+  "context": {
+    "key": "dialog.cancel",
+    "namespace": "dialog",
+    "description": "Secondary button in every dialog"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "terms": [
+    {
+      "concept_id": "c_cancel",
+      "definition": "dismissing a dialog without acting",
+      "source": {
+        "id": "t_c_cancel_src",
+        "text": "Abbrechen",
+        "locale": "de",
+        "status": "preferred"
+      },
+      "targets": [
+        {
+          "id": "t_c_cancel_use_0",
+          "text": "Annuler",
+          "locale": "fr",
+          "status": "preferred"
+        },
+        {
+          "id": "t_c_cancel_no_0",
+          "text": "Interrompre",
+          "locale": "fr",
+          "status": "forbidden"
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "codes": [
+      "inconsistent-phrasing"
+    ],
+    "quotes": [
+      "Interrompre"
+    ]
+  }
+}

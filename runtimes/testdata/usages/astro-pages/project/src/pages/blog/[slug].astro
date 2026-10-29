@@ -1,0 +1,8 @@
+---
+import { getGlossa } from "@klarlabs-studio/glossa/astro/server";
+export const getStaticPaths = () => [{ params: { slug: "hello" } }];
+const { t } = getGlossa(Astro);
+---
+<article>
+  <a href="/blog">{t("blog.back")}</a>
+</article>

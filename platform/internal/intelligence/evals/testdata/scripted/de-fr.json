@@ -1,0 +1,70 @@
+{
+  "de-fr-greeting": {
+    "translate": [
+      "{\"message\": \"Bienvenue, {$name} !\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.96, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-files-plural-repair": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} fichier importé}}\\nzero {{Aucun fichier importé}}\\n* {{{$count} fichiers importés}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} fichier importé}}\\nmany {{{$count} de fichiers importés}}\\n* {{{$count} fichiers importés}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-account-locked": {
+    "translate": [
+      "{\"message\": \"Votre compte est bloqué. Veuillez contacter le support.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-invoice-markup": {
+    "translate": [
+      "{\"message\": \"Votre {#b}facture{/b} est disponible.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.96, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-role-select": {
+    "translate": [
+      "{\"message\": \".input {$role :string}\\n.match $role\\nadmin {{Vous administrez cet espace de travail.}}\\n* {{Vous êtes membre de cet espace de travail.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-terms-link": {
+    "translate": [
+      "{\"message\": \"En vous inscrivant, vous acceptez les {#link}conditions générales{/link}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.85, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-cancel-tm-exact": {
+    "translate": []
+  },
+  "de-fr-due-date": {
+    "translate": [
+      "{\"message\": \"Échéance le {$date :datetime dateStyle=long}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-fr-save-settings-maxlength": {
+    "translate": [
+      "{\"message\": \"Enregistrer les paramètres\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.8, \"formality_ok\": true, \"issues\": [\"Slightly too long for the button.\"]}"
+    ]
+  }
+}

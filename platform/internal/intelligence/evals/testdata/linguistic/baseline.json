@@ -1,0 +1,42 @@
+{
+  "all": {
+    "cases": 18,
+    "accept_rate": 0.944,
+    "detection": 0.917,
+    "quote_accuracy": 0.833,
+    "advisory": 1,
+    "spans_ok": 1,
+    "false_alarm_rate": 0.167,
+    "spurious_rate": 0.154
+  },
+  "de-fr": {
+    "cases": 6,
+    "accept_rate": 1,
+    "detection": 0.75,
+    "quote_accuracy": 0.75,
+    "advisory": 1,
+    "spans_ok": 1,
+    "false_alarm_rate": 0,
+    "spurious_rate": 0
+  },
+  "en-de": {
+    "cases": 6,
+    "accept_rate": 1,
+    "detection": 1,
+    "quote_accuracy": 1,
+    "advisory": 1,
+    "spans_ok": 1,
+    "false_alarm_rate": 0.5,
+    "spurious_rate": 0.333
+  },
+  "en-ja": {
+    "cases": 6,
+    "accept_rate": 0.833,
+    "detection": 1,
+    "quote_accuracy": 0.75,
+    "advisory": 1,
+    "spans_ok": 1,
+    "false_alarm_rate": 0,
+    "spurious_rate": 0
+  }
+}

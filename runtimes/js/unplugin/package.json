@@ -1,0 +1,81 @@
+{
+  "name": "@klarlabs-studio/glossa-unplugin",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa's bundler plugin for Vite, Rollup, webpack and esbuild: finds where every message is used (file, line, component, route) after the framework transforms and writes .glossa/usages.json for `glossa context push`; adds the in-product editor's loader to builds for a non-production Glossa environment, never to production ones. No network calls.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js"
+    },
+    "./rollup": {
+      "types": "./dist/rollup.d.ts",
+      "import": "./dist/rollup.js"
+    },
+    "./webpack": {
+      "types": "./dist/webpack.d.ts",
+      "import": "./dist/webpack.js"
+    },
+    "./esbuild": {
+      "types": "./dist/esbuild.d.ts",
+      "import": "./dist/esbuild.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.test.json",
+    "build:m3": "node scripts/m3-fixture.mjs"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa-runtime": "workspace:^",
+    "@jridgewell/trace-mapping": "0.3.31",
+    "acorn": "8.18.0",
+    "unplugin": "3.4.0"
+  },
+  "devDependencies": {
+    "@klarlabs-studio/glossa-react": "workspace:*",
+    "@klarlabs-studio/glossa-vue": "workspace:*",
+    "@types/node": "22.19.19",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-vue": "6.0.9",
+    "ajv": "8.20.0",
+    "astro": "7.3.3",
+    "esbuild": "0.28.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "rollup": "4.63.4",
+    "typescript": "5.9.3",
+    "vite": "8.3.0",
+    "vitest": "4.1.0",
+    "vue": "3.5.43",
+    "webpack": "5.111.1"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/unplugin"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/unplugin#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

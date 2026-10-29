@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/felixgeelhaar/glossa/apierr"
+	"go.klarlabs.de/glossa/apierr"
 )
 
 func TestNew_DefaultsStatusTo500WhenZero(t *testing.T) {

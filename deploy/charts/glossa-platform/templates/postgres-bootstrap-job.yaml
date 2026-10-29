@@ -1,0 +1,92 @@
+{{- if and .Values.postgres.enabled .Values.postgres.bootstrap.enabled }}
+{{- $v := .Values.postgres -}}
+{{- $b := .Values.postgres.bootstrap -}}
+{{- $hook := include "gp.db.hook" . -}}
+{{- $backup := include "gp.backup.postgres.enabled" . -}}
+{{- $uid := include "gp.postgres.uid" . | int -}}
+{{- if .Values.networkPolicy.enabled }}
+# Created before the Jobs on every install and upgrade (hook resources
+# are not part of the release's NetworkPolicies). Out to DNS and
+# Postgres only. Helm keeps hook resources after uninstall; delete this
+# one by hand then.
+{{ include "gp.np.hookPolicy" (dict "root" $ "component" "postgres-bootstrap" "hook" $hook "egress" (include "gp.np.postgresEgress" .)) }}
+{{- end }}
+{{- /* Two Jobs, one script (files/postgres-bootstrap.sh): "init" before
+       the migration (weight -5), "app-login" after it (weight 5). */}}
+{{- range $phase := list (dict "name" "init" "weight" "-5") (dict "name" "app-login" "weight" "5") }}
+---
+# Postgres bootstrap, phase {{ $phase.name }} (files/postgres-bootstrap.sh):
+{{- if eq $phase.name "init" }}
+# the schema owner, the database and the backup role, before the
+# migration; glossa_app's password too once the role exists.
+{{- else }}
+# LOGIN and the password for glossa_app, which the migration just created.
+{{- end }}
+# The only pods that read the superuser's password besides Postgres.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" (printf "postgres-%s" $phase.name)) }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-bootstrap") | nindent 4 }}
+  annotations:
+    helm.sh/hook: {{ $hook }}
+    helm.sh/hook-weight: {{ $phase.weight | quote }}
+    # A failed Job stays for `kubectl logs`; the next upgrade replaces it.
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: {{ $b.backoffLimit }}
+  activeDeadlineSeconds: {{ $b.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-bootstrap") | nindent 8 }}
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        {{- include "gp.podSecurityContext" $uid | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: bootstrap
+          image: {{ include "gp.externalImage" (dict "image" $v.image) }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          command: ["/bin/bash", "-c"]
+          args:
+            - {{ $.Files.Get "files/postgres-bootstrap.sh" | quote }}
+          securityContext:
+            {{- include "gp.containerSecurityContext" $ | nindent 12 }}
+          env:
+            {{- include "gp.postgres.libpqEnv" (dict "root" $ "user" $v.superuser.username "secret" (include "gp.postgres.superuserSecret" $) "key" $v.superuser.passwordKey "database" "postgres") | nindent 12 }}
+            - name: PHASE
+              value: {{ $phase.name | quote }}
+            - name: DATABASE
+              value: {{ $v.database | quote }}
+            - name: OWNER
+              value: {{ $v.owner.username | quote }}
+            {{- include "gp.secretEnv" (dict "name" "OWNER_PASSWORD" "secret" (include "gp.postgres.ownerSecret" $) "key" $v.owner.passwordKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "APP_PASSWORD" "secret" (include "gp.postgres.appSecret" $) "key" $v.app.passwordKey) | nindent 12 }}
+            {{- if and $backup (eq $phase.name "init") }}
+            - name: BACKUP_USER
+              value: {{ $.Values.backup.postgres.role.username | quote }}
+            {{- include "gp.secretEnv" (dict "name" "BACKUP_PASSWORD" "secret" (include "gp.backup.roleSecret" $) "key" $.Values.backup.postgres.role.passwordKey) | nindent 12 }}
+            {{- end }}
+            - name: WAIT_SECONDS
+              value: {{ $b.waitSeconds | quote }}
+          resources:
+            {{- toYaml $b.resources | nindent 12 }}
+          volumeMounts:
+            # psql's history and temporary files (read-only root filesystem).
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 16Mi
+{{- end }}
+{{- end }}

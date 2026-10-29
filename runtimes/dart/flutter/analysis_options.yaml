@@ -1,0 +1,21 @@
+# The same bar as the core package: `dart analyze --fatal-infos`, run here
+# as `flutter analyze --fatal-infos` because this package needs the Flutter
+# SDK to resolve.
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - build/**
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    - always_declare_return_types
+    - prefer_final_locals
+    - prefer_single_quotes
+    # Every public API carries documentation.
+    - public_member_api_docs
+    - unawaited_futures

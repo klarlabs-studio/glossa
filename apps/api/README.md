@@ -32,7 +32,7 @@ Mirrors IRI/Brotwerk's apps/api layout intentionally — hex-arch, sqlc, golang-
 
 ## Status
 
-- [ ] `go mod init github.com/felixgeelhaar/glossa/apps/api`
+- [ ] `go mod init github.com/klarlabs-studio/glossa/apps/api`
 - [ ] Initial migrations (tenants, projects, locales, keys, translations, audit_log, users)
 - [ ] Domain layer
 - [ ] REST endpoints per `docs/design.md` § 5.1

@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	domain "github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
+	domain "go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
 )
 
 const (

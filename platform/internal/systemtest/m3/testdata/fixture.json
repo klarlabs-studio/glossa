@@ -1,0 +1,2980 @@
+{
+  "seed": 20260920,
+  "source_locale": "de",
+  "locales": [
+    "en",
+    "es",
+    "fr",
+    "ja"
+  ],
+  "application": "shop",
+  "commit": "3c1a5f70b28d4e96a1f0c7b4d8e2a95630fb47c1",
+  "branch": "main",
+  "pages": [
+    {
+      "route": "/",
+      "url": "/",
+      "file": "src/pages/HomePage.vue",
+      "component": "HomePage",
+      "title": "Brotwerk"
+    },
+    {
+      "route": "/produkte",
+      "url": "/produkte",
+      "file": "src/pages/ProductsPage.vue",
+      "component": "ProductsPage",
+      "title": "Sortiment"
+    },
+    {
+      "route": "/produkte/[id]",
+      "url": "/produkte/sauerteig",
+      "file": "src/pages/ProductPage.vue",
+      "component": "ProductPage",
+      "title": "Produkt"
+    },
+    {
+      "route": "/warenkorb",
+      "url": "/warenkorb",
+      "file": "src/pages/CartPage.vue",
+      "component": "CartPage",
+      "title": "Warenkorb"
+    },
+    {
+      "route": "/kasse",
+      "url": "/kasse",
+      "file": "src/pages/CheckoutPage.vue",
+      "component": "CheckoutPage",
+      "title": "Kasse"
+    },
+    {
+      "route": "/konto",
+      "url": "/konto",
+      "file": "src/pages/AccountPage.vue",
+      "component": "AccountPage",
+      "title": "Konto"
+    },
+    {
+      "route": "/hilfe",
+      "url": "/hilfe",
+      "file": "src/pages/HelpPage.vue",
+      "component": "HelpPage",
+      "title": "Hilfe"
+    },
+    {
+      "route": "/rechnung",
+      "url": "/rechnung",
+      "file": "src/pages/InvoicePage.vue",
+      "component": "InvoicePage",
+      "title": "Rechnung"
+    }
+  ],
+  "messages": [
+    {
+      "key": "layout.croissant.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Croissant ändern",
+      "translations": {
+        "en": "change croissant",
+        "es": "cambiar cruasán",
+        "fr": "modifier croissant",
+        "ja": "クロワッサンを変更"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "layout.basket.label",
+      "namespace": "layout",
+      "pattern": "component",
+      "source": "Warenkorb: täglich",
+      "translations": {
+        "en": "basket: daily",
+        "es": "cesta: diario",
+        "fr": "panier : quotidien",
+        "ja": "カート：毎日の"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "component"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "layout.plait.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Zopf bestellen",
+      "translations": {
+        "en": "order plait",
+        "es": "pedir trenza",
+        "fr": "commander tresse",
+        "ja": "編みパンを注文"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "layout.sourdough.count",
+      "namespace": "layout",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Sauerteig}}\n* {{{$count} Sauerteige}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} sourdough}}\n* {{{$count} sourdoughs}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} masa madre}}\nmany {{{$count} de masas madre}}\n* {{{$count} masas madre}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} levain}}\nmany {{{$count} de levains}}\n* {{{$count} levains}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}件のサワードウ}}"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.question.activity",
+      "namespace": "layout",
+      "pattern": "values",
+      "source": "{$name} hat Frage hinzugefügt.",
+      "translations": {
+        "en": "{$name} added the question.",
+        "es": "{$name} ha añadir pregunta.",
+        "fr": "{$name} a ajouter question.",
+        "ja": "{$name} さんが質問を追加しました。"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.salt.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Salz ändern",
+      "translations": {
+        "en": "change salt",
+        "es": "cambiar sal",
+        "fr": "modifier sel",
+        "ja": "塩を変更"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.grain.placeholder",
+      "namespace": "layout",
+      "pattern": "attribute",
+      "source": "Korn suchen …",
+      "translations": {
+        "en": "Search grains …",
+        "es": "Buscar granos …",
+        "fr": "Rechercher des grains …",
+        "ja": "穀物を検索…"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.account.label",
+      "namespace": "layout",
+      "pattern": "component",
+      "source": "Konto: regional",
+      "translations": {
+        "en": "account: regional",
+        "es": "cuenta: regional",
+        "fr": "compte : régional",
+        "ja": "アカウント：地域の"
+      },
+      "web": {
+        "file": "src/components/SiteHeader.vue",
+        "component": "SiteHeader",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "layout.bread.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Brot hinzufügen",
+      "translations": {
+        "en": "add bread",
+        "es": "añadir pan",
+        "fr": "ajouter pain",
+        "ja": "パンを追加"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.cake.help",
+      "namespace": "layout",
+      "pattern": "markup",
+      "source": "Mehr über Kuchen lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about cakes in the {#link}help centre{/link}.",
+        "es": "Más sobre pasteles en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les gâteaux dans le {#link}centre d’aide{/link}.",
+        "ja": "ケーキについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "layout.croissant.activity",
+      "namespace": "layout",
+      "pattern": "values",
+      "source": "{$name} hat Croissant bestellt.",
+      "translations": {
+        "en": "{$name} ordered the croissant.",
+        "es": "{$name} ha pedir cruasán.",
+        "fr": "{$name} a commander croissant.",
+        "ja": "{$name} さんがクロワッサンを注文しました。"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.question.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Frage teilen",
+      "translations": {
+        "en": "share question",
+        "es": "compartir pregunta",
+        "fr": "partager question",
+        "ja": "質問を共有"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.subscription.title",
+      "namespace": "layout",
+      "pattern": "plain",
+      "source": "Abo bezahlen",
+      "translations": {
+        "en": "pay subscription",
+        "es": "pagar suscripción",
+        "fr": "payer abonnement",
+        "ja": "定期購入を支払い"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "layout.dough.label",
+      "namespace": "layout",
+      "pattern": "component",
+      "source": "Teig: täglich",
+      "translations": {
+        "en": "dough: daily",
+        "es": "masa: diario",
+        "fr": "pâte : quotidien",
+        "ja": "生地：毎日の"
+      },
+      "web": {
+        "file": "src/components/SiteFooter.vue",
+        "component": "SiteFooter",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "home.allergen.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Allergen hinzufügen",
+      "translations": {
+        "en": "add allergen",
+        "es": "añadir alérgeno",
+        "fr": "ajouter allergène",
+        "ja": "アレルゲンを追加"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.tray.count",
+      "namespace": "home",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Blech}}\n* {{{$count} Bleche}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} tray}}\n* {{{$count} trays}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} bandeja}}\nmany {{{$count} de bandejas}}\n* {{{$count} bandejas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} plaque}}\nmany {{{$count} de plaques}}\n* {{{$count} plaques}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}件の天板}}"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.ingredient.activity",
+      "namespace": "home",
+      "pattern": "values",
+      "source": "{$name} hat Zutat geprüft.",
+      "translations": {
+        "en": "{$name} checked the ingredient.",
+        "es": "{$name} ha comprobar ingrediente.",
+        "fr": "{$name} a vérifier ingrédient.",
+        "ja": "{$name} さんが材料を確認しました。"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.oven.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Ofen speichern",
+      "translations": {
+        "en": "save oven",
+        "es": "guardar horno",
+        "fr": "enregistrer four",
+        "ja": "オーブンを保存"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.flour.placeholder",
+      "namespace": "home",
+      "pattern": "attribute",
+      "source": "Mehl suchen …",
+      "translations": {
+        "en": "Search flours …",
+        "es": "Buscar harinas …",
+        "fr": "Rechercher des farines …",
+        "ja": "小麦粉を検索…"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.cake.label",
+      "namespace": "home",
+      "pattern": "component",
+      "source": "Kuchen: süß",
+      "translations": {
+        "en": "cake: sweet",
+        "es": "pastel: dulce",
+        "fr": "gâteau : sucré",
+        "ja": "ケーキ：甘い"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "home.voucher.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Gutschein abholen",
+      "translations": {
+        "en": "collect voucher",
+        "es": "recoger vale",
+        "fr": "retirer bon",
+        "ja": "クーポンを受け取り"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.tray.help",
+      "namespace": "home",
+      "pattern": "markup",
+      "source": "Mehr über Blech lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about trays in the {#link}help centre{/link}.",
+        "es": "Más sobre bandejas en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les plaques dans le {#link}centre d’aide{/link}.",
+        "ja": "天板については{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "home.yeast.activity",
+      "namespace": "home",
+      "pattern": "values",
+      "source": "{$name} hat Hefe hinzugefügt.",
+      "translations": {
+        "en": "{$name} added the yeast.",
+        "es": "{$name} ha añadir levadura.",
+        "fr": "{$name} a ajouter levure.",
+        "ja": "{$name} さんが酵母を追加しました。"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.branch.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Filiale abholen",
+      "translations": {
+        "en": "collect branch",
+        "es": "recoger sucursal",
+        "fr": "retirer boutique",
+        "ja": "店舗を受け取り"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.review.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Bewertung hinzufügen",
+      "translations": {
+        "en": "add review",
+        "es": "añadir reseña",
+        "fr": "ajouter avis",
+        "ja": "レビューを追加"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.tart.label",
+      "namespace": "home",
+      "pattern": "component",
+      "source": "Torte: regional",
+      "translations": {
+        "en": "tart: regional",
+        "es": "tarta: regional",
+        "fr": "tarte : régional",
+        "ja": "タルト：地域の"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "home.croissant.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Croissant abholen",
+      "translations": {
+        "en": "collect croissant",
+        "es": "recoger cruasán",
+        "fr": "retirer croissant",
+        "ja": "クロワッサンを受け取り"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.bagel.count",
+      "namespace": "home",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Bagel}}\n* {{{$count} Bagels}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} bagel}}\n* {{{$count} bagels}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} bagel}}\nmany {{{$count} de bagels}}\n* {{{$count} bagels}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} bagel}}\nmany {{{$count} de bagels}}\n* {{{$count} bagels}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}個のベーグル}}"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.grain.activity",
+      "namespace": "home",
+      "pattern": "values",
+      "source": "{$name} hat Korn gespeichert.",
+      "translations": {
+        "en": "{$name} saveed the grain.",
+        "es": "{$name} ha guardar grano.",
+        "fr": "{$name} a enregistrer grain.",
+        "ja": "{$name} さんが穀物を保存しました。"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.basket.title",
+      "namespace": "home",
+      "pattern": "plain",
+      "source": "Warenkorb bestellen",
+      "translations": {
+        "en": "order basket",
+        "es": "pedir cesta",
+        "fr": "commander panier",
+        "ja": "カートを注文"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.stollen.placeholder",
+      "namespace": "home",
+      "pattern": "attribute",
+      "source": "Stollen suchen …",
+      "translations": {
+        "en": "Search stollen …",
+        "es": "Buscar stollen …",
+        "fr": "Rechercher des stollen …",
+        "ja": "シュトレンを検索…"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "home.delivery.label",
+      "namespace": "home",
+      "pattern": "component",
+      "source": "Lieferung: regional",
+      "translations": {
+        "en": "delivery: regional",
+        "es": "entrega: regional",
+        "fr": "livraison : régional",
+        "ja": "配達：地域の"
+      },
+      "web": {
+        "file": "src/pages/HomePage.vue",
+        "component": "HomePage",
+        "route": "/",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.bun.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Semmel speichern",
+      "translations": {
+        "en": "save bun",
+        "es": "guardar bollo",
+        "fr": "enregistrer boule",
+        "ja": "バンズを保存"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.bagel.help",
+      "namespace": "products",
+      "pattern": "markup",
+      "source": "Mehr über Bagel lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about bagels in the {#link}help centre{/link}.",
+        "es": "Más sobre bagels en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les bagels dans le {#link}centre d’aide{/link}.",
+        "ja": "ベーグルについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.salt.activity",
+      "namespace": "products",
+      "pattern": "values",
+      "source": "{$name} hat Salz geändert.",
+      "translations": {
+        "en": "{$name} changeed the salt.",
+        "es": "{$name} ha cambiar sal.",
+        "fr": "{$name} a modifier sel.",
+        "ja": "{$name} さんが塩を変更しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.salt.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Salz ändern",
+      "translations": {
+        "en": "change salt",
+        "es": "cambiar sal",
+        "fr": "modifier sel",
+        "ja": "塩を変更"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.flour.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Mehl teilen",
+      "translations": {
+        "en": "share flour",
+        "es": "compartir harina",
+        "fr": "partager farine",
+        "ja": "小麦粉を共有"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.pickup.label",
+      "namespace": "products",
+      "pattern": "component",
+      "source": "Abholung: süß",
+      "translations": {
+        "en": "pickup: sweet",
+        "es": "recogida: dulce",
+        "fr": "retrait : sucré",
+        "ja": "受け取り：甘い"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.address.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Adresse bezahlen",
+      "translations": {
+        "en": "pay address",
+        "es": "pagar dirección",
+        "fr": "payer adresse",
+        "ja": "住所を支払い"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.tart.count",
+      "namespace": "products",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Torte}}\n* {{{$count} Torten}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} tart}}\n* {{{$count} tarts}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} tarta}}\nmany {{{$count} de tartas}}\n* {{{$count} tartas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} tarte}}\nmany {{{$count} de tartes}}\n* {{{$count} tartes}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}個のタルト}}"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.question.activity",
+      "namespace": "products",
+      "pattern": "values",
+      "source": "{$name} hat Frage gespeichert.",
+      "translations": {
+        "en": "{$name} saveed the question.",
+        "es": "{$name} ha guardar pregunta.",
+        "fr": "{$name} a enregistrer question.",
+        "ja": "{$name} さんが質問を保存しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.cake.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Kuchen bezahlen",
+      "translations": {
+        "en": "pay cake",
+        "es": "pagar pastel",
+        "fr": "payer gâteau",
+        "ja": "ケーキを支払い"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.voucher.placeholder",
+      "namespace": "products",
+      "pattern": "attribute",
+      "source": "Gutschein suchen …",
+      "translations": {
+        "en": "Search vouchers …",
+        "es": "Buscar vales …",
+        "fr": "Rechercher des bons …",
+        "ja": "クーポンを検索…"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.stollen.label",
+      "namespace": "products",
+      "pattern": "component",
+      "source": "Stollen: handgemacht",
+      "translations": {
+        "en": "stollen: handmade",
+        "es": "stollen: artesanal",
+        "fr": "stollen : artisanal",
+        "ja": "シュトレン：手作りの"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.basket.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Warenkorb abholen",
+      "translations": {
+        "en": "collect basket",
+        "es": "recoger cesta",
+        "fr": "retirer panier",
+        "ja": "カートを受け取り"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.basket.help",
+      "namespace": "products",
+      "pattern": "markup",
+      "source": "Mehr über Warenkorb lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about baskets in the {#link}help centre{/link}.",
+        "es": "Más sobre cestas en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les paniers dans le {#link}centre d’aide{/link}.",
+        "ja": "カートについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.subscription.activity",
+      "namespace": "products",
+      "pattern": "values",
+      "source": "{$name} hat Abo wiederholt.",
+      "translations": {
+        "en": "{$name} retryed the subscription.",
+        "es": "{$name} ha reintentar suscripción.",
+        "fr": "{$name} a réessayer abonnement.",
+        "ja": "{$name} さんが定期購入を再試行しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.question.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Frage prüfen",
+      "translations": {
+        "en": "check question",
+        "es": "comprobar pregunta",
+        "fr": "vérifier question",
+        "ja": "質問を確認"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.sourdough.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Sauerteig bestellen",
+      "translations": {
+        "en": "order sourdough",
+        "es": "pedir masa madre",
+        "fr": "commander levain",
+        "ja": "サワードウを注文"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.tray.label",
+      "namespace": "products",
+      "pattern": "component",
+      "source": "Blech: täglich",
+      "translations": {
+        "en": "tray: daily",
+        "es": "bandeja: diario",
+        "fr": "plaque : quotidien",
+        "ja": "天板：毎日の"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "products.order.title",
+      "namespace": "products",
+      "pattern": "plain",
+      "source": "Bestellung speichern",
+      "translations": {
+        "en": "save order",
+        "es": "guardar pedido",
+        "fr": "enregistrer commande",
+        "ja": "注文を保存"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "products.flour.count",
+      "namespace": "products",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Mehl}}\n* {{{$count} Mehle}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} flour}}\n* {{{$count} flours}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} harina}}\nmany {{{$count} de harinas}}\n* {{{$count} harinas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} farine}}\nmany {{{$count} de farines}}\n* {{{$count} farines}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点の小麦粉}}"
+      },
+      "web": {
+        "file": "src/pages/ProductsPage.vue",
+        "component": "ProductsPage",
+        "route": "/produkte",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.flour.activity",
+      "namespace": "product",
+      "pattern": "values",
+      "source": "{$name} hat Mehl hinzugefügt.",
+      "translations": {
+        "en": "{$name} added the flour.",
+        "es": "{$name} ha añadir harina.",
+        "fr": "{$name} a ajouter farine.",
+        "ja": "{$name} さんが小麦粉を追加しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.address.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Adresse prüfen",
+      "translations": {
+        "en": "check address",
+        "es": "comprobar dirección",
+        "fr": "vérifier adresse",
+        "ja": "住所を確認"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.invoice.placeholder",
+      "namespace": "product",
+      "pattern": "attribute",
+      "source": "Rechnung suchen …",
+      "translations": {
+        "en": "Search invoices …",
+        "es": "Buscar facturas …",
+        "fr": "Rechercher des factures …",
+        "ja": "請求書を検索…"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.cake.label",
+      "namespace": "product",
+      "pattern": "component",
+      "source": "Kuchen: knusprig",
+      "translations": {
+        "en": "cake: crisp",
+        "es": "pastel: crujiente",
+        "fr": "gâteau : croustillant",
+        "ja": "ケーキ：サクサクの"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "product.cake.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Kuchen teilen",
+      "translations": {
+        "en": "share cake",
+        "es": "compartir pastel",
+        "fr": "partager gâteau",
+        "ja": "ケーキを共有"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.cake.help",
+      "namespace": "product",
+      "pattern": "markup",
+      "source": "Mehr über Kuchen lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about cakes in the {#link}help centre{/link}.",
+        "es": "Más sobre pasteles en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les gâteaux dans le {#link}centre d’aide{/link}.",
+        "ja": "ケーキについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "product.invoice.activity",
+      "namespace": "product",
+      "pattern": "values",
+      "source": "{$name} hat Rechnung hinzugefügt.",
+      "translations": {
+        "en": "{$name} added the invoice.",
+        "es": "{$name} ha añadir factura.",
+        "fr": "{$name} a ajouter facture.",
+        "ja": "{$name} さんが請求書を追加しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.croissant.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Croissant bestellen",
+      "translations": {
+        "en": "order croissant",
+        "es": "pedir cruasán",
+        "fr": "commander croissant",
+        "ja": "クロワッサンを注文"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.review.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Bewertung teilen",
+      "translations": {
+        "en": "share review",
+        "es": "compartir reseña",
+        "fr": "partager avis",
+        "ja": "レビューを共有"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.subscription.label",
+      "namespace": "product",
+      "pattern": "component",
+      "source": "Abo: regional",
+      "translations": {
+        "en": "subscription: regional",
+        "es": "suscripción: regional",
+        "fr": "abonnement : régional",
+        "ja": "定期購入：地域の"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "product.basket.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Warenkorb ändern",
+      "translations": {
+        "en": "change basket",
+        "es": "cambiar cesta",
+        "fr": "modifier panier",
+        "ja": "カートを変更"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.cake.count",
+      "namespace": "product",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Kuchen}}\n* {{{$count} Kuchen}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} cake}}\n* {{{$count} cakes}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} pastel}}\nmany {{{$count} de pasteles}}\n* {{{$count} pasteles}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} gâteau}}\nmany {{{$count} de gâteaux}}\n* {{{$count} gâteaux}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点のケーキ}}"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.basket.activity",
+      "namespace": "product",
+      "pattern": "values",
+      "source": "{$name} hat Warenkorb geprüft.",
+      "translations": {
+        "en": "{$name} checked the basket.",
+        "es": "{$name} ha comprobar cesta.",
+        "fr": "{$name} a vérifier panier.",
+        "ja": "{$name} さんがカートを確認しました。"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.plait.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Zopf hinzufügen",
+      "translations": {
+        "en": "add plait",
+        "es": "añadir trenza",
+        "fr": "ajouter tresse",
+        "ja": "編みパンを追加"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.review.placeholder",
+      "namespace": "product",
+      "pattern": "attribute",
+      "source": "Bewertung suchen …",
+      "translations": {
+        "en": "Search reviews …",
+        "es": "Buscar reseñas …",
+        "fr": "Rechercher des avis …",
+        "ja": "レビューを検索…"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.order.label",
+      "namespace": "product",
+      "pattern": "component",
+      "source": "Bestellung: täglich",
+      "translations": {
+        "en": "order: daily",
+        "es": "pedido: diario",
+        "fr": "commande : quotidien",
+        "ja": "注文：毎日の"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "product.question.title",
+      "namespace": "product",
+      "pattern": "plain",
+      "source": "Frage hinzufügen",
+      "translations": {
+        "en": "add question",
+        "es": "añadir pregunta",
+        "fr": "ajouter question",
+        "ja": "質問を追加"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "product.oven.help",
+      "namespace": "product",
+      "pattern": "markup",
+      "source": "Mehr über Ofen lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about ovens in the {#link}help centre{/link}.",
+        "es": "Más sobre hornos en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les fours dans le {#link}centre d’aide{/link}.",
+        "ja": "オーブンについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/ProductPage.vue",
+        "component": "ProductPage",
+        "route": "/produkte/[id]",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "cart.order.activity",
+      "namespace": "cart",
+      "pattern": "values",
+      "source": "{$name} hat Bestellung geprüft.",
+      "translations": {
+        "en": "{$name} checked the order.",
+        "es": "{$name} ha comprobar pedido.",
+        "fr": "{$name} a vérifier commande.",
+        "ja": "{$name} さんが注文を確認しました。"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.order.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Bestellung entfernen",
+      "translations": {
+        "en": "remove order",
+        "es": "quitar pedido",
+        "fr": "retirer commande",
+        "ja": "注文を削除"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.bagel.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Bagel bezahlen",
+      "translations": {
+        "en": "pay bagel",
+        "es": "pagar bagel",
+        "fr": "payer bagel",
+        "ja": "ベーグルを支払い"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.croissant.label",
+      "namespace": "cart",
+      "pattern": "component",
+      "source": "Croissant: handgemacht",
+      "translations": {
+        "en": "croissant: handmade",
+        "es": "cruasán: artesanal",
+        "fr": "croissant : artisanal",
+        "ja": "クロワッサン：手作りの"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "cart.subscription.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Abo abholen",
+      "translations": {
+        "en": "collect subscription",
+        "es": "recoger suscripción",
+        "fr": "retirer abonnement",
+        "ja": "定期購入を受け取り"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.flour.count",
+      "namespace": "cart",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Mehl}}\n* {{{$count} Mehle}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} flour}}\n* {{{$count} flours}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} harina}}\nmany {{{$count} de harinas}}\n* {{{$count} harinas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} farine}}\nmany {{{$count} de farines}}\n* {{{$count} farines}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点の小麦粉}}"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.plait.activity",
+      "namespace": "cart",
+      "pattern": "values",
+      "source": "{$name} hat Zopf hinzugefügt.",
+      "translations": {
+        "en": "{$name} added the plait.",
+        "es": "{$name} ha añadir trenza.",
+        "fr": "{$name} a ajouter tresse.",
+        "ja": "{$name} さんが編みパンを追加しました。"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.invoice.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Rechnung prüfen",
+      "translations": {
+        "en": "check invoice",
+        "es": "comprobar factura",
+        "fr": "vérifier facture",
+        "ja": "請求書を確認"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.oven.placeholder",
+      "namespace": "cart",
+      "pattern": "attribute",
+      "source": "Ofen suchen …",
+      "translations": {
+        "en": "Search ovens …",
+        "es": "Buscar hornos …",
+        "fr": "Rechercher des fours …",
+        "ja": "オーブンを検索…"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.invoice.label",
+      "namespace": "cart",
+      "pattern": "component",
+      "source": "Rechnung: herzhaft",
+      "translations": {
+        "en": "invoice: hearty",
+        "es": "factura: sabroso",
+        "fr": "facture : savoureux",
+        "ja": "請求書：香ばしい"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "cart.basket.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Warenkorb speichern",
+      "translations": {
+        "en": "save basket",
+        "es": "guardar cesta",
+        "fr": "enregistrer panier",
+        "ja": "カートを保存"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.review.help",
+      "namespace": "cart",
+      "pattern": "markup",
+      "source": "Mehr über Bewertung lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about reviews in the {#link}help centre{/link}.",
+        "es": "Más sobre reseñas en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les avis dans le {#link}centre d’aide{/link}.",
+        "ja": "レビューについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "cart.branch.activity",
+      "namespace": "cart",
+      "pattern": "values",
+      "source": "{$name} hat Filiale entfernt.",
+      "translations": {
+        "en": "{$name} removeed the branch.",
+        "es": "{$name} ha quitar sucursal.",
+        "fr": "{$name} a retirer boutique.",
+        "ja": "{$name} さんが店舗を削除しました。"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.flour.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Mehl teilen",
+      "translations": {
+        "en": "share flour",
+        "es": "compartir harina",
+        "fr": "partager farine",
+        "ja": "小麦粉を共有"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.shipping.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Versand hinzufügen",
+      "translations": {
+        "en": "add shipping",
+        "es": "añadir envío",
+        "fr": "ajouter expédition",
+        "ja": "配送を追加"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.bread.label",
+      "namespace": "cart",
+      "pattern": "component",
+      "source": "Brot: täglich",
+      "translations": {
+        "en": "bread: daily",
+        "es": "pan: diario",
+        "fr": "pain : quotidien",
+        "ja": "パン：毎日の"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "cart.tray.title",
+      "namespace": "cart",
+      "pattern": "plain",
+      "source": "Blech hinzufügen",
+      "translations": {
+        "en": "add tray",
+        "es": "añadir bandeja",
+        "fr": "ajouter plaque",
+        "ja": "天板を追加"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "cart.tart.count",
+      "namespace": "cart",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Torte}}\n* {{{$count} Torten}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} tart}}\n* {{{$count} tarts}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} tarta}}\nmany {{{$count} de tartas}}\n* {{{$count} tartas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} tarte}}\nmany {{{$count} de tartes}}\n* {{{$count} tartes}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}個のタルト}}"
+      },
+      "web": {
+        "file": "src/pages/CartPage.vue",
+        "component": "CartPage",
+        "route": "/warenkorb",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.voucher.activity",
+      "namespace": "checkout",
+      "pattern": "values",
+      "source": "{$name} hat Gutschein geteilt.",
+      "translations": {
+        "en": "{$name} shareed the voucher.",
+        "es": "{$name} ha compartir vale.",
+        "fr": "{$name} a partager bon.",
+        "ja": "{$name} さんがクーポンを共有しました。"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.order.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Bestellung prüfen",
+      "translations": {
+        "en": "check order",
+        "es": "comprobar pedido",
+        "fr": "vérifier commande",
+        "ja": "注文を確認"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.muffin.placeholder",
+      "namespace": "checkout",
+      "pattern": "attribute",
+      "source": "Muffin suchen …",
+      "translations": {
+        "en": "Search muffins …",
+        "es": "Buscar magdalenas …",
+        "fr": "Rechercher des muffins …",
+        "ja": "マフィンを検索…"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.grain.label",
+      "namespace": "checkout",
+      "pattern": "component",
+      "source": "Korn: täglich",
+      "translations": {
+        "en": "grain: daily",
+        "es": "grano: diario",
+        "fr": "grain : quotidien",
+        "ja": "穀物：毎日の"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "checkout.ingredient.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Zutat hinzufügen",
+      "translations": {
+        "en": "add ingredient",
+        "es": "añadir ingrediente",
+        "fr": "ajouter ingrédient",
+        "ja": "材料を追加"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.roll.help",
+      "namespace": "checkout",
+      "pattern": "markup",
+      "source": "Mehr über Brötchen lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about rolls in the {#link}help centre{/link}.",
+        "es": "Más sobre panecillos en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les petits pains dans le {#link}centre d’aide{/link}.",
+        "ja": "ロールパンについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "checkout.order.activity",
+      "namespace": "checkout",
+      "pattern": "values",
+      "source": "{$name} hat Bestellung entfernt.",
+      "translations": {
+        "en": "{$name} removeed the order.",
+        "es": "{$name} ha quitar pedido.",
+        "fr": "{$name} a retirer commande.",
+        "ja": "{$name} さんが注文を削除しました。"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.plait.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Zopf hinzufügen",
+      "translations": {
+        "en": "add plait",
+        "es": "añadir trenza",
+        "fr": "ajouter tresse",
+        "ja": "編みパンを追加"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.stollen.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Stollen wiederholen",
+      "translations": {
+        "en": "retry stollen",
+        "es": "reintentar stollen",
+        "fr": "réessayer stollen",
+        "ja": "シュトレンを再試行"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.crust.label",
+      "namespace": "checkout",
+      "pattern": "component",
+      "source": "Kruste: warm",
+      "translations": {
+        "en": "crust: warm",
+        "es": "corteza: caliente",
+        "fr": "croûte : chaud",
+        "ja": "クラスト：温かい"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "checkout.bagel.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Bagel hinzufügen",
+      "translations": {
+        "en": "add bagel",
+        "es": "añadir bagel",
+        "fr": "ajouter bagel",
+        "ja": "ベーグルを追加"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.pickup.count",
+      "namespace": "checkout",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Abholung}}\n* {{{$count} Abholungen}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} pickup}}\n* {{{$count} pickups}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} recogida}}\nmany {{{$count} de recogidas}}\n* {{{$count} recogidas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} retrait}}\nmany {{{$count} de retraits}}\n* {{{$count} retraits}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}件の受け取り}}"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.payment.activity",
+      "namespace": "checkout",
+      "pattern": "values",
+      "source": "{$name} hat Zahlung geändert.",
+      "translations": {
+        "en": "{$name} changeed the payment.",
+        "es": "{$name} ha cambiar pago.",
+        "fr": "{$name} a modifier paiement.",
+        "ja": "{$name} さんが支払いを変更しました。"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.croissant.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Croissant wiederholen",
+      "translations": {
+        "en": "retry croissant",
+        "es": "reintentar cruasán",
+        "fr": "réessayer croissant",
+        "ja": "クロワッサンを再試行"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.note.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Hinweis bestellen",
+      "translations": {
+        "en": "order note",
+        "es": "pedir aviso",
+        "fr": "commander note",
+        "ja": "お知らせを注文"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.shipping.label",
+      "namespace": "checkout",
+      "pattern": "component",
+      "source": "Versand: frisch",
+      "translations": {
+        "en": "shipping: fresh",
+        "es": "envío: fresco",
+        "fr": "expédition : frais",
+        "ja": "配送：新鮮な"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "checkout.bun.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Semmel hinzufügen",
+      "translations": {
+        "en": "add bun",
+        "es": "añadir bollo",
+        "fr": "ajouter boule",
+        "ja": "バンズを追加"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.invoice.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Rechnung entfernen",
+      "translations": {
+        "en": "remove invoice",
+        "es": "quitar factura",
+        "fr": "retirer facture",
+        "ja": "請求書を削除"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.bread.activity",
+      "namespace": "checkout",
+      "pattern": "values",
+      "source": "{$name} hat Brot entfernt.",
+      "translations": {
+        "en": "{$name} removeed the bread.",
+        "es": "{$name} ha quitar pan.",
+        "fr": "{$name} a retirer pain.",
+        "ja": "{$name} さんがパンを削除しました。"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "checkout.shipping.title",
+      "namespace": "checkout",
+      "pattern": "plain",
+      "source": "Versand bestellen",
+      "translations": {
+        "en": "order shipping",
+        "es": "pedir envío",
+        "fr": "commander expédition",
+        "ja": "配送を注文"
+      },
+      "web": {
+        "file": "src/islands/PayButton.tsx",
+        "component": "PayButton",
+        "route": "/kasse",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.order.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Bestellung abholen",
+      "translations": {
+        "en": "collect order",
+        "es": "recoger pedido",
+        "fr": "retirer commande",
+        "ja": "注文を受け取り"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.voucher.label",
+      "namespace": "account",
+      "pattern": "component",
+      "source": "Gutschein: regional",
+      "translations": {
+        "en": "voucher: regional",
+        "es": "vale: regional",
+        "fr": "bon : régional",
+        "ja": "クーポン：地域の"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "account.flour.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Mehl abholen",
+      "translations": {
+        "en": "collect flour",
+        "es": "recoger harina",
+        "fr": "retirer farine",
+        "ja": "小麦粉を受け取り"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.flour.count",
+      "namespace": "account",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Mehl}}\n* {{{$count} Mehle}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} flour}}\n* {{{$count} flours}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} harina}}\nmany {{{$count} de harinas}}\n* {{{$count} harinas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} farine}}\nmany {{{$count} de farines}}\n* {{{$count} farines}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点の小麦粉}}"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.sourdough.activity",
+      "namespace": "account",
+      "pattern": "values",
+      "source": "{$name} hat Sauerteig gespeichert.",
+      "translations": {
+        "en": "{$name} saveed the sourdough.",
+        "es": "{$name} ha guardar masa madre.",
+        "fr": "{$name} a enregistrer levain.",
+        "ja": "{$name} さんがサワードウを保存しました。"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.bread.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Brot bestellen",
+      "translations": {
+        "en": "order bread",
+        "es": "pedir pan",
+        "fr": "commander pain",
+        "ja": "パンを注文"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.baguette.placeholder",
+      "namespace": "account",
+      "pattern": "attribute",
+      "source": "Baguette suchen …",
+      "translations": {
+        "en": "Search baguettes …",
+        "es": "Buscar baguettes …",
+        "fr": "Rechercher des baguettes …",
+        "ja": "バゲットを検索…"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.pickup.label",
+      "namespace": "account",
+      "pattern": "component",
+      "source": "Abholung: täglich",
+      "translations": {
+        "en": "pickup: daily",
+        "es": "recogida: diario",
+        "fr": "retrait : quotidien",
+        "ja": "受け取り：毎日の"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "account.croissant.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Croissant entfernen",
+      "translations": {
+        "en": "remove croissant",
+        "es": "quitar cruasán",
+        "fr": "retirer croissant",
+        "ja": "クロワッサンを削除"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.order.help",
+      "namespace": "account",
+      "pattern": "markup",
+      "source": "Mehr über Bestellung lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about orders in the {#link}help centre{/link}.",
+        "es": "Más sobre pedidos en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les commandes dans le {#link}centre d’aide{/link}.",
+        "ja": "注文については{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "account.account.activity",
+      "namespace": "account",
+      "pattern": "values",
+      "source": "{$name} hat Konto wiederholt.",
+      "translations": {
+        "en": "{$name} retryed the account.",
+        "es": "{$name} ha reintentar cuenta.",
+        "fr": "{$name} a réessayer compte.",
+        "ja": "{$name} さんがアカウントを再試行しました。"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.biscuit.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Keks wiederholen",
+      "translations": {
+        "en": "retry biscuit",
+        "es": "reintentar galleta",
+        "fr": "réessayer biscuit",
+        "ja": "ビスケットを再試行"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.bun.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Semmel speichern",
+      "translations": {
+        "en": "save bun",
+        "es": "guardar bollo",
+        "fr": "enregistrer boule",
+        "ja": "バンズを保存"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.crust.label",
+      "namespace": "account",
+      "pattern": "component",
+      "source": "Kruste: süß",
+      "translations": {
+        "en": "crust: sweet",
+        "es": "corteza: dulce",
+        "fr": "croûte : sucré",
+        "ja": "クラスト：甘い"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "account.note.title",
+      "namespace": "account",
+      "pattern": "plain",
+      "source": "Hinweis bestellen",
+      "translations": {
+        "en": "order note",
+        "es": "pedir aviso",
+        "fr": "commander note",
+        "ja": "お知らせを注文"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "account.question.count",
+      "namespace": "account",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Frage}}\n* {{{$count} Fragen}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} question}}\n* {{{$count} questions}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} pregunta}}\nmany {{{$count} de preguntas}}\n* {{{$count} preguntas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} question}}\nmany {{{$count} de questions}}\n* {{{$count} questions}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}個の質問}}"
+      },
+      "web": {
+        "file": "src/pages/AccountPage.vue",
+        "component": "AccountPage",
+        "route": "/konto",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.note.activity",
+      "namespace": "help",
+      "pattern": "values",
+      "source": "{$name} hat Hinweis wiederholt.",
+      "translations": {
+        "en": "{$name} retryed the note.",
+        "es": "{$name} ha reintentar aviso.",
+        "fr": "{$name} a réessayer note.",
+        "ja": "{$name} さんがお知らせを再試行しました。"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.voucher.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Gutschein speichern",
+      "translations": {
+        "en": "save voucher",
+        "es": "guardar vale",
+        "fr": "enregistrer bon",
+        "ja": "クーポンを保存"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.address.placeholder",
+      "namespace": "help",
+      "pattern": "attribute",
+      "source": "Adresse suchen …",
+      "translations": {
+        "en": "Search addresses …",
+        "es": "Buscar direcciones …",
+        "fr": "Rechercher des adresses …",
+        "ja": "住所を検索…"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.biscuit.label",
+      "namespace": "help",
+      "pattern": "component",
+      "source": "Keks: täglich",
+      "translations": {
+        "en": "biscuit: daily",
+        "es": "galleta: diario",
+        "fr": "biscuit : quotidien",
+        "ja": "ビスケット：毎日の"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "help.sourdough.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Sauerteig wiederholen",
+      "translations": {
+        "en": "retry sourdough",
+        "es": "reintentar masa madre",
+        "fr": "réessayer levain",
+        "ja": "サワードウを再試行"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.crust.help",
+      "namespace": "help",
+      "pattern": "markup",
+      "source": "Mehr über Kruste lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about crusts in the {#link}help centre{/link}.",
+        "es": "Más sobre cortezas en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les croûtes dans le {#link}centre d’aide{/link}.",
+        "ja": "クラストについては{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "help.invoice.activity",
+      "namespace": "help",
+      "pattern": "values",
+      "source": "{$name} hat Rechnung bezahlt.",
+      "translations": {
+        "en": "{$name} payed the invoice.",
+        "es": "{$name} ha pagar factura.",
+        "fr": "{$name} a payer facture.",
+        "ja": "{$name} さんが請求書を支払いしました。"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.oven.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Ofen teilen",
+      "translations": {
+        "en": "share oven",
+        "es": "compartir horno",
+        "fr": "partager four",
+        "ja": "オーブンを共有"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.cake.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Kuchen speichern",
+      "translations": {
+        "en": "save cake",
+        "es": "guardar pastel",
+        "fr": "enregistrer gâteau",
+        "ja": "ケーキを保存"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.review.label",
+      "namespace": "help",
+      "pattern": "component",
+      "source": "Bewertung: handgemacht",
+      "translations": {
+        "en": "review: handmade",
+        "es": "reseña: artesanal",
+        "fr": "avis : artisanal",
+        "ja": "レビュー：手作りの"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "component"
+      }
+    },
+    {
+      "key": "help.bread.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Brot entfernen",
+      "translations": {
+        "en": "remove bread",
+        "es": "quitar pan",
+        "fr": "retirer pain",
+        "ja": "パンを削除"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.address.count",
+      "namespace": "help",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Adresse}}\n* {{{$count} Adressen}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} address}}\n* {{{$count} addresses}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} dirección}}\nmany {{{$count} de direcciones}}\n* {{{$count} direcciones}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} adresse}}\nmany {{{$count} de adresses}}\n* {{{$count} adresses}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点の住所}}"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.flour.activity",
+      "namespace": "help",
+      "pattern": "values",
+      "source": "{$name} hat Mehl gespeichert.",
+      "translations": {
+        "en": "{$name} saveed the flour.",
+        "es": "{$name} ha guardar harina.",
+        "fr": "{$name} a enregistrer farine.",
+        "ja": "{$name} さんが小麦粉を保存しました。"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "help.loaf.title",
+      "namespace": "help",
+      "pattern": "plain",
+      "source": "Laib bestellen",
+      "translations": {
+        "en": "order loaf",
+        "es": "pedir hogaza",
+        "fr": "commander miche",
+        "ja": "ひと塊を注文"
+      },
+      "web": {
+        "file": "src/pages/HelpPage.vue",
+        "component": "HelpPage",
+        "route": "/hilfe",
+        "kind": "t"
+      }
+    },
+    {
+      "key": "invoice.croissant.placeholder",
+      "namespace": "invoice",
+      "pattern": "attribute",
+      "source": "Croissant suchen …",
+      "translations": {
+        "en": "Search croissants …",
+        "es": "Buscar cruasanes …",
+        "fr": "Rechercher des croissants …",
+        "ja": "クロワッサンを検索…"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.biscuit.label",
+      "namespace": "invoice",
+      "pattern": "component",
+      "source": "Keks: täglich",
+      "translations": {
+        "en": "biscuit: daily",
+        "es": "galleta: diario",
+        "fr": "biscuit : quotidien",
+        "ja": "ビスケット：毎日の"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "component"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.address.title",
+      "namespace": "invoice",
+      "pattern": "plain",
+      "source": "Adresse ändern",
+      "translations": {
+        "en": "change address",
+        "es": "cambiar dirección",
+        "fr": "modifier adresse",
+        "ja": "住所を変更"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.branch.help",
+      "namespace": "invoice",
+      "pattern": "markup",
+      "source": "Mehr über Filiale lesen Sie im {#link}Hilfebereich{/link}.",
+      "translations": {
+        "en": "Read more about branches in the {#link}help centre{/link}.",
+        "es": "Más sobre sucursales en el {#link}centro de ayuda{/link}.",
+        "fr": "En savoir plus sur les boutiques dans le {#link}centre d’aide{/link}.",
+        "ja": "店舗については{#link}ヘルプ{/link}をご覧ください。"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "component"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.sourdough.activity",
+      "namespace": "invoice",
+      "pattern": "values",
+      "source": "{$name} hat Sauerteig geändert.",
+      "translations": {
+        "en": "{$name} changeed the sourdough.",
+        "es": "{$name} ha cambiar masa madre.",
+        "fr": "{$name} a modifier levain.",
+        "ja": "{$name} さんがサワードウを変更しました。"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.account.title",
+      "namespace": "invoice",
+      "pattern": "plain",
+      "source": "Konto hinzufügen",
+      "translations": {
+        "en": "add account",
+        "es": "añadir cuenta",
+        "fr": "ajouter compte",
+        "ja": "アカウントを追加"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.basket.title",
+      "namespace": "invoice",
+      "pattern": "plain",
+      "source": "Warenkorb entfernen",
+      "translations": {
+        "en": "remove basket",
+        "es": "quitar cesta",
+        "fr": "retirer panier",
+        "ja": "カートを削除"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "internal/receipt/receipt.go",
+          "component": "receipt.Render",
+          "kind": "t"
+        }
+      ]
+    },
+    {
+      "key": "invoice.flour.label",
+      "namespace": "invoice",
+      "pattern": "component",
+      "source": "Mehl: regional",
+      "translations": {
+        "en": "flour: regional",
+        "es": "harina: regional",
+        "fr": "farine : régional",
+        "ja": "小麦粉：地域の"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "component"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "invoice.branch.title",
+      "namespace": "invoice",
+      "pattern": "plain",
+      "source": "Filiale wiederholen",
+      "translations": {
+        "en": "retry branch",
+        "es": "reintentar sucursal",
+        "fr": "réessayer boutique",
+        "ja": "店舗を再試行"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "invoice.crust.count",
+      "namespace": "invoice",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Kruste}}\n* {{{$count} Krusten}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} crust}}\n* {{{$count} crusts}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} corteza}}\nmany {{{$count} de cortezas}}\n* {{{$count} cortezas}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} croûte}}\nmany {{{$count} de croûtes}}\n* {{{$count} croûtes}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}点のクラスト}}"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "invoice.oven.activity",
+      "namespace": "invoice",
+      "pattern": "values",
+      "source": "{$name} hat Ofen abgeholt.",
+      "translations": {
+        "en": "{$name} collected the oven.",
+        "es": "{$name} ha recoger horno.",
+        "fr": "{$name} a retirer four.",
+        "ja": "{$name} さんがオーブンを受け取りしました。"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    },
+    {
+      "key": "invoice.salt.title",
+      "namespace": "invoice",
+      "pattern": "plain",
+      "source": "Salz entfernen",
+      "translations": {
+        "en": "remove salt",
+        "es": "quitar sal",
+        "fr": "retirer sel",
+        "ja": "塩を削除"
+      },
+      "web": {
+        "file": "src/pages/InvoicePage.vue",
+        "component": "InvoicePage",
+        "route": "/rechnung",
+        "kind": "t"
+      },
+      "go": [
+        {
+          "file": "templates/receipt.html.tmpl",
+          "component": "",
+          "kind": "template"
+        }
+      ]
+    }
+  ],
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "capture_locales": [
+    "de",
+    "ja"
+  ],
+  "new_keys": [
+    {
+      "key": "pickup.window",
+      "namespace": "pickup",
+      "pattern": "plain",
+      "source": "Konto bestellen",
+      "translations": {
+        "en": "order account",
+        "es": "pedir cuenta",
+        "fr": "commander compte",
+        "ja": "アカウントを注文"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      },
+      "line": 33
+    },
+    {
+      "key": "pickup.slots",
+      "namespace": "pickup",
+      "pattern": "plain",
+      "source": "Waffel bezahlen",
+      "translations": {
+        "en": "pay waffle",
+        "es": "pagar gofre",
+        "fr": "payer gaufre",
+        "ja": "ワッフルを支払い"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      },
+      "line": 34
+    },
+    {
+      "key": "pickup.reminder",
+      "namespace": "pickup",
+      "pattern": "plural",
+      "source": ".input {$count :number}\n.match $count\none {{{$count} Versand}}\n* {{{$count} Versandarten}}",
+      "translations": {
+        "en": ".input {$count :number}\n.match $count\none {{{$count} shipping}}\n* {{{$count} shipping options}}",
+        "es": ".input {$count :number}\n.match $count\none {{{$count} envío}}\nmany {{{$count} de envíos}}\n* {{{$count} envíos}}",
+        "fr": ".input {$count :number}\n.match $count\none {{{$count} expédition}}\nmany {{{$count} de expéditions}}\n* {{{$count} expéditions}}",
+        "ja": ".input {$count :number}\n.match $count\n* {{{$count}個の配送}}"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      },
+      "line": 35
+    },
+    {
+      "key": "pickup.branch",
+      "namespace": "pickup",
+      "pattern": "plain",
+      "source": "Kuchen wiederholen",
+      "translations": {
+        "en": "retry cake",
+        "es": "reintentar pastel",
+        "fr": "réessayer gâteau",
+        "ja": "ケーキを再試行"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      },
+      "line": 36
+    },
+    {
+      "key": "pickup.confirm",
+      "namespace": "pickup",
+      "pattern": "plain",
+      "source": "Keks prüfen",
+      "translations": {
+        "en": "check biscuit",
+        "es": "comprobar galleta",
+        "fr": "vérifier biscuit",
+        "ja": "ビスケットを確認"
+      },
+      "web": {
+        "file": "src/pages/CheckoutPage.vue",
+        "component": "CheckoutPage",
+        "route": "/kasse",
+        "kind": "t"
+      },
+      "line": 37
+    }
+  ],
+  "invalid_key": "pickup.reminder",
+  "invalid_source": ".input {$count :number}\n.match $count\none {{{$count} Versand}}\nthree {{{$count} Versandarten}}",
+  "invalid_file": "src/pages/CheckoutPage.vue",
+  "invalid_line": 35,
+  "repaired_source": ".input {$count :number}\n.match $count\none {{{$count} Versand}}\n* {{{$count} Versandarten}}"
+}

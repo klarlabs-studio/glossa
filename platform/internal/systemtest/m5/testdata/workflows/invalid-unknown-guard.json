@@ -1,0 +1,21 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "invalid-unknown-guard",
+  "subject": "translation",
+  "chart": {
+    "id": "invalid-unknown-guard",
+    "initial": "reviewing",
+    "states": {
+      "reviewing": {
+        "id": "reviewing",
+        "type": "atomic",
+        "transitions": [{ "event": "approval.granted", "target": "done", "guard": "legal_signed_off" }]
+      },
+      "done": { "id": "done", "type": "final" }
+    }
+  },
+  "guards": {
+    "legal_signed_off": { "use": "legal_department_said_yes" }
+  },
+  "actions": {}
+}

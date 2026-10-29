@@ -1,0 +1,16 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "athlete.greeting", "file": "index.html", "line": 19, "column": 27, "kind": "element"},
+    {"key": "cart.items", "file": "index.html", "line": 17, "column": 14, "kind": "element"},
+    {"key": "footer.imprint", "file": "index.html", "line": 20, "column": 29, "kind": "element"},
+    {"key": "home.hero.title", "file": "index.html", "line": 11, "column": 37, "kind": "element"},
+    {"key": "home.promo.v2", "file": "index.html", "line": 12, "column": 59, "kind": "element"},
+    {"key": "home.welcome", "file": "index.html", "line": 14, "column": 25, "kind": "element"},
+    {"key": "nav.home", "file": "index.html", "line": 10, "column": 39, "kind": "element"}
+  ]
+}

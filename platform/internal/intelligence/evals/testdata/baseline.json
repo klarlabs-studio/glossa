@@ -1,0 +1,58 @@
+{
+  "all": {
+    "cases": 54,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 0.958,
+    "formality_compliance": 0.889,
+    "mean_edit_ratio": 0.038,
+    "origin_accuracy": 1
+  },
+  "de-en": {
+    "cases": 9,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 0.8,
+    "formality_compliance": 1,
+    "mean_edit_ratio": 0.047,
+    "origin_accuracy": 1
+  },
+  "de-es": {
+    "cases": 9,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 1,
+    "formality_compliance": 0.75,
+    "mean_edit_ratio": 0.033,
+    "origin_accuracy": 1
+  },
+  "de-fr": {
+    "cases": 9,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 1,
+    "formality_compliance": 1,
+    "mean_edit_ratio": 0.067,
+    "origin_accuracy": 1
+  },
+  "en-de": {
+    "cases": 10,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 1,
+    "formality_compliance": 0.75,
+    "mean_edit_ratio": 0.024,
+    "origin_accuracy": 1
+  },
+  "en-ja": {
+    "cases": 9,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 1,
+    "formality_compliance": 1,
+    "mean_edit_ratio": 0.009,
+    "origin_accuracy": 1
+  },
+  "en-pl": {
+    "cases": 8,
+    "structural_pass_rate": 1,
+    "terminology_compliance": 1,
+    "formality_compliance": 1,
+    "mean_edit_ratio": 0.05,
+    "origin_accuracy": 1
+  }
+}

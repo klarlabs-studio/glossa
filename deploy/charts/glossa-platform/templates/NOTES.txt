@@ -1,0 +1,75 @@
+Glossa platform {{ .Chart.AppVersion }} installed as release "{{ .Release.Name }}" in namespace "{{ .Release.Namespace }}".
+
+  Studio        https://{{ .Values.hosts.studio }}
+  API           https://{{ include "gp.host.api" . }}/v1
+  Delivery      https://{{ .Values.hosts.cdn }}/v1
+
+{{- if .Values.postgres.enabled }}
+
+Database: the in-namespace Postgres {{ include "gp.postgres.host" . }}:5432 (database "{{ .Values.postgres.database }}").
+{{- if .Release.IsInstall }}
+On this first install the database hooks ran post-install, in order:
+{{ include "gp.componentName" (dict "root" $ "component" "postgres-init") }} (owner, database), {{ include "gp.componentName" (dict "root" $ "component" "migrate") }}, {{ include "gp.componentName" (dict "root" $ "component" "postgres-app-login") }} (glossa_app LOGIN).
+Server pods restart until glossa_app can log in; watch them come up:
+  kubectl -n {{ .Release.Namespace }} rollout status deployment/{{ include "gp.componentName" (dict "root" $ "component" "server") }}
+{{- end }}
+Check that glossa_app cannot reach a superuser role:
+  helm test {{ .Release.Name }} -n {{ .Release.Namespace }}
+{{- else if .Values.server.migrations.enabled }}
+
+Migrations ran as the Job {{ include "gp.componentName" (dict "root" $ "component" "migrate") }} before the server started.
+{{- end }}
+{{- if .Values.backup.enabled }}
+
+Backups (UTC):
+{{- if include "gp.backup.postgres.enabled" . }}
+  {{ include "gp.componentName" (dict "root" $ "component" "postgres-backup") }}  "{{ .Values.backup.postgres.schedule }}"  → {{ .Values.backup.postgres.remote }}
+{{- end }}
+{{- if include "gp.backup.minio.enabled" . }}
+  {{ include "gp.componentName" (dict "root" $ "component" "minio-backup") }}     "{{ .Values.backup.minio.schedule }}"  → {{ .Values.backup.minio.remote }}/current
+{{- end }}
+{{- if include "gp.backup.restoreTest.enabled" . }}
+  {{ include "gp.componentName" (dict "root" $ "component" "postgres-restore-test") }}  "{{ .Values.backup.restoreTest.schedule }}"  restore drill
+{{- end }}
+Run the first backup now instead of waiting for the night:
+  kubectl -n {{ .Release.Namespace }} create job --from=cronjob/{{ include "gp.componentName" (dict "root" $ "component" (ternary "postgres-backup" "minio-backup" (not (not (include "gp.backup.postgres.enabled" .))))) }} first-backup
+{{- end }}
+
+{{- if .Values.minio.enabled }}
+
+Object storage: the in-namespace MinIO {{ include "gp.minio.service" . }} (bucket "{{ .Values.objectStorage.bucket }}").
+{{- if .Values.minio.bootstrap.enabled }}
+The Job {{ include "gp.componentName" (dict "root" $ "component" "minio-bootstrap") }} created the bucket and the server's and edge's users.
+Verify the edge's credentials are read-only:
+  helm test {{ .Release.Name }} -n {{ .Release.Namespace }}
+{{- end }}
+MinIO console (not exposed):
+  kubectl -n {{ .Release.Namespace }} port-forward statefulset/{{ include "gp.componentName" (dict "root" $ "component" "minio") }} 9001
+{{- end }}
+
+Check:
+  kubectl -n {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+  kubectl -n {{ .Release.Namespace }} get certificates
+
+{{- $mailDriver := include "gp.mailDriver" . }}
+{{- if eq $mailDriver "log" }}
+
+WARNING: mail.driver=log writes sign-in links to the server log. Development only.
+{{- else if not $mailDriver }}
+
+NOTE: no mailer is configured (mail.smtp.addr is empty), so glossa-server
+runs with its default mail driver "none": magic-link sign-in, email
+verification and password reset by email are off (404 email_disabled), and
+/v1/meta tells Studio to offer passkeys and password (+ TOTP) instead.
+Invitations can't be accepted until email is configured.
+{{- end }}
+{{- $np := .Values.networkPolicy }}
+{{- $open := list }}
+{{- if not .Values.postgres.enabled }}{{ if not $np.egress.postgres.to }}{{ $open = append $open "postgres" }}{{ end }}{{ end }}
+{{- if not .Values.minio.enabled }}{{ if not $np.egress.objectStorage.to }}{{ $open = append $open "objectStorage" }}{{ end }}{{ end }}
+{{- if .Values.backup.enabled }}{{ if not $np.egress.backupRemote.to }}{{ $open = append $open "backupRemote" }}{{ end }}{{ end }}
+{{- if and $np.enabled $open }}
+
+NOTE: networkPolicy.egress.{{ join ".to / " $open }}.to is empty, so those
+ports are open to any destination. Pin them to the provider's addresses.
+{{- end }}

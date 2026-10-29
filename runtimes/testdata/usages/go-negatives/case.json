@@ -1,0 +1,5 @@
+{
+  "description": "What is NOT a usage in Go: dynamic keys (parameters, constants, concatenation, fmt.Sprintf), literals that aren't valid keys, comments, string contents (including template source inside a Go string), other methods (Explain) and a plain function named T. The key of a T method call is its first argument when that is a string literal, else its second (Client.T(ctx, …)). One real usage (nav.control) is the control.",
+  "implementations": ["extract"],
+  "keys": []
+}

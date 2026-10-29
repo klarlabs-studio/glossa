@@ -1,0 +1,5 @@
+{
+  "description": "Astro: t() from getGlossa(Astro) in frontmatter and template, <glossa-text key|message>. Component is the .astro file name; the route comes from src/pages/** (index segments dropped, [param] kept). A component outside src/pages has no route.",
+  "implementations": ["unplugin"],
+  "keys": []
+}

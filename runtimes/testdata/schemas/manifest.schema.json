@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glossa.dev/schemas/manifest/v1.json",
+  "title": "Glossa release manifest v1 (runtimes/SPEC.md §1.1, §1.4)",
+  "type": "object",
+  "required": ["schema", "project", "environment", "release", "sourceLocale", "locales", "fallback", "artifacts"],
+  "properties": {
+    "schema": { "const": "glossa.manifest/v1" },
+    "project": { "type": "string", "minLength": 1 },
+    "environment": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$" },
+    "release": { "$ref": "#/$defs/release" },
+    "sourceLocale": { "$ref": "#/$defs/locale" },
+    "locales": { "$ref": "#/$defs/locales" },
+    "fallback": { "$ref": "#/$defs/fallback" },
+    "artifacts": { "$ref": "#/$defs/artifacts" },
+    "rollout": {
+      "description": "SPEC §1.4: a candidate release served to the installations whose cohort is below percent × 100. The top-level release stays the stable one. No member halts a rollout automatically; halting is a person's abort, which removes this member.",
+      "type": "object",
+      "required": ["id", "percent", "salt", "candidate"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "percent": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "salt": { "type": "string", "pattern": "^[A-Za-z0-9_-]{22}$" },
+        "candidate": {
+          "type": "object",
+          "required": ["release", "locales", "fallback", "artifacts"],
+          "properties": {
+            "release": { "$ref": "#/$defs/release" },
+            "locales": { "$ref": "#/$defs/locales" },
+            "fallback": { "$ref": "#/$defs/fallback" },
+            "artifacts": { "$ref": "#/$defs/artifacts" }
+          }
+        }
+      }
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["keyId", "alg", "sig"],
+        "properties": {
+          "keyId": { "type": "string" },
+          "alg": { "const": "Ed25519" },
+          "sig": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "locale": { "type": "string", "pattern": "^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$", "maxLength": 35 },
+    "release": {
+      "type": "object",
+      "required": ["id", "version", "createdAt"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "locales": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "direction"],
+        "properties": {
+          "code": { "$ref": "#/$defs/locale" },
+          "direction": { "enum": ["ltr", "rtl"] }
+        }
+      }
+    },
+    "fallback": {
+      "type": "object",
+      "propertyNames": { "anyOf": [{ "const": "*" }, { "$ref": "#/$defs/locale" }] },
+      "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/locale" } }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["default"],
+        "additionalProperties": {
+          "type": "object",
+          "required": ["sha256", "size"],
+          "properties": {
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "size": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}

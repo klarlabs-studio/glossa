@@ -1,0 +1,93 @@
+{
+  "id": "de-es-leave-formality-slip",
+  "source_locale": "de",
+  "target_locale": "es",
+  "source": "Möchtest du den Arbeitsbereich verlassen?",
+  "context": {
+    "key": "workspace.leave",
+    "description": "Confirmation dialog"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-factura",
+            "text": "factura",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-espacio",
+            "text": "espacio de trabajo",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-cuenta",
+            "text": "cuenta",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "es-informal-1",
+      "formality": "informal",
+      "pronoun": "tú",
+      "tone": [
+        "warm"
+      ]
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "espacio de trabajo"
+    ],
+    "formality": {
+      "must_include_any": [
+        "Quieres"
+      ],
+      "must_not_include": [
+        "Desea",
+        "usted"
+      ]
+    }
+  },
+  "references": [
+    "¿Quieres salir del espacio de trabajo?"
+  ]
+}

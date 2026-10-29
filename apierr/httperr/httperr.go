@@ -18,7 +18,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/felixgeelhaar/glossa/apierr"
+	"go.klarlabs.de/glossa/apierr"
 )
 
 // Send writes the envelope and sets the status. After this call the

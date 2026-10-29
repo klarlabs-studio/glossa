@@ -1,0 +1,76 @@
+# syntax=docker/dockerfile:1.10
+#
+# glossa-server: the control plane (RFC 0002 §3). The same image runs the
+# migration Job (`glossa-server -migrate=only`, see platform/README.md).
+#
+# Build from the repository root; platform/go.mod replaces messageformat
+# and runtimes/go with the in-repo modules:
+#
+#   docker build -f platform/Dockerfile.server -t glossa-server .
+#
+# Base images are pinned by digest. Bump the tag and the digest together
+# (`docker buildx imagetools inspect <image>:<tag>` prints the index digest).
+
+ARG GO_IMAGE=golang:1.26-alpine@sha256:51a7c389a5ddaf82f527191a1e9bff9928655130a44e4975dd1d7e0acf59f1ae
+ARG RUNTIME_IMAGE=gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+
+# ── Build ────────────────────────────────────────────────────────────
+# Runs on the build host's architecture and cross-compiles, so an arm64
+# laptop builds the amd64 image without emulation.
+FROM --platform=$BUILDPLATFORM ${GO_IMAGE} AS build
+ARG TARGETOS
+ARG TARGETARCH
+# The toolchain in the image is authoritative: never download another one.
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOFLAGS=-trimpath
+WORKDIR /src
+
+# Module graph first, so dependency downloads cache across source edits.
+COPY messageformat/go.mod messageformat/go.sum messageformat/
+COPY runtimes/go/go.mod runtimes/go/go.sum runtimes/go/
+COPY platform/go.mod platform/go.sum platform/
+WORKDIR /src/platform
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
+
+COPY messageformat/ /src/messageformat/
+COPY runtimes/go/ /src/runtimes/go/
+COPY platform/ /src/platform/
+# -buildvcs=false: the build context carries no .git, so the version and
+# revision come from the build args through -X.
+# The release version and source revision, linked into the binary so
+# `-version` and the startup log report them (kernel/buildinfo, #65).
+# Declared here, not at the top of the stage, so a new version does not
+# invalidate the cached module download.
+ARG VERSION=dev
+ARG REVISION=unknown
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    GOOS=$TARGETOS GOARCH=$TARGETARCH \
+    go build -buildvcs=false \
+      -ldflags="-s -w -X go.klarlabs.de/glossa/platform/internal/kernel/buildinfo.version=${VERSION} -X go.klarlabs.de/glossa/platform/internal/kernel/buildinfo.revision=${REVISION}" \
+      -o /out/glossa-server ./cmd/glossa-server
+
+# ── Runtime ──────────────────────────────────────────────────────────
+# distroless/static: CA certificates and tzdata, no shell, no package
+# manager. Runs as nonroot (65532) and writes nothing to its filesystem,
+# so it runs with a read-only root filesystem.
+#
+# No HEALTHCHECK: the image has no HTTP client to run one, and Kubernetes
+# ignores it anyway. The chart probes GET /livez and GET /readyz on :8080.
+FROM ${RUNTIME_IMAGE}
+ARG VERSION=dev
+ARG REVISION=unknown
+ARG CREATED=""
+LABEL org.opencontainers.image.title="glossa-server" \
+      org.opencontainers.image.description="Glossa control plane: the /v1 API, identity, catalog, localization and release." \
+      org.opencontainers.image.source="https://github.com/klarlabs-studio/glossa" \
+      org.opencontainers.image.url="https://github.com/klarlabs-studio/glossa/tree/main/platform" \
+      org.opencontainers.image.documentation="https://github.com/klarlabs-studio/glossa/blob/main/platform/README.md" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.vendor="Klarlabs" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.revision="${REVISION}" \
+      org.opencontainers.image.created="${CREATED}"
+COPY --from=build /out/glossa-server /usr/local/bin/glossa-server
+USER 65532:65532
+EXPOSE 8080
+ENTRYPOINT ["/usr/local/bin/glossa-server"]

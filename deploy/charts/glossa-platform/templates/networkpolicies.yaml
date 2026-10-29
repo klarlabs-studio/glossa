@@ -1,0 +1,184 @@
+{{- if .Values.networkPolicy.enabled }}
+{{- $np := .Values.networkPolicy -}}
+# glossa-server: in from the ingress controller (and scrapers); out to
+# DNS, Postgres and object storage (and SMTP, the GitHub API and the
+# OTLP collector when configured).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "server") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "server") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    {{- include "gp.np.fromIngressController" (dict "root" $ "port" 8080) | nindent 4 }}
+    {{- if .Values.metrics.allowFrom }}
+    {{- include "gp.np.fromScrapers" (dict "root" $ "port" 8080) | nindent 4 }}
+    {{- end }}
+    {{- with $np.extraIngress.server }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.postgresEgress" . | nindent 4 }}
+    {{- include "gp.np.objectStorageEgress" . | nindent 4 }}
+    {{- if eq (include "gp.mailDriver" .) "smtp" }}
+    {{- include "gp.np.egressRule" $np.egress.smtp | nindent 4 }}
+    {{- end }}
+    {{- if .Values.github.appId }}
+    {{- include "gp.np.egressRule" $np.egress.github | nindent 4 }}
+    {{- end }}
+    {{- if .Values.server.otel.endpoint }}
+    {{- include "gp.np.egressRule" $np.egress.otlp | nindent 4 }}
+    {{- end }}
+    {{- with $np.extraEgress.server }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+---
+# glossa-edge: in from the ingress controller (and scrapers); out to DNS
+# and object storage only (and the OTLP collector). It has no database.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "edge") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "edge") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    {{- include "gp.np.fromIngressController" (dict "root" $ "port" 8081) | nindent 4 }}
+    {{- if .Values.metrics.allowFrom }}
+    {{- include "gp.np.fromScrapers" (dict "root" $ "port" 8081) | nindent 4 }}
+    {{- end }}
+    {{- with $np.extraIngress.edge }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.objectStorageEgress" . | nindent 4 }}
+    {{- if .Values.edge.otel.endpoint }}
+    {{- include "gp.np.egressRule" $np.egress.otlp | nindent 4 }}
+    {{- end }}
+    {{- with $np.extraEgress.edge }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+---
+# Studio: static files. In from the ingress controller; no egress at all.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "studio") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "studio") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    {{- include "gp.np.fromIngressController" (dict "root" $ "port" 8080) | nindent 4 }}
+    {{- with $np.extraIngress.studio }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress: []
+{{- if .Values.site.enabled }}
+---
+# Site: static files. In from the ingress controller; no egress at all.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "site") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "site") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "site") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    {{- include "gp.np.fromIngressController" (dict "root" $ "port" 8080) | nindent 4 }}
+    {{- with $np.extraIngress.site }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress: []
+{{- end }}
+{{- if .Values.minio.enabled }}
+---
+# MinIO: S3 (9000) in from glossa-server, glossa-edge, the bootstrap Job,
+# the backup Job and the `helm test` Pod only; out to DNS only. The
+# console (9001) takes no traffic from other pods (kubectl port-forward
+# still reaches it).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "minio") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ include "gp.name" . }}
+              app.kubernetes.io/instance: {{ .Release.Name }}
+            matchExpressions:
+              - key: app.kubernetes.io/component
+                operator: In
+                values: [server, edge, minio-bootstrap, minio-test, minio-backup]
+      ports:
+        - port: 9000
+          protocol: TCP
+    {{- with $np.extraIngress.minio }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+{{- end }}
+{{- if .Values.postgres.enabled }}
+---
+# Postgres: 5432 in from glossa-server, the migration and bootstrap Jobs,
+# the backup Job and the `helm test` Pod only; out to DNS only. The
+# restore drill restores into its own throwaway Postgres and never
+# connects here.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "gp.componentName" (dict "root" $ "component" "postgres") }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres") | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "postgres") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ include "gp.name" . }}
+              app.kubernetes.io/instance: {{ .Release.Name }}
+            matchExpressions:
+              - key: app.kubernetes.io/component
+                operator: In
+                values: [server, migrate, postgres-bootstrap, postgres-backup, postgres-test]
+      ports:
+        - port: 5432
+          protocol: TCP
+    {{- with $np.extraIngress.postgres }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,22 @@
+---
+import { alternates, getGlossa } from "@klarlabs-studio/glossa-astro/server";
+import Greeting from "./Greeting.vue";
+
+const { t, locale, dir } = getGlossa(Astro);
+---
+
+<html lang={locale} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <title>{t("home.title", {}, { default: "Startseite" })}</title>
+    {alternates(Astro).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+  </head>
+  <body>
+    <glossa-provider>
+      <h1 id="static"><glossa-text key="home.title">Startseite</glossa-text></h1>
+      <p id="plural"><glossa-plural key="cart.items" count="3">Artikel</glossa-plural></p>
+      <p id="inline"><glossa-text key="only.inline">Nur inline</glossa-text></p>
+    </glossa-provider>
+    <Greeting client:load name="Lina" />
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "description": "React (@klarlabs-studio/glossa/react): <T id> (literal, or a string literal in an expression container) and t() from useGlossa(). Component is the nearest enclosing capitalized function (declaration, named function expression, or arrow assigned to a const) or class; lowercase helpers and anonymous defaults are skipped over. The `routes` plugin option maps route patterns to file globs.",
+  "implementations": ["unplugin"],
+  "keys": [],
+  "routes": { "/checkout/payment": ["src/checkout/**"] }
+}

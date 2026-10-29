@@ -1,0 +1,18 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "cart.checkout", "file": "internal/checkout/handler.go", "line": 43, "column": 33, "component": "checkout.Service.Label", "kind": "t"},
+    {"key": "cart.items", "file": "internal/checkout/handler.go", "line": 34, "column": 40, "component": "checkout.(*Handler).ServeHTTP", "kind": "accessor"},
+    {"key": "cart.summary", "file": "internal/checkout/handler.go", "line": 57, "column": 60, "component": "checkout.Summary", "kind": "t"},
+    {"key": "cart.title", "file": "internal/checkout/handler.go", "line": 18, "column": 57, "kind": "t"},
+    {"key": "checkout.pay", "file": "internal/checkout/handler.go", "line": 30, "column": 4, "component": "checkout.(*Handler).ServeHTTP", "kind": "t"},
+    {"key": "checkout.pay", "file": "internal/checkout/handler.go", "line": 48, "column": 43, "component": "checkout.Service.Items", "kind": "accessor"},
+    {"key": "checkout.raw-string", "file": "internal/checkout/handler.go", "line": 50, "column": 51, "component": "checkout.Service.Items", "kind": "t"},
+    {"key": "checkout.title", "file": "internal/checkout/handler.go", "line": 27, "column": 36, "component": "checkout.(*Handler).ServeHTTP", "kind": "t"},
+    {"key": "title", "file": "internal/checkout/handler.go", "line": 57, "column": 23, "component": "checkout.Summary", "kind": "accessor"}
+  ]
+}

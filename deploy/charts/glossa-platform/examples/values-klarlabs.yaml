@@ -1,0 +1,275 @@
+# Klarlabs k3s (Hetzner, EU) values for glossa-platform — Klarlabs product
+# standards §1 (GHCR, semver tags, one namespace per product, PodSecurity
+# restricted, cert-manager letsencrypt-prod, traefik) and §2 (non-superuser
+# app role, FORCE RLS), with the owner's infrastructure decisions:
+#
+#   namespace       glossa-platform (its own; v0.3 keeps running in "glossa")
+#   hosts           glossa.klarlabs.de (Studio, and the API under /v1) and
+#                   cdn.glossa.klarlabs.de (glossa-edge)
+#   database        the Klarlabs Postgres pattern: the in-namespace Postgres 16
+#                   StatefulSet on longhorn (3 replicas), no operator
+#   object storage  the in-namespace MinIO on longhorn (3 replicas)
+#   backups         nightly pg_dump and MinIO mirror to the Hetzner Storage
+#                   Box (rclone over SFTP), weekly restore drill
+#   mail            none for now
+#   rollout         RollOps, images pinned by digest at deploy time
+#   metrics         ServiceMonitors for the cluster-observability Prometheus,
+#                   traces to its Tempo
+#
+# No credentials live here: Secrets are created out of band (README.md,
+# "First install"). The "TODO(infra)" markers are the questions still open.
+#
+# The first install creates the database, so its hooks run post-install and
+# the server pods restart until glossa_app can log in: install without
+# --wait, then wait for the rollout (README.md, "Order of the database hooks").
+# Upgrades take --wait.
+#
+# This file holds the hosts, storage and backup decisions; the image
+# digests come on top of it, from the release run's values-images.yaml
+# (README.md, "Cutting a release"). It goes last so it wins, and it turns
+# image.requireDigest on, so an unpinned image fails the render.
+#
+#   kubectl create namespace glossa-platform   # + the PodSecurity labels (README.md)
+#   gh run download --repo klarlabs-studio/glossa <run-id> -n values-images
+#   helm upgrade --install glossa-platform deploy/charts/glossa-platform \
+#     --namespace glossa-platform -f deploy/charts/glossa-platform/examples/values-klarlabs.yaml \
+#     -f values-images.yaml --timeout 15m
+#   kubectl -n glossa-platform rollout status deployment/glossa-server
+
+# Resource names glossa-server, glossa-edge, glossa-studio, glossa-minio,
+# glossa-postgres, …
+# The namespace is glossa-platform's own, so nothing collides with v0.3.
+fullnameOverride: glossa
+
+# One host for Studio and the API (hosts.api empty); the passkey RP ID
+# stays glossa.klarlabs.de. TODO(infra): does a CDN front cdn.glossa.klarlabs.de, and
+# which one? (Without one, traefik serves the edge directly; compression
+# there stays off, ingress.compress.cdn.)
+hosts:
+  studio: glossa.klarlabs.de
+  api: ""
+  cdn: cdn.glossa.klarlabs.de
+
+commonLabels:
+  klarlabs.de/product: glossa
+
+# Images: the v<appVersion> tags. The empty digests are placeholders so
+# this file renders on its own in CI — a deployment overlays the release
+# run's values-images.yaml, which fills all three and requires them
+# (README.md, "Cutting a release" and "Deploying with RollOps").
+server:
+  image:
+    digest: ""
+  replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 34Mi, peak 61Mi per pod.
+  resources:
+    requests:
+      memory: 96Mi
+  webauthn:
+    # Passkeys belong to the product domain, so they work on every
+    # glossa.klarlabs.de host. It can't change later without re-enrolling
+    # every passkey.
+    rpId: glossa.klarlabs.de
+    origins:
+      - https://app.glossa.klarlabs.de
+  otel:
+    # cluster-observability's Tempo (OTLP/HTTP), in namespace observability.
+    endpoint: http://tempo.observability.svc.cluster.local:4318
+
+edge:
+  image:
+    digest: ""
+  replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 17Mi, peak 19Mi per pod.
+  resources:
+    requests:
+      memory: 32Mi
+  autoscaling:
+    enabled: false
+  otel:
+    endpoint: http://tempo.observability.svc.cluster.local:4318
+
+studio:
+  image:
+    digest: ""
+  replicas: 2
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 10Mi, peak 12Mi per pod; the 16Mi default sat close to it.
+  resources:
+    requests:
+      memory: 32Mi
+
+# The Klarlabs Postgres pattern (owner decision; README.md, "In-namespace
+# Postgres"): glossa-postgres, Postgres 16 like v0.3's, on longhorn. The
+# server's and the migration's DSNs default to it, so database.* stays
+# unset. The bootstrap hooks create glossa_owner and the database before
+# the migration and give glossa_app its login after it. Each Secret holds
+# one key, `password` (openssl rand -hex 24; no ' or \).
+postgres:
+  enabled: true
+  database: glossa
+  superuser:
+    secretName: glossa-pg-superuser  # Postgres (initdb) and the bootstrap hooks only
+  owner:
+    username: glossa_owner
+    secretName: glossa-pg-owner      # the migration Job
+  app:
+    secretName: glossa-pg-app        # glossa-server, as glossa_app
+  persistence:
+    # 3 replicas: v0.3's local-path volume pinned its database to one node.
+    storageClassName: longhorn
+    size: 5Gi
+
+# Nightly backups to the shared Hetzner Storage Box, with the same
+# rclone-config Secret (rclone.conf, id_storagebox, known_hosts) as v0.3's
+# namespace: copy it into glossa-platform (README.md, "Backups").
+backup:
+  enabled: true
+  rclone:
+    configSecretName: rclone-config
+  # Encrypted before it leaves the cluster: the dumps to the offline recovery
+  # key and the drill key (Secret backup-age-drill, key identity, created from
+  # the drill identity); the MinIO mirror through rclone crypt (Secret
+  # minio-backup-crypt, keys password and password2).
+  age:
+    drillSecretName: backup-age-drill
+  postgres:
+    # 03:40 UTC, after v0.3's 03:20 dump. The db/<product>/ convention of
+    # every Klarlabs product; retention stays at 30 days (Brotwerk's own
+    # job deletes anything older than 30 days under db/ on a shared box).
+    schedule: "40 3 * * *"
+    remote: storagebox:db/glossa-platform
+    retentionDays: 30
+    role:
+      username: glossa_backup
+      secretName: glossa-pg-backup   # key password
+  minio:
+    cryptSecretName: minio-backup-crypt
+    # Deliberately not under minio/: Brotwerk `rclone sync`s its bucket to
+    # storagebox:minio/, which would delete a sibling directory there if it
+    # shares the box's root. TODO(infra): confirm the path (and whether each
+    # product has its own Storage Box sub-account).
+    schedule: "50 3 * * *"
+    remote: storagebox:minio-crypt/glossa-platform
+  restoreTest:
+    # Sundays 05:40 UTC, offset from v0.3's 05:20 drill.
+    schedule: "40 5 * * 0"
+    # Add tables that must never come back empty once the first tenant
+    # exists, e.g. [tenants].
+    nonEmptyTables: []
+
+auth:
+  secretName: glossa-auth            # key GLOSSA_AUTH_SECRET
+
+release:
+  signingKeys:
+    secretName: glossa-release-signing   # key GLOSSA_RELEASE_SIGNING_KEYS
+  retiredKeys: ""
+
+# Audit exports (RFC 0006 §6.2), signed with their own key, never the
+# release key. Its public half is published at
+# https://api.glossa.klarlabs.de/.well-known/glossa-audit-keys.json.
+audit:
+  exports:
+    enabled: true
+  signingKey:
+    secretName: glossa-audit-signing     # key GLOSSA_AUDIT_SIGNING_KEY
+  retiredKeys: ""
+
+# Mail: out of scope for now (owner decision). With no SMTP server the
+# chart sets no GLOSSA_MAIL_*/GLOSSA_SMTP_* variables, needs no glossa-smtp
+# Secret and opens no SMTP egress (README.md, "Mail"). To turn it on later:
+# an EU submission service with STARTTLS on 587, the sender domain's
+# SPF/DKIM/DMARC, then uncomment this and networkPolicy.egress.smtp below.
+# mail:
+#   from: "Glossa <no-reply@glossa.klarlabs.de>"
+#   smtp:
+#     addr: smtp.todo-provider.invalid:587
+#     secretName: glossa-smtp        # keys GLOSSA_SMTP_USERNAME, GLOSSA_SMTP_PASSWORD
+
+# The in-namespace MinIO (README.md, "In-namespace MinIO"). The endpoint
+# defaults to glossa-minio:9000 (path-style, in-cluster HTTP). The
+# bootstrap Job creates the bucket and one MinIO user per Secret below.
+objectStorage:
+  bucket: glossa
+  region: us-east-1
+  prefix: ""
+  server:
+    secretName: glossa-s3-rw         # keys GLOSSA_S3_ACCESS_KEY_ID, GLOSSA_S3_SECRET_ACCESS_KEY
+  edge:
+    secretName: glossa-s3-ro         # same keys; becomes the read-only user
+
+minio:
+  enabled: true
+  # Memory request sized from 5 days of Prometheus data (2026-10-03..08);
+  # the chart default limit still applies.
+  # p95 261Mi: it ran at 102% of the 256Mi default request.
+  resources:
+    requests:
+      memory: 352Mi
+  rootCredentials:
+    secretName: glossa-minio-root    # keys MINIO_ROOT_USER, MINIO_ROOT_PASSWORD
+  persistence:
+    # 3 replicas across edge-1..3: glossa-edge serves every published
+    # release from this bucket.
+    storageClassName: longhorn
+    size: 5Gi
+    # The off-cluster copy is backup.minio's nightly mirror. Longhorn
+    # snapshots would only add in-cluster restore points; the cluster has
+    # only a filesystem-trim recurring job today.
+    labels: {}
+
+ingress:
+  certManager:
+    issuerName: letsencrypt-prod
+    issuerKind: ClusterIssuer
+
+networkPolicy:
+  enabled: true
+  egress:
+    # Postgres and object storage: with postgres.enabled and minio.enabled
+    # the chart allows only the glossa-postgres pod on 5432 and the MinIO
+    # pod on 9000; egress.postgres and egress.objectStorage are not used.
+    # The backup Jobs → the Storage Box's SFTP port (23).
+    # TODO(infra): pin it to the Storage Box's address; until then port 23
+    # is open to any destination for the backup pods only.
+    backupRemote:
+      to: []
+      ports:
+        - port: 23
+          protocol: TCP
+    # cluster-observability's Tempo.
+    otlp:
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+          podSelector:
+            matchLabels:
+              app: tempo
+    # With SMTP on: the provider's address ranges.
+    # smtp:
+    #   to:
+    #     - ipBlock:
+    #         cidr: 198.51.100.0/24
+
+# cluster-observability's Prometheus (kube-prometheus-stack "kps", namespace
+# observability) discovers ServiceMonitors in every namespace; its own are
+# labelled release: kps.
+metrics:
+  allowFrom:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: observability
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: prometheus
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kps

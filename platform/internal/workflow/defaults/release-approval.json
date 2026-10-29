@@ -1,0 +1,45 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "release-approval",
+  "subject": "release_request",
+  "chart": {
+    "id": "release-approval",
+    "initial": "pending",
+    "states": {
+      "pending": {
+        "id": "pending",
+        "type": "atomic",
+        "entry": ["ask_approvers"],
+        "transitions": [
+          { "event": "approval.granted", "target": "approved", "guard": "approved_as_required" },
+          { "event": "approval.denied", "target": "denied", "actions": ["deny"] },
+          { "event": "release_request.deployed", "target": "deployed" },
+          { "event": "release_request.refused", "target": "refused" },
+          { "event": "release_request.withdrawn", "target": "withdrawn" }
+        ]
+      },
+      "approved": {
+        "id": "approved",
+        "type": "atomic",
+        "entry": ["deploy"],
+        "transitions": [
+          { "event": "release_request.deployed", "target": "deployed" },
+          { "event": "release_request.refused", "target": "refused" },
+          { "event": "release_request.withdrawn", "target": "withdrawn" }
+        ]
+      },
+      "deployed": { "id": "deployed", "type": "final" },
+      "denied": { "id": "denied", "type": "final" },
+      "withdrawn": { "id": "withdrawn", "type": "final" },
+      "refused": { "id": "refused", "type": "final" }
+    }
+  },
+  "guards": {
+    "approved_as_required": { "use": "approvals_as_required" }
+  },
+  "actions": {
+    "ask_approvers": { "use": "request_approval_as_required" },
+    "deploy": { "use": "deploy_release" },
+    "deny": { "use": "deny_release" }
+  }
+}

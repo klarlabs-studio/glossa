@@ -1,0 +1,116 @@
+{{- $name := include "gp.componentName" (dict "root" $ "component" "studio") -}}
+{{- $v := .Values.studio -}}
+{{- $rc := $v.runtimeConfig -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ $v.replicas }}
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "studio") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        {{- include "gp.podSecurityContext" 101 | nindent 8 }}
+      topologySpreadConstraints:
+        {{- include "gp.topologySpread" (dict "root" $ "values" $v "component" "studio") | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: studio
+          image: {{ include "gp.image" (dict "root" $ "component" "studio" "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: GLOSSA_STUDIO_API_BASE_URL
+              value: {{ $rc.apiBaseUrl | quote }}
+            - name: GLOSSA_STUDIO_EDGE_URL
+              value: {{ $rc.edgeUrl | default (printf "https://%s" (include "gp.host.cdn" .)) | quote }}
+            - name: GLOSSA_STUDIO_ENVIRONMENT
+              value: {{ $rc.environment | quote }}
+            - name: GLOSSA_STUDIO_CSP_CONNECT_SRC
+              value: {{ $rc.cspConnectSrc | quote }}
+            {{- with $v.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2
+          resources:
+            {{- toYaml $v.resources | nindent 12 }}
+          # nginx renders its configuration, pid and temp files into /tmp.
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 32Mi
+{{- if $v.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+spec:
+  maxUnavailable: {{ $v.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "studio") | nindent 6 }}
+{{- end }}

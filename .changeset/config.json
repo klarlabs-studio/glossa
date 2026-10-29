@@ -1,11 +1,29 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "felixgeelhaar/glossa" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "klarlabs-studio/glossa"
+    }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@felixgeelhaar/glossa-admin"]
+  "ignore": [
+    "@felixgeelhaar/glossa-format",
+    "@glossa/react-test-react-18",
+    "@glossa/studio",
+    "@klarlabs-studio/glossa-astro",
+    "@klarlabs-studio/glossa-capture",
+    "@klarlabs-studio/glossa-elements",
+    "@klarlabs-studio/glossa-messageformat",
+    "@klarlabs-studio/glossa-overlay",
+    "@klarlabs-studio/glossa-react",
+    "@klarlabs-studio/glossa-runtime",
+    "@klarlabs-studio/glossa-unplugin",
+    "@klarlabs-studio/glossa-vue"
+  ]
 }

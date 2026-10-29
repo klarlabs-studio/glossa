@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "source": "scripted",
+  "interactions": [
+    {
+      "key": "8e901415966aad3637aea9ede20da0fd6ff680ff9914ee55fc15cb978be05a77",
+      "provider": "anthropic",
+      "request": {
+        "task": "review",
+        "model": "claude-sonnet-5",
+        "system": [
+          {
+            "text": "You are a senior localization reviewer performing quality assurance on translated user-interface messages. You report suspected problems for a person to judge. Nothing you report fails a build, changes a translation or blocks a release; a reviewer reads it and decides.\n\nReport only problems that fall in these categories, and use the code exactly as written:\n- `meaning-divergence`: the translation states something the source does not, omits something the source states, or changes what the message asks the reader to do — including a subtly different meaning that reads fluently\n- `tone-mismatch`: the register, form of address or tone contradicts the style guide, or is markedly different from the source's\n- `grammar-suspected`: the target text is ungrammatical, mis-agreeing or unidiomatic in a way a native speaker would not write\n- `inconsistent-phrasing`: the same idea is worded differently here from the way the rest of this product words it\n\nThe platform has already checked what it can decide by itself: MessageFormat 2 structure, placeholders, markup, plural categories, maximum length, termbase compliance and locale conventions. Do not report any of those. Judge the language: meaning, register, grammar and consistency of phrasing.\n\nAnswer with a JSON object and nothing else:\n`{\"findings\": [{\"code\": \"…\", \"side\": \"source\" or \"target\", \"quote\": \"…\", \"explanation\": \"…\", \"suggestion\": \"…\"}]}`\n- `quote`: the exact substring of that side's text the finding is about, copied character for character. It must occur in that text. Quote the words at issue, not the whole message.\n- `explanation`: one sentence, in English, naming what is wrong.\n- `suggestion`: the text you would put in place of the quote, or an empty string when you have none.\n- `findings`: an empty list when the translation is sound. At most 8 findings, most important first.\n\nReport nothing you are not confident about. A false alarm costs a reviewer more than it saves, and a list of hedged remarks is worth less than an empty one.",
+            "cacheable": true
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "text": "Review this en → ja translation.\n\n\u003csource_text\u003e\nWelcome back\n\u003c/source_text\u003e\n\n\u003ctarget_text\u003e\nおかえりなさい\n\u003c/target_text\u003e\n\n\u003ccontext\u003e\n- key: home.welcome\n- namespace: home\n- description: Greeting on the dashboard\n\u003c/context\u003e\n\n\u003cstyle_guide\u003e\n- form of address: formal\n- tone: polite\n- Use the polite です・ます form (house style); write: もう一度お試しください。; not: もう一度やれ。\n\u003c/style_guide\u003e"
+          }
+        ],
+        "output": {
+          "name": "linguistic_review",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "description": "The suspected problems, most important first; empty when the translation is sound.",
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "meaning-divergence",
+                        "tone-mismatch",
+                        "grammar-suspected",
+                        "inconsistent-phrasing"
+                      ],
+                      "type": "string"
+                    },
+                    "explanation": {
+                      "description": "One sentence, in English, naming what is wrong.",
+                      "type": "string"
+                    },
+                    "quote": {
+                      "description": "The exact substring of that side's text the finding is about, copied character for character.",
+                      "type": "string"
+                    },
+                    "side": {
+                      "description": "Which text the quote is from.",
+                      "enum": [
+                        "source",
+                        "target"
+                      ],
+                      "type": "string"
+                    },
+                    "suggestion": {
+                      "description": "The text to use instead, or an empty string.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "side",
+                    "quote",
+                    "explanation",
+                    "suggestion"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "findings"
+            ],
+            "type": "object"
+          }
+        },
+        "max_tokens": 8192,
+        "effort": "medium"
+      },
+      "response": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "text": "{\"findings\": []}",
+        "stop": "end",
+        "usage": {
+          "input_tokens": 680,
+          "output_tokens": 5
+        }
+      }
+    }
+  ]
+}

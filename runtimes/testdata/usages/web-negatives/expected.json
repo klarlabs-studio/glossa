@@ -1,0 +1,13 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "nav.home", "file": "src/Negatives.tsx", "line": 13, "column": 14, "component": "Negatives", "kind": "component"},
+    {"key": "nav.home", "file": "src/Negatives.vue", "line": 18, "column": 14, "component": "Negatives", "kind": "t"},
+    {"key": "nav.home", "file": "src/negatives.html", "line": 10, "column": 23, "kind": "element"},
+    {"key": "nav.static", "file": "src/dynamic.ts", "line": 31, "column": 8, "kind": "t"}
+  ]
+}

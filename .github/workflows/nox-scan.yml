@@ -38,8 +38,8 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install nox (pinned + sha256-verified binary)
         env:
-          NOX_VERSION: "1.7.1"
-          NOX_SHA256: "3106ab3ce7197f43a45fc1128ea27112686421e8ec3eac9be356d4ca42ab4c89"
+          NOX_VERSION: "1.43.1"
+          NOX_SHA256: "4077a0f73a3c76eebf7c93f232aaaae584a3c024c9413a42ae2ab155d346f84d"
         run: |
           curl -sL -o nox.tar.gz \
             "https://github.com/nox-hq/nox/releases/download/v${NOX_VERSION}/nox_${NOX_VERSION}_linux_amd64.tar.gz"
@@ -50,7 +50,7 @@ jobs:
         run: nox scan . -format json,sarif -output nox-results || true
       - name: Upload SARIF to code scanning
         if: always() && hashFiles('nox-results/results.sarif') != ''
-        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
         with:
           sarif_file: nox-results/results.sarif
           category: nox

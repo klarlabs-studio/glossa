@@ -9,11 +9,11 @@ import (
 
 	"github.com/google/uuid"
 
-	aitranslatorapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/aitranslator"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/audit"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translation"
+	aitranslatorapp "go.klarlabs.de/glossa/apps/api/internal/app/aitranslator"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/audit"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translation"
 )
 
 // ── stubs ─────────────────────────────────────────────────────────

@@ -1,0 +1,47 @@
+# German translation of the Glossa demo shop.
+# Copyright (C) 2026 Klarlabs
+msgid ""
+msgstr ""
+"Project-Id-Version: shop 1.0\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Page title of the cart.
+#. Keep it short.
+#: src/cart.ts:12 src/header.ts:3
+msgid "Checkout"
+msgstr "Kasse"
+
+# Reviewed by Anna.
+#, fuzzy, c-format
+msgid "Hello %s, you have {braces} and \"quotes\""
+msgstr "Hallo %s, Sie haben {Klammern} und \"Anführungszeichen\""
+
+msgctxt "verb"
+msgid "Open"
+msgstr "Öffnen"
+
+msgctxt "adjective"
+msgid "Open"
+msgstr ""
+"Ge"
+"öffnet"
+
+#: src/cart.ts:40
+msgid "One item"
+msgid_plural "%d items"
+msgstr[0] "Ein Artikel"
+msgstr[1] "%d Artikel"
+
+msgid "Untranslated"
+msgstr ""
+
+msgid "Line one\n"
+"Line two\ttabbed \\ backslash"
+msgstr "Zeile eins\nZeile zwei\ttab \\ Backslash"
+
+#~ msgid "Obsolete"
+#~ msgstr "Veraltet"

@@ -1,0 +1,70 @@
+{
+  "de-es-greeting": {
+    "translate": [
+      "{\"message\": \"¡Hola, {$name}!\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.97, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-invoices-plural": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{Tienes {$count} factura nueva.}}\\nmany {{Tienes {$count} de facturas nuevas.}}\\n* {{Tienes {$count} facturas nuevas.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-account-created": {
+    "translate": [
+      "{\"message\": \"Tu cuenta se ha creado.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-continue-markup": {
+    "translate": [
+      "{\"message\": \"Toca {#b}Siguiente{/b}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.88, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-plan-select": {
+    "translate": [
+      "{\"message\": \".input {$plan :string}\\n.match $plan\\npro {{Usas el plan Pro.}}\\n* {{Usas el plan gratuito.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-leave-formality-slip": {
+    "translate": [
+      "{\"message\": \"¿Desea salir del espacio de trabajo?\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.6, \"formality_ok\": false, \"issues\": [\"Uses 'usted' although the style guide requires 'tú'.\"]}"
+    ]
+  },
+  "de-es-save-tm-exact": {
+    "translate": []
+  },
+  "de-es-invite-repair": {
+    "translate": [
+      "{\"message\": \"{$usuario} te ha invitado a {$workspace}.\", \"notes\": \"\"}",
+      "{\"message\": \"{$user} te ha invitado a {$workspace}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.94, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-es-forgot-link": {
+    "translate": [
+      "{\"message\": \"{#link}¿Olvidaste tu contraseña?{/link}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  }
+}

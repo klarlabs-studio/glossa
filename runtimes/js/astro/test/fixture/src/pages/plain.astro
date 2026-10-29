@@ -1,0 +1,13 @@
+---
+import { getGlossa } from "@klarlabs-studio/glossa-astro/server";
+
+const { t, locale } = getGlossa(Astro);
+---
+
+<html lang={locale}>
+  <head><title>plain</title></head>
+  <body>
+    <p id="t">{t("home.title")}</p>
+    <p id="e"><glossa-text key="home.title">Startseite</glossa-text></p>
+  </body>
+</html>

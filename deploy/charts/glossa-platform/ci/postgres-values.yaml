@@ -1,0 +1,73 @@
+# The in-namespace Postgres (postgres.enabled) and MinIO with every backup
+# on, so CI renders the StatefulSet, the bootstrap hooks, the three backup
+# CronJobs and both `helm test` Pods. No database.* Secret: the DSNs
+# default to the in-namespace Postgres. Names are placeholders (RFC 2606).
+hosts:
+  studio: app.example.com
+  api: api.example.com
+  cdn: cdn.example.com
+auth:
+  secretName: glossa-auth
+release:
+  signingKeys:
+    secretName: glossa-release-signing
+objectStorage:
+  bucket: glossa
+  server:
+    secretName: glossa-s3-rw
+  edge:
+    secretName: glossa-s3-ro
+minio:
+  enabled: true
+  rootCredentials:
+    secretName: glossa-minio-root
+postgres:
+  enabled: true
+  superuser:
+    secretName: glossa-pg-superuser
+  owner:
+    secretName: glossa-pg-owner
+  app:
+    secretName: glossa-pg-app
+    poolMaxConns: 10
+  persistence:
+    storageClassName: longhorn-r1
+    size: 2Gi
+    labels:
+      recurring-job-group.longhorn.io/glossa-backup: enabled
+  nodeSelector:
+    kubernetes.io/os: linux
+backup:
+  enabled: true
+  rclone:
+    configSecretName: rclone-config
+  age:
+    drillSecretName: backup-age-drill
+  postgres:
+    remote: storagebox:db/glossa-platform
+    retentionDays: 14
+    role:
+      secretName: glossa-pg-backup
+  minio:
+    remote: storagebox:glossa-platform/minio
+    cryptSecretName: minio-backup-crypt
+  restoreTest:
+    nonEmptyTables: [tenants]
+networkPolicy:
+  egress:
+    backupRemote:
+      to:
+        - ipBlock:
+            cidr: 203.0.113.10/32
+  extraIngress:
+    postgres:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: observability
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/name: postgres-exporter
+        ports:
+          - port: 5432
+            protocol: TCP

@@ -1,0 +1,30 @@
+{
+  "action": "rerequested",
+  "check_run": {
+    "id": 5550001,
+    "name": "Glossa",
+    "head_sha": "b7c6d5e4f3a2918071625344f5e6d7c8b9a0f1e2",
+    "external_id": "0191f0c2-7a4e-7b3d-9c1a-3e5f7a9b1c2d",
+    "status": "completed",
+    "conclusion": "failure",
+    "app": { "id": 99001, "slug": "glossa" },
+    "check_suite": { "id": 7770001, "head_branch": "feature/payment-copy", "head_sha": "b7c6d5e4f3a2918071625344f5e6d7c8b9a0f1e2" },
+    "pull_requests": [
+      {
+        "number": 7,
+        "head": { "ref": "feature/payment-copy", "sha": "b7c6d5e4f3a2918071625344f5e6d7c8b9a0f1e2", "repo": { "id": 10101 } },
+        "base": { "ref": "main", "sha": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d", "repo": { "id": 10101 } }
+      }
+    ]
+  },
+  "repository": {
+    "id": 10101,
+    "name": "shop",
+    "full_name": "acme/shop",
+    "private": true,
+    "default_branch": "main",
+    "owner": { "login": "acme", "id": 424200, "type": "Organization" }
+  },
+  "installation": { "id": 4242 },
+  "sender": { "login": "octocat", "id": 583231, "type": "User" }
+}

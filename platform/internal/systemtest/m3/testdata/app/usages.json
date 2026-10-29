@@ -1,0 +1,1348 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "shop",
+  "commit": "3c1a5f70b28d4e96a1f0c7b4d8e2a95630fb47c1",
+  "branch": "main",
+  "tool": {
+    "name": "@klarlabs-studio/glossa",
+    "version": "0.4.0"
+  },
+  "usages": [
+    {
+      "key": "account.account.activity",
+      "file": "src/pages/AccountPage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.baguette.placeholder",
+      "file": "src/pages/AccountPage.vue",
+      "line": 15,
+      "column": 60,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.biscuit.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 20,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.bread.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 14,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.bun.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.croissant.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.crust.label",
+      "file": "src/pages/AccountPage.vue",
+      "line": 22,
+      "column": 37,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "component"
+    },
+    {
+      "key": "account.flour.count",
+      "file": "src/pages/AccountPage.vue",
+      "line": 12,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.flour.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 11,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.note.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 23,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.order.help",
+      "file": "src/pages/AccountPage.vue",
+      "line": 18,
+      "column": 37,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "component"
+    },
+    {
+      "key": "account.order.title",
+      "file": "src/pages/AccountPage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.pickup.label",
+      "file": "src/pages/AccountPage.vue",
+      "line": 16,
+      "column": 37,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "component"
+    },
+    {
+      "key": "account.question.count",
+      "file": "src/pages/AccountPage.vue",
+      "line": 24,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.sourdough.activity",
+      "file": "src/pages/AccountPage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "t"
+    },
+    {
+      "key": "account.voucher.label",
+      "file": "src/pages/AccountPage.vue",
+      "line": 10,
+      "column": 37,
+      "component": "AccountPage",
+      "route": "/konto",
+      "kind": "component"
+    },
+    {
+      "key": "cart.bagel.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 11,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.basket.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.branch.activity",
+      "file": "src/pages/CartPage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.bread.label",
+      "file": "src/pages/CartPage.vue",
+      "line": 24,
+      "column": 37,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "component"
+    },
+    {
+      "key": "cart.croissant.label",
+      "file": "src/pages/CartPage.vue",
+      "line": 12,
+      "column": 37,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "component"
+    },
+    {
+      "key": "cart.flour.count",
+      "file": "src/pages/CartPage.vue",
+      "line": 14,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.flour.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 22,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.invoice.label",
+      "file": "src/pages/CartPage.vue",
+      "line": 18,
+      "column": 37,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "component"
+    },
+    {
+      "key": "cart.invoice.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 16,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.order.activity",
+      "file": "src/pages/CartPage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.order.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 10,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.oven.placeholder",
+      "file": "src/pages/CartPage.vue",
+      "line": 17,
+      "column": 60,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.plait.activity",
+      "file": "src/pages/CartPage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.review.help",
+      "file": "src/pages/CartPage.vue",
+      "line": 20,
+      "column": 37,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "component"
+    },
+    {
+      "key": "cart.shipping.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 23,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.subscription.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.tart.count",
+      "file": "src/pages/CartPage.vue",
+      "line": 26,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "cart.tray.title",
+      "file": "src/pages/CartPage.vue",
+      "line": 25,
+      "column": 28,
+      "component": "CartPage",
+      "route": "/warenkorb",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.bagel.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 29,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.bread.activity",
+      "file": "src/islands/PayButton.tsx",
+      "line": 12,
+      "column": 31,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.bun.title",
+      "file": "src/islands/PayButton.tsx",
+      "line": 10,
+      "column": 31,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.croissant.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 32,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.crust.label",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 28,
+      "column": 37,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "component"
+    },
+    {
+      "key": "checkout.grain.label",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 22,
+      "column": 37,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "component"
+    },
+    {
+      "key": "checkout.ingredient.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 23,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.invoice.title",
+      "file": "src/islands/PayButton.tsx",
+      "line": 11,
+      "column": 31,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.muffin.placeholder",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 21,
+      "column": 60,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.note.title",
+      "file": "src/islands/PayButton.tsx",
+      "line": 8,
+      "column": 31,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.order.activity",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 25,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.order.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 20,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.payment.activity",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 31,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.pickup.count",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 30,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.plait.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 26,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.roll.help",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 24,
+      "column": 37,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "component"
+    },
+    {
+      "key": "checkout.shipping.label",
+      "file": "src/islands/PayButton.tsx",
+      "line": 9,
+      "column": 34,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "component"
+    },
+    {
+      "key": "checkout.shipping.title",
+      "file": "src/islands/PayButton.tsx",
+      "line": 13,
+      "column": 31,
+      "component": "PayButton",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.stollen.title",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 27,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "checkout.voucher.activity",
+      "file": "src/pages/CheckoutPage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "CheckoutPage",
+      "route": "/kasse",
+      "kind": "t"
+    },
+    {
+      "key": "help.address.count",
+      "file": "src/pages/HelpPage.vue",
+      "line": 20,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.address.placeholder",
+      "file": "src/pages/HelpPage.vue",
+      "line": 11,
+      "column": 60,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.biscuit.label",
+      "file": "src/pages/HelpPage.vue",
+      "line": 12,
+      "column": 37,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "component"
+    },
+    {
+      "key": "help.bread.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.cake.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.crust.help",
+      "file": "src/pages/HelpPage.vue",
+      "line": 14,
+      "column": 37,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "component"
+    },
+    {
+      "key": "help.flour.activity",
+      "file": "src/pages/HelpPage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.invoice.activity",
+      "file": "src/pages/HelpPage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.loaf.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 22,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.note.activity",
+      "file": "src/pages/HelpPage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.oven.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 16,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.review.label",
+      "file": "src/pages/HelpPage.vue",
+      "line": 18,
+      "column": 37,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "component"
+    },
+    {
+      "key": "help.sourdough.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "help.voucher.title",
+      "file": "src/pages/HelpPage.vue",
+      "line": 10,
+      "column": 28,
+      "component": "HelpPage",
+      "route": "/hilfe",
+      "kind": "t"
+    },
+    {
+      "key": "home.allergen.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.bagel.count",
+      "file": "src/pages/HomePage.vue",
+      "line": 22,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.basket.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 24,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.branch.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 18,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.cake.label",
+      "file": "src/pages/HomePage.vue",
+      "line": 14,
+      "column": 37,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "component"
+    },
+    {
+      "key": "home.croissant.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.delivery.label",
+      "file": "src/pages/HomePage.vue",
+      "line": 26,
+      "column": 37,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "component"
+    },
+    {
+      "key": "home.flour.placeholder",
+      "file": "src/pages/HomePage.vue",
+      "line": 13,
+      "column": 60,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.grain.activity",
+      "file": "src/pages/HomePage.vue",
+      "line": 23,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.ingredient.activity",
+      "file": "src/pages/HomePage.vue",
+      "line": 11,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.oven.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 12,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.review.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.stollen.placeholder",
+      "file": "src/pages/HomePage.vue",
+      "line": 25,
+      "column": 60,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.tart.label",
+      "file": "src/pages/HomePage.vue",
+      "line": 20,
+      "column": 37,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "component"
+    },
+    {
+      "key": "home.tray.count",
+      "file": "src/pages/HomePage.vue",
+      "line": 10,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.tray.help",
+      "file": "src/pages/HomePage.vue",
+      "line": 16,
+      "column": 37,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "component"
+    },
+    {
+      "key": "home.voucher.title",
+      "file": "src/pages/HomePage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "home.yeast.activity",
+      "file": "src/pages/HomePage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "HomePage",
+      "route": "/",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.account.title",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 14,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.address.title",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 11,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.basket.title",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.biscuit.label",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 10,
+      "column": 37,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "component"
+    },
+    {
+      "key": "invoice.branch.help",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 12,
+      "column": 37,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "component"
+    },
+    {
+      "key": "invoice.branch.title",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.croissant.placeholder",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 9,
+      "column": 60,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.crust.count",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 18,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.flour.label",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 16,
+      "column": 37,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "component"
+    },
+    {
+      "key": "invoice.oven.activity",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.salt.title",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 20,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "invoice.sourdough.activity",
+      "file": "src/pages/InvoicePage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "InvoicePage",
+      "route": "/rechnung",
+      "kind": "t"
+    },
+    {
+      "key": "layout.account.label",
+      "file": "src/components/SiteHeader.vue",
+      "line": 15,
+      "column": 37,
+      "component": "SiteHeader",
+      "kind": "component"
+    },
+    {
+      "key": "layout.basket.label",
+      "file": "src/components/SiteHeader.vue",
+      "line": 9,
+      "column": 37,
+      "component": "SiteHeader",
+      "kind": "component"
+    },
+    {
+      "key": "layout.bread.title",
+      "file": "src/components/SiteFooter.vue",
+      "line": 8,
+      "column": 28,
+      "component": "SiteFooter",
+      "kind": "t"
+    },
+    {
+      "key": "layout.cake.help",
+      "file": "src/components/SiteFooter.vue",
+      "line": 9,
+      "column": 37,
+      "component": "SiteFooter",
+      "kind": "component"
+    },
+    {
+      "key": "layout.croissant.activity",
+      "file": "src/components/SiteFooter.vue",
+      "line": 10,
+      "column": 28,
+      "component": "SiteFooter",
+      "kind": "t"
+    },
+    {
+      "key": "layout.croissant.title",
+      "file": "src/components/SiteHeader.vue",
+      "line": 8,
+      "column": 28,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.dough.label",
+      "file": "src/components/SiteFooter.vue",
+      "line": 13,
+      "column": 37,
+      "component": "SiteFooter",
+      "kind": "component"
+    },
+    {
+      "key": "layout.grain.placeholder",
+      "file": "src/components/SiteHeader.vue",
+      "line": 14,
+      "column": 60,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.plait.title",
+      "file": "src/components/SiteHeader.vue",
+      "line": 10,
+      "column": 28,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.question.activity",
+      "file": "src/components/SiteHeader.vue",
+      "line": 12,
+      "column": 28,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.question.title",
+      "file": "src/components/SiteFooter.vue",
+      "line": 11,
+      "column": 28,
+      "component": "SiteFooter",
+      "kind": "t"
+    },
+    {
+      "key": "layout.salt.title",
+      "file": "src/components/SiteHeader.vue",
+      "line": 13,
+      "column": 28,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.sourdough.count",
+      "file": "src/components/SiteHeader.vue",
+      "line": 11,
+      "column": 28,
+      "component": "SiteHeader",
+      "kind": "t"
+    },
+    {
+      "key": "layout.subscription.title",
+      "file": "src/components/SiteFooter.vue",
+      "line": 12,
+      "column": 28,
+      "component": "SiteFooter",
+      "kind": "t"
+    },
+    {
+      "key": "product.address.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 10,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.basket.activity",
+      "file": "src/pages/ProductPage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.basket.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 19,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.cake.count",
+      "file": "src/pages/ProductPage.vue",
+      "line": 20,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.cake.help",
+      "file": "src/pages/ProductPage.vue",
+      "line": 14,
+      "column": 37,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "component"
+    },
+    {
+      "key": "product.cake.label",
+      "file": "src/pages/ProductPage.vue",
+      "line": 12,
+      "column": 37,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "component"
+    },
+    {
+      "key": "product.cake.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.croissant.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 16,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.flour.activity",
+      "file": "src/pages/ProductPage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.invoice.activity",
+      "file": "src/pages/ProductPage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.invoice.placeholder",
+      "file": "src/pages/ProductPage.vue",
+      "line": 11,
+      "column": 60,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.order.label",
+      "file": "src/pages/ProductPage.vue",
+      "line": 24,
+      "column": 37,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "component"
+    },
+    {
+      "key": "product.oven.help",
+      "file": "src/pages/ProductPage.vue",
+      "line": 26,
+      "column": 37,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "component"
+    },
+    {
+      "key": "product.plait.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 22,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.question.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 25,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.review.placeholder",
+      "file": "src/pages/ProductPage.vue",
+      "line": 23,
+      "column": 60,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.review.title",
+      "file": "src/pages/ProductPage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "t"
+    },
+    {
+      "key": "product.subscription.label",
+      "file": "src/pages/ProductPage.vue",
+      "line": 18,
+      "column": 37,
+      "component": "ProductPage",
+      "route": "/produkte/[id]",
+      "kind": "component"
+    },
+    {
+      "key": "products.address.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 15,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.bagel.help",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 10,
+      "column": 37,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "component"
+    },
+    {
+      "key": "products.basket.help",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 22,
+      "column": 37,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "component"
+    },
+    {
+      "key": "products.basket.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 21,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.bun.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 9,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.cake.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 18,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.flour.count",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 28,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.flour.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 13,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.order.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 27,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.pickup.label",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 14,
+      "column": 37,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "component"
+    },
+    {
+      "key": "products.question.activity",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 17,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.question.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 24,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.salt.activity",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 11,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.salt.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 12,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.sourdough.title",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 25,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.stollen.label",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 20,
+      "column": 37,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "component"
+    },
+    {
+      "key": "products.subscription.activity",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 23,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.tart.count",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 16,
+      "column": 28,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    },
+    {
+      "key": "products.tray.label",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 26,
+      "column": 37,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "component"
+    },
+    {
+      "key": "products.voucher.placeholder",
+      "file": "src/pages/ProductsPage.vue",
+      "line": 19,
+      "column": 60,
+      "component": "ProductsPage",
+      "route": "/produkte",
+      "kind": "t"
+    }
+  ]
+}

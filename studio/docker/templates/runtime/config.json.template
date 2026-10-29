@@ -1,0 +1,5 @@
+{
+  "apiBaseUrl": "${GLOSSA_STUDIO_API_BASE_URL}",
+  "edgeUrl": "${GLOSSA_STUDIO_EDGE_URL}",
+  "environment": "${GLOSSA_STUDIO_ENVIRONMENT}"
+}

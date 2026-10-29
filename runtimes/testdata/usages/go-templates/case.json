@@ -1,0 +1,5 @@
+{
+  "description": "Go templates (*.tmpl, *.gotmpl, *.gohtml), parsed with text/template/parse: a t, td or th call whose first argument is a string literal (quoted or raw), inside any action, block, branch or parenthesized pipeline, even across lines; a string literal piped into a bare t or th ({{\"…\" | t}}) is its first argument too, but piped into td it is the default text. Template comments, plain text, strings passed to other functions and dynamic keys (fields, variables, printf) are not usages. No component, no route.",
+  "implementations": ["extract"],
+  "keys": []
+}

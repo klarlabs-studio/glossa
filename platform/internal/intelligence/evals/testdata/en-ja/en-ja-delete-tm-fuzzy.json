@@ -1,0 +1,109 @@
+{
+  "id": "en-ja-delete-tm-fuzzy",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Delete this workspace?",
+  "context": {
+    "key": "workspace.delete",
+    "description": "Confirmation dialog title"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-ja",
+            "text": "ワークスペース",
+            "locale": "ja",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-invoice-en",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-seikyusho",
+            "text": "請求書",
+            "locale": "ja",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-signin",
+        "definition": "Authenticating with an account",
+        "terms": [
+          {
+            "id": "t-signin-en",
+            "text": "sign in",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-login-ja",
+            "text": "ログイン",
+            "locale": "ja",
+            "status": "preferred"
+          },
+          {
+            "id": "t-signin-ja",
+            "text": "サインイン",
+            "locale": "ja",
+            "status": "admitted"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "ja-polite-1",
+      "formality": "formal",
+      "tone": [
+        "polite (です・ます調)"
+      ]
+    },
+    "tm": [
+      {
+        "id": "tm-del-project",
+        "source": "Delete this project?",
+        "target": "このプロジェクトを削除しますか？",
+        "pair": {
+          "source": "en",
+          "target": "ja"
+        }
+      }
+    ]
+  },
+  "expect": {
+    "required_terms": [
+      "ワークスペース"
+    ],
+    "formality": {
+      "must_include_any": [
+        "ます",
+        "です",
+        "ました",
+        "ください",
+        "ません"
+      ]
+    }
+  },
+  "references": [
+    "このワークスペースを削除しますか？"
+  ]
+}

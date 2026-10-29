@@ -1,0 +1,16 @@
+{{define "subject"}}{{t "email.welcome.subject" "name" .Name}}{{end}}
+{{define "body"}}<!doctype html>
+<html lang="{{lang}}" dir="{{dir}}">
+  <body>
+    {{/* t "fake.template-comment" is a comment, not a call */}}
+    <h1>{{- t "email.welcome.heading" -}}</h1>
+    <p>{{th "email.welcome.body" .Args}}</p>
+    {{if .Trial}}<p>{{t "email.welcome.trial" "days" .TrialDays}}</p>{{else}}<p>{{t `email.welcome.paid`}}</p>{{end}}
+    {{range .Items}}<li>{{printf "%s: %s" .Name (t "email.welcome.item")}}</li>{{end}}
+    <p>Write t "fake.plain-text" outside actions and nothing happens.</p>
+    <footer>{{td "email.footer"
+      "Thanks for shopping with us!"}}</footer>
+    {{template "subject" .}}
+  </body>
+</html>
+{{end}}

@@ -1,0 +1,32 @@
+{
+  "de-fr-hello-clean": {
+    "review": [
+      "{\"findings\": []}"
+    ]
+  },
+  "de-fr-invoice-meaning": {
+    "review": [
+      "{\"findings\": [{\"code\": \"meaning-divergence\", \"side\": \"target\", \"quote\": \"a été payée\", \"explanation\": \"The source says the invoice is due; the translation says it has been paid.\", \"suggestion\": \"est échue\"}]}"
+    ]
+  },
+  "de-fr-signin-tone": {
+    "review": [
+      "{\"findings\": [{\"code\": \"tone-mismatch\", \"side\": \"target\", \"quote\": \"Connecte-toi\", \"explanation\": \"The translation addresses the reader with tu where the guide asks for vous.\", \"suggestion\": \"Connectez-vous\"}]}"
+    ]
+  },
+  "de-fr-settings-grammar": {
+    "review": [
+      "{\"findings\": []}"
+    ]
+  },
+  "de-fr-cancel-phrasing": {
+    "review": [
+      "{\"findings\": [{\"code\": \"inconsistent-phrasing\", \"side\": \"target\", \"quote\": \"Interrompre\", \"explanation\": \"Every other dialog in the product says Annuler.\", \"suggestion\": \"Annuler\"}]}"
+    ]
+  },
+  "de-fr-save-clean": {
+    "review": [
+      "{\"findings\": []}"
+    ]
+  }
+}

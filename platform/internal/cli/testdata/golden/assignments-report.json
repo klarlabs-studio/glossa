@@ -1,0 +1,66 @@
+{
+  "schema": "glossa.cli.assignments/v1",
+  "action": "report",
+  "generated_at": "2026-10-02T09:00:00Z",
+  "truncated": false,
+  "rows": [
+    {
+      "approved": 4,
+      "assignee": "vendor:ven_2",
+      "assignments": 1,
+      "changed_after_delivery": 1,
+      "draft": 0,
+      "findings": {
+        "terminology": 1
+      },
+      "findings_per_unit": 0.25,
+      "late": 0,
+      "locale": "de",
+      "mean_edit_distance": 3.5,
+      "mean_edit_ratio": 0,
+      "needs_review": 0,
+      "no_due": 0,
+      "on_time": 1,
+      "on_time_rate": 0.5,
+      "rejected": 0,
+      "rework_rate": 0,
+      "reworked": 0,
+      "source_words": 40,
+      "tm_words": {
+        "exact": 10
+      },
+      "unavailable": 0,
+      "units": 4,
+      "unreviewed": 0
+    },
+    {
+      "approved": 6,
+      "assignee": "vendor:ven_9",
+      "assignments": 2,
+      "changed_after_delivery": 1,
+      "draft": 0,
+      "findings": {
+        "terminology": 1
+      },
+      "findings_per_unit": 0.25,
+      "late": 1,
+      "locale": "ja",
+      "mean_edit_distance": 3.5,
+      "mean_edit_ratio": 0.125,
+      "needs_review": 0,
+      "no_due": 0,
+      "on_time": 1,
+      "on_time_rate": 0.5,
+      "rejected": 0,
+      "rework_rate": 0,
+      "reworked": 0,
+      "source_words": 120,
+      "tm_words": {
+        "exact": 30
+      },
+      "unavailable": 0,
+      "units": 8,
+      "unreviewed": 2
+    }
+  ]
+}

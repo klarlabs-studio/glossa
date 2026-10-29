@@ -1,0 +1,97 @@
+{
+  "id": "de-en-save-markup",
+  "source_locale": "de",
+  "target_locale": "en",
+  "source": "Klicke auf {#b}Speichern{/b}, um fortzufahren.",
+  "context": {
+    "key": "editor.hint",
+    "description": "Hint under the editor"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-invoice",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-bill",
+            "text": "bill",
+            "locale": "en",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-account",
+            "text": "account",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "en-us-2",
+      "tone": [
+        "concise",
+        "friendly"
+      ],
+      "rules": [
+        {
+          "id": "r-case",
+          "rule": "Use sentence case",
+          "good": [
+            "Save changes"
+          ],
+          "bad": [
+            "Save Changes"
+          ]
+        }
+      ]
+    }
+  },
+  "expect": {},
+  "references": [
+    "Click {#b}Save{/b} to continue."
+  ]
+}

@@ -1,0 +1,159 @@
+name: Glossa
+description: >-
+  Push a repository's source messages, usages and screenshots to Glossa,
+  authenticating with GitHub Actions OIDC instead of a stored secret.
+
+# RFC 0004 §6.3. The job needs `id-token: write`; nothing else, and no
+# secret in the repository:
+#
+#   permissions:
+#     contents: read
+#     id-token: write
+#
+# Glossa verifies the ID token GitHub signs and matches its
+# `repository_id` — GitHub's immutable number, never the repository's
+# name — against a Git connection. The credential it hands back lives 30
+# minutes, is bound to that one project, and may only read and write the
+# project's catalog.
+#
+# A pull request **from a fork** gets no ID token and no secrets from
+# GitHub, so this action cannot authenticate there and does not try: the
+# step is skipped and Glossa's own check completes as `neutral` with an
+# explanation (§6.4). That is the intended behaviour, not a failure.
+
+inputs:
+  server:
+    description: The glossa-server URL. Defaults to glossa.yaml's `server`.
+    required: false
+    default: ''
+  project:
+    description: >-
+      The project's ID. Only needed when the repository feeds several
+      projects (a monorepo with one Git connection per path).
+    required: false
+    default: ''
+  application:
+    description: >-
+      Which application the usages and captures belong to. Defaults to
+      glossa.yaml's `extract.application`.
+    required: false
+    default: ''
+  token:
+    description: >-
+      A Glossa API token, for a repository that is not connected or a
+      server with no GitHub App. Leave it empty to authenticate with
+      OIDC, which is the point of this action.
+    required: false
+    default: ''
+  usages:
+    description: >-
+      A `glossa.usages/v1` document to upload, such as
+      @klarlabs-studio/glossa-unplugin's `.glossa/usages.json`. Empty: `glossa extract
+      --upload` collects the usages instead.
+    required: false
+    default: ''
+  capture:
+    description: >-
+      Upload screenshots with `glossa capture --upload`. Needs a running
+      preview of the application (see `capture.base_url`).
+    required: false
+    default: 'false'
+  preview-url:
+    description: >-
+      Where CI deployed this branch's preview. Registered on the branch
+      so Studio and the pull request's comment can link to it.
+    required: false
+    default: ''
+  working-directory:
+    description: The directory holding glossa.yaml.
+    required: false
+    default: '.'
+
+runs:
+  using: composite
+  steps:
+    - name: Check the CLI is there and the job can authenticate
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GLOSSA_TOKEN: ${{ inputs.token }}
+      run: |
+        set -euo pipefail
+        # The action does not install the CLI: put `glossa` on PATH
+        # first, so the workflow pins its version rather than the action
+        # choosing one.
+        if ! command -v glossa >/dev/null 2>&1; then
+          echo "::error::glossa is not on PATH. Install the CLI before this action" \
+               "(a release binary, or 'go install github.com/klarlabs-studio/glossa/platform/cmd/glossa@<version>')."
+          exit 1
+        fi
+        if [ -n "${GLOSSA_TOKEN}" ]; then
+          echo "Authenticating with the API token given to this action."
+          exit 0
+        fi
+        if [ -z "${ACTIONS_ID_TOKEN_REQUEST_URL:-}" ]; then
+          echo "::error::This job cannot request an OIDC ID token." \
+               "Add 'permissions: { id-token: write }' to the job or the workflow," \
+               "or pass an API token as the action's 'token' input."
+          exit 1
+        fi
+
+    - name: Sign in to Glossa
+      if: inputs.token == ''
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        set -euo pipefail
+        glossa login \
+          ${{ inputs.server && format('--server {0}', inputs.server) || '' }} \
+          ${{ inputs.project && format('--project {0}', inputs.project) || '' }}
+
+    - name: Push the source messages
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GLOSSA_TOKEN: ${{ inputs.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+      run: |
+        set -euo pipefail
+        # On the default branch a push activates messages; on a pull
+        # request it proposes them on the branch instead, which is what
+        # --branch does (RFC 0004 §4.1). GITHUB_HEAD_REF is set only for
+        # a pull request, so it is what tells the two apart.
+        if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+          glossa push --branch "${GITHUB_HEAD_REF}" ${PR_NUMBER:+--pr "${PR_NUMBER}"}
+        else
+          glossa push
+        fi
+
+    - name: Collect where the messages appear
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GLOSSA_TOKEN: ${{ inputs.token }}
+        GLOSSA_APPLICATION: ${{ inputs.application }}
+        USAGES: ${{ inputs.usages }}
+      run: |
+        set -euo pipefail
+        if [ -n "${USAGES}" ]; then
+          glossa context push "${USAGES}"
+        else
+          glossa extract --upload
+        fi
+
+    - name: Upload screenshots
+      if: inputs.capture == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GLOSSA_TOKEN: ${{ inputs.token }}
+        GLOSSA_APPLICATION: ${{ inputs.application }}
+      run: glossa capture --upload
+
+    - name: Register the preview
+      if: inputs.preview-url != ''
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GLOSSA_TOKEN: ${{ inputs.token }}
+      run: glossa preview register --url "${{ inputs.preview-url }}"

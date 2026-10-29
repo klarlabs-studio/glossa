@@ -1,0 +1,30 @@
+# Site server block. Static files only: "/" and /_astro/* are routed here by
+# the ingress; Studio serves every other path of the host.
+
+server {
+  listen 8080;
+  server_name _;
+  root /usr/share/glossa-site;
+  absolute_redirect off;
+
+  include /tmp/nginx/snippets/security-headers.conf;
+
+  location = /healthz {
+    access_log off;
+    default_type text/plain;
+    return 200 "ok\n";
+  }
+
+  # Fingerprinted by Astro: cache forever.
+  location ^~ /_astro/ {
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "public, max-age=31536000, immutable" always;
+    try_files $uri =404;
+  }
+
+  location / {
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "no-cache" always;
+    try_files $uri $uri/index.html =404;
+  }
+}

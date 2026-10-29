@@ -1,0 +1,42 @@
+{
+  "id": "de-fr-settings-grammar",
+  "description": "Number agreement that no native speaker writes.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Die Einstellungen wurden gespeichert.",
+  "translation": "Les paramètre a été enregistré.",
+  "context": {
+    "key": "settings.saved",
+    "namespace": "settings",
+    "description": "Toast after saving settings"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "grammar-suspected"
+    ],
+    "quotes": [
+      "Les paramètre a été enregistré"
+    ]
+  }
+}

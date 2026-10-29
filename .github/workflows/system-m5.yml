@@ -1,0 +1,123 @@
+# The M5 exit test (RFC 0006 §12): the thing that decides whether M5 is
+# done.
+#
+# **It is red by design until M5's last wave.** RFC 0006 §11.1 puts the
+# exit test in wave 1 with every criterion written and failing, so each
+# later wave can be seen turning part of it green — M4's exit test
+# arrived in its last wave and found four unbuilt layers at once. A red
+# run of this workflow is therefore not news; a criterion turning green,
+# or one that was green turning red, is. REPORT.md, kept as an
+# artifact whatever the outcome, says which criteria hold and, for each
+# one that doesn't, exactly what is missing.
+#
+# **Why this is a schedule and not a pull-request check**, for the same
+# reason as M4's: it needs Docker (two Postgres servers and MinIO), Node,
+# the Dart SDK, Python, and — because §12.7 runs the M2, M3 and M4 exit
+# tests unchanged before its own — everything those need, Flutter, a
+# built Studio and a Playwright browser included. That is well over an
+# hour and answers "is the milestone done?", a question worth asking
+# once a day, not once a commit. And a check that is red by design on
+# every pull request would teach a team to stop reading CI.
+#
+# It also runs on demand (`workflow_dispatch`), which is what a slice
+# closing one of the seven gaps uses to see its criterion turn green,
+# and on a push to `main` that touches the exit test itself.
+name: M5 exit test
+
+on:
+  schedule:
+    # 04:40 UTC: after M4's 03:20 run has finished, so the two never
+    # share a night's runner pool at once.
+    - cron: "40 4 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "platform/internal/systemtest/m5/**"
+      - ".github/workflows/system-m5.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  system-m5:
+    name: M5 exit test
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: platform/go.mod
+          cache-dependency-path: |
+            platform/go.sum
+            apps/api/go.sum
+
+      # §12.4 asks runtimes/testdata/gen/generate.py — the fourth
+      # implementation — for the expected cohorts under the manifest's
+      # salt; it imports the same modules its --check job pins.
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - run: pip install jsonschema==4.26.0 cryptography==46.0.3
+
+      # The Dart runtime is §12.4's third; the Flutter SDK is for §12.7's
+      # M4 run, whose §6.4 budgets build against it. Pinned to the
+      # versions the runtimes-dart and runtimes-flutter jobs use.
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+        with:
+          sdk: "3.13.4"
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: "3.47.5"
+          channel: stable
+          cache: true
+      - name: the Linux desktop toolchain the size budget builds against
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+
+      # @klarlabs-studio/glossa (§12.4, §12.6), v0.3's formatter (§12.6), and
+      # Studio with its Playwright browser for §12.7's M4 run.
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "26"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile=false
+      - name: build Studio, @klarlabs-studio/glossa and v0.3's formatter
+        run: |
+          pnpm --filter "@klarlabs-studio/glossa..." build
+          pnpm --filter @glossa/studio build
+          pnpm --filter @felixgeelhaar/glossa-format build
+      - name: install Chromium for Playwright
+        run: pnpm --filter @glossa/studio exec playwright install --with-deps chromium
+      - name: the Dart runtime's packages
+        working-directory: runtimes/dart
+        run: dart pub get
+
+      # The browser M3's and M4's exit tests attach to over CDP
+      # (platform/README.md).
+      - name: find Chrome
+        run: |
+          chrome=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)
+          "$chrome" --version
+          echo "GLOSSA_TEST_CHROME=$chrome" >> "$GITHUB_ENV"
+
+      - name: go vet (system)
+        working-directory: platform
+        run: go vet -tags=system ./internal/systemtest/...
+
+      - name: the seven criteria
+        working-directory: platform
+        run: go test -tags=system -timeout=5400s -count=1 -v ./internal/systemtest/m5/...
+
+      - name: keep the report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: m5-report
+          path: platform/internal/systemtest/m5/REPORT.md
+          if-no-files-found: ignore
+          retention-days: 30

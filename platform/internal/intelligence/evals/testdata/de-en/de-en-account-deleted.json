@@ -1,0 +1,101 @@
+{
+  "id": "de-en-account-deleted",
+  "source_locale": "de",
+  "target_locale": "en",
+  "source": "Dein Konto wurde gelöscht.",
+  "context": {
+    "key": "account.deleted",
+    "description": "Toast after account deletion"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-invoice",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-bill",
+            "text": "bill",
+            "locale": "en",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-account",
+            "text": "account",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "en-us-2",
+      "tone": [
+        "concise",
+        "friendly"
+      ],
+      "rules": [
+        {
+          "id": "r-case",
+          "rule": "Use sentence case",
+          "good": [
+            "Save changes"
+          ],
+          "bad": [
+            "Save Changes"
+          ]
+        }
+      ]
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "account"
+    ]
+  },
+  "references": [
+    "Your account has been deleted."
+  ]
+}

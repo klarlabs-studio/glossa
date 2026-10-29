@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	infra "github.com/felixgeelhaar/glossa/apps/api/internal/infra/aitranslator"
+	infra "go.klarlabs.de/glossa/apps/api/internal/infra/aitranslator"
 
-	domain "github.com/felixgeelhaar/glossa/apps/api/internal/domain/aitranslator"
+	domain "go.klarlabs.de/glossa/apps/api/internal/domain/aitranslator"
 )
 
 func newTranslator(stub *httptest.Server) *infra.Translator {

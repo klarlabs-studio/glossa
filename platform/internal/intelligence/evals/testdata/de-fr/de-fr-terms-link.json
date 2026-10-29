@@ -1,0 +1,124 @@
+{
+  "id": "de-fr-terms-link",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Mit der Anmeldung akzeptieren Sie die {#link}AGB{/link}.",
+  "context": {
+    "key": "auth.terms",
+    "description": "Small print under the sign-up button"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-facture",
+            "text": "facture",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-espace",
+            "text": "espace de travail",
+            "locale": "fr",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-fr",
+            "text": "workspace",
+            "locale": "fr",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-compte",
+            "text": "compte",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-datei",
+            "text": "Datei",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-fichier",
+            "text": "fichier",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "fr-formal-2",
+      "formality": "formal",
+      "pronoun": "vous",
+      "punctuation": {
+        "spacing": "a space before ! ? : and ;"
+      }
+    }
+  },
+  "expect": {
+    "formality": {
+      "must_include_any": [
+        "vous",
+        "votre",
+        "vos",
+        "Vous",
+        "Votre",
+        "Veuillez"
+      ],
+      "must_not_include": [
+        "tu",
+        "te",
+        "ton",
+        "ta",
+        "tes",
+        "toi"
+      ]
+    }
+  },
+  "references": [
+    "En vous inscrivant, vous acceptez les {#link}CGU{/link}.",
+    "En vous inscrivant, vous acceptez les {#link}CGV{/link}."
+  ]
+}

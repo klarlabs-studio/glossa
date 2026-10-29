@@ -1,0 +1,83 @@
+{
+  "id": "en-pl-files-categories-still-missing",
+  "description": "The model keeps English one/other through both repairs; the suggestion is kept but forced to review_required with a low score naming few and many.",
+  "source_locale": "en",
+  "target_locale": "pl",
+  "source": ".input {$count :number}\n.match $count\none {{{$count} file selected}}\n* {{{$count} files selected}}",
+  "context": {
+    "key": "files.selected",
+    "description": "Selection summary in the file picker"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-obszar",
+            "text": "obszar roboczy",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-file-en",
+            "text": "file",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-plik",
+            "text": "plik",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-comment",
+        "definition": "A remark on a document",
+        "terms": [
+          {
+            "id": "t-comment-en",
+            "text": "comment",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-komentarz",
+            "text": "komentarz",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "pl-1",
+      "formality": "informal",
+      "pronoun": "ty"
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "plik"
+    ],
+    "action": "review_required"
+  },
+  "references": [
+    ".input {$count :number}\n.match $count\none {{Wybrano {$count} plik}}\nfew {{Wybrano {$count} pliki}}\nmany {{Wybrano {$count} plików}}\n* {{Wybrano {$count} pliku}}"
+  ]
+}

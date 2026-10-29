@@ -1,0 +1,108 @@
+{
+  "id": "de-en-messages-tm-fuzzy",
+  "source_locale": "de",
+  "target_locale": "en",
+  "source": "Du hast {$count} neue Nachrichten.",
+  "context": {
+    "key": "inbox.new",
+    "description": "Inbox header"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-invoice",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-bill",
+            "text": "bill",
+            "locale": "en",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-account",
+            "text": "account",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "en-us-2",
+      "tone": [
+        "concise",
+        "friendly"
+      ],
+      "rules": [
+        {
+          "id": "r-case",
+          "rule": "Use sentence case",
+          "good": [
+            "Save changes"
+          ],
+          "bad": [
+            "Save Changes"
+          ]
+        }
+      ]
+    },
+    "tm": [
+      {
+        "id": "tm-notif",
+        "source": "Du hast {$n} neue Benachrichtigungen.",
+        "target": "You have {$n} new notifications.",
+        "pair": {
+          "source": "de",
+          "target": "en"
+        }
+      }
+    ]
+  },
+  "expect": {},
+  "references": [
+    "You have {$count} new messages."
+  ]
+}

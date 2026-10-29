@@ -1,0 +1,49 @@
+{{- if and .Values.postgres.enabled .Values.postgres.bootstrap.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "postgres-test") -}}
+{{- $v := .Values.postgres -}}
+{{- if .Values.networkPolicy.enabled }}
+# `helm test`: out to DNS and Postgres only.
+{{ include "gp.np.hookPolicy" (dict "root" $ "component" "postgres-test" "hook" "test" "egress" (include "gp.np.postgresEgress" .)) }}
+---
+{{- end }}
+# `helm test <release>`: glossa_app connects and can SET ROLE neither to
+# the superuser nor to any other superuser, BYPASSRLS or CREATEROLE role
+# (files/postgres-test.sh). A failed Pod stays for `kubectl logs`.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "postgres-test") | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "0"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+  securityContext:
+    {{- include "gp.podSecurityContext" (include "gp.postgres.uid" . | int) | nindent 4 }}
+  {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 2 }}{{ end }}
+  containers:
+    - name: test
+      image: {{ include "gp.externalImage" (dict "image" $v.image) }}
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      command: ["/bin/bash", "-c"]
+      args:
+        - {{ .Files.Get "files/postgres-test.sh" | quote }}
+      securityContext:
+        {{- include "gp.containerSecurityContext" . | nindent 8 }}
+      env:
+        {{- include "gp.postgres.libpqEnv" (dict "root" $ "user" "glossa_app" "secret" (include "gp.postgres.appSecret" .) "key" $v.app.passwordKey) | nindent 8 }}
+      resources:
+        {{- toYaml $v.bootstrap.resources | nindent 8 }}
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 16Mi
+{{- end }}

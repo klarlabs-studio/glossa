@@ -1,0 +1,52 @@
+{
+  "name": "@klarlabs-studio/glossa-vue",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa for Vue 3.5+: a plugin, reactive useGlossa()/useMessages() composables and <GlossaText>, SSR- and hydration-safe, on @klarlabs-studio/glossa-runtime.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa-elements": "workspace:^",
+    "@klarlabs-studio/glossa-runtime": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "jsdom": "25.0.1",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0",
+    "vue": "3.5.43"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/vue"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/vue#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

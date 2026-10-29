@@ -1,0 +1,27 @@
+{
+  "schema": "glossa.finding/v1",
+  "fingerprint": "f_7c1a3e5b9d024f68",
+  "layer": "length",
+  "code": "expansion-excessive",
+  "severity": "warning",
+  "locus": {
+    "message": "0192f5a1-2b3c-7d4e-8f90-1a2b3c4d5e6f",
+    "key": "checkout.pay",
+    "locale": "fr",
+    "revision": "0192f5b0-3c4d-7e5f-8091-2b3c4d5e6f70",
+    "namespace": "checkout",
+    "file": "src/checkout/PaymentFooter.vue",
+    "line": 42,
+    "column": 14,
+    "route": "/checkout/payment",
+    "component": "PaymentFooter",
+    "capture": "0192f5c2-4d5e-7f60-8192-3c4d5e6f7081",
+    "region": "r_18",
+    "span": { "side": "target", "start": 12, "end": 19 }
+  },
+  "message": "French is 74 % longer than the German source; the button is 148 px wide.",
+  "subject": "Payer maintenant tout de suite",
+  "evidence": { "ratio": 1.74, "max_length": null, "region_width_px": 148 },
+  "fix": { "kind": "shorten", "to": 28, "hint": "Payer maintenant" },
+  "source_revision": 9
+}

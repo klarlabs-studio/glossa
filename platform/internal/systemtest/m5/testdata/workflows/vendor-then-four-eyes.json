@@ -1,0 +1,35 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "vendor-then-four-eyes",
+  "subject": "translation",
+  "chart": {
+    "id": "vendor-then-four-eyes",
+    "initial": "translating",
+    "states": {
+      "translating": {
+        "id": "translating",
+        "type": "atomic",
+        "entry": ["assign_vendor"],
+        "transitions": [{ "event": "assignment.completed", "target": "reviewing" }]
+      },
+      "reviewing": {
+        "id": "reviewing",
+        "type": "atomic",
+        "entry": ["ask_two_reviewers"],
+        "transitions": [
+          { "event": "approval.granted", "target": "done", "guard": "two_approvals", "actions": ["approve"] },
+          { "event": "approval.denied", "target": "translating" }
+        ]
+      },
+      "done": { "id": "done", "type": "final" }
+    }
+  },
+  "guards": {
+    "two_approvals": { "use": "approvals_at_least", "n": 2, "distinct_from_author": true }
+  },
+  "actions": {
+    "assign_vendor": { "use": "assign", "to": { "vendor": "lingua-gmbh" }, "due": "P3D" },
+    "ask_two_reviewers": { "use": "request_approval", "n": 2, "from": { "role": "reviewer" } },
+    "approve": { "use": "set_review_state", "state": "approved" }
+  }
+}

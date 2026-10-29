@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translation"
 )
 
 // ErrInvalidIDs is the belt-and-suspenders guard against nil-UUID

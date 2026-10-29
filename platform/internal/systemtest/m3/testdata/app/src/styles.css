@@ -1,0 +1,8 @@
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 Arial, Helvetica, sans-serif; color: #1b1b1b; background: #fff; }
+main { padding: 16px; max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 24px; margin: 0 0 12px; }
+nav, footer { padding: 12px 16px; background: #f4efe7; }
+.line { margin: 0 0 10px; font-size: 15px; }
+.field { width: 220px; padding: 4px; font: inherit; }
+.island { padding: 12px; border: 1px solid #d8cfc0; margin-top: 12px; }

@@ -1,0 +1,191 @@
+{
+  "description": "Explicit edges, the '*' chain, truncation, and the source locale",
+  "manifest": {
+    "schema": "glossa.manifest/v1",
+    "project": "prj_fixture",
+    "environment": "production",
+    "release": {
+      "id": "rel_base",
+      "version": 1,
+      "createdAt": "2026-09-01T08:00:00Z"
+    },
+    "sourceLocale": "de",
+    "locales": [
+      {
+        "code": "de",
+        "direction": "ltr"
+      },
+      {
+        "code": "de-AT",
+        "direction": "ltr"
+      },
+      {
+        "code": "en",
+        "direction": "ltr"
+      },
+      {
+        "code": "zh-Hant",
+        "direction": "ltr"
+      },
+      {
+        "code": "ar",
+        "direction": "rtl"
+      },
+      {
+        "code": "fr-CA",
+        "direction": "ltr"
+      },
+      {
+        "code": "fr",
+        "direction": "ltr"
+      }
+    ],
+    "fallback": {
+      "de-AT": [
+        "de"
+      ],
+      "*": [
+        "en"
+      ]
+    },
+    "artifacts": {
+      "de": {
+        "default": {
+          "sha256": "6c139d50da960438817db7efcadb788679ff0d14c6a16705140c9658881fe3df",
+          "size": 1029
+        }
+      },
+      "de-AT": {
+        "default": {
+          "sha256": "a00dc9dde669279aadf2db534993aff72020a398b6d1748b689f1e4e7a24c00d",
+          "size": 160
+        }
+      },
+      "en": {
+        "default": {
+          "sha256": "d5f70fb8c4273b5bf8ce377098c66e29ddd3439e15c9b6ec63c6e565ccce203b",
+          "size": 780
+        }
+      },
+      "zh-Hant": {
+        "default": {
+          "sha256": "c4176ec1a7056e16cae2d6c5d3101447b09fa217c79a9fa359de5e0c97d8a9ee",
+          "size": 159
+        }
+      },
+      "ar": {
+        "default": {
+          "sha256": "a891fc8617642cf4ccb136f60ba862fea9b40a44053620133480763e48d04889",
+          "size": 220
+        }
+      },
+      "fr": {
+        "default": {
+          "sha256": "ab341378ee9a3bb065f3dd107280fc5507531a337e3eaefd59487211a4e01da7",
+          "size": 156
+        }
+      },
+      "fr-CA": {
+        "default": {
+          "sha256": "4ad87a9ffa159917b879a499f35c77421c536811adacb29fd10bd369a015bf2c",
+          "size": 84
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "6c139d50da960438817db7efcadb788679ff0d14c6a16705140c9658881fe3df": "{\"locale\":\"de\",\"messages\":{\"cart.checkout\":{\"declarations\":[],\"pattern\":[\"Zur Kasse\"],\"type\":\"message\"},\"cart.items\":{\"declarations\":[{\"name\":\"n\",\"type\":\"input\",\"value\":{\"arg\":{\"name\":\"n\",\"type\":\"variable\"},\"function\":{\"name\":\"number\",\"type\":\"function\"},\"type\":\"expression\"}}],\"selectors\":[{\"name\":\"n\",\"type\":\"variable\"}],\"type\":\"select\",\"variants\":[{\"keys\":[{\"type\":\"literal\",\"value\":\"one\"}],\"value\":[{\"arg\":{\"name\":\"n\",\"type\":\"variable\"},\"type\":\"expression\"},\" Artikel\"]},{\"keys\":[{\"type\":\"*\"}],\"value\":[{\"arg\":{\"name\":\"n\",\"type\":\"variable\"},\"type\":\"expression\"},\" Artikel\"]}]},\"cart.total\":{\"declarations\":[],\"pattern\":[{\"arg\":{\"name\":\"amount\",\"type\":\"variable\"},\"function\":{\"name\":\"number\",\"type\":\"function\"},\"type\":\"expression\"},\" Artikel\"],\"type\":\"message\"},\"greeting\":{\"declarations\":[],\"pattern\":[\"Hallo \",{\"arg\":{\"name\":\"name\",\"type\":\"variable\"},\"type\":\"expression\"},\"!\"],\"type\":\"message\"},\"only.de\":{\"declarations\":[],\"pattern\":[\"Nur auf Deutsch\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "a00dc9dde669279aadf2db534993aff72020a398b6d1748b689f1e4e7a24c00d": "{\"locale\":\"de-AT\",\"messages\":{\"cart.checkout\":{\"declarations\":[],\"pattern\":[\"Zur Kassa\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "d5f70fb8c4273b5bf8ce377098c66e29ddd3439e15c9b6ec63c6e565ccce203b": "{\"locale\":\"en\",\"messages\":{\"cart.checkout\":{\"declarations\":[],\"pattern\":[\"Checkout\"],\"type\":\"message\"},\"cart.items\":{\"declarations\":[{\"name\":\"n\",\"type\":\"input\",\"value\":{\"arg\":{\"name\":\"n\",\"type\":\"variable\"},\"function\":{\"name\":\"number\",\"type\":\"function\"},\"type\":\"expression\"}}],\"selectors\":[{\"name\":\"n\",\"type\":\"variable\"}],\"type\":\"select\",\"variants\":[{\"keys\":[{\"type\":\"literal\",\"value\":\"one\"}],\"value\":[\"one item\"]},{\"keys\":[{\"type\":\"*\"}],\"value\":[{\"arg\":{\"name\":\"n\",\"type\":\"variable\"},\"type\":\"expression\"},\" items\"]}]},\"greeting\":{\"declarations\":[],\"pattern\":[\"Hello \",{\"arg\":{\"name\":\"name\",\"type\":\"variable\"},\"type\":\"expression\"},\"!\"],\"type\":\"message\"},\"only.en\":{\"declarations\":[],\"pattern\":[\"English only\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "c4176ec1a7056e16cae2d6c5d3101447b09fa217c79a9fa359de5e0c97d8a9ee": "{\"locale\":\"zh-Hant\",\"messages\":{\"cart.checkout\":{\"declarations\":[],\"pattern\":[\"結帳\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "a891fc8617642cf4ccb136f60ba862fea9b40a44053620133480763e48d04889": "{\"locale\":\"ar\",\"messages\":{\"greeting\":{\"declarations\":[],\"pattern\":[\"مرحبا \",{\"arg\":{\"name\":\"name\",\"type\":\"variable\"},\"type\":\"expression\"},\"!\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "ab341378ee9a3bb065f3dd107280fc5507531a337e3eaefd59487211a4e01da7": "{\"locale\":\"fr\",\"messages\":{\"cart.checkout\":{\"declarations\":[],\"pattern\":[\"Paiement\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "4ad87a9ffa159917b879a499f35c77421c536811adacb29fd10bd369a015bf2c": "{\"locale\":\"fr-CA\",\"messages\":{},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+  },
+  "cases": [
+    {
+      "requested": [
+        "de-AT"
+      ],
+      "id": "cart.checkout",
+      "values": {},
+      "bidiIsolation": "none",
+      "exp": "Zur Kassa",
+      "expLocale": "de-AT",
+      "expChain": [
+        "de-AT",
+        "de",
+        "en"
+      ],
+      "expResolvedFrom": "de-AT"
+    },
+    {
+      "requested": [
+        "de-AT"
+      ],
+      "id": "only.de",
+      "values": {},
+      "bidiIsolation": "none",
+      "exp": "Nur auf Deutsch",
+      "expLocale": "de-AT",
+      "expChain": [
+        "de-AT",
+        "de",
+        "en"
+      ],
+      "expResolvedFrom": "de"
+    },
+    {
+      "requested": [
+        "de-AT"
+      ],
+      "id": "only.en",
+      "values": {},
+      "bidiIsolation": "none",
+      "exp": "English only",
+      "expLocale": "de-AT",
+      "expChain": [
+        "de-AT",
+        "de",
+        "en"
+      ],
+      "expResolvedFrom": "en"
+    },
+    {
+      "requested": [
+        "fr-CA"
+      ],
+      "id": "only.de",
+      "values": {},
+      "bidiIsolation": "none",
+      "exp": "Nur auf Deutsch",
+      "expLocale": "fr-CA",
+      "expChain": [
+        "fr-CA",
+        "fr",
+        "en",
+        "de"
+      ],
+      "expResolvedFrom": "de"
+    },
+    {
+      "requested": [
+        "ar"
+      ],
+      "id": "greeting",
+      "values": {
+        "name": "Lina"
+      },
+      "bidiIsolation": "none",
+      "exp": "مرحبا Lina!",
+      "expLocale": "ar",
+      "expChain": [
+        "ar",
+        "en",
+        "de"
+      ],
+      "expResolvedFrom": "ar",
+      "expDirection": "rtl"
+    }
+  ]
+}

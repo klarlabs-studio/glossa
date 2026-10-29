@@ -1,0 +1,26 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "invalid-unreachable-state",
+  "subject": "translation",
+  "chart": {
+    "id": "invalid-unreachable-state",
+    "initial": "reviewing",
+    "states": {
+      "reviewing": {
+        "id": "reviewing",
+        "type": "atomic",
+        "transitions": [{ "event": "approval.granted", "target": "done", "actions": ["approve"] }]
+      },
+      "orphaned": {
+        "id": "orphaned",
+        "type": "atomic",
+        "transitions": [{ "event": "approval.granted", "target": "done" }]
+      },
+      "done": { "id": "done", "type": "final" }
+    }
+  },
+  "guards": {},
+  "actions": {
+    "approve": { "use": "set_review_state", "state": "approved" }
+  }
+}

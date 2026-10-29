@@ -7,11 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	apikeyapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/apikey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/apikey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	apikeyapp "go.klarlabs.de/glossa/apps/api/internal/app/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 type apiKeyRow struct {

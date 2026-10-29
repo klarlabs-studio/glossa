@@ -1,0 +1,41 @@
+{
+  "id": "en-ja-saved-grammar",
+  "description": "A verb form that is not Japanese.",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Your changes were saved.",
+  "translation": "変更が保存されるでした。",
+  "context": {
+    "key": "settings.saved",
+    "namespace": "settings",
+    "description": "Toast after saving"
+  },
+  "style": {
+    "version": "ja@1",
+    "formality": "formal",
+    "tone": [
+      "polite"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Use the polite です・ます form",
+        "rationale": "house style",
+        "good": [
+          "もう一度お試しください。"
+        ],
+        "bad": [
+          "もう一度やれ。"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "grammar-suspected"
+    ],
+    "quotes": [
+      "保存されるでした"
+    ]
+  }
+}

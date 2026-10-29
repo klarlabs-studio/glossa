@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte(" <!DOCTYPE>\n<tmx a=\"000\">\n<a aaaaaa=\"000\"aaaaaaaaaaaaaaaaaaa=\"00\" aaaaaaa=\"00000000\" a-aaaaa!")

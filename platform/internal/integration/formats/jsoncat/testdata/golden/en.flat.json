@@ -1,0 +1,6 @@
+{
+  "app.name": "Glossa",
+  "checkout.greeting": "Hi {name}, it''s <b>'{}'</b> & more",
+  "checkout.items": "{count, plural, one {# item} other {# items}}",
+  "checkout.title": "Checkout"
+}

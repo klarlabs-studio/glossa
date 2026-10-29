@@ -1,0 +1,238 @@
+{{- if .Values.ingress.enabled }}
+{{- $ing := .Values.ingress -}}
+{{- $fullname := include "gp.fullname" . -}}
+{{- $server := include "gp.componentName" (dict "root" $ "component" "server") -}}
+{{- $edge := include "gp.componentName" (dict "root" $ "component" "edge") -}}
+{{- $studio := include "gp.componentName" (dict "root" $ "component" "studio") -}}
+{{- $site := include "gp.componentName" (dict "root" $ "component" "site") -}}
+{{- $hosts := dict "studio" (include "gp.host.studio" .) "api" (include "gp.host.api" .) "cdn" (include "gp.host.cdn" .) -}}
+{{- $apiSeparate := include "gp.host.apiSeparate" . -}}
+{{- $keys := ternary (list "studio" "api" "cdn") (list "studio" "cdn") (not (empty $apiSeparate)) -}}
+{{- $auditKeysPath := "/.well-known/glossa-audit-keys.json" -}}
+{{- range $key := $keys }}
+{{- $tls := index $ing.tlsSecretNames $key | default (printf "%s-%s-tls" $fullname $key) }}
+{{- if $ing.certManager.enabled }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ printf "%s-%s" $fullname $key }}
+  labels:
+    {{- include "gp.labels" $ | nindent 4 }}
+spec:
+  secretName: {{ $tls }}
+  issuerRef:
+    name: {{ $ing.certManager.issuerName }}
+    kind: {{ $ing.certManager.issuerKind }}
+  dnsNames:
+    - {{ index $hosts $key }}
+{{- end }}
+{{- end }}
+{{- if $ing.hsts.enabled }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $fullname }}-hsts
+  labels:
+    {{- include "gp.labels" . | nindent 4 }}
+spec:
+  headers:
+    stsSeconds: {{ $ing.hsts.maxAge | int64 }}
+    stsIncludeSubdomains: {{ $ing.hsts.includeSubdomains }}
+    stsPreload: {{ $ing.hsts.preload }}
+{{- end }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $fullname }}-compress
+  labels:
+    {{- include "gp.labels" . | nindent 4 }}
+spec:
+  compress: {}
+{{- if $ing.httpsRedirect }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $fullname }}-https-redirect
+  labels:
+    {{- include "gp.labels" . | nindent 4 }}
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# http → https for every host (once each). ACME HTTP-01 challenges stay on http:
+# cert-manager's solver routes them with a more specific rule.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullname }}-http-redirect
+  labels:
+    {{- include "gp.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - {{ $ing.entryPoints.web }}
+  routes:
+    - match: ({{ range $i, $k := $keys }}{{ if $i }} || {{ end }}Host(`{{ index $hosts $k }}`){{ end }}) && !PathPrefix(`/.well-known/acme-challenge/`)
+      kind: Rule
+      middlewares:
+        - name: {{ $fullname }}-https-redirect
+      services:
+        # Never reached: the middleware answers first.
+        - name: {{ $studio }}
+          port: 8080
+{{- end }}
+{{- /* Middlewares per host: HSTS, compression, then the operator's own. */}}
+{{- $mw := dict }}
+{{- range $key := $keys }}
+{{- $list := list }}
+{{- if $ing.hsts.enabled }}{{ $list = append $list (dict "name" (printf "%s-hsts" $fullname)) }}{{ end }}
+{{- if index $ing.compress $key }}{{ $list = append $list (dict "name" (printf "%s-compress" $fullname)) }}{{ end }}
+{{- $list = concat $list (index $ing.extraMiddlewares $key) }}
+{{- $_ := set $mw $key $list }}
+{{- end }}
+---
+# Studio, with /v1 on the same origin routed to glossa-server so the
+# session cookie stays first-party (studio/README.md).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $studio }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "studio") | nindent 4 }}
+spec:
+  entryPoints:
+    - {{ $ing.entryPoints.websecure }}
+  routes:
+    - match: Host(`{{ $hosts.studio }}`) && PathPrefix(`/v1`)
+      kind: Rule
+      priority: 100
+      {{- with $mw.studio }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    - match: Host(`{{ $hosts.studio }}`) && Path(`{{ $auditKeysPath }}`)
+      kind: Rule
+      priority: 100
+      {{- with $mw.studio }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    {{- if and $.Values.server.mcp.enabled (empty $apiSeparate) }}
+    # MCP (RFC 0005 §7) lives on the API host; here that is the Studio host.
+    - match: Host(`{{ $hosts.studio }}`) && PathPrefix(`/mcp`)
+      kind: Rule
+      priority: 100
+      {{- with $mw.studio }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    {{- end }}
+    {{- if $.Values.site.enabled }}
+    # The landing page: exactly "/" and its assets. Everything else on the
+    # host (Studio's /app, /auth/*, /t/*, /device, ...) stays with Studio.
+    - match: Host(`{{ $hosts.studio }}`) && (Path(`/`) || PathPrefix(`/_astro/`) || Path(`/favicon.svg`) || Path(`/og.png`))
+      kind: Rule
+      priority: 50
+      {{- with $mw.studio }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $site }}
+          port: 8080
+    {{- end }}
+    - match: Host(`{{ $hosts.studio }}`)
+      kind: Rule
+      priority: 10
+      {{- with $mw.studio }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $studio }}
+          port: 8080
+  tls:
+    secretName: {{ $ing.tlsSecretNames.studio | default (printf "%s-studio-tls" $fullname) }}
+{{- if $apiSeparate }}
+---
+# The public API on its own host. Only /v1 and the published audit keys:
+# /livez, /readyz and /metrics stay in-cluster.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $server }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 4 }}
+spec:
+  entryPoints:
+    - {{ $ing.entryPoints.websecure }}
+  routes:
+    - match: Host(`{{ $hosts.api }}`) && PathPrefix(`/v1`)
+      kind: Rule
+      {{- with $mw.api }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    - match: Host(`{{ $hosts.api }}`) && Path(`{{ $auditKeysPath }}`)
+      kind: Rule
+      {{- with $mw.api }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    {{- if $.Values.server.mcp.enabled }}
+    - match: Host(`{{ $hosts.api }}`) && PathPrefix(`/mcp`)
+      kind: Rule
+      {{- with $mw.api }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $server }}
+          port: 8080
+    {{- end }}
+  tls:
+    secretName: {{ $ing.tlsSecretNames.api | default (printf "%s-api-tls" $fullname) }}
+{{- end }}
+---
+# Delivery. Only /v1 (manifests and artifacts).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $edge }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "edge") | nindent 4 }}
+spec:
+  entryPoints:
+    - {{ $ing.entryPoints.websecure }}
+  routes:
+    - match: Host(`{{ $hosts.cdn }}`) && PathPrefix(`/v1`)
+      kind: Rule
+      {{- with $mw.cdn }}
+      middlewares:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      services:
+        - name: {{ $edge }}
+          port: 8081
+  tls:
+    secretName: {{ $ing.tlsSecretNames.cdn | default (printf "%s-cdn-tls" $fullname) }}
+{{- end }}

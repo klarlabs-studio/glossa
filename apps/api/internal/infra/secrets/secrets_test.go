@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/infra/secrets"
+	"go.klarlabs.de/glossa/apps/api/internal/infra/secrets"
 )
 
 const testKey = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"

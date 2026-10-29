@@ -6,6 +6,42 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · SemVer.
 
 ## [Unreleased]
 
+Glossa is becoming localization infrastructure: see
+[`docs/product-intent.md`](docs/product-intent.md) and
+[RFC 0001](docs/rfcs/0001-platform-foundation.md).
+
+### Added
+
+- **Full BCP 47 locale identity** (RFC 0001 D4). Locale codes are parsed,
+  validated and canonicalized as BCP 47 tags: `zh-Hant-TW`, `sr-Latn`,
+  `es-419` and `ca-ES-valencia` are accepted; `en_us` becomes `en-US`,
+  `iw` becomes `he`, `en-Latn-US` becomes `en-US`. Extensions and private
+  use are rejected. Locale responses gain `language`, `script`, `region`
+  and `direction`. Migration `0006` widens the code columns to 35
+  characters.
+- **Right-to-left editing in the admin.** The translation field and the
+  preview take the locale's `lang` and `dir`.
+
+### Changed
+
+- **Locale URL segments match by canonical form.** `/locales/de-de/messages`
+  and `/locales/de_DE/messages` resolve to `de-DE`, and bundle responses,
+  SSE events and audit metadata carry the canonical code. Before, a
+  spelling that differed from the stored code returned 404.
+- **Invalid project default locales are rejected** with 422. Before, the
+  project was created and the source-locale row was silently skipped.
+- **Translator locale scopes are validated and canonicalized** on create
+  and update.
+
+### Fixed
+
+- **`<glossa-*>` elements inside Vue templates always showed their
+  fallback.** Vue reserves `key` for its own list reconciliation and never
+  renders it as a DOM attribute, so `<glossa-text key="…">` in a `.vue`
+  file reached the element with no message ID and rendered the slot content
+  in every locale. The elements now also accept `message="…"`; use it in
+  Vue templates. `key` keeps working in plain HTML and `.astro` files.
+
 ## 0.3.1 — 2026-08-12
 
 ### Fixed

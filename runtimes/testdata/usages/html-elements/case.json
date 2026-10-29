@@ -1,0 +1,5 @@
+{
+  "description": "Custom elements in plain HTML: <glossa-text|rich|plural|select> with key or message, single or double quotes, attributes across lines. `key` wins over `message`; `id` is the DOM id, never a message. No component, no route.",
+  "implementations": ["unplugin", "extract"],
+  "keys": []
+}

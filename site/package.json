@@ -1,0 +1,33 @@
+{
+  "name": "@glossa/site",
+  "version": "0.0.0",
+  "private": true,
+  "description": "glossa.klarlabs.de: the Glossa landing page (static Astro; Studio serves every other path).",
+  "type": "module",
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "site"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "node ../studio/scripts/klarlabs-ui.mjs && astro dev",
+    "build": "node ../studio/scripts/klarlabs-ui.mjs && astro-check && astro build",
+    "preview": "astro preview",
+    "lint": "astro-check",
+    "test": "node ../studio/scripts/klarlabs-ui.mjs && astro build && node --test test/dist.test.mjs"
+  },
+  "dependencies": {
+    "@klarlabs-studio/ui": "link:../studio/.klarlabs-ui",
+    "astro": "7.3.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "22.20.4",
+    "typescript": "5.9.3"
+  }
+}

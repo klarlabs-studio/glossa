@@ -1,0 +1,32 @@
+{
+  "en-ja-welcome-clean": {
+    "review": [
+      "{\"findings\": []}"
+    ]
+  },
+  "en-ja-cancel-meaning": {
+    "review": [
+      "{\"findings\": [{\"code\": \"meaning-divergence\", \"side\": \"target\", \"quote\": \"サブスクリプション\", \"explanation\": \"The translation does not match the source.\", \"suggestion\": \"\"}]}"
+    ]
+  },
+  "en-ja-retry-tone": {
+    "review": [
+      "{\"findings\": [{\"code\": \"tone-mismatch\", \"side\": \"target\", \"quote\": \"やれ\", \"explanation\": \"The blunt imperative contradicts the guide's polite です・ます form.\", \"suggestion\": \"お試しください\"}]}"
+    ]
+  },
+  "en-ja-saved-grammar": {
+    "review": [
+      "{\"findings\": [{\"code\": \"grammar-suspected\", \"side\": \"target\", \"quote\": \"保存されるでした\", \"explanation\": \"The present form cannot take でした; the past polite is 保存されました.\", \"suggestion\": \"保存されました\"}]}"
+    ]
+  },
+  "en-ja-signin-phrasing": {
+    "review": [
+      "{\"findings\": [{\"code\": \"inconsistent-phrasing\", \"side\": \"target\", \"quote\": \"ログオン\", \"explanation\": \"The rest of the product says ログイン for this action.\", \"suggestion\": \"ログイン\"}]}"
+    ]
+  },
+  "en-ja-settings-clean": {
+    "review": [
+      "The translation looks correct to me — 設定 is the standard rendering of Settings in Japanese user interfaces."
+    ]
+  }
+}

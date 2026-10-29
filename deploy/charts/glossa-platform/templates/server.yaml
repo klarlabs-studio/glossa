@@ -1,0 +1,299 @@
+{{- $name := include "gp.componentName" (dict "root" $ "component" "server") -}}
+{{- $v := .Values.server -}}
+{{- $gh := .Values.github -}}
+{{- $mailDriver := include "gp.mailDriver" . -}}
+{{- if and (eq $mailDriver "smtp") (not .Values.mail.smtp.addr) }}
+{{- fail "mail.smtp.addr is required when mail.driver is smtp" }}
+{{- end }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "server") | nindent 4 }}
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ $v.replicas }}
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "server") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: {{ $v.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- include "gp.podSecurityContext" 65532 | nindent 8 }}
+      topologySpreadConstraints:
+        {{- include "gp.topologySpread" (dict "root" $ "values" $v "component" "server") | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: server
+          image: {{ include "gp.image" (dict "root" $ "component" "server" "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: GLOSSA_HTTP_ADDR
+              value: ":8080"
+            - name: GLOSSA_MIGRATE
+              value: "off"
+            - name: GLOSSA_LOG_LEVEL
+              value: {{ $v.logLevel | quote }}
+            - name: GLOSSA_SHUTDOWN_TIMEOUT
+              value: {{ $v.shutdownTimeout | quote }}
+            - name: GLOSSA_OUTBOX_ENABLED
+              value: {{ $v.outbox.enabled | quote }}
+            - name: GLOSSA_AI_WORKERS_ENABLED
+              value: {{ $v.ai.workersEnabled | quote }}
+            - name: GLOSSA_AI_WORKERS
+              value: {{ $v.ai.workers | quote }}
+            - name: GLOSSA_AI_PROVIDER_CONCURRENCY
+              value: {{ $v.ai.providerConcurrency | quote }}
+            - name: GLOSSA_INTEGRATION_WORKERS_ENABLED
+              value: {{ $v.integration.workersEnabled | quote }}
+            - name: GLOSSA_INTEGRATION_WORKERS
+              value: {{ $v.integration.workers | quote }}
+            - name: GLOSSA_INTEGRATION_MAX_UPLOAD_BYTES
+              value: {{ $v.integration.maxUploadBytes | int64 | quote }}
+            - name: GLOSSA_INTEGRATION_RETENTION
+              value: {{ $v.integration.retention | quote }}
+            - name: GLOSSA_PURGE_ENABLED
+              value: {{ $v.purge.enabled | quote }}
+            - name: GLOSSA_PURGE_INTERVAL
+              value: {{ $v.purge.interval | quote }}
+            - name: GLOSSA_PURGE_TIMEOUT
+              value: {{ $v.purge.timeout | quote }}
+            - name: GLOSSA_PURGE_LEASE
+              value: {{ $v.purge.lease | quote }}
+            - name: GLOSSA_PURGE_POLL_INTERVAL
+              value: {{ $v.purge.pollInterval | quote }}
+            - name: GLOSSA_PURGE_JITTER
+              value: {{ $v.purge.jitter | quote }}
+            - name: GLOSSA_PURGE_BATCH_SIZE
+              value: {{ $v.purge.batchSize | quote }}
+            - name: GLOSSA_WORKFLOW_INSTANCE_RETENTION
+              value: {{ $v.workflow.instanceRetention | quote }}
+            - name: GLOSSA_CONTEXT_STORAGE_QUOTA_BYTES
+              value: {{ $v.context.storageQuotaBytes | int64 | quote }}
+            {{- /* MCP (RFC 0005 §7) is off unless a deployment asks for
+                   it; the other three are inert while it is. */}}
+            - name: GLOSSA_MCP_ENABLED
+              value: {{ $v.mcp.enabled | quote }}
+            - name: GLOSSA_MCP_SESSION_TIMEOUT
+              value: {{ $v.mcp.sessionTimeout | quote }}
+            - name: GLOSSA_MCP_RATE
+              value: {{ $v.mcp.rate | quote }}
+            - name: GLOSSA_MCP_BURST
+              value: {{ $v.mcp.burst | quote }}
+            - name: GLOSSA_BRANCH_PUBLISHER_ENABLED
+              value: {{ $v.branches.publisherEnabled | quote }}
+            - name: GLOSSA_BRANCH_PUBLISH_INTERVAL
+              value: {{ $v.branches.publishInterval | quote }}
+            {{- /* The inbox worker's tuning is read whether or not an App
+                   is configured; without one nothing ever reaches it. */}}
+            - name: GLOSSA_GITHUB_INBOX_ENABLED
+              value: {{ $v.github.inbox.enabled | quote }}
+            - name: GLOSSA_GITHUB_INBOX_WORKERS
+              value: {{ $v.github.inbox.workers | quote }}
+            - name: GLOSSA_GITHUB_INBOX_POLL_INTERVAL
+              value: {{ $v.github.inbox.pollInterval | quote }}
+            - name: GLOSSA_GITHUB_INBOX_TIMEOUT
+              value: {{ $v.github.inbox.timeout | quote }}
+            - name: GLOSSA_GITHUB_INBOX_LEASE
+              value: {{ $v.github.inbox.lease | quote }}
+            - name: GLOSSA_GITHUB_INBOX_DEPTH_INTERVAL
+              value: {{ $v.github.inbox.depthInterval | quote }}
+            {{- /* The PR check worker, likewise: its tuning is read whether
+                   or not an App is configured. */}}
+            - name: GLOSSA_GITHUB_CHECKS_ENABLED
+              value: {{ $v.github.checks.enabled | quote }}
+            - name: GLOSSA_GITHUB_CHECK_WORKERS
+              value: {{ $v.github.checks.workers | quote }}
+            - name: GLOSSA_GITHUB_CHECK_POLL_INTERVAL
+              value: {{ $v.github.checks.pollInterval | quote }}
+            - name: GLOSSA_GITHUB_CHECK_TIMEOUT
+              value: {{ $v.github.checks.timeout | quote }}
+            - name: GLOSSA_GITHUB_CHECK_LEASE
+              value: {{ $v.github.checks.lease | quote }}
+            - name: GLOSSA_GITHUB_CHECK_DEPTH_INTERVAL
+              value: {{ $v.github.checks.depthInterval | quote }}
+            - name: GLOSSA_STUDIO_URL
+              value: {{ include "gp.studioUrl" . | quote }}
+            # Surfaced to clients by GET /v1/meta (Studio's runtime snippets).
+            - name: GLOSSA_EDGE_PUBLIC_URL
+              value: {{ .Values.studio.runtimeConfig.edgeUrl | default (printf "https://%s" (include "gp.host.cdn" .)) | quote }}
+            - name: GLOSSA_SESSION_TTL
+              value: {{ $v.sessionTTL | quote }}
+            - name: GLOSSA_WEBAUTHN_RP_ID
+              value: {{ $v.webauthn.rpId | default (include "gp.host.studio" .) | quote }}
+            - name: GLOSSA_WEBAUTHN_RP_NAME
+              value: {{ $v.webauthn.rpName | quote }}
+            - name: GLOSSA_WEBAUTHN_ORIGINS
+              value: {{ $v.webauthn.origins | default (list (include "gp.studioUrl" .)) | join "," | quote }}
+            {{- /* No mailer configured: no mail variables at all. */}}
+            {{- if $mailDriver }}
+            - name: GLOSSA_MAIL_DRIVER
+              value: {{ $mailDriver | quote }}
+            {{- with .Values.mail.from }}
+            - name: GLOSSA_MAIL_FROM
+              value: {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if eq $mailDriver "smtp" }}
+            - name: GLOSSA_SMTP_ADDR
+              value: {{ .Values.mail.smtp.addr | quote }}
+            {{- with .Values.mail.smtp.secretName }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_SMTP_USERNAME" "secret" . "key" $.Values.mail.smtp.usernameKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_SMTP_PASSWORD" "secret" . "key" $.Values.mail.smtp.passwordKey) | nindent 12 }}
+            {{- end }}
+            {{- end }}
+            {{- with $v.otel.endpoint }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ . | quote }}
+            {{- end }}
+            {{- include "gp.databaseAppEnv" . | nindent 12 }}
+            {{- include "gp.authEnv" . | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_RELEASE_SIGNING_KEYS" "secret" (required "release.signingKeys.secretName is required (Secret with GLOSSA_RELEASE_SIGNING_KEYS)" .Values.release.signingKeys.secretName) "key" .Values.release.signingKeys.secretKey) | nindent 12 }}
+            {{- with .Values.release.retiredKeys }}
+            - name: GLOSSA_RELEASE_RETIRED_KEYS
+              value: {{ . | quote }}
+            {{- end }}
+            {{- if .Values.audit.exports.enabled }}
+            - name: GLOSSA_AUDIT_EXPORTS_ENABLED
+              value: "true"
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_AUDIT_SIGNING_KEY" "secret" (required "audit.signingKey.secretName is required when audit.exports.enabled (Secret with GLOSSA_AUDIT_SIGNING_KEY; not the release key)" .Values.audit.signingKey.secretName) "key" .Values.audit.signingKey.secretKey) | nindent 12 }}
+            {{- else if .Values.audit.signingKey.secretName }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_AUDIT_SIGNING_KEY" "secret" .Values.audit.signingKey.secretName "key" .Values.audit.signingKey.secretKey) | nindent 12 }}
+            {{- end }}
+            {{- with .Values.audit.retiredKeys }}
+            - name: GLOSSA_AUDIT_RETIRED_KEYS
+              value: {{ . | quote }}
+            {{- end }}
+            {{- /* No GitHub App configured: not one GLOSSA_GITHUB_APP_*,
+                   _CLIENT_* or _WEBHOOK_* variable, and no Secret to
+                   create — the endpoints answer github_not_configured
+                   (503). With an App, everything it needs is required
+                   here, so a half-configured chart fails to render
+                   instead of crash-looping the pods (RFC 0004 §6.1). */}}
+            {{- if $gh.appId }}
+            - name: GLOSSA_GITHUB_APP_ID
+              value: {{ $gh.appId | quote }}
+            - name: GLOSSA_GITHUB_APP_SLUG
+              value: {{ required "github.appSlug is required with github.appId (the App's name in its own URL)" $gh.appSlug | quote }}
+            - name: GLOSSA_GITHUB_CLIENT_ID
+              value: {{ required "github.clientId is required with github.appId (the App's OAuth client id)" $gh.clientId | quote }}
+            {{- with $gh.apiUrl }}
+            - name: GLOSSA_GITHUB_API_URL
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with $gh.webUrl }}
+            - name: GLOSSA_GITHUB_WEB_URL
+              value: {{ . | quote }}
+            {{- end }}
+            {{- /* CI's OIDC exchange (RFC 0004 §6.3). github.com needs
+                   none of these; GHES has its own issuer, and an
+                   operator who knows that issuer's availability can
+                   widen how long a cached key set keeps verifying. */}}
+            {{- with $gh.oidc.issuer }}
+            - name: GLOSSA_GITHUB_OIDC_ISSUER
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with $gh.oidc.audience }}
+            - name: GLOSSA_GITHUB_OIDC_AUDIENCE
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with $gh.oidc.maxStale }}
+            - name: GLOSSA_GITHUB_OIDC_MAX_STALE
+              value: {{ . | quote }}
+            {{- end }}
+            {{- $ghSecret := required "github.credentials.secretName is required with github.appId (one Secret with the private key, the webhook secret and the OAuth client secret)" $gh.credentials.secretName }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_GITHUB_APP_PRIVATE_KEY" "secret" $ghSecret "key" $gh.credentials.privateKeyKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_GITHUB_WEBHOOK_SECRET" "secret" $ghSecret "key" $gh.credentials.webhookSecretKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "GLOSSA_GITHUB_CLIENT_SECRET" "secret" $ghSecret "key" $gh.credentials.clientSecretKey) | nindent 12 }}
+            {{- end }}
+            {{- include "gp.storageEnv" (dict "root" $ "creds" .Values.objectStorage.server "secretName" (include "gp.storage.serverSecret" .)) | nindent 12 }}
+            {{- with $v.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          startupProbe:
+            httpGet:
+              path: /livez
+              port: http
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2
+          resources:
+            {{- toYaml $v.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        # Capture uploads spool one image (at most 10 MB, and its
+        # re-encoding) per upload in progress here.
+        - name: tmp
+          emptyDir:
+            sizeLimit: 256Mi
+{{- if $v.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "server") | nindent 4 }}
+spec:
+  maxUnavailable: {{ $v.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "server") | nindent 6 }}
+{{- end }}

@@ -1,0 +1,5 @@
+{
+  "checkout.greeting": "Hallo {$name}",
+  "checkout.items": ".input {$count :number}\n.match $count\none {{{$count} Artikel}}\n* {{{$count} Artikel}}",
+  "checkout.title": "Kasse"
+}

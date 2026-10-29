@@ -6,11 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	keyapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translationkey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	keyapp "go.klarlabs.de/glossa/apps/api/internal/app/translationkey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 type scanKeysReq struct {

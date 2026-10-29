@@ -7,16 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	aitranslatorapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/aitranslator"
-	translationapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translation"
-	keyapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translationkey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/audit"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translation"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	aitranslatorapp "go.klarlabs.de/glossa/apps/api/internal/app/aitranslator"
+	translationapp "go.klarlabs.de/glossa/apps/api/internal/app/translation"
+	keyapp "go.klarlabs.de/glossa/apps/api/internal/app/translationkey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/audit"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 // handleBulkImport — POST /api/v1/admin/projects/:slug/locales/:locale/bulk
@@ -63,17 +63,12 @@ func handleBulkImport(
 			ginerr.Send(c, errs.InternalFromErr(err))
 			return
 		}
-		var l locale.Locale
-		for _, candidate := range allLocales {
-			if candidate.Code.String() == localeCode {
-				l = candidate
-				break
-			}
-		}
-		if l.ID == uuid.Nil {
+		l, ok := findLocale(allLocales, localeCode)
+		if !ok {
 			ginerr.Send(c, errs.LocaleNotFound)
 			return
 		}
+		localeCode = l.Code.String()
 
 		// Ensure every key exists. UpsertKeys is idempotent.
 		inputs := make([]keyapp.UpsertInput, 0, len(body.Messages))
@@ -138,7 +133,7 @@ func handleBulkImport(
 				Value:   out.Value,
 				Status:  string(out.Status),
 			})
-			if fanOut != nil && localeCode == p.DefaultLocale {
+			if fanOut != nil && l.Code.Matches(p.DefaultLocale) {
 				fanOut.Trigger(aitranslatorapp.FanOutInput{
 					TenantID:       tenantID.(uuid.UUID),
 					ProjectID:      p.ID,

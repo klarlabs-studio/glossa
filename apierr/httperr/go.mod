@@ -1,7 +1,7 @@
-module github.com/felixgeelhaar/glossa/apierr/httperr
+module go.klarlabs.de/glossa/apierr/httperr
 
 go 1.26.3
 
-require github.com/felixgeelhaar/glossa/apierr v0.0.0-20260525132450-82112f021e1a
+require go.klarlabs.de/glossa/apierr v0.2.0
 
-replace github.com/felixgeelhaar/glossa/apierr => ../
+replace go.klarlabs.de/glossa/apierr => ../

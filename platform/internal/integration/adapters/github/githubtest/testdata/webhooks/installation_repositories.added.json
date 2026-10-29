@@ -1,0 +1,15 @@
+{
+  "action": "added",
+  "installation": {
+    "id": 4242,
+    "app_id": 99001,
+    "account": { "login": "acme", "id": 424200, "type": "Organization" },
+    "repository_selection": "selected"
+  },
+  "repository_selection": "selected",
+  "repositories_added": [
+    { "id": 10103, "node_id": "R_kgDOAAAnlw", "name": "billing", "full_name": "acme/billing", "private": true }
+  ],
+  "repositories_removed": [],
+  "sender": { "login": "octocat", "id": 583231, "type": "User" }
+}

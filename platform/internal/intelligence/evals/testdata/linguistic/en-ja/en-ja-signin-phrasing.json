@@ -1,0 +1,67 @@
+{
+  "id": "en-ja-signin-phrasing",
+  "description": "The glossary says this product signs people in with ログイン.",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Sign in",
+  "translation": "ログオン",
+  "context": {
+    "key": "auth.sign_in",
+    "namespace": "auth",
+    "description": "Primary button on the sign-in page"
+  },
+  "style": {
+    "version": "ja@1",
+    "formality": "formal",
+    "tone": [
+      "polite"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Use the polite です・ます form",
+        "rationale": "house style",
+        "good": [
+          "もう一度お試しください。"
+        ],
+        "bad": [
+          "もう一度やれ。"
+        ]
+      }
+    ]
+  },
+  "terms": [
+    {
+      "concept_id": "c_signin",
+      "definition": "starting a session",
+      "source": {
+        "id": "t_c_signin_src",
+        "text": "sign in",
+        "locale": "en",
+        "status": "preferred"
+      },
+      "targets": [
+        {
+          "id": "t_c_signin_use_0",
+          "text": "ログイン",
+          "locale": "ja",
+          "status": "preferred"
+        },
+        {
+          "id": "t_c_signin_no_0",
+          "text": "ログオン",
+          "locale": "ja",
+          "status": "forbidden"
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "codes": [
+      "inconsistent-phrasing"
+    ],
+    "quotes": [
+      "ログオン"
+    ]
+  }
+}

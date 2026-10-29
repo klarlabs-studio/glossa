@@ -1,0 +1,95 @@
+{{- if and .Values.minio.enabled .Values.minio.bootstrap.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "minio-bootstrap") -}}
+{{- $v := .Values.minio -}}
+{{- $b := .Values.minio.bootstrap -}}
+{{- $root := required "minio.rootCredentials.secretName is required with minio.enabled" $v.rootCredentials.secretName -}}
+{{- if .Values.networkPolicy.enabled }}
+# Created before the Job on every install and upgrade (hook resources
+# are not part of the release's NetworkPolicies). Out to DNS and MinIO's
+# S3 port only. Helm keeps hook resources after uninstall; delete this
+# one by hand then.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-bootstrap") | nindent 4 }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio-bootstrap") | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    {{- include "gp.np.dnsEgress" . | nindent 4 }}
+    {{- include "gp.np.objectStorageEgress" . | nindent 4 }}
+---
+{{- end }}
+# Provisions MinIO after every install and upgrade (files/minio-bootstrap.sh):
+# the bucket, a read-write user for glossa-server and a read-only user for
+# glossa-edge, each with the credentials from the Secret that pod already
+# reads. Idempotent. Neither server nor edge needs the bucket to become
+# ready, so running after them (and after `--wait`) is safe.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio-bootstrap") | nindent 4 }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "0"
+    # A failed Job stays for `kubectl logs`; the next upgrade replaces it.
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: {{ $b.backoffLimit }}
+  activeDeadlineSeconds: {{ $b.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "minio-bootstrap") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        {{- include "gp.podSecurityContext" 65532 | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: bootstrap
+          image: {{ include "gp.externalImage" (dict "image" $b.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/bash", "-c"]
+          args:
+            - {{ .Files.Get "files/minio-bootstrap.sh" | quote }}
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          env:
+            {{- include "gp.minio.mcEnv" . | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "MINIO_ROOT_USER" "secret" $root "key" $v.rootCredentials.userKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "MINIO_ROOT_PASSWORD" "secret" $root "key" $v.rootCredentials.passwordKey) | nindent 12 }}
+            - name: POLICY_RW
+              value: {{ printf "%s-readwrite" (include "gp.fullname" .) | quote }}
+            - name: POLICY_RO
+              value: {{ printf "%s-readonly" (include "gp.fullname" .) | quote }}
+            - name: WAIT_SECONDS
+              value: {{ $b.waitSeconds | quote }}
+          resources:
+            {{- toYaml $b.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        # mc's config dir and the policy documents (read-only root filesystem).
+        - name: tmp
+          emptyDir:
+            sizeLimit: 16Mi
+{{- end }}

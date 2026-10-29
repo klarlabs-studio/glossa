@@ -1,0 +1,10 @@
+# oapi-codegen configuration for the /v1 client the CLI uses
+# (api/openapi.yaml). The generator version is pinned by the `tool`
+# directive in go.mod; regenerate with `go generate ./internal/apiclient/...`.
+package: apiclient
+output: apiclient.gen.go
+generate:
+  models: true
+  client: true
+output-options:
+  skip-prune: false

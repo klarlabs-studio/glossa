@@ -1,0 +1,4484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" version="2.1" srcLang="de" trgLang="es" xml:space="preserve">
+  <file id="f1" original="billing">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="billing.invoice.download_success" name="billing.invoice.download_success">
+      <notes>
+        <note category="description">Toast shown after the invoice was downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Rechnung wurde heruntergeladen.</source>
+        <target>La factura se ha descargado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.delete" name="billing.invoice.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the invoice.</note>
+      </notes>
+      <segment state="final">
+        <source>Rechnung löschen</source>
+        <target>Eliminar factura</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.delete_success" name="billing.invoice.delete_success">
+      <notes>
+        <note category="description">Toast shown after the invoice was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Rechnung wurde gelöscht.</source>
+        <target>La factura se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.delete_confirm" name="billing.invoice.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a invoice is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diese Rechnung wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta factura?</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.download_activity" name="billing.invoice.download_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member downloaded a invoice. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Rechnung heruntergeladen.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha descargado la factura.</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.delete_activity" name="billing.invoice.delete_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member deleted a invoice. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Rechnung gelöscht.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha eliminado la factura.</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.download_permission" name="billing.invoice.download_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the invoices page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Rechnungen herunterladen.}}
+* {{Nur Administratoren können Rechnungen herunterladen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede descargar las facturas.}}
+* {{Solo los administradores pueden descargar las facturas.}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.help" name="billing.invoice.help">
+      <notes>
+        <note category="description">Help link below the invoices list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Rechnungen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las facturas en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.total" name="billing.invoice.total">
+      <notes>
+        <note category="description">Total number of invoices in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Rechnungen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de facturas: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.new" name="billing.invoice.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a invoice.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Rechnung</source>
+        <target>Nueva factura</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.search" name="billing.invoice.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the invoices search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Rechnungen durchsuchen</source>
+        <target>Buscar facturas</target>
+      </segment>
+    </unit>
+    <unit id="billing.invoice.selected" name="billing.invoice.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected invoices. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Rechnung ausgewählt}}
+* {{{$count} Rechnungen ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} factura seleccionada}}
+many {{{$count} de facturas seleccionadas}}
+* {{{$count} facturas seleccionadas}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.renew" name="billing.subscription.renew" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that renews the subscription.</note>
+      </notes>
+      <segment state="final">
+        <source>Abonnement verlängern</source>
+        <target>Renovar suscripción</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.renew_success" name="billing.subscription.renew_success">
+      <notes>
+        <note category="description">Toast shown after the subscription was renewed.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Abonnement wurde verlängert.</source>
+        <target>La suscripción se ha renovado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.edit" name="billing.subscription.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the subscription.</note>
+      </notes>
+      <segment state="final">
+        <source>Abonnement bearbeiten</source>
+        <target>Editar suscripción</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.archive" name="billing.subscription.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the subscription.</note>
+      </notes>
+      <segment state="final">
+        <source>Abonnement archivieren</source>
+        <target>Archivar suscripción</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.archive_success" name="billing.subscription.archive_success">
+      <notes>
+        <note category="description">Toast shown after the subscription was archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Abonnement wurde archiviert.</source>
+        <target>La suscripción se ha archivado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.delete" name="billing.subscription.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the subscription.</note>
+      </notes>
+      <segment state="final">
+        <source>Abonnement löschen</source>
+        <target>Eliminar suscripción</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.delete_confirm" name="billing.subscription.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a subscription is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie dieses Abonnement wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta suscripción?</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.count" name="billing.subscription.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of subscriptions in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Abonnement}}
+* {{{$count} Abonnements}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} suscripción}}
+many {{{$count} de suscripciones}}
+* {{{$count} suscripciones}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.empty" name="billing.subscription.empty">
+      <notes>
+        <note category="description">Empty state of the subscriptions list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Abonnements.</source>
+        <target>Todavía no tiene suscripciones.</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.renew_activity" name="billing.subscription.renew_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member renewed a subscription. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Abonnement verlängert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha renovado la suscripción.</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.renew_permission" name="billing.subscription.renew_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the subscriptions page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Abonnements verlängern.}}
+* {{Nur Administratoren können Abonnements verlängern.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede renovar las suscripciones.}}
+* {{Solo los administradores pueden renovar las suscripciones.}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.total" name="billing.subscription.total">
+      <notes>
+        <note category="description">Total number of subscriptions in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Abonnements: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de suscripciones: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.new" name="billing.subscription.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a subscription.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Abonnement</source>
+        <target>Nueva suscripción</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.search" name="billing.subscription.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the subscriptions search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Abonnements durchsuchen</source>
+        <target>Buscar suscripciones</target>
+      </segment>
+    </unit>
+    <unit id="billing.subscription.selected" name="billing.subscription.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected subscriptions. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Abonnement ausgewählt}}
+* {{{$count} Abonnements ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} suscripción seleccionada}}
+many {{{$count} de suscripciones seleccionadas}}
+* {{{$count} suscripciones seleccionadas}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.create_success" name="billing.payment_method.create_success">
+      <notes>
+        <note category="description">Toast shown after the payment method was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Zahlungsmethode wurde erstellt.</source>
+        <target>El método de pago se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.edit_success" name="billing.payment_method.edit_success">
+      <notes>
+        <note category="description">Toast shown after the payment method was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Zahlungsmethode wurde bearbeitet.</source>
+        <target>El método de pago se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.update_success" name="billing.payment_method.update_success">
+      <notes>
+        <note category="description">Toast shown after the payment method was updated.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Zahlungsmethode wurde aktualisiert.</source>
+        <target>El método de pago se ha actualizado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.count" name="billing.payment_method.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of payment methods in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Zahlungsmethode}}
+* {{{$count} Zahlungsmethoden}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} método de pago}}
+many {{{$count} de métodos de pago}}
+* {{{$count} métodos de pago}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.empty" name="billing.payment_method.empty">
+      <notes>
+        <note category="description">Empty state of the payment methods list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Zahlungsmethoden.</source>
+        <target>Todavía no tiene métodos de pago.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.edit_activity" name="billing.payment_method.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a payment method. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Zahlungsmethode bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el método de pago.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.create_permission" name="billing.payment_method.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the payment methods page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Zahlungsmethoden erstellen.}}
+* {{Nur Administratoren können Zahlungsmethoden erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los métodos de pago.}}
+* {{Solo los administradores pueden crear los métodos de pago.}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.help" name="billing.payment_method.help">
+      <notes>
+        <note category="description">Help link below the payment methods list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Zahlungsmethoden erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los métodos de pago en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.search" name="billing.payment_method.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the payment methods search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Zahlungsmethoden durchsuchen</source>
+        <target>Buscar métodos de pago</target>
+      </segment>
+    </unit>
+    <unit id="billing.payment_method.all" name="billing.payment_method.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all payment methods.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Zahlungsmethoden</source>
+        <target>Todos los métodos de pago</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.redeem" name="billing.discount_code.redeem" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that redeems the discount code.</note>
+      </notes>
+      <segment state="final">
+        <source>Rabattcode einlösen</source>
+        <target>Canjear código de descuento</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.redeem_success" name="billing.discount_code.redeem_success">
+      <notes>
+        <note category="description">Toast shown after the discount code was redeemed.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Rabattcode wurde eingelöst.</source>
+        <target>El código de descuento se ha canjeado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.share" name="billing.discount_code.share" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that shares the discount code.</note>
+      </notes>
+      <segment state="final">
+        <source>Rabattcode teilen</source>
+        <target>Compartir código de descuento</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.share_success" name="billing.discount_code.share_success">
+      <notes>
+        <note category="description">Toast shown after the discount code was shared.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Rabattcode wurde geteilt.</source>
+        <target>El código de descuento se ha compartido.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.delete_success" name="billing.discount_code.delete_success">
+      <notes>
+        <note category="description">Toast shown after the discount code was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Rabattcode wurde gelöscht.</source>
+        <target>El código de descuento se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.delete_confirm" name="billing.discount_code.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a discount code is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Rabattcode wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este código de descuento?</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.count" name="billing.discount_code.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of discount codes in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Rabattcode}}
+* {{{$count} Rabattcodes}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} código de descuento}}
+many {{{$count} de códigos de descuento}}
+* {{{$count} códigos de descuento}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.empty" name="billing.discount_code.empty">
+      <notes>
+        <note category="description">Empty state of the discount codes list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Rabattcodes.</source>
+        <target>Todavía no tiene códigos de descuento.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.redeem_activity" name="billing.discount_code.redeem_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member redeemed a discount code. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Rabattcode eingelöst.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha canjeado el código de descuento.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.create_activity" name="billing.discount_code.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a discount code. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Rabattcode erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el código de descuento.</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.redeem_permission" name="billing.discount_code.redeem_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the discount codes page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Rabattcodes einlösen.}}
+* {{Nur Administratoren können Rabattcodes einlösen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede canjear los códigos de descuento.}}
+* {{Solo los administradores pueden canjear los códigos de descuento.}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.new" name="billing.discount_code.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a discount code.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Rabattcode</source>
+        <target>Nuevo código de descuento</target>
+      </segment>
+    </unit>
+    <unit id="billing.discount_code.all" name="billing.discount_code.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all discount codes.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Rabattcodes</source>
+        <target>Todos los códigos de descuento</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.edit" name="billing.plan.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the plan.</note>
+      </notes>
+      <segment state="final">
+        <source>Tarif bearbeiten</source>
+        <target>Editar plan</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.edit_success" name="billing.plan.edit_success">
+      <notes>
+        <note category="description">Toast shown after the plan was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Tarif wurde bearbeitet.</source>
+        <target>El plan se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.share" name="billing.plan.share" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that shares the plan.</note>
+      </notes>
+      <segment state="final">
+        <source>Tarif teilen</source>
+        <target>Compartir plan</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.export" name="billing.plan.export" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that exports the plan.</note>
+      </notes>
+      <segment state="final">
+        <source>Tarif exportieren</source>
+        <target>Exportar plan</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.export_success" name="billing.plan.export_success">
+      <notes>
+        <note category="description">Toast shown after the plan was exported.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Tarif wurde exportiert.</source>
+        <target>El plan se ha exportado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.archive" name="billing.plan.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the plan.</note>
+      </notes>
+      <segment state="final">
+        <source>Tarif archivieren</source>
+        <target>Archivar plan</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.archive_success" name="billing.plan.archive_success">
+      <notes>
+        <note category="description">Toast shown after the plan was archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Tarif wurde archiviert.</source>
+        <target>El plan se ha archivado.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.archive_confirm" name="billing.plan.archive_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a plan is archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Tarif wirklich archivieren?</source>
+        <target>¿Seguro que desea archivar este plan?</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.count" name="billing.plan.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of plans in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Tarif}}
+* {{{$count} Tarife}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} plan}}
+many {{{$count} de planes}}
+* {{{$count} planes}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.edit_activity" name="billing.plan.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a plan. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Tarif bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el plan.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.share_activity" name="billing.plan.share_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member shared a plan. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Tarif geteilt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha compartido el plan.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.help" name="billing.plan.help">
+      <notes>
+        <note category="description">Help link below the plans list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Tarife erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los planes en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.new" name="billing.plan.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a plan.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Tarif</source>
+        <target>Nuevo plan</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.search" name="billing.plan.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the plans search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Tarife durchsuchen</source>
+        <target>Buscar planes</target>
+      </segment>
+    </unit>
+    <unit id="billing.plan.selected" name="billing.plan.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected plans. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Tarif ausgewählt}}
+* {{{$count} Tarife ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} plan seleccionado}}
+many {{{$count} de planes seleccionados}}
+* {{{$count} planes seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="billing.actions.save" name="billing.actions.save" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic save button in the billing area.</note>
+      </notes>
+      <segment state="final">
+        <source>Speichern</source>
+        <target>Guardar</target>
+      </segment>
+    </unit>
+    <unit id="billing.actions.back" name="billing.actions.back" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic back button in the billing area.</note>
+      </notes>
+      <segment state="final">
+        <source>Zurück</source>
+        <target>Atrás</target>
+      </segment>
+    </unit>
+    <unit id="billing.actions.continue" name="billing.actions.continue" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic continue button in the billing area.</note>
+      </notes>
+      <segment state="final">
+        <source>Weiter</source>
+        <target>Continuar</target>
+      </segment>
+    </unit>
+    <unit id="billing.actions.close" name="billing.actions.close" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic close button in the billing area.</note>
+      </notes>
+      <segment state="final">
+        <source>Schließen</source>
+        <target>Cerrar</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f2" original="errors">
+    <unit id="errors.invoice.not_found" name="errors.invoice.not_found">
+      <notes>
+        <note category="description">Error when a invoice does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Rechnung wurde nicht gefunden.</source>
+        <target>No se encontró la factura.</target>
+      </segment>
+    </unit>
+    <unit id="errors.invoice.download_failed" name="errors.invoice.download_failed">
+      <notes>
+        <note category="description">Error when a invoice could not be downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Rechnung konnte nicht heruntergeladen werden.</source>
+        <target>No se pudo descargar la factura.</target>
+      </segment>
+    </unit>
+    <unit id="errors.subscription.not_found" name="errors.subscription.not_found">
+      <notes>
+        <note category="description">Error when a subscription does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Abonnement wurde nicht gefunden.</source>
+        <target>No se encontró la suscripción.</target>
+      </segment>
+    </unit>
+    <unit id="errors.subscription.renew_failed" name="errors.subscription.renew_failed">
+      <notes>
+        <note category="description">Error when a subscription could not be renewed.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Abonnement konnte nicht verlängert werden.</source>
+        <target>No se pudo renovar la suscripción.</target>
+      </segment>
+    </unit>
+    <unit id="errors.payment_method.not_found" name="errors.payment_method.not_found">
+      <notes>
+        <note category="description">Error when a payment method does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Zahlungsmethode wurde nicht gefunden.</source>
+        <target>No se encontró el método de pago.</target>
+      </segment>
+    </unit>
+    <unit id="errors.payment_method.create_failed" name="errors.payment_method.create_failed">
+      <notes>
+        <note category="description">Error when a payment method could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Zahlungsmethode konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el método de pago.</target>
+      </segment>
+    </unit>
+    <unit id="errors.discount_code.not_found" name="errors.discount_code.not_found">
+      <notes>
+        <note category="description">Error when a discount code does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Rabattcode wurde nicht gefunden.</source>
+        <target>No se encontró el código de descuento.</target>
+      </segment>
+    </unit>
+    <unit id="errors.discount_code.redeem_failed" name="errors.discount_code.redeem_failed">
+      <notes>
+        <note category="description">Error when a discount code could not be redeemed.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Rabattcode konnte nicht eingelöst werden.</source>
+        <target>No se pudo canjear el código de descuento.</target>
+      </segment>
+    </unit>
+    <unit id="errors.plan.not_found" name="errors.plan.not_found">
+      <notes>
+        <note category="description">Error when a plan does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Tarif wurde nicht gefunden.</source>
+        <target>No se encontró el plan.</target>
+      </segment>
+    </unit>
+    <unit id="errors.plan.edit_failed" name="errors.plan.edit_failed">
+      <notes>
+        <note category="description">Error when a plan could not be edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Tarif konnte nicht bearbeitet werden.</source>
+        <target>No se pudo editar el plan.</target>
+      </segment>
+    </unit>
+    <unit id="errors.password.not_found" name="errors.password.not_found">
+      <notes>
+        <note category="description">Error when a password does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort wurde nicht gefunden.</source>
+        <target>No se encontró la contraseña.</target>
+      </segment>
+    </unit>
+    <unit id="errors.password.reset_failed" name="errors.password.reset_failed">
+      <notes>
+        <note category="description">Error when a password could not be reset.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort konnte nicht zurückgesetzt werden.</source>
+        <target>No se pudo restablecer la contraseña.</target>
+      </segment>
+    </unit>
+    <unit id="errors.session.not_found" name="errors.session.not_found">
+      <notes>
+        <note category="description">Error when a session does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Sitzung wurde nicht gefunden.</source>
+        <target>No se encontró la sesión.</target>
+      </segment>
+    </unit>
+    <unit id="errors.session.end_failed" name="errors.session.end_failed">
+      <notes>
+        <note category="description">Error when a session could not be ended.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Sitzung konnte nicht beendet werden.</source>
+        <target>No se pudo cerrar la sesión.</target>
+      </segment>
+    </unit>
+    <unit id="errors.api_key.not_found" name="errors.api_key.not_found">
+      <notes>
+        <note category="description">Error when a API key does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der API-Schlüssel wurde nicht gefunden.</source>
+        <target>No se encontró la clave de API.</target>
+      </segment>
+    </unit>
+    <unit id="errors.api_key.create_failed" name="errors.api_key.create_failed">
+      <notes>
+        <note category="description">Error when a API key could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der API-Schlüssel konnte nicht erstellt werden.</source>
+        <target>No se pudo crear la clave de API.</target>
+      </segment>
+    </unit>
+    <unit id="errors.passkey.not_found" name="errors.passkey.not_found">
+      <notes>
+        <note category="description">Error when a passkey does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Passkey wurde nicht gefunden.</source>
+        <target>No se encontró la llave de acceso.</target>
+      </segment>
+    </unit>
+    <unit id="errors.invitation.not_found" name="errors.invitation.not_found">
+      <notes>
+        <note category="description">Error when a invitation does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Einladung wurde nicht gefunden.</source>
+        <target>No se encontró la invitación.</target>
+      </segment>
+    </unit>
+    <unit id="errors.report.not_found" name="errors.report.not_found">
+      <notes>
+        <note category="description">Error when a report does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Bericht wurde nicht gefunden.</source>
+        <target>No se encontró el informe.</target>
+      </segment>
+    </unit>
+    <unit id="errors.report.download_failed" name="errors.report.download_failed">
+      <notes>
+        <note category="description">Error when a report could not be downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Bericht konnte nicht heruntergeladen werden.</source>
+        <target>No se pudo descargar el informe.</target>
+      </segment>
+    </unit>
+    <unit id="errors.widget.not_found" name="errors.widget.not_found">
+      <notes>
+        <note category="description">Error when a widget does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Widget wurde nicht gefunden.</source>
+        <target>No se encontró el widget.</target>
+      </segment>
+    </unit>
+    <unit id="errors.widget.create_failed" name="errors.widget.create_failed">
+      <notes>
+        <note category="description">Error when a widget could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Widget konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el widget.</target>
+      </segment>
+    </unit>
+    <unit id="errors.project.not_found" name="errors.project.not_found">
+      <notes>
+        <note category="description">Error when a project does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Projekt wurde nicht gefunden.</source>
+        <target>No se encontró el proyecto.</target>
+      </segment>
+    </unit>
+    <unit id="errors.project.create_failed" name="errors.project.create_failed">
+      <notes>
+        <note category="description">Error when a project could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Projekt konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el proyecto.</target>
+      </segment>
+    </unit>
+    <unit id="errors.chart.not_found" name="errors.chart.not_found">
+      <notes>
+        <note category="description">Error when a chart does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Diagramm wurde nicht gefunden.</source>
+        <target>No se encontró el gráfico.</target>
+      </segment>
+    </unit>
+    <unit id="errors.filter.not_found" name="errors.filter.not_found">
+      <notes>
+        <note category="description">Error when a filter does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Filter wurde nicht gefunden.</source>
+        <target>No se encontró el filtro.</target>
+      </segment>
+    </unit>
+    <unit id="errors.filter.create_failed" name="errors.filter.create_failed">
+      <notes>
+        <note category="description">Error when a filter could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Filter konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el filtro.</target>
+      </segment>
+    </unit>
+    <unit id="errors.workspace.not_found" name="errors.workspace.not_found">
+      <notes>
+        <note category="description">Error when a workspace does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich wurde nicht gefunden.</source>
+        <target>No se encontró el espacio de trabajo.</target>
+      </segment>
+    </unit>
+    <unit id="errors.workspace.create_failed" name="errors.workspace.create_failed">
+      <notes>
+        <note category="description">Error when a workspace could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el espacio de trabajo.</target>
+      </segment>
+    </unit>
+    <unit id="errors.member.not_found" name="errors.member.not_found">
+      <notes>
+        <note category="description">Error when a member does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Das Mitglied wurde nicht gefunden.</source>
+        <target>No se encontró el miembro.</target>
+      </segment>
+    </unit>
+    <unit id="errors.member.invite_failed" name="errors.member.invite_failed">
+      <notes>
+        <note category="description">Error when a member could not be invited.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Mitglied konnte nicht eingeladen werden.</source>
+        <target>No se pudo invitar el miembro.</target>
+      </segment>
+    </unit>
+    <unit id="errors.integration.create_failed" name="errors.integration.create_failed">
+      <notes>
+        <note category="description">Error when a integration could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Integration konnte nicht erstellt werden.</source>
+        <target>No se pudo crear la integración.</target>
+      </segment>
+    </unit>
+    <unit id="errors.webhook.not_found" name="errors.webhook.not_found">
+      <notes>
+        <note category="description">Error when a webhook does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Der Webhook wurde nicht gefunden.</source>
+        <target>No se encontró el webhook.</target>
+      </segment>
+    </unit>
+    <unit id="errors.webhook.create_failed" name="errors.webhook.create_failed">
+      <notes>
+        <note category="description">Error when a webhook could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Webhook konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el webhook.</target>
+      </segment>
+    </unit>
+    <unit id="errors.notification.not_found" name="errors.notification.not_found">
+      <notes>
+        <note category="description">Error when a notification does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Benachrichtigung wurde nicht gefunden.</source>
+        <target>No se encontró la notificación.</target>
+      </segment>
+    </unit>
+    <unit id="errors.notification.mute_failed" name="errors.notification.mute_failed">
+      <notes>
+        <note category="description">Error when a notification could not be muted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Benachrichtigung konnte nicht stummgeschaltet werden.</source>
+        <target>No se pudo silenciar la notificación.</target>
+      </segment>
+    </unit>
+    <unit id="errors.comment.create_failed" name="errors.comment.create_failed">
+      <notes>
+        <note category="description">Error when a comment could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Kommentar konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el comentario.</target>
+      </segment>
+    </unit>
+    <unit id="errors.task.not_found" name="errors.task.not_found">
+      <notes>
+        <note category="description">Error when a task does not exist (any more).</note>
+      </notes>
+      <segment state="final">
+        <source>Die Aufgabe wurde nicht gefunden.</source>
+        <target>No se encontró la tarea.</target>
+      </segment>
+    </unit>
+    <unit id="errors.task.create_failed" name="errors.task.create_failed">
+      <notes>
+        <note category="description">Error when a task could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Aufgabe konnte nicht erstellt werden.</source>
+        <target>No se pudo crear la tarea.</target>
+      </segment>
+    </unit>
+    <unit id="errors.reminder.create_failed" name="errors.reminder.create_failed">
+      <notes>
+        <note category="description">Error when a reminder could not be created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Erinnerung konnte nicht erstellt werden.</source>
+        <target>No se pudo crear el recordatorio.</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f3" original="auth">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="auth.password.reset" name="auth.password.reset" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that resets the password.</note>
+      </notes>
+      <segment state="final">
+        <source>Passwort zurücksetzen</source>
+        <target>Restablecer contraseña</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.reset_success" name="auth.password.reset_success">
+      <notes>
+        <note category="description">Toast shown after the password was reset.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort wurde zurückgesetzt.</source>
+        <target>La contraseña se ha restablecido.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.update" name="auth.password.update" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that updates the password.</note>
+      </notes>
+      <segment state="final">
+        <source>Passwort aktualisieren</source>
+        <target>Actualizar contraseña</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.update_success" name="auth.password.update_success">
+      <notes>
+        <note category="description">Toast shown after the password was updated.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort wurde aktualisiert.</source>
+        <target>La contraseña se ha actualizado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.create" name="auth.password.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the password.</note>
+      </notes>
+      <segment state="final">
+        <source>Passwort erstellen</source>
+        <target>Crear contraseña</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.create_success" name="auth.password.create_success">
+      <notes>
+        <note category="description">Toast shown after the password was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort wurde erstellt.</source>
+        <target>La contraseña se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.delete" name="auth.password.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the password.</note>
+      </notes>
+      <segment state="final">
+        <source>Passwort löschen</source>
+        <target>Eliminar contraseña</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.delete_success" name="auth.password.delete_success">
+      <notes>
+        <note category="description">Toast shown after the password was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Passwort wurde gelöscht.</source>
+        <target>La contraseña se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.delete_confirm" name="auth.password.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a password is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie dieses Passwort wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta contraseña?</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.count" name="auth.password.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of passwords in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Passwort}}
+* {{{$count} Passwörter}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} contraseña}}
+many {{{$count} de contraseñas}}
+* {{{$count} contraseñas}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.empty" name="auth.password.empty">
+      <notes>
+        <note category="description">Empty state of the passwords list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Passwörter.</source>
+        <target>Todavía no tiene contraseñas.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.reset_activity" name="auth.password.reset_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member reset a password. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Passwort zurückgesetzt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha restablecido la contraseña.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.update_activity" name="auth.password.update_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member updated a password. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Passwort aktualisiert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha actualizado la contraseña.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.reset_permission" name="auth.password.reset_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the passwords page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Passwörter zurücksetzen.}}
+* {{Nur Administratoren können Passwörter zurücksetzen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede restablecer las contraseñas.}}
+* {{Solo los administradores pueden restablecer las contraseñas.}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.help" name="auth.password.help">
+      <notes>
+        <note category="description">Help link below the passwords list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Passwörter erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las contraseñas en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.new" name="auth.password.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a password.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Passwort</source>
+        <target>Nueva contraseña</target>
+      </segment>
+    </unit>
+    <unit id="auth.password.all" name="auth.password.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all passwords.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Passwörter</source>
+        <target>Todas las contraseñas</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.end_success" name="auth.session.end_success">
+      <notes>
+        <note category="description">Toast shown after the session was ended.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Sitzung wurde beendet.</source>
+        <target>La sesión se ha cerrado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.export" name="auth.session.export" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that exports the session.</note>
+      </notes>
+      <segment state="final">
+        <source>Sitzung exportieren</source>
+        <target>Exportar sesión</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.export_success" name="auth.session.export_success">
+      <notes>
+        <note category="description">Toast shown after the session was exported.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Sitzung wurde exportiert.</source>
+        <target>La sesión se ha exportado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.delete" name="auth.session.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the session.</note>
+      </notes>
+      <segment state="final">
+        <source>Sitzung löschen</source>
+        <target>Eliminar sesión</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.empty" name="auth.session.empty">
+      <notes>
+        <note category="description">Empty state of the sessions list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Sitzungen.</source>
+        <target>Todavía no tiene sesiones.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.end_activity" name="auth.session.end_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member ended a session. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Sitzung beendet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha cerrado la sesión.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.revoke_activity" name="auth.session.revoke_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member revoked a session. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Sitzung widerrufen.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha revocado la sesión.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.end_permission" name="auth.session.end_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the sessions page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Sitzungen beenden.}}
+* {{Nur Administratoren können Sitzungen beenden.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede cerrar las sesiones.}}
+* {{Solo los administradores pueden cerrar las sesiones.}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.help" name="auth.session.help">
+      <notes>
+        <note category="description">Help link below the sessions list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Sitzungen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las sesiones en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.total" name="auth.session.total">
+      <notes>
+        <note category="description">Total number of sessions in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Sitzungen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de sesiones: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="auth.session.new" name="auth.session.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a session.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Sitzung</source>
+        <target>Nueva sesión</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.all" name="auth.session.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all sessions.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Sitzungen</source>
+        <target>Todas las sesiones</target>
+      </segment>
+    </unit>
+    <unit id="auth.session.selected" name="auth.session.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected sessions. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Sitzung ausgewählt}}
+* {{{$count} Sitzungen ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} sesión seleccionada}}
+many {{{$count} de sesiones seleccionadas}}
+* {{{$count} sesiones seleccionadas}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.create" name="auth.api_key.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the API key.</note>
+      </notes>
+      <segment state="final">
+        <source>API-Schlüssel erstellen</source>
+        <target>Crear clave de API</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.create_success" name="auth.api_key.create_success">
+      <notes>
+        <note category="description">Toast shown after the API key was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der API-Schlüssel wurde erstellt.</source>
+        <target>La clave de API se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.revoke_success" name="auth.api_key.revoke_success">
+      <notes>
+        <note category="description">Toast shown after the API key was revoked.</note>
+      </notes>
+      <segment state="final">
+        <source>Der API-Schlüssel wurde widerrufen.</source>
+        <target>La clave de API se ha revocado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.update" name="auth.api_key.update" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that updates the API key.</note>
+      </notes>
+      <segment state="final">
+        <source>API-Schlüssel aktualisieren</source>
+        <target>Actualizar clave de API</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.update_success" name="auth.api_key.update_success">
+      <notes>
+        <note category="description">Toast shown after the API key was updated.</note>
+      </notes>
+      <segment state="final">
+        <source>Der API-Schlüssel wurde aktualisiert.</source>
+        <target>La clave de API se ha actualizado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.delete_confirm" name="auth.api_key.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a API key is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen API-Schlüssel wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta clave de API?</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.count" name="auth.api_key.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of API keys in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} API-Schlüssel}}
+* {{{$count} API-Schlüssel}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} clave de API}}
+many {{{$count} de claves de API}}
+* {{{$count} claves de API}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.empty" name="auth.api_key.empty">
+      <notes>
+        <note category="description">Empty state of the API keys list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine API-Schlüssel.</source>
+        <target>Todavía no tiene claves de API.</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.create_activity" name="auth.api_key.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a API key. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den API-Schlüssel erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado la clave de API.</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.create_permission" name="auth.api_key.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the API keys page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie API-Schlüssel erstellen.}}
+* {{Nur Administratoren können API-Schlüssel erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear las claves de API.}}
+* {{Solo los administradores pueden crear las claves de API.}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.new" name="auth.api_key.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a API key.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer API-Schlüssel</source>
+        <target>Nueva clave de API</target>
+      </segment>
+    </unit>
+    <unit id="auth.api_key.search" name="auth.api_key.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the API keys search field.</note>
+      </notes>
+      <segment state="final">
+        <source>API-Schlüssel durchsuchen</source>
+        <target>Buscar claves de API</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.create_success" name="auth.passkey.create_success">
+      <notes>
+        <note category="description">Toast shown after the passkey was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Passkey wurde erstellt.</source>
+        <target>La llave de acceso se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.revoke" name="auth.passkey.revoke" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that revokes the passkey.</note>
+      </notes>
+      <segment state="final">
+        <source>Passkey widerrufen</source>
+        <target>Revocar llave de acceso</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.revoke_success" name="auth.passkey.revoke_success">
+      <notes>
+        <note category="description">Toast shown after the passkey was revoked.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Passkey wurde widerrufen.</source>
+        <target>La llave de acceso se ha revocado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.delete" name="auth.passkey.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the passkey.</note>
+      </notes>
+      <segment state="final">
+        <source>Passkey löschen</source>
+        <target>Eliminar llave de acceso</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.delete_success" name="auth.passkey.delete_success">
+      <notes>
+        <note category="description">Toast shown after the passkey was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Passkey wurde gelöscht.</source>
+        <target>La llave de acceso se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.delete_confirm" name="auth.passkey.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a passkey is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Passkey wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta llave de acceso?</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.create_activity" name="auth.passkey.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a passkey. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Passkey erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado la llave de acceso.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.revoke_activity" name="auth.passkey.revoke_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member revoked a passkey. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Passkey widerrufen.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha revocado la llave de acceso.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.create_permission" name="auth.passkey.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the passkeys page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Passkeys erstellen.}}
+* {{Nur Administratoren können Passkeys erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear las llaves de acceso.}}
+* {{Solo los administradores pueden crear las llaves de acceso.}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.help" name="auth.passkey.help">
+      <notes>
+        <note category="description">Help link below the passkeys list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Passkeys erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las llaves de acceso en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.new" name="auth.passkey.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a passkey.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Passkey</source>
+        <target>Nueva llave de acceso</target>
+      </segment>
+    </unit>
+    <unit id="auth.passkey.selected" name="auth.passkey.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected passkeys. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Passkey ausgewählt}}
+* {{{$count} Passkeys ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} llave de acceso seleccionada}}
+many {{{$count} de llaves de acceso seleccionadas}}
+* {{{$count} llaves de acceso seleccionadas}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.resend" name="auth.invitation.resend" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that resends the invitation.</note>
+      </notes>
+      <segment state="final">
+        <source>Einladung erneut senden</source>
+        <target>Reenviar invitación</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.resend_success" name="auth.invitation.resend_success">
+      <notes>
+        <note category="description">Toast shown after the invitation was resent.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Einladung wurde erneut gesendet.</source>
+        <target>La invitación se ha reenviado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.revoke" name="auth.invitation.revoke" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that revokes the invitation.</note>
+      </notes>
+      <segment state="final">
+        <source>Einladung widerrufen</source>
+        <target>Revocar invitación</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.revoke_success" name="auth.invitation.revoke_success">
+      <notes>
+        <note category="description">Toast shown after the invitation was revoked.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Einladung wurde widerrufen.</source>
+        <target>La invitación se ha revocado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.create" name="auth.invitation.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the invitation.</note>
+      </notes>
+      <segment state="final">
+        <source>Einladung erstellen</source>
+        <target>Crear invitación</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.create_success" name="auth.invitation.create_success">
+      <notes>
+        <note category="description">Toast shown after the invitation was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Einladung wurde erstellt.</source>
+        <target>La invitación se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.delete" name="auth.invitation.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the invitation.</note>
+      </notes>
+      <segment state="final">
+        <source>Einladung löschen</source>
+        <target>Eliminar invitación</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.delete_confirm" name="auth.invitation.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a invitation is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diese Einladung wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta invitación?</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.count" name="auth.invitation.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of invitations in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Einladung}}
+* {{{$count} Einladungen}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} invitación}}
+many {{{$count} de invitaciones}}
+* {{{$count} invitaciones}}</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.empty" name="auth.invitation.empty">
+      <notes>
+        <note category="description">Empty state of the invitations list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Einladungen.</source>
+        <target>Todavía no tiene invitaciones.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.resend_activity" name="auth.invitation.resend_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member resent a invitation. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Einladung erneut gesendet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha reenviado la invitación.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.revoke_activity" name="auth.invitation.revoke_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member revoked a invitation. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Einladung widerrufen.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha revocado la invitación.</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.new" name="auth.invitation.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a invitation.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Einladung</source>
+        <target>Nueva invitación</target>
+      </segment>
+    </unit>
+    <unit id="auth.invitation.all" name="auth.invitation.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all invitations.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Einladungen</source>
+        <target>Todas las invitaciones</target>
+      </segment>
+    </unit>
+    <unit id="auth.actions.save" name="auth.actions.save" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic save button in the auth area.</note>
+      </notes>
+      <segment state="final">
+        <source>Speichern</source>
+        <target>Guardar</target>
+      </segment>
+    </unit>
+    <unit id="auth.actions.cancel" name="auth.actions.cancel" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic cancel button in the auth area.</note>
+      </notes>
+      <segment state="final">
+        <source>Abbrechen</source>
+        <target>Cancelar</target>
+      </segment>
+    </unit>
+    <unit id="auth.actions.back" name="auth.actions.back" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic back button in the auth area.</note>
+      </notes>
+      <segment state="final">
+        <source>Zurück</source>
+        <target>Atrás</target>
+      </segment>
+    </unit>
+    <unit id="auth.actions.continue" name="auth.actions.continue" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic continue button in the auth area.</note>
+      </notes>
+      <segment state="final">
+        <source>Weiter</source>
+        <target>Continuar</target>
+      </segment>
+    </unit>
+    <unit id="auth.actions.close" name="auth.actions.close" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic close button in the auth area.</note>
+      </notes>
+      <segment state="final">
+        <source>Schließen</source>
+        <target>Cerrar</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f4" original="dashboard">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="dashboard.report.download" name="dashboard.report.download" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that downloads the report.</note>
+      </notes>
+      <segment state="final">
+        <source>Bericht herunterladen</source>
+        <target>Descargar informe</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.download_success" name="dashboard.report.download_success">
+      <notes>
+        <note category="description">Toast shown after the report was downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Bericht wurde heruntergeladen.</source>
+        <target>El informe se ha descargado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.export" name="dashboard.report.export" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that exports the report.</note>
+      </notes>
+      <segment state="final">
+        <source>Bericht exportieren</source>
+        <target>Exportar informe</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.share" name="dashboard.report.share" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that shares the report.</note>
+      </notes>
+      <segment state="final">
+        <source>Bericht teilen</source>
+        <target>Compartir informe</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.create_success" name="dashboard.report.create_success">
+      <notes>
+        <note category="description">Toast shown after the report was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Bericht wurde erstellt.</source>
+        <target>El informe se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.create_confirm" name="dashboard.report.create_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a report is created.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Bericht wirklich erstellen?</source>
+        <target>¿Seguro que desea crear este informe?</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.count" name="dashboard.report.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of reports in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Bericht}}
+* {{{$count} Berichte}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} informe}}
+many {{{$count} de informes}}
+* {{{$count} informes}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.empty" name="dashboard.report.empty">
+      <notes>
+        <note category="description">Empty state of the reports list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Berichte.</source>
+        <target>Todavía no tiene informes.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.export_activity" name="dashboard.report.export_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member exported a report. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Bericht exportiert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha exportado el informe.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.total" name="dashboard.report.total">
+      <notes>
+        <note category="description">Total number of reports in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Berichte: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de informes: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.new" name="dashboard.report.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a report.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Bericht</source>
+        <target>Nuevo informe</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.search" name="dashboard.report.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the reports search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Berichte durchsuchen</source>
+        <target>Buscar informes</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.all" name="dashboard.report.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all reports.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Berichte</source>
+        <target>Todos los informes</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.report.selected" name="dashboard.report.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected reports. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Bericht ausgewählt}}
+* {{{$count} Berichte ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} informe seleccionado}}
+many {{{$count} de informes seleccionados}}
+* {{{$count} informes seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.create" name="dashboard.widget.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the widget.</note>
+      </notes>
+      <segment state="final">
+        <source>Widget erstellen</source>
+        <target>Crear widget</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.edit" name="dashboard.widget.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the widget.</note>
+      </notes>
+      <segment state="final">
+        <source>Widget bearbeiten</source>
+        <target>Editar widget</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.edit_success" name="dashboard.widget.edit_success">
+      <notes>
+        <note category="description">Toast shown after the widget was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Widget wurde bearbeitet.</source>
+        <target>El widget se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.update" name="dashboard.widget.update" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that updates the widget.</note>
+      </notes>
+      <segment state="final">
+        <source>Widget aktualisieren</source>
+        <target>Actualizar widget</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.update_success" name="dashboard.widget.update_success">
+      <notes>
+        <note category="description">Toast shown after the widget was updated.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Widget wurde aktualisiert.</source>
+        <target>El widget se ha actualizado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.delete_success" name="dashboard.widget.delete_success">
+      <notes>
+        <note category="description">Toast shown after the widget was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Widget wurde gelöscht.</source>
+        <target>El widget se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.delete_confirm" name="dashboard.widget.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a widget is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie dieses Widget wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este widget?</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.count" name="dashboard.widget.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of widgets in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Widget}}
+* {{{$count} Widgets}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} widget}}
+many {{{$count} de widgets}}
+* {{{$count} widgets}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.empty" name="dashboard.widget.empty">
+      <notes>
+        <note category="description">Empty state of the widgets list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Widgets.</source>
+        <target>Todavía no tiene widgets.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.create_activity" name="dashboard.widget.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a widget. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Widget erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el widget.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.edit_activity" name="dashboard.widget.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a widget. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Widget bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el widget.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.create_permission" name="dashboard.widget.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the widgets page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Widgets erstellen.}}
+* {{Nur Administratoren können Widgets erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los widgets.}}
+* {{Solo los administradores pueden crear los widgets.}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.help" name="dashboard.widget.help">
+      <notes>
+        <note category="description">Help link below the widgets list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Widgets erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los widgets en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.new" name="dashboard.widget.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a widget.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Widget</source>
+        <target>Nuevo widget</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.all" name="dashboard.widget.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all widgets.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Widgets</source>
+        <target>Todos los widgets</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.widget.selected" name="dashboard.widget.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected widgets. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Widget ausgewählt}}
+* {{{$count} Widgets ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} widget seleccionado}}
+many {{{$count} de widgets seleccionados}}
+* {{{$count} widgets seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.create" name="dashboard.project.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the project.</note>
+      </notes>
+      <segment state="final">
+        <source>Projekt erstellen</source>
+        <target>Crear proyecto</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.create_success" name="dashboard.project.create_success">
+      <notes>
+        <note category="description">Toast shown after the project was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Projekt wurde erstellt.</source>
+        <target>El proyecto se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.archive_success" name="dashboard.project.archive_success">
+      <notes>
+        <note category="description">Toast shown after the project was archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Projekt wurde archiviert.</source>
+        <target>El proyecto se ha archivado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.share" name="dashboard.project.share" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that shares the project.</note>
+      </notes>
+      <segment state="final">
+        <source>Projekt teilen</source>
+        <target>Compartir proyecto</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.delete_success" name="dashboard.project.delete_success">
+      <notes>
+        <note category="description">Toast shown after the project was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Projekt wurde gelöscht.</source>
+        <target>El proyecto se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.empty" name="dashboard.project.empty">
+      <notes>
+        <note category="description">Empty state of the projects list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Projekte.</source>
+        <target>Todavía no tiene proyectos.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.create_activity" name="dashboard.project.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a project. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Projekt erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el proyecto.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.archive_activity" name="dashboard.project.archive_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member archived a project. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Projekt archiviert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha archivado el proyecto.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.create_permission" name="dashboard.project.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the projects page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Projekte erstellen.}}
+* {{Nur Administratoren können Projekte erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los proyectos.}}
+* {{Solo los administradores pueden crear los proyectos.}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.help" name="dashboard.project.help">
+      <notes>
+        <note category="description">Help link below the projects list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Projekte erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los proyectos en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.total" name="dashboard.project.total">
+      <notes>
+        <note category="description">Total number of projects in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Projekte: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de proyectos: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.new" name="dashboard.project.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a project.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Projekt</source>
+        <target>Nuevo proyecto</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.all" name="dashboard.project.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all projects.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Projekte</source>
+        <target>Todos los proyectos</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.project.selected" name="dashboard.project.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected projects. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Projekt ausgewählt}}
+* {{{$count} Projekte ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} proyecto seleccionado}}
+many {{{$count} de proyectos seleccionados}}
+* {{{$count} proyectos seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.export" name="dashboard.chart.export" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that exports the chart.</note>
+      </notes>
+      <segment state="final">
+        <source>Diagramm exportieren</source>
+        <target>Exportar gráfico</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.download" name="dashboard.chart.download" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that downloads the chart.</note>
+      </notes>
+      <segment state="final">
+        <source>Diagramm herunterladen</source>
+        <target>Descargar gráfico</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.download_success" name="dashboard.chart.download_success">
+      <notes>
+        <note category="description">Toast shown after the chart was downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Diagramm wurde heruntergeladen.</source>
+        <target>El gráfico se ha descargado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.edit" name="dashboard.chart.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the chart.</note>
+      </notes>
+      <segment state="final">
+        <source>Diagramm bearbeiten</source>
+        <target>Editar gráfico</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.share_confirm" name="dashboard.chart.share_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a chart is shared.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie dieses Diagramm wirklich teilen?</source>
+        <target>¿Seguro que desea compartir este gráfico?</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.export_activity" name="dashboard.chart.export_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member exported a chart. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Diagramm exportiert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha exportado el gráfico.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.help" name="dashboard.chart.help">
+      <notes>
+        <note category="description">Help link below the charts list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Diagramme erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los gráficos en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.total" name="dashboard.chart.total">
+      <notes>
+        <note category="description">Total number of charts in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Diagramme: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de gráficos: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.new" name="dashboard.chart.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a chart.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Diagramm</source>
+        <target>Nuevo gráfico</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.chart.all" name="dashboard.chart.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all charts.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Diagramme</source>
+        <target>Todos los gráficos</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.create" name="dashboard.filter.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the filter.</note>
+      </notes>
+      <segment state="final">
+        <source>Filter erstellen</source>
+        <target>Crear filtro</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.edit" name="dashboard.filter.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the filter.</note>
+      </notes>
+      <segment state="final">
+        <source>Filter bearbeiten</source>
+        <target>Editar filtro</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.edit_success" name="dashboard.filter.edit_success">
+      <notes>
+        <note category="description">Toast shown after the filter was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Filter wurde bearbeitet.</source>
+        <target>El filtro se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.share" name="dashboard.filter.share" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that shares the filter.</note>
+      </notes>
+      <segment state="final">
+        <source>Filter teilen</source>
+        <target>Compartir filtro</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.share_success" name="dashboard.filter.share_success">
+      <notes>
+        <note category="description">Toast shown after the filter was shared.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Filter wurde geteilt.</source>
+        <target>El filtro se ha compartido.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.delete_success" name="dashboard.filter.delete_success">
+      <notes>
+        <note category="description">Toast shown after the filter was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Filter wurde gelöscht.</source>
+        <target>El filtro se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.delete_confirm" name="dashboard.filter.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a filter is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Filter wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este filtro?</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.count" name="dashboard.filter.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of filters in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Filter}}
+* {{{$count} Filter}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} filtro}}
+many {{{$count} de filtros}}
+* {{{$count} filtros}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.create_activity" name="dashboard.filter.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a filter. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Filter erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el filtro.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.edit_activity" name="dashboard.filter.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a filter. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Filter bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el filtro.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.help" name="dashboard.filter.help">
+      <notes>
+        <note category="description">Help link below the filters list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Filter erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los filtros en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.total" name="dashboard.filter.total">
+      <notes>
+        <note category="description">Total number of filters in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Filter: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de filtros: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.new" name="dashboard.filter.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a filter.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Filter</source>
+        <target>Nuevo filtro</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.search" name="dashboard.filter.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the filters search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Filter durchsuchen</source>
+        <target>Buscar filtros</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.all" name="dashboard.filter.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all filters.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Filter</source>
+        <target>Todos los filtros</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.filter.selected" name="dashboard.filter.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected filters. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Filter ausgewählt}}
+* {{{$count} Filter ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} filtro seleccionado}}
+many {{{$count} de filtros seleccionados}}
+* {{{$count} filtros seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.save" name="dashboard.actions.save" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic save button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Speichern</source>
+        <target>Guardar</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.cancel" name="dashboard.actions.cancel" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic cancel button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Abbrechen</source>
+        <target>Cancelar</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.back" name="dashboard.actions.back" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic back button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Zurück</source>
+        <target>Atrás</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.continue" name="dashboard.actions.continue" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic continue button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Weiter</source>
+        <target>Continuar</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.close" name="dashboard.actions.close" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic close button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Schließen</source>
+        <target>Cerrar</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.actions.retry" name="dashboard.actions.retry" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic retry button in the dashboard area.</note>
+      </notes>
+      <segment state="final">
+        <source>Wiederholen</source>
+        <target>Reintentar</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f5" original="settings">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="settings.workspace.create" name="settings.workspace.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the workspace.</note>
+      </notes>
+      <segment state="final">
+        <source>Arbeitsbereich erstellen</source>
+        <target>Crear espacio de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.create_success" name="settings.workspace.create_success">
+      <notes>
+        <note category="description">Toast shown after the workspace was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich wurde erstellt.</source>
+        <target>El espacio de trabajo se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.archive" name="settings.workspace.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the workspace.</note>
+      </notes>
+      <segment state="final">
+        <source>Arbeitsbereich archivieren</source>
+        <target>Archivar espacio de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.archive_success" name="settings.workspace.archive_success">
+      <notes>
+        <note category="description">Toast shown after the workspace was archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich wurde archiviert.</source>
+        <target>El espacio de trabajo se ha archivado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.edit" name="settings.workspace.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the workspace.</note>
+      </notes>
+      <segment state="final">
+        <source>Arbeitsbereich bearbeiten</source>
+        <target>Editar espacio de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.edit_success" name="settings.workspace.edit_success">
+      <notes>
+        <note category="description">Toast shown after the workspace was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich wurde bearbeitet.</source>
+        <target>El espacio de trabajo se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.delete" name="settings.workspace.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the workspace.</note>
+      </notes>
+      <segment state="final">
+        <source>Arbeitsbereich löschen</source>
+        <target>Eliminar espacio de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.delete_success" name="settings.workspace.delete_success">
+      <notes>
+        <note category="description">Toast shown after the workspace was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Arbeitsbereich wurde gelöscht.</source>
+        <target>El espacio de trabajo se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.delete_confirm" name="settings.workspace.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a workspace is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Arbeitsbereich wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este espacio de trabajo?</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.count" name="settings.workspace.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of workspaces in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Arbeitsbereich}}
+* {{{$count} Arbeitsbereiche}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} espacio de trabajo}}
+many {{{$count} de espacios de trabajo}}
+* {{{$count} espacios de trabajo}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.empty" name="settings.workspace.empty">
+      <notes>
+        <note category="description">Empty state of the workspaces list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Arbeitsbereiche.</source>
+        <target>Todavía no tiene espacios de trabajo.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.create_activity" name="settings.workspace.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a workspace. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Arbeitsbereich erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el espacio de trabajo.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.archive_activity" name="settings.workspace.archive_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member archived a workspace. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Arbeitsbereich archiviert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha archivado el espacio de trabajo.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.help" name="settings.workspace.help">
+      <notes>
+        <note category="description">Help link below the workspaces list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Arbeitsbereiche erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los espacios de trabajo en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.search" name="settings.workspace.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the workspaces search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Arbeitsbereiche durchsuchen</source>
+        <target>Buscar espacios de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.workspace.all" name="settings.workspace.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all workspaces.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Arbeitsbereiche</source>
+        <target>Todos los espacios de trabajo</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.invite_success" name="settings.member.invite_success">
+      <notes>
+        <note category="description">Toast shown after the member was invited.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Mitglied wurde eingeladen.</source>
+        <target>El miembro se ha invitado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.remove" name="settings.member.remove" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that removes the member.</note>
+      </notes>
+      <segment state="final">
+        <source>Mitglied entfernen</source>
+        <target>Quitar miembro</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.remove_success" name="settings.member.remove_success">
+      <notes>
+        <note category="description">Toast shown after the member was removed.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Mitglied wurde entfernt.</source>
+        <target>El miembro se ha quitado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.edit" name="settings.member.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the member.</note>
+      </notes>
+      <segment state="final">
+        <source>Mitglied bearbeiten</source>
+        <target>Editar miembro</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.edit_success" name="settings.member.edit_success">
+      <notes>
+        <note category="description">Toast shown after the member was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Das Mitglied wurde bearbeitet.</source>
+        <target>El miembro se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.remove_confirm" name="settings.member.remove_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a member is removed.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie dieses Mitglied wirklich entfernen?</source>
+        <target>¿Seguro que desea quitar este miembro?</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.empty" name="settings.member.empty">
+      <notes>
+        <note category="description">Empty state of the members list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Mitglieder.</source>
+        <target>Todavía no tiene miembros.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.remove_activity" name="settings.member.remove_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member removed a member. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat das Mitglied entfernt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha quitado el miembro.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.invite_permission" name="settings.member.invite_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the members page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Mitglieder einladen.}}
+* {{Nur Administratoren können Mitglieder einladen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede invitar los miembros.}}
+* {{Solo los administradores pueden invitar los miembros.}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.help" name="settings.member.help">
+      <notes>
+        <note category="description">Help link below the members list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Mitglieder erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los miembros en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.total" name="settings.member.total">
+      <notes>
+        <note category="description">Total number of members in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Mitglieder: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de miembros: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="settings.member.new" name="settings.member.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a member.</note>
+      </notes>
+      <segment state="final">
+        <source>Neues Mitglied</source>
+        <target>Nuevo miembro</target>
+      </segment>
+    </unit>
+    <unit id="settings.member.search" name="settings.member.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the members search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Mitglieder durchsuchen</source>
+        <target>Buscar miembros</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.edit" name="settings.role.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the role.</note>
+      </notes>
+      <segment state="final">
+        <source>Rolle bearbeiten</source>
+        <target>Editar rol</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.delete" name="settings.role.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the role.</note>
+      </notes>
+      <segment state="final">
+        <source>Rolle löschen</source>
+        <target>Eliminar rol</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.delete_success" name="settings.role.delete_success">
+      <notes>
+        <note category="description">Toast shown after the role was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Rolle wurde gelöscht.</source>
+        <target>El rol se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.empty" name="settings.role.empty">
+      <notes>
+        <note category="description">Empty state of the roles list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Rollen.</source>
+        <target>Todavía no tiene roles.</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.create_activity" name="settings.role.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a role. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Rolle erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el rol.</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.edit_activity" name="settings.role.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a role. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Rolle bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el rol.</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.create_permission" name="settings.role.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the roles page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Rollen erstellen.}}
+* {{Nur Administratoren können Rollen erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los roles.}}
+* {{Solo los administradores pueden crear los roles.}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.help" name="settings.role.help">
+      <notes>
+        <note category="description">Help link below the roles list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Rollen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los roles en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.total" name="settings.role.total">
+      <notes>
+        <note category="description">Total number of roles in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Rollen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de roles: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="settings.role.search" name="settings.role.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the roles search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Rollen durchsuchen</source>
+        <target>Buscar roles</target>
+      </segment>
+    </unit>
+    <unit id="settings.role.selected" name="settings.role.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected roles. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Rolle ausgewählt}}
+* {{{$count} Rollen ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} rol seleccionado}}
+many {{{$count} de roles seleccionados}}
+* {{{$count} roles seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.create" name="settings.integration.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the integration.</note>
+      </notes>
+      <segment state="final">
+        <source>Integration erstellen</source>
+        <target>Crear integración</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.edit" name="settings.integration.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the integration.</note>
+      </notes>
+      <segment state="final">
+        <source>Integration bearbeiten</source>
+        <target>Editar integración</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.delete" name="settings.integration.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the integration.</note>
+      </notes>
+      <segment state="final">
+        <source>Integration löschen</source>
+        <target>Eliminar integración</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.delete_confirm" name="settings.integration.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a integration is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diese Integration wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta integración?</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.count" name="settings.integration.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of integrations in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Integration}}
+* {{{$count} Integrationen}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} integración}}
+many {{{$count} de integraciones}}
+* {{{$count} integraciones}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.empty" name="settings.integration.empty">
+      <notes>
+        <note category="description">Empty state of the integrations list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Integrationen.</source>
+        <target>Todavía no tiene integraciones.</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.create_activity" name="settings.integration.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a integration. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Integration erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado la integración.</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.update_activity" name="settings.integration.update_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member updated a integration. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Integration aktualisiert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha actualizado la integración.</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.create_permission" name="settings.integration.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the integrations page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Integrationen erstellen.}}
+* {{Nur Administratoren können Integrationen erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear las integraciones.}}
+* {{Solo los administradores pueden crear las integraciones.}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.help" name="settings.integration.help">
+      <notes>
+        <note category="description">Help link below the integrations list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Integrationen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las integraciones en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="settings.integration.total" name="settings.integration.total">
+      <notes>
+        <note category="description">Total number of integrations in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Integrationen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de integraciones: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.create" name="settings.webhook.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the webhook.</note>
+      </notes>
+      <segment state="final">
+        <source>Webhook erstellen</source>
+        <target>Crear webhook</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.edit" name="settings.webhook.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the webhook.</note>
+      </notes>
+      <segment state="final">
+        <source>Webhook bearbeiten</source>
+        <target>Editar webhook</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.update_success" name="settings.webhook.update_success">
+      <notes>
+        <note category="description">Toast shown after the webhook was updated.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Webhook wurde aktualisiert.</source>
+        <target>El webhook se ha actualizado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.delete_success" name="settings.webhook.delete_success">
+      <notes>
+        <note category="description">Toast shown after the webhook was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Webhook wurde gelöscht.</source>
+        <target>El webhook se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.delete_confirm" name="settings.webhook.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a webhook is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Webhook wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este webhook?</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.count" name="settings.webhook.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of webhooks in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Webhook}}
+* {{{$count} Webhooks}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} webhook}}
+many {{{$count} de webhooks}}
+* {{{$count} webhooks}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.edit_activity" name="settings.webhook.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a webhook. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Webhook bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el webhook.</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.create_permission" name="settings.webhook.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the webhooks page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Webhooks erstellen.}}
+* {{Nur Administratoren können Webhooks erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los webhooks.}}
+* {{Solo los administradores pueden crear los webhooks.}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.help" name="settings.webhook.help">
+      <notes>
+        <note category="description">Help link below the webhooks list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Webhooks erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los webhooks en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.total" name="settings.webhook.total">
+      <notes>
+        <note category="description">Total number of webhooks in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Webhooks: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de webhooks: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.new" name="settings.webhook.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a webhook.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Webhook</source>
+        <target>Nuevo webhook</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.all" name="settings.webhook.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all webhooks.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Webhooks</source>
+        <target>Todos los webhooks</target>
+      </segment>
+    </unit>
+    <unit id="settings.webhook.selected" name="settings.webhook.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected webhooks. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Webhook ausgewählt}}
+* {{{$count} Webhooks ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} webhook seleccionado}}
+many {{{$count} de webhooks seleccionados}}
+* {{{$count} webhooks seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="settings.actions.save" name="settings.actions.save" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic save button in the settings area.</note>
+      </notes>
+      <segment state="final">
+        <source>Speichern</source>
+        <target>Guardar</target>
+      </segment>
+    </unit>
+    <unit id="settings.actions.back" name="settings.actions.back" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic back button in the settings area.</note>
+      </notes>
+      <segment state="final">
+        <source>Zurück</source>
+        <target>Atrás</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f6" original="notifications">
+    <slr:profiles generalProfile="xliff:codepoints"/>
+    <unit id="notifications.notification.mute_success" name="notifications.notification.mute_success">
+      <notes>
+        <note category="description">Toast shown after the notification was muted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Benachrichtigung wurde stummgeschaltet.</source>
+        <target>La notificación se ha silenciado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.archive" name="notifications.notification.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the notification.</note>
+      </notes>
+      <segment state="final">
+        <source>Benachrichtigung archivieren</source>
+        <target>Archivar notificación</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.delete_success" name="notifications.notification.delete_success">
+      <notes>
+        <note category="description">Toast shown after the notification was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Benachrichtigung wurde gelöscht.</source>
+        <target>La notificación se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.delete_confirm" name="notifications.notification.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a notification is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diese Benachrichtigung wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta notificación?</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.empty" name="notifications.notification.empty">
+      <notes>
+        <note category="description">Empty state of the notifications list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Benachrichtigungen.</source>
+        <target>Todavía no tiene notificaciones.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.archive_activity" name="notifications.notification.archive_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member archived a notification. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Benachrichtigung archiviert.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha archivado la notificación.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.mute_permission" name="notifications.notification.mute_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the notifications page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Benachrichtigungen stummschalten.}}
+* {{Nur Administratoren können Benachrichtigungen stummschalten.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede silenciar las notificaciones.}}
+* {{Solo los administradores pueden silenciar las notificaciones.}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.help" name="notifications.notification.help">
+      <notes>
+        <note category="description">Help link below the notifications list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Benachrichtigungen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las notificaciones en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.total" name="notifications.notification.total">
+      <notes>
+        <note category="description">Total number of notifications in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Benachrichtigungen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de notificaciones: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.new" name="notifications.notification.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a notification.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Benachrichtigung</source>
+        <target>Nueva notificación</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.search" name="notifications.notification.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the notifications search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Benachrichtigungen durchsuchen</source>
+        <target>Buscar notificaciones</target>
+      </segment>
+    </unit>
+    <unit id="notifications.notification.all" name="notifications.notification.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all notifications.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Benachrichtigungen</source>
+        <target>Todas las notificaciones</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.create_success" name="notifications.comment.create_success">
+      <notes>
+        <note category="description">Toast shown after the comment was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Kommentar wurde erstellt.</source>
+        <target>El comentario se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.edit" name="notifications.comment.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the comment.</note>
+      </notes>
+      <segment state="final">
+        <source>Kommentar bearbeiten</source>
+        <target>Editar comentario</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.edit_success" name="notifications.comment.edit_success">
+      <notes>
+        <note category="description">Toast shown after the comment was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Der Kommentar wurde bearbeitet.</source>
+        <target>El comentario se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.delete_confirm" name="notifications.comment.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a comment is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diesen Kommentar wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar este comentario?</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.count" name="notifications.comment.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of comments in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Kommentar}}
+* {{{$count} Kommentare}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} comentario}}
+many {{{$count} de comentarios}}
+* {{{$count} comentarios}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.empty" name="notifications.comment.empty">
+      <notes>
+        <note category="description">Empty state of the comments list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Kommentare.</source>
+        <target>Todavía no tiene comentarios.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.edit_activity" name="notifications.comment.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a comment. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat den Kommentar bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el comentario.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.help" name="notifications.comment.help">
+      <notes>
+        <note category="description">Help link below the comments list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Kommentare erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los comentarios en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.new" name="notifications.comment.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a comment.</note>
+      </notes>
+      <segment state="final">
+        <source>Neuer Kommentar</source>
+        <target>Nuevo comentario</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.search" name="notifications.comment.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the comments search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Kommentare durchsuchen</source>
+        <target>Buscar comentarios</target>
+      </segment>
+    </unit>
+    <unit id="notifications.comment.all" name="notifications.comment.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all comments.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Kommentare</source>
+        <target>Todos los comentarios</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.download_success" name="notifications.file.download_success">
+      <notes>
+        <note category="description">Toast shown after the file was downloaded.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Datei wurde heruntergeladen.</source>
+        <target>El archivo se ha descargado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.archive" name="notifications.file.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the file.</note>
+      </notes>
+      <segment state="final">
+        <source>Datei archivieren</source>
+        <target>Archivar archivo</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.delete" name="notifications.file.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the file.</note>
+      </notes>
+      <segment state="final">
+        <source>Datei löschen</source>
+        <target>Eliminar archivo</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.delete_success" name="notifications.file.delete_success">
+      <notes>
+        <note category="description">Toast shown after the file was deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Datei wurde gelöscht.</source>
+        <target>El archivo se ha eliminado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.count" name="notifications.file.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of files in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Datei}}
+* {{{$count} Dateien}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} archivo}}
+many {{{$count} de archivos}}
+* {{{$count} archivos}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.download_activity" name="notifications.file.download_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member downloaded a file. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Datei heruntergeladen.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha descargado el archivo.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.share_activity" name="notifications.file.share_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member shared a file. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Datei geteilt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha compartido el archivo.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.download_permission" name="notifications.file.download_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the files page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Dateien herunterladen.}}
+* {{Nur Administratoren können Dateien herunterladen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede descargar los archivos.}}
+* {{Solo los administradores pueden descargar los archivos.}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.help" name="notifications.file.help">
+      <notes>
+        <note category="description">Help link below the files list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Dateien erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los archivos en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.total" name="notifications.file.total">
+      <notes>
+        <note category="description">Total number of files in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Dateien: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de archivos: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="notifications.file.new" name="notifications.file.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a file.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Datei</source>
+        <target>Nuevo archivo</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.create" name="notifications.task.create" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that creates the task.</note>
+      </notes>
+      <segment state="final">
+        <source>Aufgabe erstellen</source>
+        <target>Crear tarea</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.create_success" name="notifications.task.create_success">
+      <notes>
+        <note category="description">Toast shown after the task was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Aufgabe wurde erstellt.</source>
+        <target>La tarea se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.edit_success" name="notifications.task.edit_success">
+      <notes>
+        <note category="description">Toast shown after the task was edited.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Aufgabe wurde bearbeitet.</source>
+        <target>La tarea se ha editado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.archive" name="notifications.task.archive" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that archives the task.</note>
+      </notes>
+      <segment state="final">
+        <source>Aufgabe archivieren</source>
+        <target>Archivar tarea</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.archive_success" name="notifications.task.archive_success">
+      <notes>
+        <note category="description">Toast shown after the task was archived.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Aufgabe wurde archiviert.</source>
+        <target>La tarea se ha archivado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.delete" name="notifications.task.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the task.</note>
+      </notes>
+      <segment state="final">
+        <source>Aufgabe löschen</source>
+        <target>Eliminar tarea</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.delete_confirm" name="notifications.task.delete_confirm">
+      <notes>
+        <note category="description">Confirmation dialog before a task is deleted.</note>
+      </notes>
+      <segment state="final">
+        <source>Möchten Sie diese Aufgabe wirklich löschen?</source>
+        <target>¿Seguro que desea eliminar esta tarea?</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.create_activity" name="notifications.task.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a task. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Aufgabe erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado la tarea.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.edit_activity" name="notifications.task.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a task. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Aufgabe bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado la tarea.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.create_permission" name="notifications.task.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the tasks page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Aufgaben erstellen.}}
+* {{Nur Administratoren können Aufgaben erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear las tareas.}}
+* {{Solo los administradores pueden crear las tareas.}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.help" name="notifications.task.help">
+      <notes>
+        <note category="description">Help link below the tasks list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Aufgaben erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre las tareas en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.total" name="notifications.task.total">
+      <notes>
+        <note category="description">Total number of tasks in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Aufgaben: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de tareas: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.new" name="notifications.task.new" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Title of the dialog that creates a task.</note>
+      </notes>
+      <segment state="final">
+        <source>Neue Aufgabe</source>
+        <target>Nueva tarea</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.search" name="notifications.task.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the tasks search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Aufgaben durchsuchen</source>
+        <target>Buscar tareas</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.all" name="notifications.task.all" slr:sizeRestriction="32">
+      <notes>
+        <note category="description">Tab that lists all tasks.</note>
+      </notes>
+      <segment state="final">
+        <source>Alle Aufgaben</source>
+        <target>Todas las tareas</target>
+      </segment>
+    </unit>
+    <unit id="notifications.task.selected" name="notifications.task.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected tasks. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Aufgabe ausgewählt}}
+* {{{$count} Aufgaben ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} tarea seleccionada}}
+many {{{$count} de tareas seleccionadas}}
+* {{{$count} tareas seleccionadas}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.create_success" name="notifications.reminder.create_success">
+      <notes>
+        <note category="description">Toast shown after the reminder was created.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Erinnerung wurde erstellt.</source>
+        <target>El recordatorio se ha creado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.edit" name="notifications.reminder.edit" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that edits the reminder.</note>
+      </notes>
+      <segment state="final">
+        <source>Erinnerung bearbeiten</source>
+        <target>Editar recordatorio</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.mute" name="notifications.reminder.mute" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that mutes the reminder.</note>
+      </notes>
+      <segment state="final">
+        <source>Erinnerung stummschalten</source>
+        <target>Silenciar recordatorio</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.mute_success" name="notifications.reminder.mute_success">
+      <notes>
+        <note category="description">Toast shown after the reminder was muted.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Erinnerung wurde stummgeschaltet.</source>
+        <target>El recordatorio se ha silenciado.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.delete" name="notifications.reminder.delete" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Button that deletes the reminder.</note>
+      </notes>
+      <segment state="final">
+        <source>Erinnerung löschen</source>
+        <target>Eliminar recordatorio</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.count" name="notifications.reminder.count" type="glossa:mf2">
+      <notes>
+        <note category="description">Number of reminders in the list header. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Erinnerung}}
+* {{{$count} Erinnerungen}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} recordatorio}}
+many {{{$count} de recordatorios}}
+* {{{$count} recordatorios}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.empty" name="notifications.reminder.empty">
+      <notes>
+        <note category="description">Empty state of the reminders list.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben noch keine Erinnerungen.</source>
+        <target>Todavía no tiene recordatorios.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.create_activity" name="notifications.reminder.create_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member created a reminder. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Erinnerung erstellt.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha creado el recordatorio.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.edit_activity" name="notifications.reminder.edit_activity">
+      <notes>
+        <note category="description">Activity feed entry: a member edited a reminder. $name is their display name.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$name}</data>
+      </originalData>
+      <segment state="final">
+        <source><ph id="1" dataRef="d1" disp="{$name}"/> hat die Erinnerung bearbeitet.</source>
+        <target><ph id="1" dataRef="d1" disp="{$name}"/> ha editado el recordatorio.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.create_permission" name="notifications.reminder.create_permission" type="glossa:mf2">
+      <notes>
+        <note category="description">Permission hint on the reminders page. $role is the viewer's role.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$role :string}
+.match $role
+admin {{Als Administrator können Sie Erinnerungen erstellen.}}
+* {{Nur Administratoren können Erinnerungen erstellen.}}</source>
+        <target>.input {$role :string}
+.match $role
+admin {{Como administrador, puede crear los recordatorios.}}
+* {{Solo los administradores pueden crear los recordatorios.}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.help" name="notifications.reminder.help">
+      <notes>
+        <note category="description">Help link below the reminders list.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{#link}</data>
+        <data id="d2">{/link}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mehr über Erinnerungen erfahren Sie in der <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">Hilfe</pc>.</source>
+        <target>Más información sobre los recordatorios en el <pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="{#link}" dispEnd="{/link}">centro de ayuda</pc>.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.total" name="notifications.reminder.total">
+      <notes>
+        <note category="description">Total number of reminders in the summary panel. $total is the number.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$total :number}</data>
+      </originalData>
+      <segment state="final">
+        <source>Anzahl der Erinnerungen: <ph id="1" dataRef="d1" disp="{$total :number}"/></source>
+        <target>Número de recordatorios: <ph id="1" dataRef="d1" disp="{$total :number}"/></target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.search" name="notifications.reminder.search" slr:sizeRestriction="40">
+      <notes>
+        <note category="description">Placeholder of the reminders search field.</note>
+      </notes>
+      <segment state="final">
+        <source>Erinnerungen durchsuchen</source>
+        <target>Buscar recordatorios</target>
+      </segment>
+    </unit>
+    <unit id="notifications.reminder.selected" name="notifications.reminder.selected" type="glossa:mf2">
+      <notes>
+        <note category="description">Toolbar label with the number of selected reminders. $count is the number.</note>
+      </notes>
+      <segment state="final">
+        <source>.input {$count :number}
+.match $count
+one {{{$count} Erinnerung ausgewählt}}
+* {{{$count} Erinnerungen ausgewählt}}</source>
+        <target>.input {$count :number}
+.match $count
+one {{{$count} recordatorio seleccionado}}
+many {{{$count} de recordatorios seleccionados}}
+* {{{$count} recordatorios seleccionados}}</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actions.save" name="notifications.actions.save" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic save button in the notifications area.</note>
+      </notes>
+      <segment state="final">
+        <source>Speichern</source>
+        <target>Guardar</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actions.cancel" name="notifications.actions.cancel" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic cancel button in the notifications area.</note>
+      </notes>
+      <segment state="final">
+        <source>Abbrechen</source>
+        <target>Cancelar</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actions.close" name="notifications.actions.close" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic close button in the notifications area.</note>
+      </notes>
+      <segment state="final">
+        <source>Schließen</source>
+        <target>Cerrar</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actions.retry" name="notifications.actions.retry" slr:sizeRestriction="24">
+      <notes>
+        <note category="description">Generic retry button in the notifications area.</note>
+      </notes>
+      <segment state="final">
+        <source>Wiederholen</source>
+        <target>Reintentar</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="f7" original="legal">
+    <unit id="legal.privacy.purpose_account" name="legal.privacy.purpose_account">
+      <notes>
+        <note category="description">Privacy policy clause (purpose) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir verarbeiten Ihre Kontodaten ausschließlich zur Vertragserfüllung.</source>
+        <target>Tratamos sus datos de cuenta exclusivamente para la ejecución del contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.purpose_billing" name="legal.privacy.purpose_billing">
+      <notes>
+        <note category="description">Privacy policy clause (purpose) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir verarbeiten Ihre Rechnungsdaten ausschließlich zur Vertragserfüllung.</source>
+        <target>Tratamos sus datos de facturación exclusivamente para la ejecución del contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.purpose_usage" name="legal.privacy.purpose_usage">
+      <notes>
+        <note category="description">Privacy policy clause (purpose) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir verarbeiten Ihre Nutzungsdaten ausschließlich zur Vertragserfüllung.</source>
+        <target>Tratamos sus datos de uso exclusivamente para la ejecución del contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.purpose_payment" name="legal.privacy.purpose_payment">
+      <notes>
+        <note category="description">Privacy policy clause (purpose) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir verarbeiten Ihre Zahlungsdaten ausschließlich zur Vertragserfüllung.</source>
+        <target>Tratamos sus datos de pago exclusivamente para la ejecución del contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.purpose_communication" name="legal.privacy.purpose_communication">
+      <notes>
+        <note category="description">Privacy policy clause (purpose) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir verarbeiten Ihre Kommunikationsdaten ausschließlich zur Vertragserfüllung.</source>
+        <target>Tratamos sus datos de comunicación exclusivamente para la ejecución del contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.retention_account" name="legal.privacy.retention_account">
+      <notes>
+        <note category="description">Privacy policy clause (retention) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Kontodaten werden nach Vertragsende gelöscht.</source>
+        <target>Sus datos de cuenta se eliminan al finalizar el contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.retention_billing" name="legal.privacy.retention_billing">
+      <notes>
+        <note category="description">Privacy policy clause (retention) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Rechnungsdaten werden nach Vertragsende gelöscht.</source>
+        <target>Sus datos de facturación se eliminan al finalizar el contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.retention_usage" name="legal.privacy.retention_usage">
+      <notes>
+        <note category="description">Privacy policy clause (retention) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Nutzungsdaten werden nach Vertragsende gelöscht.</source>
+        <target>Sus datos de uso se eliminan al finalizar el contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.retention_payment" name="legal.privacy.retention_payment">
+      <notes>
+        <note category="description">Privacy policy clause (retention) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Zahlungsdaten werden nach Vertragsende gelöscht.</source>
+        <target>Sus datos de pago se eliminan al finalizar el contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.retention_communication" name="legal.privacy.retention_communication">
+      <notes>
+        <note category="description">Privacy policy clause (retention) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Kommunikationsdaten werden nach Vertragsende gelöscht.</source>
+        <target>Sus datos de comunicación se eliminan al finalizar el contrato.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.objection_account" name="legal.privacy.objection_account">
+      <notes>
+        <note category="description">Privacy policy clause (objection) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie können der Verarbeitung Ihrer Kontodaten jederzeit widersprechen.</source>
+        <target>Puede oponerse al tratamiento de sus datos de cuenta en cualquier momento.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.objection_billing" name="legal.privacy.objection_billing">
+      <notes>
+        <note category="description">Privacy policy clause (objection) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie können der Verarbeitung Ihrer Rechnungsdaten jederzeit widersprechen.</source>
+        <target>Puede oponerse al tratamiento de sus datos de facturación en cualquier momento.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.objection_usage" name="legal.privacy.objection_usage">
+      <notes>
+        <note category="description">Privacy policy clause (objection) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie können der Verarbeitung Ihrer Nutzungsdaten jederzeit widersprechen.</source>
+        <target>Puede oponerse al tratamiento de sus datos de uso en cualquier momento.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.objection_payment" name="legal.privacy.objection_payment">
+      <notes>
+        <note category="description">Privacy policy clause (objection) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie können der Verarbeitung Ihrer Zahlungsdaten jederzeit widersprechen.</source>
+        <target>Puede oponerse al tratamiento de sus datos de pago en cualquier momento.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.objection_communication" name="legal.privacy.objection_communication">
+      <notes>
+        <note category="description">Privacy policy clause (objection) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie können der Verarbeitung Ihrer Kommunikationsdaten jederzeit widersprechen.</source>
+        <target>Puede oponerse al tratamiento de sus datos de comunicación en cualquier momento.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.third_parties_account" name="legal.privacy.third_parties_account">
+      <notes>
+        <note category="description">Privacy policy clause (third_parties) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir geben Ihre Kontodaten nicht an Dritte weiter.</source>
+        <target>No cedemos sus datos de cuenta a terceros.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.third_parties_billing" name="legal.privacy.third_parties_billing">
+      <notes>
+        <note category="description">Privacy policy clause (third_parties) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir geben Ihre Rechnungsdaten nicht an Dritte weiter.</source>
+        <target>No cedemos sus datos de facturación a terceros.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.third_parties_usage" name="legal.privacy.third_parties_usage">
+      <notes>
+        <note category="description">Privacy policy clause (third_parties) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir geben Ihre Nutzungsdaten nicht an Dritte weiter.</source>
+        <target>No cedemos sus datos de uso a terceros.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.third_parties_payment" name="legal.privacy.third_parties_payment">
+      <notes>
+        <note category="description">Privacy policy clause (third_parties) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir geben Ihre Zahlungsdaten nicht an Dritte weiter.</source>
+        <target>No cedemos sus datos de pago a terceros.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.third_parties_communication" name="legal.privacy.third_parties_communication">
+      <notes>
+        <note category="description">Privacy policy clause (third_parties) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Wir geben Ihre Kommunikationsdaten nicht an Dritte weiter.</source>
+        <target>No cedemos sus datos de comunicación a terceros.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.location_account" name="legal.privacy.location_account">
+      <notes>
+        <note category="description">Privacy policy clause (location) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Kontodaten werden in der Europäischen Union gespeichert.</source>
+        <target>Sus datos de cuenta se almacenan en la Unión Europea.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.location_billing" name="legal.privacy.location_billing">
+      <notes>
+        <note category="description">Privacy policy clause (location) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Rechnungsdaten werden in der Europäischen Union gespeichert.</source>
+        <target>Sus datos de facturación se almacenan en la Unión Europea.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.location_usage" name="legal.privacy.location_usage">
+      <notes>
+        <note category="description">Privacy policy clause (location) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Nutzungsdaten werden in der Europäischen Union gespeichert.</source>
+        <target>Sus datos de uso se almacenan en la Unión Europea.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.location_payment" name="legal.privacy.location_payment">
+      <notes>
+        <note category="description">Privacy policy clause (location) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Zahlungsdaten werden in der Europäischen Union gespeichert.</source>
+        <target>Sus datos de pago se almacenan en la Unión Europea.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.location_communication" name="legal.privacy.location_communication">
+      <notes>
+        <note category="description">Privacy policy clause (location) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Ihre Kommunikationsdaten werden in der Europäischen Union gespeichert.</source>
+        <target>Sus datos de comunicación se almacenan en la Unión Europea.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.access_account" name="legal.privacy.access_account">
+      <notes>
+        <note category="description">Privacy policy clause (access) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben das Recht auf Auskunft über Ihre Kontodaten.</source>
+        <target>Tiene derecho a acceder a sus datos de cuenta.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.access_billing" name="legal.privacy.access_billing">
+      <notes>
+        <note category="description">Privacy policy clause (access) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben das Recht auf Auskunft über Ihre Rechnungsdaten.</source>
+        <target>Tiene derecho a acceder a sus datos de facturación.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.access_usage" name="legal.privacy.access_usage">
+      <notes>
+        <note category="description">Privacy policy clause (access) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben das Recht auf Auskunft über Ihre Nutzungsdaten.</source>
+        <target>Tiene derecho a acceder a sus datos de uso.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.access_payment" name="legal.privacy.access_payment">
+      <notes>
+        <note category="description">Privacy policy clause (access) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben das Recht auf Auskunft über Ihre Zahlungsdaten.</source>
+        <target>Tiene derecho a acceder a sus datos de pago.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.access_communication" name="legal.privacy.access_communication">
+      <notes>
+        <note category="description">Privacy policy clause (access) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Sie haben das Recht auf Auskunft über Ihre Kommunikationsdaten.</source>
+        <target>Tiene derecho a acceder a sus datos de comunicación.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.basis_account" name="legal.privacy.basis_account">
+      <notes>
+        <note category="description">Privacy policy clause (basis) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Verarbeitung Ihrer Kontodaten erfolgt auf Grundlage von Art. 6 DSGVO.</source>
+        <target>El tratamiento de sus datos de cuenta se basa en el art. 6 del RGPD.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.basis_billing" name="legal.privacy.basis_billing">
+      <notes>
+        <note category="description">Privacy policy clause (basis) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Verarbeitung Ihrer Rechnungsdaten erfolgt auf Grundlage von Art. 6 DSGVO.</source>
+        <target>El tratamiento de sus datos de facturación se basa en el art. 6 del RGPD.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.basis_usage" name="legal.privacy.basis_usage">
+      <notes>
+        <note category="description">Privacy policy clause (basis) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Verarbeitung Ihrer Nutzungsdaten erfolgt auf Grundlage von Art. 6 DSGVO.</source>
+        <target>El tratamiento de sus datos de uso se basa en el art. 6 del RGPD.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.basis_payment" name="legal.privacy.basis_payment">
+      <notes>
+        <note category="description">Privacy policy clause (basis) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Verarbeitung Ihrer Zahlungsdaten erfolgt auf Grundlage von Art. 6 DSGVO.</source>
+        <target>El tratamiento de sus datos de pago se basa en el art. 6 del RGPD.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.basis_communication" name="legal.privacy.basis_communication">
+      <notes>
+        <note category="description">Privacy policy clause (basis) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <segment state="final">
+        <source>Die Verarbeitung Ihrer Kommunikationsdaten erfolgt auf Grundlage von Art. 6 DSGVO.</source>
+        <target>El tratamiento de sus datos de comunicación se basa en el art. 6 del RGPD.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.acceptance_account" name="legal.privacy.acceptance_account">
+      <notes>
+        <note category="description">Privacy policy clause (acceptance) about account data. Legal text: translated by counsel only.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$product}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mit der Nutzung von <ph id="1" dataRef="d1" disp="{$product}"/> akzeptieren Sie die Regeln zu Ihren Kontodaten.</source>
+        <target>Al usar <ph id="1" dataRef="d1" disp="{$product}"/>, acepta las normas sobre sus datos de cuenta.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.acceptance_billing" name="legal.privacy.acceptance_billing">
+      <notes>
+        <note category="description">Privacy policy clause (acceptance) about billing data. Legal text: translated by counsel only.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$product}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mit der Nutzung von <ph id="1" dataRef="d1" disp="{$product}"/> akzeptieren Sie die Regeln zu Ihren Rechnungsdaten.</source>
+        <target>Al usar <ph id="1" dataRef="d1" disp="{$product}"/>, acepta las normas sobre sus datos de facturación.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.acceptance_usage" name="legal.privacy.acceptance_usage">
+      <notes>
+        <note category="description">Privacy policy clause (acceptance) about usage data. Legal text: translated by counsel only.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$product}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mit der Nutzung von <ph id="1" dataRef="d1" disp="{$product}"/> akzeptieren Sie die Regeln zu Ihren Nutzungsdaten.</source>
+        <target>Al usar <ph id="1" dataRef="d1" disp="{$product}"/>, acepta las normas sobre sus datos de uso.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.acceptance_payment" name="legal.privacy.acceptance_payment">
+      <notes>
+        <note category="description">Privacy policy clause (acceptance) about payment data. Legal text: translated by counsel only.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$product}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mit der Nutzung von <ph id="1" dataRef="d1" disp="{$product}"/> akzeptieren Sie die Regeln zu Ihren Zahlungsdaten.</source>
+        <target>Al usar <ph id="1" dataRef="d1" disp="{$product}"/>, acepta las normas sobre sus datos de pago.</target>
+      </segment>
+    </unit>
+    <unit id="legal.privacy.acceptance_communication" name="legal.privacy.acceptance_communication">
+      <notes>
+        <note category="description">Privacy policy clause (acceptance) about communication data. Legal text: translated by counsel only.</note>
+      </notes>
+      <originalData>
+        <data id="d1">{$product}</data>
+      </originalData>
+      <segment state="final">
+        <source>Mit der Nutzung von <ph id="1" dataRef="d1" disp="{$product}"/> akzeptieren Sie die Regeln zu Ihren Kommunikationsdaten.</source>
+        <target>Al usar <ph id="1" dataRef="d1" disp="{$product}"/>, acepta las normas sobre sus datos de comunicación.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

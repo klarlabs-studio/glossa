@@ -177,6 +177,55 @@
       "description": "Operational follow-up to the scoped-keys feature. Today brotwerk uses the legacy write-scope key inherited from migration 0003. Issue a new 'read'-scope key via the admin UI ('brotwerk web' label), swap into brotwerk apps/web/.env + the CI build args, redeploy brotwerk, then revoke the legacy write key. Validates the read-only path end-to-end + closes the embedded-write-key security gap flagged earlier.",
       "requirements": [],
       "source": {}
+    },
+    {
+      "id": "p1-1-locale-identity-bcp-47",
+      "title": "P1.1 Locale identity (BCP 47)",
+      "description": "RFC 0001 D4. Parse and canonicalize locale codes as full BCP 47 tags (golang.org/x/text/language in Go, Intl.Locale in TS). Widen locales.code and projects.default_locale to VARCHAR(35). Expose language, script, region and direction (derived from the likely script via CLDR likely subtags) on the locale wire shape. Acceptance: zh-Hant-TW, sr-Latn, es-419 and ar-EG accepted; ar/he/fa report rtl; non-canonical input (e.g. en_us) is rejected or canonicalized; existing codes still accepted; tests green.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m0-foundations",
+      "title": "M0 Foundations",
+      "description": "RFC 0002 §13. Repo layout (platform/, messageformat/, runtimes/, studio/, site/). glossa-server kernel: config, bolt + OpenTelemetry + Prometheus, HTTP server with health probes, Postgres with FORCE RLS and the RLS isolation suite, transactional outbox, tenancy (individual/organization) and auth-go identity. MessageFormat kernel: official MFWG conformance suite vendored; Go engine (messageformat-go behind a port) with MF1→MF2 conversion and argument extraction; TS engine (messageformat v4) plus a tiny runtime interpreter; both green on the suite. OpenAPI 3.1 skeleton. CI for the new tree. Exit: conformance and RLS suites green.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m1-core-loop",
+      "title": "M1 Core loop",
+      "description": "RFC 0002 §13. Catalog, Localization and Release contexts; glossa-edge serving signed, content-addressed artifacts from object storage; JS runtime core + web components (v0.3-compatible glossa-text) + Vue + Astro; Go runtime with html/template and text helpers; Go CLI (init push pull extract generate check release, --json); Studio v0 (editor, locales, releases); v0.3 importer. Exit: Brotwerk serves production strings from a Glossa release on web and in its Go emails.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m2-knowledge-ai",
+      "title": "M2 Knowledge + AI",
+      "description": "RFC 0002 §13. Translation memory, termbase, style guides; translation agent (agent-go/axi-go) with structural gate, provenance, decisionkit confidence and review routing; evals as code; Studio translator workspace (keyboard-first, TM/terms panes, review queue); XLIFF 2/JSON import. Exit: Armada's es/fr/ja gaps closed through review by exception; KraftSport and Pet Medical web off v0.3.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m3-context",
+      "title": "M3 Context",
+      "description": "RFC 0002 §13. Bundler plugin (unplugin) usages and chunking, in-product editor overlay, preview environments per branch, scout screenshot capture, GitHub integration with PR checks, React runtime. Exit: translators see where every message appears; Nexa's tax PDF and Lexora's export render through the Go runtime.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m4-quality",
+      "title": "M4 Quality",
+      "description": "RFC 0002 §13. Layered QA (structural, terminology, linguistic, visual, runtime), CI policies, visual QA via scout, quality dashboards, complete MCP interface, Flutter runtime. Exit: glossa check gates CI in every dogfood product.",
+      "requirements": [],
+      "source": {}
+    },
+    {
+      "id": "m5-operations",
+      "title": "M5 Operations",
+      "description": "RFC 0002 §13. Workflow engine on statekit, assignments, vendors, audit export, advanced release policies (staged rollout policies, approvals). Exit: all Klarlabs products migrated; v0.3 retired.",
+      "requirements": [],
+      "source": {}
     }
   ],
   "constraints": [],

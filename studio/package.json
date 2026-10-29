@@ -1,0 +1,59 @@
+{
+  "name": "@glossa/studio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Glossa Studio: the web app for translators, developers and localization managers (Vue 3 SPA over the /v1 API).",
+  "type": "module",
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "studio"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/klarlabs-ui.mjs && vite",
+    "build": "node scripts/klarlabs-ui.mjs && vite build",
+    "preview": "vite preview",
+    "size": "node scripts/bundle-size.mjs",
+    "ui:link": "node scripts/klarlabs-ui.mjs",
+    "gen:api": "node scripts/gen-api.mjs",
+    "lint": "node scripts/gen-api.mjs --check && vue-tsc --noEmit -p tsconfig.json && vue-tsc --noEmit -p tsconfig.test.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@klarlabs-studio/glossa": "workspace:*",
+    "@klarlabs-studio/ui": "link:.klarlabs-ui",
+    "lit": "3.3.3",
+    "mermaid": "12.1.0",
+    "openapi-fetch": "0.17.0",
+    "vue": "3.5.43",
+    "vue-router": "4.6.4",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@testcontainers/postgresql": "12.1.0",
+    "@types/node": "22.20.4",
+    "@vitejs/plugin-vue": "6.0.9",
+    "@vue/test-utils": "2.5.1",
+    "happy-dom": "21.0.4",
+    "openapi-typescript": "7.13.0",
+    "testcontainers": "12.1.0",
+    "typescript": "5.9.3",
+    "vite": "6.4.3",
+    "vitest": "4.1.0",
+    "vue-tsc": "3.3.11"
+  },
+  "klarlabsUi": {
+    "repository": "https://github.com/klarlabs-studio/klarlabs.git",
+    "commit": "34bbcb2338503e69143dc2ff8521b9e11ae8ee9e",
+    "directory": "packages/ui"
+  }
+}

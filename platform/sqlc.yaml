@@ -1,0 +1,249 @@
+# sqlc code generation for glossa-server (RFC 0002 §6).
+#
+# Regenerate from platform/:  go generate ./db/...
+# (runs sqlc pinned in db/generate.go — no global install needed)
+#
+# The schema is the migration stream itself. Each bounded context gets
+# its own entry: its queries under db/queries/<context>/, its generated
+# package inside the context's adapters. A context never queries
+# another context's tables.
+version: "2"
+
+overrides:
+  go:
+    overrides:
+      - db_type: uuid
+        go_type: github.com/google/uuid.UUID
+      - db_type: uuid
+        nullable: true
+        go_type:
+          import: github.com/google/uuid
+          type: NullUUID
+      - db_type: timestamptz
+        go_type: time.Time
+      - db_type: jsonb
+        go_type: encoding/json.RawMessage
+
+sql:
+  - name: tenancy
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/tenancy
+    gen:
+      go:
+        package: tenancysql
+        out: internal/kernel/tenancy/tenancysql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: outbox
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/outbox
+    gen:
+      go:
+        package: outboxsql
+        out: internal/kernel/outbox/outboxsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: scheduler
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/scheduler
+    gen:
+      go:
+        package: schedulersql
+        out: internal/kernel/scheduler/schedulersql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: identity
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/identity
+    gen:
+      go:
+        package: identitysql
+        out: internal/identity/adapters/postgres/identitysql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: catalog
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/catalog
+    gen:
+      go:
+        package: catalogsql
+        out: internal/catalog/adapters/postgres/catalogsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: localization
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/localization
+    gen:
+      go:
+        package: localizationsql
+        out: internal/localization/adapters/postgres/localizationsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: release
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/release
+    gen:
+      go:
+        package: releasesql
+        out: internal/release/adapters/postgres/releasesql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: knowledge
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/knowledge
+    gen:
+      go:
+        package: knowledgesql
+        out: internal/knowledge/adapters/postgres/knowledgesql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: intelligence
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/intelligence
+    gen:
+      go:
+        package: intelligencesql
+        out: internal/intelligence/adapters/postgres/intelligencesql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: integration
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/integration
+    gen:
+      go:
+        package: integrationsql
+        out: internal/integration/adapters/postgres/integrationsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: context
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/context
+    gen:
+      go:
+        package: contextsql
+        out: internal/context/adapters/postgres/contextsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: quality
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/quality
+    gen:
+      go:
+        package: qualitysql
+        out: internal/quality/adapters/postgres/qualitysql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: mcp
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/mcp
+    gen:
+      go:
+        package: mcpsql
+        out: internal/mcp/adapters/postgres/mcpsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: quality
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/quality
+    gen:
+      go:
+        package: qualitysql
+        out: internal/quality/adapters/postgres/qualitysql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: workflow
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/workflow
+    gen:
+      go:
+        package: workflowsql
+        out: internal/workflow/adapters/postgres/workflowsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  # Workflow's assignments and approvals (RFC 0006 §3), generated apart
+  # from definitions and instances so each can change on its own.
+  - name: workflow_work
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/workflow_work
+    gen:
+      go:
+        package: worksql
+        out: internal/workflow/adapters/postgres/worksql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true
+
+  - name: audit
+    engine: postgresql
+    schema: db/migrations
+    queries: db/queries/audit
+    gen:
+      go:
+        package: auditsql
+        out: internal/audit/adapters/postgres/auditsql
+        sql_package: pgx/v5
+        emit_interface: false
+        emit_exported_queries: false
+        omit_unused_structs: true

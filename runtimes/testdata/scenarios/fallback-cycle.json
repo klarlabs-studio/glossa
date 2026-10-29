@@ -1,0 +1,79 @@
+{
+  "description": "Cycles in the fallback graph stop at the first repeat",
+  "manifest": {
+    "schema": "glossa.manifest/v1",
+    "project": "prj_fixture",
+    "environment": "production",
+    "release": {
+      "id": "rel_cycle",
+      "version": 1,
+      "createdAt": "2026-09-01T08:00:00Z"
+    },
+    "sourceLocale": "en",
+    "locales": [
+      {
+        "code": "en",
+        "direction": "ltr"
+      },
+      {
+        "code": "pt-BR",
+        "direction": "ltr"
+      },
+      {
+        "code": "pt-PT",
+        "direction": "ltr"
+      }
+    ],
+    "fallback": {
+      "pt-BR": [
+        "pt-PT"
+      ],
+      "pt-PT": [
+        "pt-BR"
+      ]
+    },
+    "artifacts": {
+      "en": {
+        "default": {
+          "sha256": "c90b2f0bd85b20cc3ea7282564dba8a66a1ec9096ebeec0d0b0bbf4f091cf283",
+          "size": 145
+        }
+      },
+      "pt-BR": {
+        "default": {
+          "sha256": "ff8e8b1f2268893c351e391d81af5ae6bbf489963befa781173866cc4488bb68",
+          "size": 84
+        }
+      },
+      "pt-PT": {
+        "default": {
+          "sha256": "5b9d12ed0cd083d63be59fe577c936bc725a1e3816a5962976070dd49a34d8a6",
+          "size": 147
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "c90b2f0bd85b20cc3ea7282564dba8a66a1ec9096ebeec0d0b0bbf4f091cf283": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "ff8e8b1f2268893c351e391d81af5ae6bbf489963befa781173866cc4488bb68": "{\"locale\":\"pt-BR\",\"messages\":{},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+    "5b9d12ed0cd083d63be59fe577c936bc725a1e3816a5962976070dd49a34d8a6": "{\"locale\":\"pt-PT\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Olá\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+  },
+  "cases": [
+    {
+      "requested": [
+        "pt-BR"
+      ],
+      "id": "hello",
+      "values": {},
+      "bidiIsolation": "none",
+      "exp": "Olá",
+      "expLocale": "pt-BR",
+      "expChain": [
+        "pt-BR",
+        "pt-PT",
+        "en"
+      ],
+      "expResolvedFrom": "pt-PT"
+    }
+  ]
+}

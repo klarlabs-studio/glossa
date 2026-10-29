@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("<xliff xmlns=\"urn:oasis:names:tc:xliff:document:2.0\"version=\"2.\"srcLang=\"\r\r\r\r\">")

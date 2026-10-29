@@ -8,7 +8,7 @@
 #     → CI "Go API" unit tests + "JS workspaces" test step (the Docker-bound
 #       RLS integration suite stays CI-only).
 #   - `make packages` builds the TS packages in pnpm's topological dep order;
-#     it MUST run before the typecheck because sdk/elements/admin consume the
+#     it MUST run before the typecheck because studio and the runtimes consume the
 #     built .d.ts of their workspace deps (a bare `pnpm -r lint` fails otherwise).
 #
 # pre-commit stays fast (gofmt check only — no TS build needed); pre-push runs
@@ -25,7 +25,7 @@ commands:
   # Non-mutating format gate. CI's "Go API" job fails the build on `gofmt -l`;
   # mirror exactly. `make fmt` / `pnpm -r format` MUTATE (gofmt -w / prettier
   # --write) so they are unsuitable as a verify-only check.
-  formatcheck: bash -c 'cd apps/api && out=$(gofmt -l .) && test -z "$out" || { echo "$out"; exit 1; }'
+  formatcheck: bash -c 'out=$(gofmt -l apps/api messageformat platform runtimes/go) && test -z "$out" || { echo "$out"; exit 1; }'
   # `make packages` = `pnpm -r --filter "./packages/*" build` (topological order).
   build: make packages
   # `make lint` = go vet + pnpm -r lint (tsc --noEmit). Named 'typecheck' (not

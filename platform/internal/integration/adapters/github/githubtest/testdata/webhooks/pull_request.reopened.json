@@ -1,0 +1,37 @@
+{
+  "action": "reopened",
+  "number": 7,
+  "pull_request": {
+    "id": 2001007,
+    "number": 7,
+    "state": "open",
+    "title": "Checkout: new payment copy",
+    "merged": false,
+    "draft": false,
+    "created_at": "2026-09-19T09:30:00Z",
+    "html_url": "https://github.com/acme/shop/pull/7",
+    "user": { "login": "octocat", "id": 583231, "type": "User" },
+    "head": {
+      "label": "octocat:feature/payment-copy",
+      "ref": "feature/payment-copy",
+      "sha": "b7c6d5e4f3a2918071625344f5e6d7c8b9a0f1e2",
+      "repo": { "id": 10101, "name": "shop", "full_name": "acme/shop", "fork": false }
+    },
+    "base": {
+      "label": "acme:main",
+      "ref": "main",
+      "sha": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+      "repo": { "id": 10101, "name": "shop", "full_name": "acme/shop", "fork": false }
+    }
+  },
+  "repository": {
+    "id": 10101,
+    "name": "shop",
+    "full_name": "acme/shop",
+    "private": true,
+    "default_branch": "main",
+    "owner": { "login": "acme", "id": 424200, "type": "Organization" }
+  },
+  "installation": { "id": 4242 },
+  "sender": { "login": "octocat", "id": 583231, "type": "User" }
+}

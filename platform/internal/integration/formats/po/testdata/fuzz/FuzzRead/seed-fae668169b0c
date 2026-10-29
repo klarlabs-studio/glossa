@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("msgid \"\"\nmsgstr \"\"\n\"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\\ms\n\nmsgid \"a file\"\nn\"gid_plural \"files\"\nmsgstr[0] \"f0\"\nmsgstr[1] \"f1\"\nmsgstr[2] \"f2\"\n")

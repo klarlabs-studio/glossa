@@ -1,0 +1,5 @@
+{
+  "description": "Typed accessors from `glossa generate` (createMessages): a call <receiver>.<path>(…) whose path is a key's accessor path reports that key. Paths follow codegen: segments camelCased, colliding keys (payment-failed vs payment_failed) go to the first in sort order, a key that is also a group (nav.home vs nav.home.title) gets none. A one-segment path counts only on a receiver named `messages`. Files starting with a `// Code generated … DO NOT EDIT.` line are not scanned. Also passes runtime.t(id, values) with a dynamic id, which is not reported.",
+  "implementations": ["unplugin", "extract"],
+  "keys": ["cart.checkout", "checkout.pay", "checkout.payment-failed", "checkout.payment_failed", "nav.home", "nav.home.title", "title"]
+}

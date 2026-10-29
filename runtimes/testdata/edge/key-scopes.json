@@ -1,0 +1,316 @@
+{
+  "description": "A key reads the environments on its allowlist and, with branches, every branch environment (pr-<n>, br-<8 hex>); anything else answers 404 exactly like an unknown key. An index object without environments predates scopes and reads as the four default environments. Artifacts aren't scoped by environment.",
+  "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+  "keys": {
+    "production": {
+      "key": "glossa_pk_vOndw6JRTs3LH4TqiG61OxaJEmhciAMr",
+      "index": {
+        "schema": "glossa.delivery-key/v1",
+        "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+        "key_id": "k_prod",
+        "environments": [
+          "production"
+        ],
+        "branches": false
+      }
+    },
+    "staging-and-production": {
+      "key": "glossa_pk_6v9O-OWMzUxo7cLqyIM1Y80mVbXLA6NU",
+      "index": {
+        "schema": "glossa.delivery-key/v1",
+        "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+        "key_id": "k_stage",
+        "environments": [
+          "production",
+          "staging"
+        ],
+        "branches": false
+      }
+    },
+    "preview": {
+      "key": "glossa_pk_BzRIhJKgfjNKiFGwkZclPgMV13-oL0hv",
+      "index": {
+        "schema": "glossa.delivery-key/v1",
+        "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+        "key_id": "k_preview",
+        "environments": [
+          "preview"
+        ],
+        "branches": true
+      }
+    },
+    "branches-only": {
+      "key": "glossa_pk_cqa9tEAKPxcs7zpIzbmrXPnib-cCEgo4",
+      "index": {
+        "schema": "glossa.delivery-key/v1",
+        "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+        "key_id": "k_branches",
+        "environments": [],
+        "branches": true
+      }
+    },
+    "legacy": {
+      "key": "glossa_pk_8PohEXk2v-2LK6Er3xJKOe69HjqK4XCl",
+      "index": {
+        "schema": "glossa.delivery-key/v1",
+        "project": "0192f5a0-7a4e-7cc3-9d1e-3a4b5c6d7e8f",
+        "key_id": "k_legacy"
+      }
+    },
+    "revoked": {
+      "key": "glossa_pk_RCz9IpBq7Yh_ZMN8sqJf6XWq_XlmWwBW",
+      "index": null
+    }
+  },
+  "environments": [
+    "development",
+    "preview",
+    "staging",
+    "production",
+    "qa",
+    "pr-42",
+    "br-0a1b2c3d"
+  ],
+  "cases": [
+    {
+      "key": "production",
+      "environment": "development",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "environment": "preview",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "environment": "staging",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "environment": "production",
+      "expStatus": 200
+    },
+    {
+      "key": "production",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "environment": "pr-42",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 404
+    },
+    {
+      "key": "production",
+      "artifact": true,
+      "expStatus": 200
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "development",
+      "expStatus": 404
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "preview",
+      "expStatus": 404
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "staging",
+      "expStatus": 200
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "production",
+      "expStatus": 200
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "pr-42",
+      "expStatus": 404
+    },
+    {
+      "key": "staging-and-production",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 404
+    },
+    {
+      "key": "staging-and-production",
+      "artifact": true,
+      "expStatus": 200
+    },
+    {
+      "key": "preview",
+      "environment": "development",
+      "expStatus": 404
+    },
+    {
+      "key": "preview",
+      "environment": "preview",
+      "expStatus": 200
+    },
+    {
+      "key": "preview",
+      "environment": "staging",
+      "expStatus": 404
+    },
+    {
+      "key": "preview",
+      "environment": "production",
+      "expStatus": 404
+    },
+    {
+      "key": "preview",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "preview",
+      "environment": "pr-42",
+      "expStatus": 200
+    },
+    {
+      "key": "preview",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 200
+    },
+    {
+      "key": "preview",
+      "artifact": true,
+      "expStatus": 200
+    },
+    {
+      "key": "branches-only",
+      "environment": "development",
+      "expStatus": 404
+    },
+    {
+      "key": "branches-only",
+      "environment": "preview",
+      "expStatus": 404
+    },
+    {
+      "key": "branches-only",
+      "environment": "staging",
+      "expStatus": 404
+    },
+    {
+      "key": "branches-only",
+      "environment": "production",
+      "expStatus": 404
+    },
+    {
+      "key": "branches-only",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "branches-only",
+      "environment": "pr-42",
+      "expStatus": 200
+    },
+    {
+      "key": "branches-only",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 200
+    },
+    {
+      "key": "branches-only",
+      "artifact": true,
+      "expStatus": 200
+    },
+    {
+      "key": "legacy",
+      "environment": "development",
+      "expStatus": 200
+    },
+    {
+      "key": "legacy",
+      "environment": "preview",
+      "expStatus": 200
+    },
+    {
+      "key": "legacy",
+      "environment": "staging",
+      "expStatus": 200
+    },
+    {
+      "key": "legacy",
+      "environment": "production",
+      "expStatus": 200
+    },
+    {
+      "key": "legacy",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "legacy",
+      "environment": "pr-42",
+      "expStatus": 404
+    },
+    {
+      "key": "legacy",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 404
+    },
+    {
+      "key": "legacy",
+      "artifact": true,
+      "expStatus": 200
+    },
+    {
+      "key": "revoked",
+      "environment": "development",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "preview",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "staging",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "production",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "qa",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "pr-42",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "environment": "br-0a1b2c3d",
+      "expStatus": 404
+    },
+    {
+      "key": "revoked",
+      "artifact": true,
+      "expStatus": 404
+    }
+  ]
+}

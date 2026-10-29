@@ -1,0 +1,85 @@
+{
+  "id": "en-ja-greeting",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Welcome back, {$name}!",
+  "context": {
+    "key": "home.welcome",
+    "description": "Headline after sign-in"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-ja",
+            "text": "ワークスペース",
+            "locale": "ja",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-invoice-en",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-seikyusho",
+            "text": "請求書",
+            "locale": "ja",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-signin",
+        "definition": "Authenticating with an account",
+        "terms": [
+          {
+            "id": "t-signin-en",
+            "text": "sign in",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-login-ja",
+            "text": "ログイン",
+            "locale": "ja",
+            "status": "preferred"
+          },
+          {
+            "id": "t-signin-ja",
+            "text": "サインイン",
+            "locale": "ja",
+            "status": "admitted"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "ja-polite-1",
+      "formality": "formal",
+      "tone": [
+        "polite (です・ます調)"
+      ]
+    }
+  },
+  "expect": {},
+  "references": [
+    "{$name}さん、おかえりなさい！"
+  ]
+}

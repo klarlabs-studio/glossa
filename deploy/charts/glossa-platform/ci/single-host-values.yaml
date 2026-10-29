@@ -1,0 +1,23 @@
+# Single-host layout (the Klarlabs one): Studio and the API share
+# hosts.studio, hosts.api is empty. Ingress must render each host once.
+hosts:
+  studio: glossa.example.com
+  api: ""
+  cdn: cdn.glossa.example.com
+database:
+  app:
+    secretName: glossa-db-app
+  migration:
+    secretName: glossa-db-owner
+auth:
+  secretName: glossa-auth
+release:
+  signingKeys:
+    secretName: glossa-release-signing
+objectStorage:
+  endpoint: objects.example.com
+  bucket: glossa-releases
+  server:
+    secretName: glossa-s3-rw
+  edge:
+    secretName: glossa-s3-ro

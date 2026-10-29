@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/uuid"
 
-	keyapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translationkey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/translationkey"
+	keyapp "go.klarlabs.de/glossa/apps/api/internal/app/translationkey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/translationkey"
 )
 
 type inMemoryRepo struct {

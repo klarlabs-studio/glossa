@@ -1,0 +1,7 @@
+{
+  "name": "@glossa/m3-fixture-shop",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Brotwerk's shop: the M3 exit test's fixture application. Generated; built by `pnpm --filter @klarlabs-studio/glossa-unplugin build:m3`, never installed."
+}

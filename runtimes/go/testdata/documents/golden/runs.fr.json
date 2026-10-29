@@ -1,0 +1,180 @@
+{
+  "export.footer": [
+    {
+      "Text": "Exporté le 1 sept. 2026, 08:15",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "export.note": [
+    {
+      "Text": "Remarque :",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " les distances sont des ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "estimations GPS",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    },
+    {
+      "Text": " ; la charge totale est calculée ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "sans",
+      "Bold": false,
+      "Italic": false,
+      "Underline": true
+    },
+    {
+      "Text": " le poids du corps.",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary": [
+    {
+      "Text": "7 séances",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " du 3 août 2026 au 28 août 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.summary one": [
+    {
+      "Text": "1 séance",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " du 3 août 2026 au 3 août 2026",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "export.title": [
+    {
+      "Text": "Export des entraînements",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " – Kim Nakamura",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.due": [
+    {
+      "Text": "À payer au plus tard le ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "1 juin 2026",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.intro": [
+    {
+      "Text": "Ce récapitulatif porte sur la ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "déclaration de revenus",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " de Erika Mustermann. ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "Tous les montants sont provisoires.",
+      "Bold": false,
+      "Italic": true,
+      "Underline": false
+    }
+  ],
+  "tax.status joint": [
+    {
+      "Text": "Situation déclarative : ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "imposition commune",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.status single": [
+    {
+      "Text": "Situation déclarative : ",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": "imposition individuelle",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.title": [
+    {
+      "Text": "Récapitulatif fiscal",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    },
+    {
+      "Text": " 2025",
+      "Bold": false,
+      "Italic": false,
+      "Underline": false
+    }
+  ],
+  "tax.total": [
+    {
+      "Text": "Total",
+      "Bold": true,
+      "Italic": false,
+      "Underline": false
+    }
+  ]
+}

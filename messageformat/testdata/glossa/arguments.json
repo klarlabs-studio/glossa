@@ -1,0 +1,177 @@
+{
+  "$comment": "Message -> derived argument and markup metadata (RFC 0002 §5 'derived metadata'). Each test: `description`; the message as either `src` (MF2 syntax) or `mf1` plus `locale` (ICU MessageFormat 1, converted first); `arguments`: the message's external variables in order of first appearance (declarations, then selectors, then patterns), each {name, type, function?, selector?}. `type` is one of string|number|integer|percent|currency|date|time|datetime|unit|select, inferred from the variable's annotation: its .input declaration wins, otherwise the first annotated use (locals propagate to the variable they are bound to); unannotated variables are string, and a :string selector is select. `function` is the annotating function's name when there is one. `selector` is present when the variable (directly or through a .local) is a selector: {kind: plural|ordinal|exact|string, keys: the literal variant keys in order of appearance; the catch-all * always exists and is not listed}. `markup`: distinct {name, kind} markup elements in order of first appearance, kind being open|standalone|close.",
+  "tests": [
+    {
+      "description": "plain text has no arguments",
+      "src": "Brot backen",
+      "arguments": [],
+      "markup": []
+    },
+    {
+      "description": "unannotated variable is a string",
+      "src": "Hallo {$name}!",
+      "arguments": [{ "name": "name", "type": "string" }],
+      "markup": []
+    },
+    {
+      "description": "standard formatting functions",
+      "src": "{$n :number} {$i :integer} {$p :percent} {$c :currency currency=EUR} {$d :date} {$t :time} {$dt :datetime} {$u :unit unit=kilometer}",
+      "arguments": [
+        { "name": "n", "type": "number", "function": "number" },
+        { "name": "i", "type": "integer", "function": "integer" },
+        { "name": "p", "type": "percent", "function": "percent" },
+        { "name": "c", "type": "currency", "function": "currency" },
+        { "name": "d", "type": "date", "function": "date" },
+        { "name": "t", "type": "time", "function": "time" },
+        { "name": "dt", "type": "datetime", "function": "datetime" },
+        { "name": "u", "type": "unit", "function": "unit" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "string select",
+      "src": ".input {$gender :string}\n.match $gender\nfemale {{Sie}}\nmale {{Er}}\n* {{Sie}}",
+      "arguments": [{ "name": "gender", "type": "select", "function": "string", "selector": { "kind": "string", "keys": ["female", "male"] } }],
+      "markup": []
+    },
+    {
+      "description": "plural with an exact key",
+      "src": ".input {$count :number}\n.match $count\n0 {{Keine}}\none {{Eine}}\n* {{{$count}}}",
+      "arguments": [{ "name": "count", "type": "number", "function": "number", "selector": { "kind": "plural", "keys": ["0", "one"] } }],
+      "markup": []
+    },
+    {
+      "description": "ordinal",
+      "src": ".input {$n :number select=ordinal}\n.match $n\none {{{$n}st}}\ntwo {{{$n}nd}}\nfew {{{$n}rd}}\n* {{{$n}th}}",
+      "arguments": [{ "name": "n", "type": "number", "function": "number", "selector": { "kind": "ordinal", "keys": ["one", "two", "few"] } }],
+      "markup": []
+    },
+    {
+      "description": "exact integer selection",
+      "src": ".input {$step :integer select=exact}\n.match $step\n1 {{Start}}\n2 {{Weiter}}\n* {{Fertig}}",
+      "arguments": [{ "name": "step", "type": "integer", "function": "integer", "selector": { "kind": "exact", "keys": ["1", "2"] } }],
+      "markup": []
+    },
+    {
+      "description": "offset local selects on behalf of its variable",
+      "src": ".input {$guests :number}\n.local $others = {$guests :offset subtract=1}\n.match $guests $others\n0 * {{Niemand}}\n* one {{{$host} und {$others} weitere Person}}\n* * {{{$host} und {$others} weitere Personen}}",
+      "arguments": [
+        { "name": "guests", "type": "number", "function": "number", "selector": { "kind": "plural", "keys": ["0", "one"] } },
+        { "name": "host", "type": "string" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "two selectors from a lifted nested MF1 select",
+      "mf1": "{gender, select, female {{count, plural, one {Sie hat # Haustier} other {Sie hat # Haustiere}}} other {{count, plural, one {Sie haben # Haustier} other {Sie haben # Haustiere}}}}",
+      "locale": "de",
+      "arguments": [
+        { "name": "gender", "type": "select", "function": "string", "selector": { "kind": "string", "keys": ["female"] } },
+        { "name": "count", "type": "number", "function": "number", "selector": { "kind": "plural", "keys": ["one"] } }
+      ],
+      "markup": []
+    },
+    {
+      "description": "MF1 plural offset and a host name",
+      "mf1": "{guests, plural, offset:1 =0 {Niemand kommt} one {{host} und # weitere Person} other {{host} und # weitere Personen}}",
+      "locale": "de",
+      "arguments": [
+        { "name": "guests", "type": "number", "function": "number", "selector": { "kind": "plural", "keys": ["0", "one"] } },
+        { "name": "host", "type": "string" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "MF1 currency, date and time",
+      "mf1": "Abholung am {day, date, medium} um {from, time, short}, Summe {total, number, ::currency/EUR}",
+      "locale": "de",
+      "arguments": [
+        { "name": "day", "type": "date", "function": "date" },
+        { "name": "from", "type": "time", "function": "time" },
+        { "name": "total", "type": "currency", "function": "currency" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "MF1 fallbacks keep their MF1 type",
+      "mf1": "{secs, duration} {d, date, ::yyyyMMMd} {p, number, currency} {n, number, #,##0.0}",
+      "locale": "en",
+      "arguments": [
+        { "name": "secs", "type": "number", "function": "mf1:duration" },
+        { "name": "d", "type": "date", "function": "mf1:date" },
+        { "name": "p", "type": "currency", "function": "mf1:currency" },
+        { "name": "n", "type": "number", "function": "mf1:number" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "variable used as an option value",
+      "src": "{$amount :currency currency=$currency}",
+      "arguments": [
+        { "name": "amount", "type": "currency", "function": "currency" },
+        { "name": "currency", "type": "string" }
+      ],
+      "markup": []
+    },
+    {
+      "description": "a later annotated use types an earlier plain use",
+      "src": "{$n} von {$n :integer}",
+      "arguments": [{ "name": "n", "type": "integer", "function": "integer" }],
+      "markup": []
+    },
+    {
+      "description": "the input declaration wins over a placeholder annotation",
+      "src": ".input {$n :number}\n{{{$n :string}}}",
+      "arguments": [{ "name": "n", "type": "number", "function": "number" }],
+      "markup": []
+    },
+    {
+      "description": "input declaration without a function",
+      "src": ".input {$name}\n{{Hallo {$name}}}",
+      "arguments": [{ "name": "name", "type": "string" }],
+      "markup": []
+    },
+    {
+      "description": "a local types the variable it is bound to",
+      "src": ".local $price = {$total :number minimumFractionDigits=2}\n{{Preis: {$price}}}",
+      "arguments": [{ "name": "total", "type": "number", "function": "number" }],
+      "markup": []
+    },
+    {
+      "description": "locals bound to literals are not arguments",
+      "src": ".local $five = {5 :number}\n{{{$five} Sterne für {$name}}}",
+      "arguments": [{ "name": "name", "type": "string" }],
+      "markup": []
+    },
+    {
+      "description": "markup elements and a variable in markup options",
+      "src": "Mit {#link href=$url}Klick{/link} akzeptierst du die AGB.{#br/}{#link href=$privacy}Datenschutz{/link}",
+      "arguments": [
+        { "name": "url", "type": "string" },
+        { "name": "privacy", "type": "string" }
+      ],
+      "markup": [
+        { "name": "link", "kind": "open" },
+        { "name": "link", "kind": "close" },
+        { "name": "br", "kind": "standalone" }
+      ]
+    },
+    {
+      "description": "markup across variants",
+      "src": ".input {$n :number}\n.match $n\none {{{#b}Ein{/b} Brot}}\n* {{{#b}{$n}{/b} Brote{#i}!{/i}}}",
+      "arguments": [{ "name": "n", "type": "number", "function": "number", "selector": { "kind": "plural", "keys": ["one"] } }],
+      "markup": [
+        { "name": "b", "kind": "open" },
+        { "name": "b", "kind": "close" },
+        { "name": "i", "kind": "open" },
+        { "name": "i", "kind": "close" }
+      ]
+    },
+    {
+      "description": "unknown functions leave the argument a string",
+      "src": "{$x :acme:shout}",
+      "arguments": [{ "name": "x", "type": "string", "function": "acme:shout" }],
+      "markup": []
+    }
+  ]
+}

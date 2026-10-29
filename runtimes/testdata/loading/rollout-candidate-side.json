@@ -1,0 +1,472 @@
+{
+  "description": "An installation whose cohort (390) is inside 10 % activates the candidate, keeps it through restart and advance, returns to stable on abort, and is drawn again by a new rollout",
+  "publicKeys": [
+    {
+      "keyId": "k_test",
+      "key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg"
+    }
+  ],
+  "installationId": "e56569efb77a68930c4817af70197f0b",
+  "steps": [
+    {
+      "description": "cold start, a rollout of rel_2 at 10 %: the installation is in the candidate",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m1\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "rollout": {
+              "id": "ro_fixture",
+              "percent": 10,
+              "salt": "c3RhZ2VkLXJvbGxvdXQtMQ",
+              "candidate": {
+                "release": {
+                  "id": "rel_2",
+                  "version": 2,
+                  "createdAt": "2026-09-02T08:00:00Z"
+                },
+                "locales": [
+                  {
+                    "code": "en",
+                    "direction": "ltr"
+                  },
+                  {
+                    "code": "de",
+                    "direction": "ltr"
+                  }
+                ],
+                "fallback": {},
+                "artifacts": {
+                  "en": {
+                    "default": {
+                      "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                      "size": 148
+                    }
+                  },
+                  "de": {
+                    "default": {
+                      "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                      "size": 148
+                    }
+                  }
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "oxgggoKB52YWnRSTIyCRBnBFb80CHeRenSVtc0BW33PRYktps6A_lk-kx9QxfK_U1HWSWkfWpVlcm_kW4FkkBQ"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_2",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v2",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 10,
+        "cohort": 390,
+        "side": "candidate"
+      }
+    },
+    {
+      "description": "revalidate, not modified",
+      "edge": {
+        "manifest": {
+          "status": 304
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_2",
+      "expSource": "memory",
+      "expErrors": [],
+      "exp": "Hello v2",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 10,
+        "cohort": 390,
+        "side": "candidate"
+      }
+    },
+    {
+      "description": "process restart, edge down: the persisted manifest puts it on the candidate again",
+      "edge": {
+        "manifest": {
+          "status": 503
+        },
+        "artifacts": {}
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_2",
+      "expSource": "persisted",
+      "expErrors": [
+        "network"
+      ],
+      "exp": "Hello v2",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 10,
+        "cohort": 390,
+        "side": "candidate"
+      }
+    },
+    {
+      "description": "advanced to 50 %: still in the candidate",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m2\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "rollout": {
+              "id": "ro_fixture",
+              "percent": 50,
+              "salt": "c3RhZ2VkLXJvbGxvdXQtMQ",
+              "candidate": {
+                "release": {
+                  "id": "rel_2",
+                  "version": 2,
+                  "createdAt": "2026-09-02T08:00:00Z"
+                },
+                "locales": [
+                  {
+                    "code": "en",
+                    "direction": "ltr"
+                  },
+                  {
+                    "code": "de",
+                    "direction": "ltr"
+                  }
+                ],
+                "fallback": {},
+                "artifacts": {
+                  "en": {
+                    "default": {
+                      "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                      "size": 148
+                    }
+                  },
+                  "de": {
+                    "default": {
+                      "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                      "size": 148
+                    }
+                  }
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "7e3T1Vq7-N8jCH-44yQqMyMyhPNG8vKhrGS9oMKOaScUYmhZE20eZqsNA9gK4QelZECNscKrxgLQjVH_FuPuCg"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_2",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v2",
+      "expRollout": {
+        "id": "ro_fixture",
+        "percent": 50,
+        "cohort": 390,
+        "side": "candidate"
+      }
+    },
+    {
+      "description": "aborted: the manifest carries no rollout, so the installation is back on stable",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m3\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "w3jGw0oAQKmTb2JJhqJVuUqXrHON3LccAtjnvilVYVTAxV5PYs9MnrwJzJaKL_7WEPfzBRU62loSxSjhIwYBCg"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_1",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v1",
+      "expRollout": null
+    },
+    {
+      "description": "a new rollout under another salt: the installation's new cohort is outside it",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m4\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "rollout": {
+              "id": "ro_fixture_2",
+              "percent": 10,
+              "salt": "b3RoZXItcm9sbG91dC0yMg",
+              "candidate": {
+                "release": {
+                  "id": "rel_2",
+                  "version": 2,
+                  "createdAt": "2026-09-02T08:00:00Z"
+                },
+                "locales": [
+                  {
+                    "code": "en",
+                    "direction": "ltr"
+                  },
+                  {
+                    "code": "de",
+                    "direction": "ltr"
+                  }
+                ],
+                "fallback": {},
+                "artifacts": {
+                  "en": {
+                    "default": {
+                      "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                      "size": 148
+                    }
+                  },
+                  "de": {
+                    "default": {
+                      "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                      "size": 148
+                    }
+                  }
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "91nU4NnhmysewFSPbFyxlltQfC6pmkiM-_Pw5n0YE2XRZtHrG1cHynlaF0gCvq349JPEYdveY06aYcNCcWIYAw"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_1",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v1",
+      "expRollout": {
+        "id": "ro_fixture_2",
+        "percent": 10,
+        "cohort": 6586,
+        "side": "stable"
+      }
+    }
+  ],
+  "restartBefore": [
+    2
+  ]
+}

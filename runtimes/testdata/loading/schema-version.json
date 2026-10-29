@@ -1,0 +1,149 @@
+{
+  "description": "A manifest with an unknown major schema version is rejected; the last good release stays",
+  "publicKeys": [
+    {
+      "keyId": "k_test",
+      "key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg"
+    }
+  ],
+  "steps": [
+    {
+      "description": "release 1",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m1\"",
+          "body": {
+            "schema": "glossa.manifest/v1",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_1",
+              "version": 1,
+              "createdAt": "2026-09-01T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a",
+                  "size": 148
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "w3jGw0oAQKmTb2JJhqJVuUqXrHON3LccAtjnvilVYVTAxV5PYs9MnrwJzJaKL_7WEPfzBRU62loSxSjhIwYBCg"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_1",
+      "expSource": "network",
+      "expErrors": [],
+      "exp": "Hello v1"
+    },
+    {
+      "description": "v2 manifest",
+      "edge": {
+        "manifest": {
+          "status": 200,
+          "etag": "\"m2\"",
+          "body": {
+            "schema": "glossa.manifest/v2",
+            "project": "prj_fixture",
+            "environment": "production",
+            "release": {
+              "id": "rel_2",
+              "version": 2,
+              "createdAt": "2026-09-02T08:00:00Z"
+            },
+            "sourceLocale": "en",
+            "locales": [
+              {
+                "code": "en",
+                "direction": "ltr"
+              },
+              {
+                "code": "de",
+                "direction": "ltr"
+              }
+            ],
+            "fallback": {},
+            "artifacts": {
+              "en": {
+                "default": {
+                  "sha256": "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf",
+                  "size": 148
+                }
+              },
+              "de": {
+                "default": {
+                  "sha256": "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b",
+                  "size": 148
+                }
+              }
+            },
+            "signatures": [
+              {
+                "keyId": "k_test",
+                "alg": "Ed25519",
+                "sig": "opSywOVlCIwByncNndCJAiIp5Vi-Rn8q_nX92GL7Mwt32GnmXgGQIVoPOXySI12DGzLOMyCAaPTaZhajyS3eCg"
+              }
+            ]
+          }
+        },
+        "artifacts": {
+          "3a983084116cdde9ab64c7b5122230010cd46c05a0dd2592b1b1039c20f0b998": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "026edb3a6c30f4d8628c90888212d950b6c73dd84a3edead407f8a99a0be765a": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v1\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "73ade9f780b0c847d09f1851945fe2219914308f2dd7a814ce0d697d56ad5bbf": "{\"locale\":\"en\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hello v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}",
+          "b01c1a4d610e384b9b55ca0714e3421f918e59cc85acebc9c753ea9d532ea57b": "{\"locale\":\"de\",\"messages\":{\"hello\":{\"declarations\":[],\"pattern\":[\"Hallo v2\"],\"type\":\"message\"}},\"namespace\":\"default\",\"schema\":\"glossa.artifact/v1\"}"
+        }
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": "rel_1",
+      "expSource": "memory",
+      "expErrors": [
+        "schema"
+      ],
+      "exp": "Hello v1"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "glossa-messageformat-fixture-gen",
+  "private": true,
+  "description": "Verifies testdata/glossa/mf1-to-mf2.json against the reference MessageFormat implementations. Standalone: not part of the pnpm workspace.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "verify": "TZ=UTC node verify-mf1.mjs",
+    "write": "TZ=UTC node verify-mf1.mjs --write"
+  },
+  "dependencies": {
+    "@messageformat/core": "3.4.0",
+    "@messageformat/icu-messageformat-1": "0.12.0",
+    "messageformat": "4.0.0"
+  }
+}

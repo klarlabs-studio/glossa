@@ -1,0 +1,46 @@
+# Object storage on the in-namespace MinIO (minio.enabled) with every
+# MinIO option set; no SMTP. Names are placeholders (RFC 2606 example.com).
+hosts:
+  studio: app.example.com
+  api: api.example.com
+  cdn: cdn.example.com
+database:
+  app:
+    secretName: glossa-db-app
+  migration:
+    secretName: glossa-db-owner
+auth:
+  secretName: glossa-auth
+release:
+  signingKeys:
+    secretName: glossa-release-signing
+objectStorage:
+  # endpoint defaults to <fullname>-minio:9000
+  bucket: glossa
+  prefix: prod/
+  server:
+    secretName: glossa-minio-server
+  edge:
+    secretName: glossa-minio-edge
+minio:
+  enabled: true
+  rootCredentials:
+    secretName: glossa-minio-root
+  persistence:
+    storageClassName: longhorn-r1
+    size: 10Gi
+    labels:
+      recurring-job.longhorn.io/source: enabled
+      recurring-job-group.longhorn.io/glossa-backup: enabled
+  nodeSelector:
+    kubernetes.io/os: linux
+networkPolicy:
+  extraIngress:
+    minio:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: backup
+        ports:
+          - port: 9000
+            protocol: TCP

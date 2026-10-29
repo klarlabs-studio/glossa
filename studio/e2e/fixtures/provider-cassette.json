@@ -1,0 +1,15 @@
+{
+  "model": "fake-model",
+  "drafts": [
+    { "source": "Delete this workspace", "target_locale": "de", "message": "Diesen Workspace löschen", "notes": "" },
+    { "source": "Download your invoice", "target_locale": "de", "message": "Rechnung herunterladen", "notes": "" },
+    { "source": "By continuing you accept the terms.", "target_locale": "de", "message": "Mit dem Fortfahren akzeptierst du die Bedingungen.", "notes": "Informal address per the style guide." },
+    { "source": "Create a new workspace", "target_locale": "de", "message": "Einen neuen Arbeitsbereich erstellen", "notes": "" }
+  ],
+  "assessments": [
+    { "translation": "Diesen Workspace löschen", "score": 0.7, "formality_ok": true, "issues": ["uses the anglicism Workspace"] },
+    { "translation": "Rechnung herunterladen", "score": 0.97, "formality_ok": true, "issues": [] },
+    { "translation": "Mit dem Fortfahren akzeptierst du die Bedingungen.", "score": 0.8, "formality_ok": true, "issues": [] },
+    { "translation": "Einen neuen Arbeitsbereich erstellen", "score": 0.95, "formality_ok": true, "issues": [] }
+  ]
+}

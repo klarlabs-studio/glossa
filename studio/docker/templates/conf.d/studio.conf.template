@@ -1,0 +1,100 @@
+# Studio server block, rendered at container start (envsubst replaces only
+# the GLOSSA_STUDIO_* variables; nginx's own $variables are untouched).
+
+server {
+  # IPv4 only: a [::] listener fails to start on nodes with IPv6 disabled.
+  listen 8080;
+  server_name _;
+  root /usr/share/nginx/html;
+  absolute_redirect off;
+
+  # The default Cross-Origin-Opener-Policy for every location here; the
+  # authorize popup below is the one exception.
+  set $glossa_coop "same-origin";
+
+  include /tmp/nginx/snippets/security-headers.conf;
+
+  # Liveness/readiness for the container and Kubernetes probes.
+  location = /healthz {
+    access_log off;
+    default_type text/plain;
+    return 200 "ok\n";
+  }
+
+  # Runtime configuration, rendered from GLOSSA_STUDIO_* at startup, so one
+  # image serves every environment without a rebuild.
+  location = /config.json {
+    alias /tmp/nginx/runtime/config.json;
+    default_type application/json;
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "no-store" always;
+  }
+
+  # The API lives on the same origin but is routed to glossa-server by the
+  # ingress. Reaching this block means that routing is missing; answer with
+  # a problem instead of the SPA's index.html.
+  location ^~ /v1/ {
+    default_type application/problem+json;
+    return 502 '{"type":"about:blank","title":"Bad Gateway","status":502,"detail":"/v1 is served by glossa-server; route it there at the ingress"}';
+  }
+
+  # The in-product editor (RFC 0004 §5.1): one script that preview
+  # deployments of other products load cross-origin, pinned by the SRI hash
+  # they read from overlay.json at build time. `crossorigin="anonymous"`
+  # makes it a CORS request, so it needs Access-Control-Allow-Origin, and
+  # Cross-Origin-Resource-Policy must allow other origins — which is why the
+  # security-headers snippet (same-origin CORP) is not included here. It is
+  # public, read-only JavaScript; nothing about a tenant is in it.
+  location = /overlay/v1/overlay.js {
+    types { } default_type text/javascript;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "same-origin" always;
+    add_header Cross-Origin-Resource-Policy "cross-origin" always;
+    add_header Access-Control-Allow-Origin "*" always;
+    # A new Studio deploy changes these bytes and their hash, so it can't be
+    # cached for long: a build pinned the old hash and the new one has to
+    # reach browsers quickly.
+    add_header Cache-Control "public, max-age=300" always;
+    try_files $uri =404;
+  }
+
+  # What a build reads to pin the hash: never cached.
+  location = /overlay/v1/overlay.json {
+    types { } default_type application/json;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Cross-Origin-Resource-Policy "cross-origin" always;
+    add_header Access-Control-Allow-Origin "*" always;
+    add_header Cache-Control "no-store" always;
+    try_files $uri =404;
+  }
+
+  # The in-product editor's authorization popup (RFC 0004 §5.2). A preview
+  # deployment of another product opens this window and waits for the grant
+  # on window.opener.postMessage. Under the default same-origin COOP the
+  # browser would put the popup in its own browsing-context group and
+  # window.opener would be null, so this one route relaxes it. Nothing else
+  # changes: the CSP is the same, frame-ancestors is still 'none' (the flow
+  # is a popup, never an iframe), and the page still needs Studio's session.
+  location = /in-context/authorize {
+    set $glossa_coop "unsafe-none";
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "no-store" always;
+    try_files /index.html =404;
+  }
+
+  # Vite fingerprints everything under /assets/, so it can be cached forever.
+  location ^~ /assets/ {
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "public, max-age=31536000, immutable" always;
+    try_files $uri =404;
+  }
+
+  # Everything else: a real file, or the SPA's entry point (client-side
+  # routes such as /t/acme/p/web/translate survive a reload). index.html is
+  # never cached, so a deploy is picked up on the next navigation.
+  location / {
+    include /tmp/nginx/snippets/security-headers.conf;
+    add_header Cache-Control "no-cache" always;
+    try_files $uri /index.html;
+  }
+}

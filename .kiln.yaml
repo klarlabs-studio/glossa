@@ -1,0 +1,83 @@
+# Kiln builds Glossa's platform images (owner decision, 2026-10-05: Kiln
+# instead of GitHub Actions for publishing). Warden proves the commit — the
+# checks live in .warden.yaml — Kiln builds, signs with the operator's
+# cosign key and pushes, and RollOps is the only thing that ships.
+#
+# VERSION and REVISION come from the commit Kiln builds (kiln >= 0.7.0):
+# ${kiln.version} is the release tag's semver without the leading v and
+# ${kiln.sha} the commit, so nothing here is bumped by hand and every
+# binary reports the release and commit it was built from. Both are
+# derived from the commit, not the environment, so a build stays
+# reproducible from it. The one version bumped by hand is Chart.yaml's
+# appVersion; ci/check-release-version.sh checks the tag against it.
+apiVersion: kiln.klarlabs.de/v1
+kind: Pipeline
+
+on:
+  pull_request: [prove]
+  push: [prove]
+  tag: [prove, publish]
+
+prove:
+  from: warden
+  # node_modules is gitignored, so it lives in the clone, never in the
+  # disposable worktree the gate runs in. pnpm keeps one per workspace
+  # package (pnpm-workspace.yaml), each with its own .bin, so every one is
+  # named here: with only the root, the gate's build fails "tsc: command
+  # not found". Keep this list in step with the workspace.
+  materialize:
+    - node_modules
+    - messageformat/js/node_modules
+    - packages/format/node_modules
+    - runtimes/js/astro/node_modules
+    - runtimes/js/capture/node_modules
+    - runtimes/js/elements/node_modules
+    - runtimes/js/overlay/node_modules
+    - runtimes/js/react/node_modules
+    - runtimes/js/react/react-18/node_modules
+    - runtimes/js/runtime/node_modules
+    - runtimes/js/unplugin/node_modules
+    - runtimes/js/vue/node_modules
+    - studio/node_modules
+    - site/node_modules
+
+publish:
+  - kind: image
+    image: ghcr.io/klarlabs-studio/glossa-server
+    dockerfile: platform/Dockerfile.server
+    context: .
+    platforms: [linux/amd64]
+    tags: [sha, semver, latest]
+    args: {VERSION: "${kiln.version}", REVISION: "${kiln.sha}"}
+    on: [tag]
+
+  - kind: image
+    image: ghcr.io/klarlabs-studio/glossa-edge
+    dockerfile: platform/Dockerfile.edge
+    context: .
+    platforms: [linux/amd64]
+    tags: [sha, semver, latest]
+    args: {VERSION: "${kiln.version}", REVISION: "${kiln.sha}"}
+    on: [tag]
+
+  - kind: image
+    image: ghcr.io/klarlabs-studio/glossa-studio
+    dockerfile: studio/Dockerfile
+    context: .
+    platforms: [linux/amd64]
+    tags: [sha, semver, latest]
+    args: {VERSION: "${kiln.version}", REVISION: "${kiln.sha}"}
+    on: [tag]
+
+  - kind: image
+    image: ghcr.io/klarlabs-studio/glossa-site
+    dockerfile: site/Dockerfile
+    context: .
+    platforms: [linux/amd64]
+    tags: [sha, semver, latest]
+    args: {VERSION: "${kiln.version}", REVISION: "${kiln.sha}"}
+    on: [tag]
+
+watch:
+  remote: origin
+  ref: main

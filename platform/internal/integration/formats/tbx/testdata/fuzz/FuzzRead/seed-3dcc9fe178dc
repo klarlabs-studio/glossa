@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("<martif type=\"TBX-Basic\" xml:eeeg=\"en\"><text><body><termEntry id=\"1\"><langSet xml:lang=\"de\"><ntig><termGrp><term>a</term>epreca<termNote type=\"normativeAuthorization\">deprem</termNote></termGrp></ntig></langSet></termEntry></bo><textext></martif>")

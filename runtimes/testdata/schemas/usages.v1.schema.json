@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glossa.dev/schemas/usages/v1.json",
+  "title": "Glossa usages v1: one build's message usages (RFC 0004 §2.2)",
+  "description": "Written by @klarlabs-studio/glossa/unplugin (.glossa/usages.json) and by `glossa extract`, uploaded by the CLI. One document is one build: one application at one commit. Usages are sorted by key, file, line, column (strings by Unicode code point); (file, line, column) is unique. Fixtures: runtimes/testdata/usages/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "application", "commit", "branch", "tool", "usages"],
+  "properties": {
+    "schema": { "const": "glossa.usages/v1" },
+    "application": {
+      "description": "The application's slug in the project (catalog Slug rules).",
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+    },
+    "commit": {
+      "description": "Full commit ID, lowercase hex: SHA-1 (40) or SHA-256 (64) repositories.",
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "branch": {
+      "description": "Short branch name (feat/checkout-copy, not refs/heads/…): ref-name components without '..', control characters, spaces, ~^:?*[\\{, and no component starting or ending with '.'.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{](?:[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{]|\\.[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{])*(?:/[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{](?:[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{]|\\.[^/.\\x00-\\x20\\x7f~^:?*\\[\\\\{])*)*$"
+    },
+    "tool": {
+      "description": "What produced the document. Informational: never part of the comparison between extractors.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^(?:@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$", "maxLength": 214 },
+        "version": {
+          "description": "Semantic version.",
+          "type": "string",
+          "pattern": "^(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        }
+      }
+    },
+    "usages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/usage" }
+    }
+  },
+  "$defs": {
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "file", "line", "column", "kind"],
+      "properties": {
+        "key": {
+          "description": "The message key as written at the call site (catalog key rules). Resolved to a message ID at ingest; an unknown key is stored, not rejected.",
+          "type": "string",
+          "maxLength": 200,
+          "pattern": "^[a-z0-9_-]+(?:\\.[a-z0-9_-]+)*$"
+        },
+        "file": {
+          "description": "Path relative to the project root: POSIX separators, no '.' or '..' segments, no empty segment, no leading or trailing slash, no ':' or backslash.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?:[^/.:\\x00-\\x1f\\x7f\\\\][^/:\\x00-\\x1f\\x7f\\\\]*|\\.[^/.:\\x00-\\x1f\\x7f\\\\][^/:\\x00-\\x1f\\x7f\\\\]*|\\.\\.[^/:\\x00-\\x1f\\x7f\\\\]+)(?:/(?:[^/.:\\x00-\\x1f\\x7f\\\\][^/:\\x00-\\x1f\\x7f\\\\]*|\\.[^/.:\\x00-\\x1f\\x7f\\\\][^/:\\x00-\\x1f\\x7f\\\\]*|\\.\\.[^/:\\x00-\\x1f\\x7f\\\\]+))*$"
+        },
+        "line": { "description": "1-based line.", "type": "integer", "minimum": 1 },
+        "column": {
+          "description": "1-based column, counted in Unicode code points (not bytes, not UTF-16 units), of the first character of the key inside its quotes, or of the accessor's first path segment.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "component": {
+          "description": "Vue/Astro: the file name without extension. JSX/TSX: the nearest enclosing capitalized function or class. Go: pkg.Func, pkg.Type.Method or pkg.(*Type).Method. Absent where none applies.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^\\S+$"
+        },
+        "route": {
+          "description": "Route pattern (not a URL): /checkout/payment, /blog/[slug]. Absent when unknown.",
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "^/[^\\s?#]*$"
+        },
+        "kind": {
+          "description": "t: t()/$t() calls and Go T calls. component: <GlossaText id> (Vue) and <T id> (React). element: <glossa-text|rich|plural|select key|message>. accessor: typed accessors from `glossa generate`. template: {{t}}, {{td}}, {{th}} in Go templates.",
+          "enum": ["t", "component", "element", "accessor", "template"]
+        }
+      }
+    }
+  }
+}

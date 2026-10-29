@@ -1,0 +1,13 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "web",
+  "commit": "9f2c1e7a4b3d5c6e8f0a1b2c3d4e5f6a7b8c9d0e",
+  "branch": "feat/checkout-copy",
+  "tool": { "name": "@klarlabs-studio/glossa", "version": "0.1.0" },
+  "usages": [
+    { "key": "cart.checkout", "file": "src/checkout/PaymentFooter.vue", "line": 17, "column": 21, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "component" },
+    { "key": "checkout.pay", "file": "src/checkout/PaymentFooter.vue", "line": 42, "column": 9, "component": "PaymentFooter", "route": "/checkout/payment", "kind": "t" },
+    { "key": "checkout.pay", "file": "src/components/PayButton.tsx", "line": 8, "column": 22, "component": "PayButton", "kind": "accessor" },
+    { "key": "nav.home", "file": "index.html", "line": 10, "column": 38, "kind": "element" }
+  ]
+}

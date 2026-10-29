@@ -1,0 +1,32 @@
+{
+  "en-de-files-clean": {
+    "review": [
+      "{\"findings\": []}"
+    ]
+  },
+  "en-de-pay-tone": {
+    "review": [
+      "{\"findings\": [{\"code\": \"tone-mismatch\", \"side\": \"target\", \"quote\": \"Zahl jetzt\", \"explanation\": \"The informal imperative contradicts the style guide, which asks for Sie.\", \"suggestion\": \"Jetzt bezahlen\"}]}"
+    ]
+  },
+  "en-de-delete-meaning": {
+    "review": [
+      "{\"findings\": [{\"code\": \"meaning-divergence\", \"side\": \"target\", \"quote\": \"archiviert\", \"explanation\": \"The source deletes the account permanently; the translation says it is archived.\", \"suggestion\": \"endgültig gelöscht\"}, {\"code\": \"grammar-suspected\", \"side\": \"target\", \"quote\": \"wird\", \"explanation\": \"The passive reads oddly here.\", \"suggestion\": \"\"}]}"
+    ]
+  },
+  "en-de-saved-grammar": {
+    "review": [
+      "{\"findings\": [{\"code\": \"grammar-suspected\", \"side\": \"target\", \"quote\": \"gespeichert wurden\", \"explanation\": \"The passive carries two auxiliaries; only one belongs there.\", \"suggestion\": \"gespeichert\"}]}"
+    ]
+  },
+  "en-de-signout-phrasing": {
+    "review": [
+      "{\"findings\": [{\"code\": \"inconsistent-phrasing\", \"side\": \"target\", \"quote\": \"Ausloggen\", \"explanation\": \"The rest of the product says Abmelden for this action.\", \"suggestion\": \"Abmelden\"}]}"
+    ]
+  },
+  "en-de-welcome-clean": {
+    "review": [
+      "{\"findings\": [{\"code\": \"tone-mismatch\", \"side\": \"target\", \"quote\": \"Willkommen zurück\", \"explanation\": \"The greeting feels casual for a professional tone.\", \"suggestion\": \"\"}]}"
+    ]
+  }
+}

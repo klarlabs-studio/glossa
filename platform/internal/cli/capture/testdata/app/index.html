@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capture fixture</title>
+<style>
+  body { margin: 0; font: 16px/1.4 Arial, Helvetica, sans-serif; background: #fff; color: #222; }
+  main { padding: 16px; }
+  h1 { margin: 0 0 16px; font-size: 32px; }
+  #search { width: 240px; }
+  #hidden { display: none; }
+  #account { margin-top: 24px; padding: 24px; width: 240px; background: rgb(0, 160, 0); color: #fff; }
+  .spacer { height: 1200px; }
+  @media (max-width: 600px) { #desktop { display: none; } }
+</style>
+<script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+  <h1 id="title"></h1>
+  <glossa-provider id="provider"><p id="component"><glossa-text key="cart.checkout">Zur Kasse</glossa-text></p></glossa-provider>
+  <p><input id="search"></p>
+  <p id="hidden"></p>
+  <p id="desktop"></p>
+  <p><button id="open" type="button">…</button></p>
+  <p id="dialog" hidden></p>
+  <div id="account" data-glossa-redact><span id="account-label"></span>: lina@example.com</div>
+  <div class="spacer"></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "name": "@klarlabs-studio/glossa-capture",
+  "version": "0.4.0",
+  "private": true,
+  "description": "PRIVATE source package of @klarlabs-studio/glossa (RFC 0002 Amendment 1): not published; its build output ships as a subpath of the umbrella. Glossa's capture mode (RFC 0004 §3.1): an onRender hook that marks t() strings with invisible markers, and the capture script that turns marked text, attributes and component hosts into regions for glossa capture. Loaded only in capture and editor sessions, never by applications.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./probes": {
+      "types": "./dist/probes.d.ts",
+      "import": "./dist/probes.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:cli": "node scripts/cli-bundles.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "playwright test",
+    "lint": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "peerDependencies": {
+    "@klarlabs-studio/glossa-runtime": "workspace:^"
+  },
+  "devDependencies": {
+    "@klarlabs-studio/glossa-elements": "workspace:*",
+    "@klarlabs-studio/glossa-react": "workspace:*",
+    "@klarlabs-studio/glossa-runtime": "workspace:*",
+    "@klarlabs-studio/glossa-vue": "workspace:*",
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.19.19",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2",
+    "jsdom": "25.0.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0",
+    "vue": "3.5.43"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/capture"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/capture#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

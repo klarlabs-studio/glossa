@@ -1,0 +1,129 @@
+{
+  "id": "de-fr-role-select",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": ".input {$role :string}\n.match $role\nadmin {{Sie verwalten diesen Arbeitsbereich.}}\n* {{Sie sind Mitglied dieses Arbeitsbereichs.}}",
+  "context": {
+    "key": "workspace.role",
+    "description": "Line under the workspace name"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-facture",
+            "text": "facture",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-espace",
+            "text": "espace de travail",
+            "locale": "fr",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace-fr",
+            "text": "workspace",
+            "locale": "fr",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-compte",
+            "text": "compte",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-datei",
+            "text": "Datei",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-fichier",
+            "text": "fichier",
+            "locale": "fr",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "fr-formal-2",
+      "formality": "formal",
+      "pronoun": "vous",
+      "punctuation": {
+        "spacing": "a space before ! ? : and ;"
+      }
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "espace de travail"
+    ],
+    "forbidden_terms": [
+      "workspace"
+    ],
+    "formality": {
+      "must_include_any": [
+        "vous",
+        "votre",
+        "vos",
+        "Vous",
+        "Votre",
+        "Veuillez"
+      ],
+      "must_not_include": [
+        "tu",
+        "te",
+        "ton",
+        "ta",
+        "tes",
+        "toi"
+      ]
+    }
+  },
+  "references": [
+    ".input {$role :string}\n.match $role\nadmin {{Vous gérez cet espace de travail.}}\n* {{Vous êtes membre de cet espace de travail.}}"
+  ]
+}

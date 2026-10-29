@@ -1,0 +1,16 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "blog.back", "file": "src/pages/blog/[slug].astro", "line": 7, "column": 23, "component": "[slug]", "route": "/blog/[slug]", "kind": "t"},
+    {"key": "checkout.pay", "file": "src/pages/checkout/payment.astro", "line": 9, "column": 21, "component": "payment", "route": "/checkout/payment", "kind": "element"},
+    {"key": "checkout.title", "file": "src/pages/checkout/payment.astro", "line": 5, "column": 20, "component": "payment", "route": "/checkout/payment", "kind": "t"},
+    {"key": "footer.copyright", "file": "src/components/Footer.astro", "line": 8, "column": 25, "component": "Footer", "kind": "element"},
+    {"key": "footer.imprint", "file": "src/components/Footer.astro", "line": 7, "column": 14, "component": "Footer", "kind": "t"},
+    {"key": "home.hero.title", "file": "src/pages/index.astro", "line": 12, "column": 23, "component": "index", "route": "/", "kind": "element"},
+    {"key": "home.title", "file": "src/pages/index.astro", "line": 9, "column": 16, "component": "index", "route": "/", "kind": "t"}
+  ]
+}

@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/tenant"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/user"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/tenant"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/user"
 )
 
 // Bootstrap idempotently seeds a tenant + admin user from env-

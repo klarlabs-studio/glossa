@@ -30,3 +30,13 @@ pnpm-debug.log*
 
 # Claude Code session artifacts
 .claude/
+
+# MessageFormat fixture verifier (standalone npm project, not in the pnpm workspace)
+/messageformat/testdata/glossa/gen/node_modules/
+
+# Dart / Flutter
+.dart_tool/
+/runtimes/dart/flutter/build/
+
+# Kiln run ledger (local)
+.kiln/

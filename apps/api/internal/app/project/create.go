@@ -9,11 +9,11 @@ import (
 
 	"github.com/google/uuid"
 
-	apikeyapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/apikey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/analytics"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/apikey"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/locale"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
+	apikeyapp "go.klarlabs.de/glossa/apps/api/internal/app/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/analytics"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/apikey"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/locale"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
 )
 
 // ErrInvalidTenantID is the belt-and-suspender guard. Authenticated
@@ -82,10 +82,15 @@ func (uc *CreateProject) Execute(ctx context.Context, in CreateInput) (CreateOut
 	if err != nil {
 		return CreateOutput{}, err
 	}
-	defaultLocale := in.DefaultLocale
-	if defaultLocale == "" {
-		defaultLocale = "de"
+	rawLocale := in.DefaultLocale
+	if rawLocale == "" {
+		rawLocale = "de"
 	}
+	defaultCode, err := locale.NewCode(rawLocale)
+	if err != nil {
+		return CreateOutput{}, err
+	}
+	defaultLocale := defaultCode.String()
 
 	p := project.Project{
 		ID:            uuid.New(),
@@ -115,16 +120,14 @@ func (uc *CreateProject) Execute(ctx context.Context, in CreateInput) (CreateOut
 	// see the type comment for why a failed seed isn't worth
 	// rolling the project back.
 	if uc.locales != nil {
-		if code, lerr := locale.NewCode(defaultLocale); lerr == nil {
-			if label, lerr2 := locale.NewLabel(defaultLocale); lerr2 == nil {
-				_ = uc.locales.Save(ctx, locale.Locale{
-					ID:        uuid.New(),
-					ProjectID: p.ID,
-					Code:      code,
-					Label:     label,
-					Enabled:   true,
-				})
-			}
+		if label, lerr := locale.NewLabel(defaultLocale); lerr == nil {
+			_ = uc.locales.Save(ctx, locale.Locale{
+				ID:        uuid.New(),
+				ProjectID: p.ID,
+				Code:      defaultCode,
+				Label:     label,
+				Enabled:   true,
+			})
 		}
 	}
 

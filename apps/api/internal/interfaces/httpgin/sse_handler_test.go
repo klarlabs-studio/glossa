@@ -14,8 +14,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	translationapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/translation"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/project"
+	translationapp "go.klarlabs.de/glossa/apps/api/internal/app/translation"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/project"
 )
 
 // sseFrame mirrors one parsed SSE message — id + event name + the

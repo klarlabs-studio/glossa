@@ -1,0 +1,104 @@
+{
+  "id": "de-en-status-select",
+  "source_locale": "de",
+  "target_locale": "en",
+  "source": ".input {$status :string}\n.match $status\npaid {{Die Rechnung ist bezahlt.}}\noverdue {{Die Rechnung ist überfällig.}}\n* {{Die Rechnung ist offen.}}",
+  "context": {
+    "key": "billing.status",
+    "description": "Invoice status line"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-invoice",
+            "text": "invoice",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-bill",
+            "text": "bill",
+            "locale": "en",
+            "status": "forbidden"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-workspace",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-account",
+            "text": "account",
+            "locale": "en",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "en-us-2",
+      "tone": [
+        "concise",
+        "friendly"
+      ],
+      "rules": [
+        {
+          "id": "r-case",
+          "rule": "Use sentence case",
+          "good": [
+            "Save changes"
+          ],
+          "bad": [
+            "Save Changes"
+          ]
+        }
+      ]
+    }
+  },
+  "expect": {
+    "required_terms": [
+      "invoice"
+    ],
+    "forbidden_terms": [
+      "bill"
+    ]
+  },
+  "references": [
+    ".input {$status :string}\n.match $status\npaid {{The invoice is paid.}}\noverdue {{The invoice is overdue.}}\n* {{The invoice is open.}}"
+  ]
+}

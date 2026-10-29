@@ -1,0 +1,18 @@
+# Build context is the repository root (see Dockerfile.server). Send only
+# the three Go modules the server is built from; tests and fixtures never
+# reach the image.
+*
+!messageformat/
+!runtimes/go/
+!platform/
+messageformat/js/
+runtimes/go/examples/
+messageformat/testdata/
+**/testdata/
+# Exception: internal/intelligence/evals embeds this one fixture into the
+# binary (//go:embed testdata/baseline.json), so the build needs it in the
+# context even though nothing else under testdata/ does.
+!platform/internal/intelligence/evals/testdata/baseline.json
+**/*_test.go
+**/node_modules/
+**/.DS_Store

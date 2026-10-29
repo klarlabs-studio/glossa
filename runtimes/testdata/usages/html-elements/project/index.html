@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Brotwerk</title>
+  </head>
+  <body>
+    <glossa-provider edge="https://edge.example.com" delivery-key="pk_fixture">
+      <nav>
+        <a href="/"><glossa-text key="nav.home">Start</glossa-text></a>
+        <glossa-text id="hero" key='home.hero.title'>Frisches Brot</glossa-text>
+        <glossa-text id="promo" message="home.promo" key="home.promo.v2"></glossa-text>
+      </nav>
+      <glossa-rich key="home.welcome" vars='{"name":"Sophia"}'>Willkommen</glossa-rich>
+      <glossa-plural
+        count="3"
+        key="cart.items"
+      ></glossa-plural>
+      <glossa-select key="athlete.greeting" value="female"></glossa-select>
+      <glossa-text message="footer.imprint"></glossa-text>
+    </glossa-provider>
+  </body>
+</html>

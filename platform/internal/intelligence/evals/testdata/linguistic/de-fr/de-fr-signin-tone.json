@@ -1,0 +1,42 @@
+{
+  "id": "de-fr-signin-tone",
+  "description": "The guide asks for vous and the translation uses tu.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Bitte melden Sie sich an.",
+  "translation": "Connecte-toi.",
+  "context": {
+    "key": "auth.sign_in",
+    "namespace": "auth",
+    "description": "Prompt above the sign-in form"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "tone-mismatch"
+    ],
+    "quotes": [
+      "Connecte-toi"
+    ]
+  }
+}

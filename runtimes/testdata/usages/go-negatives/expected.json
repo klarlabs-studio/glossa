@@ -1,0 +1,10 @@
+{
+  "schema": "glossa.usages/v1",
+  "application": "fixture",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "branch": "main",
+  "tool": {"name": "fixture", "version": "0.0.0"},
+  "usages": [
+    {"key": "nav.control", "file": "internal/nav/nav.go", "line": 31, "column": 8, "component": "nav.Links", "kind": "t"}
+  ]
+}

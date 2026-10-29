@@ -2,14 +2,14 @@
 // path in the HTTP layer should pick one of these (or compose with
 // WithMessage / WithParam) rather than hand-rolling `gin.H{"error":
 // "literal"}`. The wire envelope is defined by
-// github.com/felixgeelhaar/glossa/apierr — three audiences (logs,
+// go.klarlabs.de/glossa/apierr — three audiences (logs,
 // curl, i18n clients) in one shape.
 package errs
 
 import (
 	"net/http"
 
-	"github.com/felixgeelhaar/glossa/apierr"
+	"go.klarlabs.de/glossa/apierr"
 )
 
 // ─── Authentication / authorization ────────────────────────────────

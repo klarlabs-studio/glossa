@@ -1,0 +1,211 @@
+{
+  "name": "@klarlabs-studio/glossa",
+  "version": "0.5.0",
+  "description": "Glossa for JavaScript, in one package: the runtime, web components, Vue, React and Astro bindings, the usages bundler plugin, capture, the in-product editor and the MessageFormat kernel, as subpath exports.",
+  "keywords": [
+    "i18n",
+    "localization",
+    "messageformat",
+    "mf2",
+    "vue",
+    "react",
+    "astro",
+    "web-components"
+  ],
+  "type": "module",
+  "main": "./dist/runtime/index.js",
+  "module": "./dist/runtime/index.js",
+  "types": "./dist/runtime/index.d.ts",
+  "sideEffects": [
+    "./dist/elements/index.js",
+    "./dist/elements/glossa-*.js",
+    "./dist/overlay/index.js",
+    "./dist/overlay/overlay.js",
+    "./dist/overlay/standalone.js",
+    "./dist/overlay/bundle/overlay.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/runtime/index.d.ts",
+      "import": "./dist/runtime/index.js"
+    },
+    "./idb": {
+      "types": "./dist/runtime/idb.d.ts",
+      "import": "./dist/runtime/idb.js"
+    },
+    "./apierr": {
+      "types": "./dist/runtime/apierr.d.ts",
+      "import": "./dist/runtime/apierr.js"
+    },
+    "./dev": {
+      "types": "./dist/runtime/dev.d.ts",
+      "import": "./dist/runtime/dev.js"
+    },
+    "./elements": {
+      "types": "./dist/elements/index.d.ts",
+      "import": "./dist/elements/index.js"
+    },
+    "./elements/ssr": {
+      "types": "./dist/elements/ssr.d.ts",
+      "import": "./dist/elements/ssr.js"
+    },
+    "./elements/parts": {
+      "types": "./dist/elements/parts.d.ts",
+      "import": "./dist/elements/parts.js"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./astro": {
+      "types": "./dist/astro/index.d.ts",
+      "import": "./dist/astro/index.js"
+    },
+    "./astro/server": {
+      "types": "./dist/astro/server.d.ts",
+      "import": "./dist/astro/server.js"
+    },
+    "./astro/client": {
+      "types": "./dist/astro/client.d.ts",
+      "import": "./dist/astro/client.js"
+    },
+    "./astro/vue": {
+      "types": "./dist/astro/vue.d.ts",
+      "import": "./dist/astro/vue.js"
+    },
+    "./astro/elements": {
+      "types": "./dist/astro/elements.d.ts",
+      "import": "./dist/astro/elements.js"
+    },
+    "./astro/middleware": {
+      "types": "./dist/astro/middleware.d.ts",
+      "import": "./dist/astro/middleware.js"
+    },
+    "./astro/testing": {
+      "types": "./dist/astro/test-support.d.ts",
+      "import": "./dist/astro/test-support.js"
+    },
+    "./astro/translate": {
+      "types": "./dist/astro/translate.d.ts",
+      "import": "./dist/astro/translate.js"
+    },
+    "./unplugin": {
+      "types": "./dist/unplugin/index.d.ts",
+      "import": "./dist/unplugin/index.js"
+    },
+    "./unplugin/vite": {
+      "types": "./dist/unplugin/vite.d.ts",
+      "import": "./dist/unplugin/vite.js"
+    },
+    "./unplugin/rollup": {
+      "types": "./dist/unplugin/rollup.d.ts",
+      "import": "./dist/unplugin/rollup.js"
+    },
+    "./unplugin/webpack": {
+      "types": "./dist/unplugin/webpack.d.ts",
+      "import": "./dist/unplugin/webpack.js"
+    },
+    "./unplugin/esbuild": {
+      "types": "./dist/unplugin/esbuild.d.ts",
+      "import": "./dist/unplugin/esbuild.js"
+    },
+    "./capture": {
+      "types": "./dist/capture/index.d.ts",
+      "import": "./dist/capture/index.js"
+    },
+    "./capture/probes": {
+      "types": "./dist/capture/probes.d.ts",
+      "import": "./dist/capture/probes.js"
+    },
+    "./overlay": {
+      "types": "./dist/overlay/index.d.ts",
+      "import": "./dist/overlay/index.js"
+    },
+    "./overlay/bundle": "./dist/overlay/bundle/overlay.js",
+    "./messageformat": {
+      "types": "./dist/messageformat/index.d.ts",
+      "import": "./dist/messageformat/index.js"
+    },
+    "./messageformat/testing": {
+      "types": "./dist/messageformat/testing/index.d.ts",
+      "import": "./dist/messageformat/testing/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/verify.mjs && size-limit",
+    "lint": "node scripts/check-types.mjs",
+    "size": "size-limit"
+  },
+  "dependencies": {
+    "@jridgewell/trace-mapping": "0.3.31",
+    "@lit/context": "1.1.6",
+    "@messageformat/icu-messageformat-1": "0.12.0",
+    "acorn": "8.18.0",
+    "lit": "3.3.3",
+    "messageformat": "4.0.0",
+    "unplugin": "3.4.0",
+    "zod": "^4.1.0"
+  },
+  "peerDependencies": {
+    "astro": "^6.4.0 || ^7.0.0",
+    "react": "^18.3.0 || ^19.0.0",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "astro": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@klarlabs-studio/glossa-astro": "workspace:*",
+    "@klarlabs-studio/glossa-capture": "workspace:*",
+    "@klarlabs-studio/glossa-elements": "workspace:*",
+    "@klarlabs-studio/glossa-messageformat": "workspace:*",
+    "@klarlabs-studio/glossa-overlay": "workspace:*",
+    "@klarlabs-studio/glossa-react": "workspace:*",
+    "@klarlabs-studio/glossa-runtime": "workspace:*",
+    "@klarlabs-studio/glossa-unplugin": "workspace:*",
+    "@klarlabs-studio/glossa-vue": "workspace:*",
+    "@size-limit/preset-small-lib": "11.2.0",
+    "@types/node": "22.19.19",
+    "@types/react": "19.3.0",
+    "astro": "7.3.3",
+    "esbuild": "0.28.2",
+    "react": "19.3.0",
+    "size-limit": "11.2.0",
+    "typescript": "5.9.3",
+    "vue": "3.5.43"
+  },
+  "license": "MIT",
+  "author": "Felix Geelhaar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klarlabs-studio/glossa.git",
+    "directory": "runtimes/js/glossa"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/klarlabs-studio/glossa/tree/main/runtimes/js/glossa#readme",
+  "bugs": "https://github.com/klarlabs-studio/glossa/issues"
+}

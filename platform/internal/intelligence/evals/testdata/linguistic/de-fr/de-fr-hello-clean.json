@@ -1,0 +1,37 @@
+{
+  "id": "de-fr-hello-clean",
+  "description": "A sound translation: nothing to report.",
+  "source_locale": "de",
+  "target_locale": "fr",
+  "source": "Guten Tag",
+  "translation": "Bonjour",
+  "context": {
+    "key": "home.greeting",
+    "namespace": "home",
+    "description": "Greeting in the header"
+  },
+  "style": {
+    "version": "fr@2",
+    "formality": "formal",
+    "pronoun": "vous",
+    "tone": [
+      "professional"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Address the reader with vous",
+        "rationale": "house style",
+        "good": [
+          "Connectez-vous"
+        ],
+        "bad": [
+          "Connecte-toi"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": []
+  }
+}

@@ -2,7 +2,7 @@
 
 **Version**: 0.1 (planning)
 **Last updated**: 2026-05-23
-**Status**: Pre-build. Awaiting IRI v0.2.0 stabilization before kickoff.
+**Status**: Historical — describes the v0.1–v0.3 build. Direction now comes from [`product-intent.md`](./product-intent.md); [RFC 0001](./rfcs/0001-platform-foundation.md) §6 lists the statements here that it supersedes (notably §2.2 "roll own ICU subset" and §2.5 "same JSON bundles server-side").
 
 ## 1. Problem
 
@@ -232,8 +232,8 @@ CREATE POLICY projects_isolation ON projects USING (tenant_id::text = current_se
 
 Mirror IRI's `deploy/k3s/` structure:
 
-- `apps/api` builds + pushes to `ghcr.io/felixgeelhaar/glossa-api`
-- `apps/admin` builds + pushes to `ghcr.io/felixgeelhaar/glossa-admin`
+- `apps/api` builds + pushes to `ghcr.io/klarlabs-studio/glossa-api`
+- `apps/admin` builds + pushes to `ghcr.io/klarlabs-studio/glossa-admin`
 - StatefulSet for Postgres (20Gi PVC)
 - Ingress: `<glossa-domain>` → admin; `<glossa-domain>/api/*` → API
 - Daily backup CronJob via existing rclone-config + Hetzner Storage Box pattern

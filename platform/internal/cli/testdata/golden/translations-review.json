@@ -1,0 +1,15 @@
+{
+  "schema": "glossa.cli.translations.review/v1",
+  "state": "approved",
+  "reviewed": 1,
+  "failed": 0,
+  "units": [
+    {
+      "key": "checkout.pay",
+      "locale": "de",
+      "from": "needs_review",
+      "state": "approved",
+      "revision": 2
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "accepted": [
+    {
+      "use": "approvals_as_required",
+      "params": {},
+      "cases": [
+        { "name": "two distinct approvers of two required", "subject": { "author": "person:req", "required": 2, "approvers": ["person:a", "person:b"] }, "want": true },
+        { "name": "one approver of two required", "subject": { "author": "person:req", "required": 2, "approvers": ["person:a"] }, "want": false },
+        { "name": "the same approver twice", "subject": { "author": "person:req", "required": 2, "approvers": ["person:a", "person:a"] }, "want": false },
+        { "name": "the requester never counts", "subject": { "author": "person:req", "required": 2, "approvers": ["person:req", "person:a"] }, "want": false },
+        { "name": "a subject that requires nothing", "subject": { "author": "person:req", "required": 0, "approvers": ["person:a"] }, "want": false }
+      ]
+    },
+    {
+      "use": "origin_in",
+      "params": { "origins": ["ai", "machine_translation"] },
+      "cases": [
+        { "name": "AI text", "subject": { "origin": "ai" }, "want": true },
+        { "name": "machine-translated text", "subject": { "origin": "machine_translation" }, "want": true },
+        { "name": "a person's text", "subject": { "origin": "human" }, "want": false },
+        { "name": "no revision yet", "subject": {}, "want": false }
+      ]
+    },
+    {
+      "use": "confidence_at_least",
+      "params": { "band": "approve_recommended" },
+      "cases": [
+        { "name": "the band itself", "subject": { "band": "approve_recommended" }, "want": true },
+        { "name": "a higher band", "subject": { "band": "auto_approve" }, "want": true },
+        { "name": "a lower band", "subject": { "band": "review_required" }, "want": false },
+        { "name": "no suggestion", "subject": {}, "want": false }
+      ]
+    },
+    {
+      "use": "findings_at_least",
+      "params": { "layer": "terminology", "severity": "warning", "count": 2 },
+      "cases": [
+        { "name": "two warnings", "subject": { "findings": [{ "layer": "terminology", "severity": "warning", "count": 2 }] }, "want": true },
+        { "name": "an error counts as at least a warning", "subject": { "findings": [{ "layer": "terminology", "severity": "warning", "count": 1 }, { "layer": "terminology", "severity": "error", "count": 1 }] }, "want": true },
+        { "name": "one is not two", "subject": { "findings": [{ "layer": "terminology", "severity": "warning", "count": 1 }] }, "want": false },
+        { "name": "another layer does not count", "subject": { "findings": [{ "layer": "length", "severity": "error", "count": 5 }] }, "want": false }
+      ]
+    },
+    {
+      "use": "findings_at_least",
+      "params": { "severity": "error", "count": 1 },
+      "cases": [
+        { "name": "an error in any layer", "subject": { "findings": [{ "layer": "length", "severity": "error", "count": 1 }] }, "want": true },
+        { "name": "warnings are below error", "subject": { "findings": [{ "layer": "length", "severity": "warning", "count": 9 }] }, "want": false }
+      ]
+    },
+    {
+      "use": "locale_in",
+      "params": { "locales": ["de", "fr-CA"] },
+      "cases": [
+        { "name": "listed", "subject": { "locale": "de" }, "want": true },
+        { "name": "listed, written in another case", "subject": { "locale": "fr-ca" }, "want": true },
+        { "name": "a region of a listed language is not that language", "subject": { "locale": "de-AT" }, "want": false },
+        { "name": "not listed", "subject": { "locale": "en" }, "want": false }
+      ]
+    },
+    {
+      "use": "review_state_in",
+      "params": { "states": ["approved", "rejected"] },
+      "cases": [
+        { "name": "a reviewer approved it", "subject": { "review_state": "approved" }, "want": true },
+        { "name": "a reviewer rejected it", "subject": { "review_state": "rejected" }, "want": true },
+        { "name": "sent back to review, which decides nothing", "subject": { "review_state": "needs_review" }, "want": false }
+      ]
+    },
+    {
+      "use": "namespace_in",
+      "params": { "namespaces": ["checkout", "legal"] },
+      "cases": [
+        { "name": "listed", "subject": { "namespace": "checkout" }, "want": true },
+        { "name": "not listed", "subject": { "namespace": "marketing" }, "want": false },
+        { "name": "no namespace", "subject": {}, "want": false }
+      ]
+    },
+    {
+      "use": "approvals_at_least",
+      "params": { "n": 2, "distinct_from_author": true },
+      "cases": [
+        { "name": "two people besides the author", "subject": { "author": "person:a", "approvers": ["person:b", "person:c"] }, "want": true },
+        { "name": "the author's own approval does not count", "subject": { "author": "person:a", "approvers": ["person:a", "person:b"] }, "want": false },
+        { "name": "one person twice is one approval", "subject": { "author": "person:a", "approvers": ["person:b", "person:b"] }, "want": false },
+        { "name": "none yet", "subject": { "author": "person:a" }, "want": false }
+      ]
+    },
+    {
+      "use": "approvals_at_least",
+      "params": { "n": 1 },
+      "cases": [
+        { "name": "without distinct_from_author the author counts", "subject": { "author": "person:a", "approvers": ["person:a"] }, "want": true }
+      ]
+    },
+    {
+      "use": "actor_has_permission",
+      "params": { "permission": "translations.review" },
+      "cases": [
+        { "name": "the actor holds it here", "trigger": { "permissions": ["translations.read", "translations.review"] }, "want": true },
+        { "name": "the actor does not", "trigger": { "permissions": ["translations.write"] }, "want": false }
+      ]
+    },
+    {
+      "use": "tm_match_at_least",
+      "params": { "score": 0.95 },
+      "cases": [
+        { "name": "an exact match", "subject": { "tm_match": 1 }, "want": true },
+        { "name": "exactly the threshold", "subject": { "tm_match": 0.95 }, "want": true },
+        { "name": "a fuzzy match", "subject": { "tm_match": 0.8 }, "want": false }
+      ]
+    }
+  ],
+  "refused": [
+    { "use": "approvals_as_required", "params": { "n": 1 } },
+    { "use": "origin_in", "params": { "origins": ["crowd"] } },
+    { "use": "origin_in", "params": {} },
+    { "use": "origin_in", "params": { "origins": ["ai"], "vendor": "x" } },
+    { "use": "confidence_at_least", "params": { "band": "high" } },
+    { "use": "findings_at_least", "params": { "layer": "spelling", "severity": "error", "count": 1 } },
+    { "use": "findings_at_least", "params": { "severity": "info", "count": 1 } },
+    { "use": "findings_at_least", "params": { "severity": "error", "count": 0 } },
+    { "use": "locale_in", "params": { "locales": [] } },
+    { "use": "locale_in", "params": { "locales": ["not a locale!"] } },
+    { "use": "review_state_in", "params": { "states": [] } },
+    { "use": "review_state_in", "params": { "states": ["legal_review"] } },
+    { "use": "namespace_in", "params": { "namespaces": [""] } },
+    { "use": "approvals_at_least", "params": { "n": 0 } },
+    { "use": "approvals_at_least", "params": { "n": 11 } },
+    { "use": "actor_has_permission", "params": { "permission": "legal" } },
+    { "use": "tm_match_at_least", "params": { "score": 0 } },
+    { "use": "tm_match_at_least", "params": { "score": 1.5 } }
+  ]
+}

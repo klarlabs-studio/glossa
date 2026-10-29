@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tmx version="1.4">
+  <header creationtool="Glossa" creationtoolversion="1" segtype="sentence" o-tmf="Glossa" adminlang="en" srclang="en" datatype="plaintext"/>
+  <body>
+    <tu tuid="tm-1" srclang="en" creationdate="20260901T083000Z" changedate="20260901T093000Z" lastusagedate="20260903T083000Z" usagecount="7">
+      <prop type="x-project">shop</prop>
+      <prop type="x-origin">revision:42</prop>
+      <note>approved by Anna</note>
+      <tuv xml:lang="en">
+        <seg>Hello <bpt i="1" x="1">{#b}</bpt><ph x="2">{$name}</ph><ept i="1">{/b}</ept>, you have <ph x="3">{$count :number}</ph> items<ph x="4">{#br /}</ph> <it pos="begin" x="5">{#i}</it></seg>
+      </tuv>
+      <tuv xml:lang="de">
+        <seg>Hallo <bpt i="1" x="1">{#b}</bpt><ph x="2">{$name}</ph><ept i="1">{/b}</ept>, Sie haben <ph x="3">{$count :number}</ph> Artikel<ph x="4">{#br /}</ph> <it pos="begin" x="5">{#i}</it></seg>
+      </tuv>
+    </tu>
+    <tu tuid="tm-2" srclang="en">
+      <tuv xml:lang="en">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$n :number} .match $n one {{{$n} file}} * {{{$n} files}}</seg>
+      </tuv>
+      <tuv xml:lang="de">
+        <prop type="x-glossa-syntax">mf2</prop>
+        <seg>.input {$n :number} .match $n one {{{$n} Datei}} * {{{$n} Dateien}}</seg>
+      </tuv>
+    </tu>
+    <tu tuid="tm-3" srclang="en">
+      <tuv xml:lang="en">
+        <seg>Escapes: &amp; &lt; &gt; " {braces}</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>Échappements : &amp; &lt; &gt; " {accolades}</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

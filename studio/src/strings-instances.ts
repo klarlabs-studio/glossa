@@ -1,0 +1,80 @@
+/**
+ * Studio's copy for one M5 surface (RFC 0006), kept beside strings.ts and
+ * spread into it: `strings.instances` and `strings.problems`. Plain data —
+ * it imports nothing, so strings.ts stays the one place every screen reads.
+ *
+ * This surface: workflow instances and their transition logs (§2.5).
+ */
+export const instanceStrings = {
+  title: "Workflow instances",
+  lead: "An instance is one translation unit (or release request) while work on it is in flight under a binding. It keeps the version of the workflow it started on, and its transition log says what moved it, who caused it, and what each action did.",
+  back: "Workflow bindings",
+  fromTranslation: "Workflow history of this translation",
+  loading: "Loading instances…",
+  failed: "The instances could not be read, so nothing below is known — not even whether there are any.",
+  empty: "No instances match. A unit gets one when a bound workflow starts on it; a project with no binding has none.",
+  retry: "Read again",
+  loadMore: "Load more instances",
+  count: (n: number, more: boolean) => `${n.toLocaleString()}${more ? "+" : ""} instance${n === 1 && !more ? "" : "s"}`,
+  filters: "Filter instances",
+  status: "Status",
+  anyStatus: "Any status",
+  statusName: { active: "Active", finished: "Finished" } as Record<string, string>,
+  statusTone: { active: "warn", finished: "ok" } as Record<string, string>,
+  locale: "Locale",
+  message: "Message key",
+  messageHint: "The exact key, e.g. checkout.pay.",
+  apply: "Filter",
+  clear: "Clear filters",
+  columns: { subject: "Subject", locale: "Locale", workflow: "Workflow", state: "State", status: "Status", updated: "Updated", open: "Open" },
+  open: "Open",
+  ofInstance: (subject: string) => ` instance for ${subject}`,
+  releaseRequest: (id: string) => `Release request ${id.slice(0, 8)}`,
+  message_: (id: string) => `Message ${id.slice(0, 8)}`,
+  unknownKeyHint: "Instances name their message by id only; filter by a key to see it named.",
+  workflowVersion: (name: string, v: number) => `${name} v${v}`,
+  unknownDefinition: (id: string) => `Definition ${id.slice(0, 8)}`,
+  // one instance
+  instanceTitle: (subject: string) => `Workflow instance: ${subject}`,
+  instanceLoading: "Loading the instance…",
+  instanceFailed: "This instance could not be read.",
+  facts: "About this instance",
+  subject: "Subject",
+  subjectKind: { translation: "Translation unit", release_request: "Release request" } as Record<string, string>,
+  workflow: "Workflow",
+  runsOn: "Runs on the version it started with; saving the workflow again does not move it.",
+  state: "Current state",
+  started: "Started",
+  updated: "Last moved",
+  allInstances: "All instances",
+  openRequest: "Open the release request",
+  openWorkspace: "Open in the editor",
+  log: "Transition log",
+  logLead: "Every event the instance received, oldest first. Actions run as the person or system whose event caused the transition — never as a stand-in with more rights.",
+  logEmpty: "No events yet.",
+  logFailed: "The transition log could not be read.",
+  seq: (n: number) => `#${n}`,
+  move: (from: string, to: string) => `${from} → ${to}`,
+  stayed: (state: string) => `stayed in ${state}`,
+  outcome: { applied: "Applied", ignored: "Ignored", refused: "Refused" } as Record<string, string>,
+  outcomeTone: { applied: "ok", ignored: "neutral", refused: "err" } as Record<string, string>,
+  outcomeText: {
+    applied: "The event moved the instance and its actions ran.",
+    ignored: "The instance no longer accepted this event — the world moved on meanwhile. That is normal, not an error.",
+    refused: "An action was refused for permission, so the instance stayed where it was. The actor lacks the right the action needs.",
+  } as Record<string, string>,
+  guards: "Guards",
+  guardPassed: "passed",
+  guardFailed: "did not pass",
+  actions: "Actions",
+  actionOutcome: { done: "done", refused: "refused", failed: "failed" } as Record<string, string>,
+  actionTone: { done: "ok", refused: "err", failed: "err" } as Record<string, string>,
+  noGuards: "No guards evaluated.",
+  noActions: "No actions ran.",
+  actor: (who: string) => `Caused by ${who}`,
+};
+
+/** Sentences for this surface's problem codes, merged into `strings.problems`. */
+export const instanceProblems: Record<string, string> = {
+  workflow_instances_unavailable: "This server keeps no workflow instances, so there is nothing to show. Ask whoever runs it to enable the instance store.",
+};

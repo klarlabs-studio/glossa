@@ -1,0 +1,75 @@
+{
+  "de-en-greeting": {
+    "translate": [
+      "{\"message\": \"Hi {$name}, great to have you here!\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.94, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-invoices-plural": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{{$count} open invoice}}\\n* {{{$count} open invoices}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-account-deleted": {
+    "translate": [
+      "{\"message\": \"Your account has been deleted.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.96, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-save-markup": {
+    "translate": [
+      "{\"message\": \"Click {#b}Save{/b} to continue.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-status-select": {
+    "translate": [
+      "{\"message\": \".input {$status :string}\\n.match $status\\npaid {{The invoice has been paid.}}\\noverdue {{The invoice is overdue.}}\\n* {{The invoice is open.}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.9, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-switch-workspace": {
+    "translate": [
+      "{\"message\": \"Switch workspace\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-download-term-slip": {
+    "translate": [
+      "{\"message\": \"Download bill\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.7, \"formality_ok\": true, \"issues\": [\"'bill' should be 'invoice' in this product.\"]}"
+    ]
+  },
+  "de-en-privacy-repair": {
+    "translate": [
+      "{\"message\": \"Read our {#link}privacy policy{/link.\", \"notes\": \"\"}",
+      "{\"message\": \"Read our {#link}privacy policy{/link}.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "de-en-messages-tm-fuzzy": {
+    "translate": [
+      "{\"message\": \"You have {$count} new messages.\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  }
+}

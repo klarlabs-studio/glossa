@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("<tmx><A><A>0<A>0")

@@ -1,0 +1,27 @@
+{
+  "description": "No network and nothing persisted: inline default, never empty",
+  "publicKeys": [],
+  "steps": [
+    {
+      "description": "edge down on first ever start",
+      "edge": {
+        "manifest": {
+          "status": 503
+        },
+        "artifacts": {}
+      },
+      "read": {
+        "id": "hello",
+        "requested": [
+          "en"
+        ]
+      },
+      "expActiveRelease": null,
+      "expSource": "inline",
+      "expErrors": [
+        "network"
+      ],
+      "exp": "hello"
+    }
+  ]
+}

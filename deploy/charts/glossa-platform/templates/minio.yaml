@@ -1,0 +1,171 @@
+{{- if .Values.minio.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "minio") -}}
+{{- $v := .Values.minio -}}
+{{- $root := required "minio.rootCredentials.secretName is required with minio.enabled (existing Secret with MINIO_ROOT_USER and MINIO_ROOT_PASSWORD)" $v.rootCredentials.secretName -}}
+# S3 on 9000 for glossa-server, glossa-edge and the bootstrap Job. The
+# console (9001) listens inside the pod only: kubectl port-forward.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+  ports:
+    - name: s3
+      port: 9000
+      targetPort: s3
+      protocol: TCP
+---
+# The StatefulSet's governing Service (stable pod DNS).
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}-headless
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+spec:
+  clusterIP: None
+  selector:
+    {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+  ports:
+    - name: s3
+      port: 9000
+      targetPort: s3
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+spec:
+  serviceName: {{ $name }}-headless
+  # One MinIO per product namespace (single drive). More replicas would
+  # need MinIO's distributed mode, not a bigger number here.
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  revisionHistoryLimit: 5
+  updateStrategy:
+    type: RollingUpdate
+  # The volume outlives the StatefulSet: uninstalling or scaling to 0
+  # keeps the published releases.
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.statefulPodLabels" (dict "root" $ "component" "minio") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: {{ $v.terminationGracePeriodSeconds }}
+      # uid/gid 65532 is the Chainguard MinIO image's user. fsGroup makes
+      # the Longhorn volume group-writable for it; OnRootMismatch keeps a
+      # large bucket from being re-chowned on every restart.
+      securityContext:
+        {{- include "gp.podSecurityContext" 65532 | nindent 8 }}
+        fsGroupChangePolicy: OnRootMismatch
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      containers:
+        - name: minio
+          image: {{ include "gp.externalImage" (dict "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - server
+            - /data
+            - --address
+            - :9000
+            - --console-address
+            - :9001
+            # The default (~/.minio/certs) is on the read-only root filesystem.
+            - --certs-dir
+            - /tmp/certs
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          ports:
+            - name: s3
+              containerPort: 9000
+              protocol: TCP
+            - name: console
+              containerPort: 9001
+              protocol: TCP
+          env:
+            {{- include "gp.secretEnv" (dict "name" "MINIO_ROOT_USER" "secret" $root "key" $v.rootCredentials.userKey) | nindent 12 }}
+            {{- include "gp.secretEnv" (dict "name" "MINIO_ROOT_PASSWORD" "secret" $root "key" $v.rootCredentials.passwordKey) | nindent 12 }}
+          startupProbe:
+            httpGet:
+              path: /minio/health/live
+              port: s3
+            periodSeconds: 5
+            failureThreshold: 60
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: s3
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: s3
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          resources:
+            {{- toYaml $v.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 10 }}
+          {{- with $v.persistence.labels }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- with $v.persistence.annotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      spec:
+        accessModes: [ReadWriteOnce]
+        storageClassName: {{ $v.persistence.storageClassName | quote }}
+        resources:
+          requests:
+            storage: {{ $v.persistence.size | quote }}
+{{- if $v.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "minio") | nindent 4 }}
+spec:
+  maxUnavailable: {{ $v.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- include "gp.selectorLabels" (dict "root" $ "component" "minio") | nindent 6 }}
+{{- end }}
+{{- end }}

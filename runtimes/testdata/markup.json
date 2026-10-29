@@ -1,0 +1,523 @@
+{
+  "$comment": "Formatted parts -> HTML, the rules of @klarlabs-studio/glossa/elements/parts and the Go runtime's HTML/th. `safeTags`: the only markup names that become elements; `voidTags`: the safe tags rendered without children or a closing tag. Markup options are always dropped. Text is escaped (& < >). Unsafe markup keeps just its content. Unclosed markup closes at the end; a close closes everything opened after its matching open; a close without an open is ignored. Non-markup parts render as their text: `value`, the joined `parts` values of numbers and dates, or `{source}` for a fallback.",
+  "safeTags": [
+    "b",
+    "strong",
+    "i",
+    "em",
+    "u",
+    "s",
+    "small",
+    "mark",
+    "sub",
+    "sup",
+    "code",
+    "kbd",
+    "samp",
+    "var",
+    "abbr",
+    "cite",
+    "dfn",
+    "q",
+    "del",
+    "ins",
+    "bdi",
+    "span",
+    "br",
+    "wbr"
+  ],
+  "voidTags": [
+    "br",
+    "wbr"
+  ],
+  "cases": [
+    {
+      "description": "text, isolation, values and fallbacks join into one text node",
+      "parts": [
+        {
+          "type": "text",
+          "value": "Hallo "
+        },
+        {
+          "type": "bidiIsolation",
+          "value": "⁨"
+        },
+        {
+          "type": "string",
+          "value": "Lina"
+        },
+        {
+          "type": "bidiIsolation",
+          "value": "⁩"
+        },
+        {
+          "type": "text",
+          "value": ", du hast "
+        },
+        {
+          "type": "number",
+          "parts": [
+            {
+              "type": "integer",
+              "value": "1"
+            },
+            {
+              "type": "group",
+              "value": "."
+            },
+            {
+              "type": "integer",
+              "value": "000"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": " Punkte "
+        },
+        {
+          "type": "fallback",
+          "source": "$missing"
+        }
+      ],
+      "html": "Hallo ⁨Lina⁩, du hast 1.000 Punkte {$missing}"
+    },
+    {
+      "description": "safe markup becomes nested elements",
+      "parts": [
+        {
+          "type": "text",
+          "value": "Tippe "
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "hier "
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "em"
+        },
+        {
+          "type": "text",
+          "value": "jetzt"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "em"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ],
+      "html": "Tippe <b>hier <em>jetzt</em></b>."
+    },
+    {
+      "description": "standalone void markup",
+      "parts": [
+        {
+          "type": "text",
+          "value": "a"
+        },
+        {
+          "type": "markup",
+          "kind": "standalone",
+          "name": "br"
+        },
+        {
+          "type": "text",
+          "value": "b"
+        },
+        {
+          "type": "markup",
+          "kind": "standalone",
+          "name": "wbr"
+        }
+      ],
+      "html": "a<br>b<wbr>"
+    },
+    {
+      "description": "an opened void tag renders once, without children",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "br"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "br"
+        }
+      ],
+      "html": "<br>x"
+    },
+    {
+      "description": "standalone non-void markup renders nothing",
+      "parts": [
+        {
+          "type": "text",
+          "value": "a"
+        },
+        {
+          "type": "markup",
+          "kind": "standalone",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "c"
+        }
+      ],
+      "html": "ac"
+    },
+    {
+      "description": "unsafe markup keeps only its content",
+      "parts": [
+        {
+          "type": "text",
+          "value": "Klick "
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "link"
+        },
+        {
+          "type": "text",
+          "value": "hier"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "link"
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "script"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "script"
+        },
+        {
+          "type": "markup",
+          "kind": "standalone",
+          "name": "img"
+        }
+      ],
+      "html": "Klick hierx"
+    },
+    {
+      "description": "a link from a translation stays text (en link markup)",
+      "parts": [
+        {
+          "type": "text",
+          "value": "By continuing you accept the "
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "link",
+          "options": {
+            "href": "/terms"
+          }
+        },
+        {
+          "type": "text",
+          "value": "terms of service"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "link"
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ],
+      "html": "By continuing you accept the terms of service."
+    },
+    {
+      "description": "options are dropped, so a translation can't add attributes",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b",
+          "options": {
+            "onclick": "alert(1)",
+            "class": "x"
+          }
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "span",
+          "options": {
+            "style": "color:red",
+            "title": "t"
+          }
+        },
+        {
+          "type": "text",
+          "value": "y"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "span"
+        }
+      ],
+      "html": "<b>x</b><span>y</span>"
+    },
+    {
+      "description": "safe markup inside unsafe markup",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "a",
+          "options": {
+            "href": "javascript:alert(1)"
+          }
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "a"
+        }
+      ],
+      "html": "<b>x</b>"
+    },
+    {
+      "description": "unclosed markup closes at the end",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "i"
+        },
+        {
+          "type": "text",
+          "value": "y"
+        }
+      ],
+      "html": "<b>x<i>y</i></b>"
+    },
+    {
+      "description": "a close without an open is ignored",
+      "parts": [
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "y"
+        }
+      ],
+      "html": "xy"
+    },
+    {
+      "description": "a close closes everything opened after its open",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "1"
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "i"
+        },
+        {
+          "type": "text",
+          "value": "2"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "3"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "i"
+        }
+      ],
+      "html": "<b>1<i>2</i></b>3"
+    },
+    {
+      "description": "a close for unsafe markup ends the safe markup inside it",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "link"
+        },
+        {
+          "type": "text",
+          "value": "1"
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "2"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "link"
+        },
+        {
+          "type": "text",
+          "value": "3"
+        }
+      ],
+      "html": "1<b>2</b>3"
+    },
+    {
+      "description": "text is escaped, quotes are kept",
+      "parts": [
+        {
+          "type": "text",
+          "value": "<img src=x onerror=alert(1)> & "
+        },
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "strong"
+        },
+        {
+          "type": "text",
+          "value": "\"fett\" 'x'"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "strong"
+        },
+        {
+          "type": "markup",
+          "kind": "standalone",
+          "name": "br"
+        }
+      ],
+      "html": "&lt;img src=x onerror=alert(1)&gt; &amp; <strong>\"fett\" 'x'</strong><br>"
+    },
+    {
+      "description": "markup names are case-sensitive",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "B"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "B"
+        }
+      ],
+      "html": "x"
+    },
+    {
+      "description": "empty safe elements are kept",
+      "parts": [
+        {
+          "type": "markup",
+          "kind": "open",
+          "name": "b"
+        },
+        {
+          "type": "markup",
+          "kind": "close",
+          "name": "b"
+        },
+        {
+          "type": "text",
+          "value": "x"
+        }
+      ],
+      "html": "<b></b>x"
+    }
+  ]
+}

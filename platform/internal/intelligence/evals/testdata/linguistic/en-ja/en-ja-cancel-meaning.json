@@ -1,0 +1,41 @@
+{
+  "id": "en-ja-cancel-meaning",
+  "description": "The translation renews the subscription the source cancels.",
+  "source_locale": "en",
+  "target_locale": "ja",
+  "source": "Cancel your subscription",
+  "translation": "サブスクリプションを更新する",
+  "context": {
+    "key": "billing.cancel",
+    "namespace": "billing",
+    "description": "Destructive action in billing settings"
+  },
+  "style": {
+    "version": "ja@1",
+    "formality": "formal",
+    "tone": [
+      "polite"
+    ],
+    "rules": [
+      {
+        "id": "r1",
+        "rule": "Use the polite です・ます form",
+        "rationale": "house style",
+        "good": [
+          "もう一度お試しください。"
+        ],
+        "bad": [
+          "もう一度やれ。"
+        ]
+      }
+    ]
+  },
+  "expect": {
+    "codes": [
+      "meaning-divergence"
+    ],
+    "quotes": [
+      "更新する"
+    ]
+  }
+}

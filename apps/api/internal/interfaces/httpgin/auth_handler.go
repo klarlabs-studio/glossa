@@ -7,10 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/felixgeelhaar/glossa/apierr/ginerr"
-	authapp "github.com/felixgeelhaar/glossa/apps/api/internal/app/auth"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/domain/tenant"
-	"github.com/felixgeelhaar/glossa/apps/api/internal/errs"
+	"go.klarlabs.de/glossa/apierr/ginerr"
+	authapp "go.klarlabs.de/glossa/apps/api/internal/app/auth"
+	"go.klarlabs.de/glossa/apps/api/internal/domain/tenant"
+	"go.klarlabs.de/glossa/apps/api/internal/errs"
 )
 
 type discoverReq struct {

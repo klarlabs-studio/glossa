@@ -13,7 +13,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/felixgeelhaar/glossa/apierr"
+	"go.klarlabs.de/glossa/apierr"
 )
 
 // Send writes the wire envelope and aborts the request. Use directly

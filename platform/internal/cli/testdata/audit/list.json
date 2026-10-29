@@ -1,0 +1,46 @@
+{
+  "schema": "glossa.cli.audit.list/v1",
+  "tenant": "ten_1",
+  "filter": {
+    "from": null,
+    "to": null
+  },
+  "count": 2,
+  "limit": 2,
+  "more": true,
+  "entries": [
+    {
+      "action": "identity.person.signed_in",
+      "actor": "person:0190a1b2-0000-7000-8000-000000000002",
+      "aggregate_id": "0190a1b2-0000-7000-8000-000000000002",
+      "aggregate_type": "person",
+      "event_id": "fd0a4fed-29d2-530c-8bf6-829193f64ce6",
+      "hash": "eac9f2985fd6779e0db0a7665190a9a940f1ca05c534ef3ac5c136c88fd039bc",
+      "occurred_at": "2026-10-01T09:02:00Z",
+      "prev_hash": "5711c5aeffc6b30b8d0fb69d1b43bf42a9c17f9c57d44be17fa6e57f029b47d0",
+      "sequence": 3,
+      "source": "direct",
+      "summary": {
+        "method": "passkey"
+      }
+    },
+    {
+      "action": "localization.translation.revised",
+      "actor": "person:0190a1b2-0000-7000-8000-000000000001",
+      "aggregate_id": "tr_1",
+      "aggregate_type": "translation",
+      "event_id": "e6673633-bd29-5ae8-b706-04ea7fdddccc",
+      "hash": "5711c5aeffc6b30b8d0fb69d1b43bf42a9c17f9c57d44be17fa6e57f029b47d0",
+      "locale": "de",
+      "occurred_at": "2026-10-01T09:01:00Z",
+      "prev_hash": "cb717a06bdfd9e166986e4e4d6f298051c102f401b26539abde3ba9f058fd55a",
+      "sequence": 2,
+      "source": "outbox",
+      "summary": {
+        "revision": 2,
+        "state": "approved",
+        "text": "string(len=12)"
+      }
+    }
+  ]
+}

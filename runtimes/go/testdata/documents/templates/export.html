@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+<meta charset="utf-8">
+<title>{{t "export.doctitle" "athlete" .Athlete}}</title>
+</head>
+<body>
+<h1>{{th "export.title" "athlete" .Athlete}}</h1>
+<p>{{th "export.summary" "count" .TotalSessions "from" .From "to" .To}}</p>
+<table>
+<thead>
+<tr><th>{{t "export.col.date"}}</th><th>{{t "export.col.sessions"}}</th><th>{{t "export.col.reps"}}</th><th>{{t "export.col.completion"}}</th><th>{{t "export.col.distance"}}</th><th>{{t "export.col.load"}}</th></tr>
+</thead>
+<tbody>
+{{- range .Rows}}
+<tr><td>{{date .Date}}</td><td>{{th "export.sessions" "count" .Sessions}}</td><td class="num">{{num .Reps}}</td><td class="num">{{percent .Completion "maximumFractionDigits" 1}}</td><td class="num">{{unit .Distance "kilometer"}}</td><td class="num">{{unit .Load "kilogram"}}</td></tr>
+{{- end}}
+</tbody>
+</table>
+<p>{{th "export.note"}}</p>
+<p>{{th "export.footer" "at" .ExportedAt}}</p>
+</body>
+</html>

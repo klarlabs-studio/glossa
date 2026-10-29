@@ -1,0 +1,75 @@
+{
+  "en-ja-greeting": {
+    "translate": [
+      "{\"message\": \"{$name}さん、おかえりなさい！\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-files-plural": {
+    "translate": [
+      "{\"message\": \"ファイルが{$count :number}件あります。\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.94, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-invoice-ready": {
+    "translate": [
+      "{\"message\": \"請求書の準備ができました。\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-save-markup": {
+    "translate": [
+      "{\"message\": \"続行するには{#b}保存{/b}をクリックしてください。\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-role-select": {
+    "translate": [
+      "{\"message\": \".input {$role :string}\\n.match $role\\nowner {{あなたはこのワークスペースのオーナーです。}}\\n* {{あなたはこのワークスペースのメンバーです。}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.85, \"formality_ok\": true, \"issues\": [\"'あなたは' is unnatural in UI text.\"]}"
+    ]
+  },
+  "en-ja-signin-button": {
+    "translate": [
+      "{\"message\": \"ログイン\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.97, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-delete-tm-fuzzy": {
+    "translate": [
+      "{\"message\": \"このワークスペースを削除しますか？\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.96, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-messages-plural-repair": {
+    "translate": [
+      "{\"message\": \".input {$count :number}\\n.match $count\\none {{新着メッセージ{$count}件}}\\n* {{新着メッセージ{$count}件}}\", \"notes\": \"\"}",
+      "{\"message\": \".input {$count :number}\\n.match $count\\n* {{新着メッセージ{$count}件}}\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.92, \"formality_ok\": true, \"issues\": []}"
+    ]
+  },
+  "en-ja-updated-date": {
+    "translate": [
+      "{\"message\": \"{$date :datetime dateStyle=medium}に更新されました\", \"notes\": \"\"}"
+    ],
+    "assess": [
+      "{\"score\": 0.93, \"formality_ok\": true, \"issues\": []}"
+    ]
+  }
+}

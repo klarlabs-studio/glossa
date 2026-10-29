@@ -1,0 +1,18 @@
+{
+  "year": "2025",
+  "taxpayer": "Erika Mustermann",
+  "filingStatus": "joint",
+  "periodStart": "2025-01-01T00:00:00+01:00",
+  "periodEnd": "2025-12-31T00:00:00+01:00",
+  "due": "2026-05-31T22:30:00Z",
+  "issued": "2026-03-14T16:45:00Z",
+  "lines": [
+    { "item": "tax.item.salary", "receipts": 1, "eur": "12345678901234.56", "jpy": "2012345678901234" },
+    { "item": "tax.item.insurance", "receipts": 3, "eur": "1234.50", "jpy": "201224" },
+    { "item": "tax.item.donations", "receipts": 12, "eur": "250", "jpy": "40750" },
+    { "item": "tax.item.prepayments", "receipts": 0, "eur": "-3200", "jpy": "-521600" }
+  ],
+  "totalReceipts": 16,
+  "totalEUR": "12345678899519.06",
+  "totalJPY": "2012345678621608"
+}

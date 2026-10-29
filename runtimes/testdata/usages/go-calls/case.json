@@ -1,0 +1,5 @@
+{
+  "description": "Go runtime calls: Client.T(ctx, \"…\"), Localizer.T(\"…\"), For(…).T(\"…\"), raw-string keys, calls split across lines, and the typed accessors from `glossa generate` (msg.For(l).CheckoutPay, msg.FromContext(…).CartItems, m.Title). Component is pkg.Func, pkg.Type.Method or pkg.(*Type).Method of the enclosing declaration (function literals belong to it); package-level initializers have none. A call on an imported package (strings.Title) is never an accessor. The generated msg package is not scanned. Columns count code points.",
+  "implementations": ["extract"],
+  "keys": ["cart.items", "checkout.pay", "title"]
+}

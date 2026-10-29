@@ -1,0 +1,24 @@
+{
+  "schema": "glossa.workflow/v1",
+  "name": "invalid-delayed-transition",
+  "subject": "translation",
+  "chart": {
+    "id": "invalid-delayed-transition",
+    "initial": "reviewing",
+    "states": {
+      "reviewing": {
+        "id": "reviewing",
+        "type": "atomic",
+        "transitions": [
+          { "event": "approval.granted", "target": "done", "actions": ["approve"] },
+          { "event": "", "target": "done", "isDelayed": true, "delayMs": 259200000 }
+        ]
+      },
+      "done": { "id": "done", "type": "final" }
+    }
+  },
+  "guards": {},
+  "actions": {
+    "approve": { "use": "set_review_state", "state": "approved" }
+  }
+}

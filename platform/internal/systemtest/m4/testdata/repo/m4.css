@@ -1,0 +1,43 @@
+/* What M4 adds to the M3 fixture application's preview build
+   (RFC 0005 §12.1, §12.2).
+
+   The checkout page's pay button: a fixed-width, single-line control
+   that clips what does not fit. That is the shape a product's primary
+   action has, and it is the shape a longer translation breaks — which
+   is what the visual layer's `text-clipped` probe is for (§5.2: the
+   region's host has `overflow: hidden` and `scrollWidth > clientWidth`,
+   measured live in the page).
+
+   The button is the checkout page's tenth line, which is where
+   `CheckoutPage.vue` renders `checkout.crust.label`. It is selected by
+   position because the committed preview bundle carries no per-message
+   attribute to select on: `<GlossaText>` marks its text with invisible
+   characters in the text node, not with `data-glossa-id`, so the region
+   the probe measures is the `<p class="line">` around it. The exit test
+   asserts the finding it gets back names `checkout.crust.label`, so a
+   fixture that moved the line fails loudly rather than silently
+   measuring the wrong one.
+
+   Its German is "Kruste: warm" and its Japanese "クラスト：温かい" —
+   eight full-width glyphs against twelve Latin ones, which is the
+   ordinary Japanese expansion this rule exists to catch. The width
+   below sits between the two, so the Japanese capture of /kasse clips
+   and the German one does not.
+
+   Nothing here is conditional on the locale: one button, one width, two
+   captures, and the browser decides. */
+.page > p.line:nth-of-type(10) {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 104px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  padding: 8px 14px;
+  border: 1px solid #8a7654;
+  border-radius: 6px;
+  background: #f4efe7;
+  font-weight: 700;
+  text-align: center;
+}

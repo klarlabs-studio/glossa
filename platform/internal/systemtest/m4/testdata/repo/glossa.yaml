@@ -1,0 +1,36 @@
+# The fixture product's configuration (RFC 0005 §12.1). It replaces the
+# M3 application's own glossa.yaml in the repository the exit test
+# materializes; the server, the tenant and the project come from the
+# environment, and the base URL from `glossa capture --base-url`.
+#
+# There is no `check:` block on purpose. §4.2: the server owns the check
+# policy, and `glossa.yaml` can only override it locally — a fixture
+# that graded itself would be testing its own opinion instead of the
+# project's policy v3.
+version: 1
+server: http://127.0.0.1:1
+project: shop
+source_locale: de
+syntax: mf2
+catalogs:
+  path: locales/{locale}.json
+extract:
+  application: shop
+  include:
+    - "internal/**/*.go"
+  templates:
+    - "templates/**/*.tmpl"
+capture:
+  application: shop
+  base_url: http://127.0.0.1:1
+  # German and Japanese, because the clip the visual layer has to find
+  # is the difference between them.
+  locales: [de, ja]
+  locale:
+    query: lang
+  viewports:
+    - { width: 1280, height: 800 }
+  # The checkout route alone: this is a quality fixture, not a context
+  # one, and M3 already proved the platform captures all eight.
+  routes:
+    - { route: "/kasse" }

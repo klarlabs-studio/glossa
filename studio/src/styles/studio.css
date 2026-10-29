@@ -1,0 +1,335 @@
+/*
+ * Studio on the Klarlabs tokens (@klarlabs-studio/ui/tokens.css).
+ *
+ * Product accent — Glossa cobalt. Not in the standard's accent table yet
+ * (proposed addition: Glossa | light+dark | #2563EB). Blue is the one hue
+ * no Klarlabs product uses in this band, and it stays clear of the
+ * semantic colours a translation tool leans on all day: green approved,
+ * amber needs-review/warning, red rejected/error. A teal or amber accent
+ * would read as a review state. #2563EB passes AA as text on white and
+ * under white text; dark mode lifts it to #60A5FA with dark text on fills.
+ *
+ * The overrides below are unlayered, so they win over the tokens layer.
+ */
+:root {
+  --kl-accent: #2563eb;
+  --kl-accent-light: #3b82f6;
+  --kl-accent-dark: #1d4ed8;
+  --kl-accent-dim: color-mix(in srgb, #2563eb 10%, transparent);
+  --kl-accent-border: color-mix(in srgb, #2563eb 35%, transparent);
+
+  /* Studio semantics: AA-contrast inks for small text, tints for fills. */
+  --gs-on-accent: #ffffff;
+  /* Accent-coloured text on accent tints needs the deeper shade for AA. */
+  --gs-accent-ink: #1d4ed8;
+  --gs-ok: #166534;
+  --gs-warn: #92400e;
+  --gs-err: #b91c1c;
+  --gs-ok-bg: color-mix(in srgb, #16a34a 10%, var(--kl-surface));
+  --gs-warn-bg: color-mix(in srgb, #d97706 10%, var(--kl-surface));
+  --gs-err-bg: color-mix(in srgb, #dc2626 8%, var(--kl-surface));
+  /* Form controls need 3:1 against the page (WCAG 1.4.11). */
+  --gs-control-border: #71717a;
+  --gs-row-h: 3.25rem;
+  --gs-topbar-h: 3.25rem;
+}
+
+[data-theme="dark"] {
+  --kl-accent: #60a5fa;
+  --kl-accent-light: #93c5fd;
+  --kl-accent-dark: #3b82f6;
+  --kl-accent-dim: color-mix(in srgb, #60a5fa 14%, transparent);
+  --kl-accent-border: color-mix(in srgb, #60a5fa 40%, transparent);
+  --gs-on-accent: #0a0a0b;
+  --gs-accent-ink: #93c5fd;
+  --gs-ok: #4ade80;
+  --gs-warn: #fbbf24;
+  --gs-err: #f87171;
+  --gs-ok-bg: color-mix(in srgb, #22c55e 14%, var(--kl-surface));
+  --gs-warn-bg: color-mix(in srgb, #f59e0b 14%, var(--kl-surface));
+  --gs-err-bg: color-mix(in srgb, #ef4444 14%, var(--kl-surface));
+  --gs-control-border: #8b8b94;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  block-size: 100%;
+}
+
+body {
+  font-size: 0.9375rem;
+  line-height: var(--kl-leading-snug);
+}
+
+#app {
+  min-block-size: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--kl-accent);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--kl-accent);
+  text-underline-offset: 0.15em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: var(--kl-tracking-tight);
+  line-height: var(--kl-leading-tight);
+  margin: 0;
+}
+h1 { font-size: var(--kl-text-lg); font-weight: var(--kl-weight-semibold); }
+h2 { font-size: var(--kl-text-md); font-weight: var(--kl-weight-semibold); }
+h3 { font-size: var(--kl-text-base); font-weight: var(--kl-weight-semibold); }
+
+p {
+  margin: 0;
+}
+
+code,
+kbd,
+.mono {
+  font-family: var(--kl-font-mono);
+  font-size: 0.875em;
+}
+
+kbd {
+  display: inline-block;
+  min-inline-size: 1.6em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--gs-control-border);
+  border-block-end-width: 2px;
+  border-radius: var(--kl-radius-sm);
+  background: var(--kl-surface-raised);
+  color: var(--kl-ink);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--kl-ink-secondary);
+}
+
+.stack { display: flex; flex-direction: column; gap: var(--kl-space-4); }
+.stack-sm { display: flex; flex-direction: column; gap: var(--kl-space-2); }
+.row { display: flex; align-items: center; gap: var(--kl-space-3); flex-wrap: wrap; }
+.spacer { flex: 1; }
+
+.page {
+  max-inline-size: var(--kl-content-lg);
+  margin-inline: auto;
+  padding: var(--kl-space-8) var(--kl-space-6);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--kl-space-4);
+  margin-block-end: var(--kl-space-6);
+  flex-wrap: wrap;
+}
+
+.card {
+  background: var(--kl-surface-raised);
+  border: 1px solid var(--kl-border);
+  border-radius: var(--kl-radius-lg);
+  padding: var(--kl-space-6);
+}
+
+/* ── form controls ─────────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kl-space-1);
+}
+.field > label,
+.label {
+  font-size: var(--kl-text-sm);
+  font-weight: var(--kl-weight-medium);
+  color: var(--kl-ink);
+}
+.hint {
+  font-size: var(--kl-text-sm);
+  color: var(--kl-ink-secondary);
+}
+.field-error {
+  font-size: var(--kl-text-sm);
+  color: var(--gs-err);
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font: inherit;
+  color: var(--kl-ink);
+  background: var(--kl-surface);
+  border: 1px solid var(--gs-control-border);
+  border-radius: var(--kl-radius-md);
+  padding: var(--kl-space-2) var(--kl-space-3);
+  min-block-size: 2.5rem;
+}
+textarea {
+  line-height: var(--kl-leading-normal);
+  resize: vertical;
+}
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--gs-err);
+  box-shadow: 0 0 0 1px var(--gs-err);
+}
+input[type="checkbox"] {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  accent-color: var(--kl-accent);
+}
+.check {
+  display: flex;
+  gap: var(--kl-space-2);
+  align-items: flex-start;
+}
+
+/* ── buttons ───────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kl-space-2);
+  min-block-size: 2.5rem;
+  padding: 0 var(--kl-space-4);
+  border-radius: var(--kl-radius-md);
+  border: 1px solid var(--gs-control-border);
+  background: var(--kl-surface);
+  color: var(--kl-ink);
+  font: inherit;
+  font-weight: var(--kl-weight-medium);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--kl-duration-fast) var(--kl-ease-default), border-color var(--kl-duration-fast) var(--kl-ease-default);
+}
+.btn:hover:not(:disabled) {
+  background: var(--kl-surface-muted);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.btn-primary {
+  background: var(--kl-accent);
+  border-color: var(--kl-accent);
+  color: var(--gs-on-accent);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--kl-accent-dark);
+}
+[data-theme="dark"] .btn-primary:hover:not(:disabled) {
+  background: var(--kl-accent-light);
+}
+.btn-ok {
+  border-color: var(--gs-ok);
+  color: var(--gs-ok);
+}
+.btn-danger {
+  border-color: var(--gs-err);
+  color: var(--gs-err);
+}
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+}
+.btn-sm {
+  min-block-size: 2rem;
+  padding: 0 var(--kl-space-3);
+  font-size: var(--kl-text-sm);
+}
+.btn-icon {
+  inline-size: 2.25rem;
+  min-block-size: 2.25rem;
+  padding: 0;
+}
+/* Full ink: dimmed text on a primary button fails WCAG contrast. */
+.kbd-hint {
+  font-size: var(--kl-text-sm);
+}
+
+/* ── feedback ──────────────────────────────────────────────────────── */
+.alert {
+  border-radius: var(--kl-radius-md);
+  padding: var(--kl-space-3) var(--kl-space-4);
+  border: 1px solid var(--kl-border);
+  background: var(--kl-surface-raised);
+  color: var(--kl-ink);
+}
+.alert-error { border-color: var(--gs-err); background: var(--gs-err-bg); }
+.alert-ok { border-color: var(--gs-ok); background: var(--gs-ok-bg); }
+.alert-warn { border-color: var(--gs-warn); background: var(--gs-warn-bg); }
+.alert-title { font-weight: var(--kl-weight-semibold); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.1em 0.55em;
+  border-radius: var(--kl-radius-full);
+  font-size: var(--kl-text-sm);
+  font-weight: var(--kl-weight-medium);
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.pill-ok { color: var(--gs-ok); background: var(--gs-ok-bg); }
+.pill-warn { color: var(--gs-warn); background: var(--gs-warn-bg); }
+.pill-err { color: var(--gs-err); background: var(--gs-err-bg); }
+.pill-accent { color: var(--gs-accent-ink); background: var(--kl-accent-dim); }
+.pill-neutral { color: var(--kl-ink-secondary); background: var(--kl-surface-muted); }
+
+/* ── tables ────────────────────────────────────────────────────────── */
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  text-align: start;
+  padding: var(--kl-space-3);
+  border-block-end: 1px solid var(--kl-border);
+  vertical-align: middle;
+}
+.table th {
+  font-size: var(--kl-text-sm);
+  font-weight: var(--kl-weight-medium);
+  color: var(--kl-ink-secondary);
+}
+
+.dialog {
+  border: 1px solid var(--kl-border);
+  border-radius: var(--kl-radius-lg);
+  background: var(--kl-surface);
+  color: var(--kl-ink);
+  padding: var(--kl-space-6);
+  max-inline-size: min(40rem, calc(100vw - 2rem));
+  box-shadow: var(--kl-shadow-xl);
+}
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}

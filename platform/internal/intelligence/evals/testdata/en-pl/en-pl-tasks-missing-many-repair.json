@@ -1,0 +1,78 @@
+{
+  "id": "en-pl-tasks-missing-many-repair",
+  "description": "The first draft lacks Polish 'many'; policy sends it back for repair and the repair adds it.",
+  "source_locale": "en",
+  "target_locale": "pl",
+  "source": ".input {$count :number}\n.match $count\none {{{$count} task open}}\n* {{{$count} tasks open}}",
+  "context": {
+    "key": "tasks.open",
+    "description": "Task counter on the dashboard"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-workspace-en",
+            "text": "workspace",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-obszar",
+            "text": "obszar roboczy",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-file",
+        "definition": "An uploaded document",
+        "terms": [
+          {
+            "id": "t-file-en",
+            "text": "file",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-plik",
+            "text": "plik",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-comment",
+        "definition": "A remark on a document",
+        "terms": [
+          {
+            "id": "t-comment-en",
+            "text": "comment",
+            "locale": "en",
+            "status": "preferred"
+          },
+          {
+            "id": "t-komentarz",
+            "text": "komentarz",
+            "locale": "pl",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "pl-1",
+      "formality": "informal",
+      "pronoun": "ty"
+    }
+  },
+  "expect": {},
+  "references": [
+    ".input {$count :number}\n.match $count\none {{{$count} otwarte zadanie}}\nfew {{{$count} otwarte zadania}}\nmany {{{$count} otwartych zadań}}\n* {{{$count} otwartego zadania}}"
+  ]
+}

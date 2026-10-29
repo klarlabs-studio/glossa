@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "source": "scripted",
+  "interactions": [
+    {
+      "key": "cf1c5765115476a2859095f38d253eabb605e00756c9d4546544b013d6e8e14b",
+      "provider": "anthropic",
+      "request": {
+        "task": "translate",
+        "model": "claude-sonnet-5",
+        "system": [
+          {
+            "text": "You are a professional software localizer. You translate one user-interface message at a time, from a source locale into a target locale, for a product team's localization platform. The platform gives you what it knows about the message: its context, the product glossary, the style guide and matches from translation memory. These reflect decisions the team has already made, so follow them; translate the meaning in context, not word by word.\n\nMessages are written in Unicode MessageFormat 2 (MF2) syntax, and your translation must be valid MF2 with the same structure as the source:\n\n1. Keep every placeholder exactly as it is: `{$name}`, `{$count :number}`, `{$date :datetime dateStyle=medium}`. Never translate, rename, add or drop a variable, and keep its function and options.\n2. Keep markup exactly: `{#b}…{/b}` and `{#link}…{/link}` keep their names and stay balanced; move them to surround the words that correspond in your translation. Standalone markup like `{#br/}` stays too.\n3. Keep `.input` and `.local` declarations and the `.match` selectors as they are. After declarations, every pattern is quoted: `{{…}}`.\n4. Plural selectors (`:number` or `:integer`) select CLDR plural categories. Write exactly one variant for each category of the TARGET locale that the task lists — use `*` for `other` — and keep any exact-number keys from the source, such as `0`. Do not copy the source locale's categories: English has `one` and `other`, but Polish needs `one`, `few`, `many` and `*`, and Japanese needs only `*`. For several selectors, write a variant for every combination.\n5. String selectors (`:string`) keep the source's keys and `*`.\n6. Every `.match` ends with a catch-all variant whose keys are all `*`.\n7. In text, escape `\\`, `{` and `}` as `\\\\`, `\\{` and `\\}`.\n8. Use the glossary: for each concept, use a term the task lists under \"use\"; never use a term listed under \"avoid\".\n9. Follow the style guide, especially the form of address (formal or informal) and punctuation.\n10. When the context gives a maximum length, keep the visible text of every variant within it, not counting placeholders.\n11. Write only the message: no quotes around it, no explanations, no alternatives.\n\nAnswer with a JSON object: `{\"message\": \"\u003cthe translation in MF2 syntax\u003e\", \"notes\": \"\u003cone short sentence about an ambiguity you resolved, or an empty string\u003e\"}`.\n\nExample — English to Polish:\nSource:\n.input {$count :number}\n.match $count\none {{You have {$count} new message.}}\n* {{You have {$count} new messages.}}\nTarget plural categories: one, few, many, other.\nAnswer:\n{\"message\": \".input {$count :number}\\n.match $count\\none {{Masz {$count} nową wiadomość.}}\\nfew {{Masz {$count} nowe wiadomości.}}\\nmany {{Masz {$count} nowych wiadomości.}}\\n* {{Masz {$count} wiadomości.}}\", \"notes\": \"\"}\n\nExample — English to German, informal, with markup:\nSource: Read the {#link}terms{/link} before you continue.\nAnswer:\n{\"message\": \"Lies die {#link}Bedingungen{/link}, bevor du fortfährst.\", \"notes\": \"\"}",
+            "cacheable": true
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "text": "Translate this message from de to en.\n\n\u003csource\u003e\nLies unsere {#link}Datenschutzerklärung{/link}.\n\u003c/source\u003e\n\n\u003cstructure\u003e\n- markup: link\n\u003c/structure\u003e\n\n\u003ccontext\u003e\n- key: footer.privacy\n- description: Footer link\n\u003c/context\u003e\n\n\u003cstyle_guide\u003e\n- tone: concise, friendly\n- Use sentence case Good: Save changes. Bad: Save Changes.\n\u003c/style_guide\u003e"
+          }
+        ],
+        "output": {
+          "name": "translation",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "message": {
+                "description": "The translation in MessageFormat 2 syntax.",
+                "type": "string"
+              },
+              "notes": {
+                "description": "One short sentence about an ambiguity, or empty.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "message",
+              "notes"
+            ],
+            "type": "object"
+          }
+        },
+        "max_tokens": 8192,
+        "effort": "medium"
+      },
+      "response": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "text": "{\"message\": \"Read our {#link}privacy policy{/link.\", \"notes\": \"\"}",
+        "stop": "end",
+        "usage": {
+          "input_tokens": 952,
+          "output_tokens": 19
+        }
+      }
+    },
+    {
+      "key": "a4cc8c5a3d72186ef7ed5dcce27dc0a7ad164365ce2a57292426af440834393a",
+      "provider": "anthropic",
+      "request": {
+        "task": "translate",
+        "model": "claude-sonnet-5",
+        "system": [
+          {
+            "text": "You are a professional software localizer. You translate one user-interface message at a time, from a source locale into a target locale, for a product team's localization platform. The platform gives you what it knows about the message: its context, the product glossary, the style guide and matches from translation memory. These reflect decisions the team has already made, so follow them; translate the meaning in context, not word by word.\n\nMessages are written in Unicode MessageFormat 2 (MF2) syntax, and your translation must be valid MF2 with the same structure as the source:\n\n1. Keep every placeholder exactly as it is: `{$name}`, `{$count :number}`, `{$date :datetime dateStyle=medium}`. Never translate, rename, add or drop a variable, and keep its function and options.\n2. Keep markup exactly: `{#b}…{/b}` and `{#link}…{/link}` keep their names and stay balanced; move them to surround the words that correspond in your translation. Standalone markup like `{#br/}` stays too.\n3. Keep `.input` and `.local` declarations and the `.match` selectors as they are. After declarations, every pattern is quoted: `{{…}}`.\n4. Plural selectors (`:number` or `:integer`) select CLDR plural categories. Write exactly one variant for each category of the TARGET locale that the task lists — use `*` for `other` — and keep any exact-number keys from the source, such as `0`. Do not copy the source locale's categories: English has `one` and `other`, but Polish needs `one`, `few`, `many` and `*`, and Japanese needs only `*`. For several selectors, write a variant for every combination.\n5. String selectors (`:string`) keep the source's keys and `*`.\n6. Every `.match` ends with a catch-all variant whose keys are all `*`.\n7. In text, escape `\\`, `{` and `}` as `\\\\`, `\\{` and `\\}`.\n8. Use the glossary: for each concept, use a term the task lists under \"use\"; never use a term listed under \"avoid\".\n9. Follow the style guide, especially the form of address (formal or informal) and punctuation.\n10. When the context gives a maximum length, keep the visible text of every variant within it, not counting placeholders.\n11. Write only the message: no quotes around it, no explanations, no alternatives.\n\nAnswer with a JSON object: `{\"message\": \"\u003cthe translation in MF2 syntax\u003e\", \"notes\": \"\u003cone short sentence about an ambiguity you resolved, or an empty string\u003e\"}`.\n\nExample — English to Polish:\nSource:\n.input {$count :number}\n.match $count\none {{You have {$count} new message.}}\n* {{You have {$count} new messages.}}\nTarget plural categories: one, few, many, other.\nAnswer:\n{\"message\": \".input {$count :number}\\n.match $count\\none {{Masz {$count} nową wiadomość.}}\\nfew {{Masz {$count} nowe wiadomości.}}\\nmany {{Masz {$count} nowych wiadomości.}}\\n* {{Masz {$count} wiadomości.}}\", \"notes\": \"\"}\n\nExample — English to German, informal, with markup:\nSource: Read the {#link}terms{/link} before you continue.\nAnswer:\n{\"message\": \"Lies die {#link}Bedingungen{/link}, bevor du fortfährst.\", \"notes\": \"\"}",
+            "cacheable": true
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "text": "Translate this message from de to en.\n\n\u003csource\u003e\nLies unsere {#link}Datenschutzerklärung{/link}.\n\u003c/source\u003e\n\n\u003cstructure\u003e\n- markup: link\n\u003c/structure\u003e\n\n\u003ccontext\u003e\n- key: footer.privacy\n- description: Footer link\n\u003c/context\u003e\n\n\u003cstyle_guide\u003e\n- tone: concise, friendly\n- Use sentence case Good: Save changes. Bad: Save Changes.\n\u003c/style_guide\u003e"
+          },
+          {
+            "role": "assistant",
+            "text": "{\"message\": \"Read our {#link}privacy policy{/link.\", \"notes\": \"\"}"
+          },
+          {
+            "role": "user",
+            "text": "Your translation cannot be used yet: the platform's structural validation of MF2 found these problems (attempt 1 of 2 to fix them):\n\n- invalid-message: the translation is not valid MessageFormat 2: intelligence: message is not valid MF2: messageformat: syntax-error: missing } at 37\n\nFix these problems and keep everything that was already right. Answer with the complete corrected message in the same JSON format."
+          }
+        ],
+        "output": {
+          "name": "translation",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "message": {
+                "description": "The translation in MessageFormat 2 syntax.",
+                "type": "string"
+              },
+              "notes": {
+                "description": "One short sentence about an ambiguity, or empty.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "message",
+              "notes"
+            ],
+            "type": "object"
+          }
+        },
+        "max_tokens": 8192,
+        "effort": "medium"
+      },
+      "response": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "text": "{\"message\": \"Read our {#link}privacy policy{/link}.\", \"notes\": \"\"}",
+        "stop": "end",
+        "usage": {
+          "input_tokens": 1089,
+          "output_tokens": 19
+        }
+      }
+    },
+    {
+      "key": "9fb506c9ab7745ce276740aac1758e0bc6c440abe056d69d8140e1d08baaa698",
+      "provider": "anthropic",
+      "request": {
+        "task": "assess",
+        "model": "claude-haiku-4-5-20251001",
+        "system": [
+          {
+            "text": "You are a senior localization reviewer. You judge one translated user-interface message against its source, the product glossary and the style guide, the way a professional reviewer on the product team would. Your judgement decides only how urgently a person reviews the translation; it never approves anything on its own.\n\nMessages are in Unicode MessageFormat 2 syntax. Placeholders like `{$count}` and markup like `{#b}…{/b}` have already been checked by the platform; judge the language: meaning, fluency, terminology, form of address, tone and fit for a user interface.\n\nAnswer with a JSON object:\n`{\"score\": \u003cnumber from 0 to 1\u003e, \"formality_ok\": \u003ctrue or false\u003e, \"issues\": [\"\u003cshort issue\u003e\", ...]}`\n- score: how likely a professional reviewer approves the translation without any edit (1 = certainly, 0 = certainly not). Be calibrated: a fluent, accurate translation that follows the glossary and style guide scores about 0.9; a mistranslation scores below 0.3.\n- formality_ok: false only when the form of address contradicts the style guide; true when it follows it or the message addresses nobody.\n- issues: the concrete problems a reviewer would fix, most important first; an empty list when there are none.",
+            "cacheable": true
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "text": "Review this de → en translation.\n\n\u003csource\u003e\nLies unsere {#link}Datenschutzerklärung{/link}.\n\u003c/source\u003e\n\n\u003ctranslation\u003e\nRead our {#link}privacy policy{/link}.\n\u003c/translation\u003e\n\n\u003ccontext\u003e\n- description: Footer link\n\u003c/context\u003e\n\n\u003cstyle_guide\u003e\n- tone: concise, friendly\n\u003c/style_guide\u003e"
+          }
+        ],
+        "output": {
+          "name": "assessment",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "formality_ok": {
+                "type": "boolean"
+              },
+              "issues": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "score": {
+                "description": "Probability in [0, 1] that a reviewer approves without edits.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "score",
+              "formality_ok",
+              "issues"
+            ],
+            "type": "object"
+          }
+        },
+        "max_tokens": 1024
+      },
+      "response": {
+        "provider": "anthropic",
+        "model": "claude-haiku-4-5-20251001",
+        "text": "{\"score\": 0.95, \"formality_ok\": true, \"issues\": []}",
+        "stop": "end",
+        "usage": {
+          "input_tokens": 426,
+          "output_tokens": 15
+        }
+      }
+    }
+  ]
+}

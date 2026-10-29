@@ -1,0 +1,24 @@
+-- 0033 — a check row remembers when its pull request was opened.
+--
+-- RFC 0005 §4.3: a policy saved with a `grace_until` pins the pull
+-- requests that predate it to the version they were opened under, so
+-- that tightening a rule does not turn forty open pull requests red for
+-- something their authors did not do. The report has graded a pinned
+-- pull request correctly since wave 4 — it takes both times and reads no
+-- clock of its own — but nothing recorded the one fact it needs, so in
+-- production the grace never fired and the summary's promise was empty.
+--
+-- `opened_at` is GitHub's `pull_request.created_at` from the webhook, not
+-- when Glossa first saw the pull request. The difference matters exactly
+-- where the feature does: a pull request opened long before the App was
+-- installed, or before this policy was saved, must grade against the
+-- version it predates, and `requested_at` — which moves to every new head
+-- SHA — would say it was opened moments ago.
+--
+-- NULL is "nobody recorded when", which is every row written before this
+-- migration and every check that is not a pull request's. The domain
+-- already spells that the zero time, and a zero opened-at pins nothing:
+-- such a check grades against the project's current version, which is
+-- what it did yesterday.
+ALTER TABLE integration_github_checks
+    ADD COLUMN opened_at timestamptz;

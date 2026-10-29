@@ -1,0 +1,101 @@
+{{- if .Values.server.migrations.enabled }}
+{{- $name := include "gp.componentName" (dict "root" $ "component" "migrate") -}}
+{{- $v := .Values.server -}}
+{{- $m := .Values.server.migrations -}}
+{{- if .Values.networkPolicy.enabled }}
+# Created before the Job on every install and upgrade: hooks run before
+# the release's own NetworkPolicies exist, and a namespace-wide default
+# deny would otherwise block the first migration. Helm keeps hook
+# resources after uninstall; delete this one by hand then.
+{{ include "gp.np.hookPolicy" (dict "root" $ "component" "migrate" "hook" (include "gp.db.hook" .) "egress" (include "gp.np.postgresEgress" .)) }}
+---
+{{- end }}
+# glossa-server -migrate=only as the schema owner (CREATEROLE, never a
+# superuser), before any server pod of the new version starts. The owner
+# DSN reaches only this Job, never the server pods. With postgres.enabled
+# it runs between the Postgres bootstrap (weight -5) and glossa_app's
+# login (weight 5), post-install on the first install (README.md, "Order
+# of the database hooks").
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "gp.componentLabels" (dict "root" $ "component" "migrate") | nindent 4 }}
+  annotations:
+    helm.sh/hook: {{ include "gp.db.hook" . }}
+    helm.sh/hook-weight: "0"
+    # A failed Job stays for `kubectl logs`; the next upgrade replaces it.
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: {{ $m.backoffLimit }}
+  activeDeadlineSeconds: {{ $m.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        {{- include "gp.componentLabels" (dict "root" $ "component" "migrate") | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        {{- include "gp.podSecurityContext" 65532 | nindent 8 }}
+      {{- with (include "gp.scheduling" (dict "root" $ "values" $v) | trim) }}{{ . | nindent 6 }}{{ end }}
+      {{- if .Values.postgres.enabled }}
+      # A new pod's first connections can be refused for a moment while
+      # its network policy is programmed (k3s): wait until the in-namespace
+      # Postgres answers, at most 60 s. glossa-server retries the connection
+      # itself since #66 (GLOSSA_DB_CONNECT_TIMEOUT); this stays as belt and
+      # braces, because the chart can pin a server image older than that
+      # retry and a cold Postgres would otherwise burn the Job's attempts.
+      initContainers:
+        - name: wait-for-postgres
+          image: {{ include "gp.externalImage" (dict "image" .Values.postgres.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - for i in $(seq 1 60); do pg_isready -q -t 2 -h "$PGHOST" -p 5432 && exit 0; sleep 1; done; echo "Postgres at $PGHOST does not answer" >&2; exit 1
+          env:
+            - name: PGHOST
+              value: {{ include "gp.postgres.host" . | quote }}
+            # pg_isready needs a user name to try at all; uid 65532 has no
+            # passwd entry, so without one it answers "no attempt" (exit 3).
+            # It never authenticates, so the name is only a formality.
+            - name: PGUSER
+              value: postgres
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }
+            limits: { memory: 32Mi }
+      {{- end }}
+      containers:
+        - name: migrate
+          image: {{ include "gp.image" (dict "root" $ "component" "server" "image" $v.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["-migrate=only"]
+          securityContext:
+            {{- include "gp.containerSecurityContext" . | nindent 12 }}
+          # Only what migrating needs: config validation also asks for the
+          # app DSN and the auth secret, but neither is used to connect.
+          env:
+            - name: GLOSSA_LOG_LEVEL
+              value: {{ $v.logLevel | quote }}
+            {{- include "gp.databaseMigrationEnv" . | nindent 12 }}
+            {{- include "gp.databaseAppEnv" . | nindent 12 }}
+            {{- include "gp.authEnv" . | nindent 12 }}
+          resources:
+            {{- toYaml $m.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 16Mi
+{{- end }}

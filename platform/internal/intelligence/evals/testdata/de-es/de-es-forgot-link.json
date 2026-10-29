@@ -1,0 +1,81 @@
+{
+  "id": "de-es-forgot-link",
+  "source_locale": "de",
+  "target_locale": "es",
+  "source": "{#link}Passwort vergessen?{/link}",
+  "context": {
+    "key": "auth.forgot",
+    "description": "Link under the password field"
+  },
+  "knowledge": {
+    "terms": [
+      {
+        "id": "c-invoice",
+        "definition": "A bill for a subscription period",
+        "terms": [
+          {
+            "id": "t-rechnung",
+            "text": "Rechnung",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-factura",
+            "text": "factura",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-workspace",
+        "definition": "A shared area for a team's projects",
+        "terms": [
+          {
+            "id": "t-arbeitsbereich",
+            "text": "Arbeitsbereich",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-espacio",
+            "text": "espacio de trabajo",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      },
+      {
+        "id": "c-account",
+        "definition": "A person's login",
+        "terms": [
+          {
+            "id": "t-konto",
+            "text": "Konto",
+            "locale": "de",
+            "status": "preferred"
+          },
+          {
+            "id": "t-cuenta",
+            "text": "cuenta",
+            "locale": "es",
+            "status": "preferred"
+          }
+        ]
+      }
+    ],
+    "style": {
+      "version": "es-informal-1",
+      "formality": "informal",
+      "pronoun": "tú",
+      "tone": [
+        "warm"
+      ]
+    }
+  },
+  "expect": {},
+  "references": [
+    "{#link}¿Has olvidado tu contraseña?{/link}",
+    "{#link}¿Olvidaste tu contraseña?{/link}"
+  ]
+}
