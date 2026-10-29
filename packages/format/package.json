@@ -30,11 +30,11 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.0.0",
-    "prettier": "^3.0.0",
-    "size-limit": "^11.0.0",
-    "typescript": "^5.5.0",
-    "vitest": "^4.1.0"
+    "@size-limit/preset-small-lib": "^14.3.0",
+    "prettier": "^3.9.10",
+    "size-limit": "^14.3.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
   },
   "license": "MIT",
   "author": "Felix Geelhaar",
