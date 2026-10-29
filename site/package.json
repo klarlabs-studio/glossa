@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@klarlabs-studio/ui": "link:../studio/.klarlabs-ui",
-    "astro": "7.3.7"
+    "astro": "7.4.4"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
-    "@types/node": "22.20.4",
-    "typescript": "5.9.3"
+    "@astrojs/check": "0.9.12",
+    "@types/node": "26.6.6",
+    "typescript": "6.0.3"
   }
 }

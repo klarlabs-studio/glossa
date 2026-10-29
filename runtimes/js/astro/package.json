@@ -60,12 +60,12 @@
     "@klarlabs-studio/glossa-vue": "workspace:^"
   },
   "devDependencies": {
-    "@astrojs/vue": "7.0.3",
-    "@types/node": "22.19.19",
-    "astro": "7.3.3",
-    "typescript": "5.9.3",
-    "vitest": "4.1.0",
-    "vue": "3.5.43"
+    "@astrojs/vue": "7.1.2",
+    "@types/node": "26.6.6",
+    "astro": "7.4.4",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5",
+    "vue": "3.5.44"
   },
   "license": "MIT",
   "author": "Felix Geelhaar",
