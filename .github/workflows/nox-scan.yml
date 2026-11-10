@@ -1,90 +1,15 @@
-# Standalone nox security scan — the dependency-CVE + secrets + IaC gate that
-# replaces dependabot's alerting. Lifted from the central reusable
-# felixgeelhaar/.github `security` job (js-ci.yml) and inlined here because
-# glossa's CI (ci.yml) has no security job to extend. nox covers both ecosystems
-# in this monorepo: npm/pnpm (via pnpm-lock.yaml) and Go (via go.sum), plus
-# secrets and IaC. Config (excludes) lives in .nox.yaml.
-name: Nox Scan
+name: Security
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - "LICENSE"
   pull_request:
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - "LICENSE"
 
 permissions:
   contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  security-events: write
+  pull-requests: write
 
 jobs:
-  security:
-    name: Security (nox)
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      pull-requests: write # nox annotate
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Install nox (pinned + sha256-verified binary)
-        env:
-          NOX_VERSION: "1.43.1"
-          NOX_SHA256: "4077a0f73a3c76eebf7c93f232aaaae584a3c024c9413a42ae2ab155d346f84d"
-        run: |
-          curl -sL -o nox.tar.gz \
-            "https://github.com/nox-hq/nox/releases/download/v${NOX_VERSION}/nox_${NOX_VERSION}_linux_amd64.tar.gz"
-          echo "${NOX_SHA256}  nox.tar.gz" | sha256sum -c -
-          tar xzf nox.tar.gz && sudo mv nox /usr/local/bin/ && nox version
-      - name: Scan
-        # nox core covers JS/TS + Go dependency CVEs (OSV), secrets, and IaC.
-        run: nox scan . -format json,sarif -output nox-results || true
-      - name: Upload SARIF to code scanning
-        if: always() && hashFiles('nox-results/results.sarif') != ''
-        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
-        with:
-          sarif_file: nox-results/results.sarif
-          category: nox
-      - name: Annotate PR
-        if: github.event_name == 'pull_request' && hashFiles('nox-results/findings.json') != ''
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: nox annotate -input nox-results/findings.json || true
-      - name: Gate on net-new critical/high findings
-        # Self-adjusting: report-only until the repo commits a nox baseline,
-        # then gates net-new critical/high. Adopting the workflow never breaks a
-        # red build on day one. glossa ships no baseline yet (its remaining
-        # critical/high are first-party infra/CI findings policy forbids
-        # source-blinding — mutable Action tags, dev docker-compose creds,
-        # placeholder example secrets), so this stays report-only.
-        if: always() && hashFiles('nox-results/findings.json') != ''
-        run: |
-          f=nox-results/findings.json
-          baselined=$(jq '[.findings[]? | select(.Status=="baselined")] | length' "$f" 2>/dev/null || echo 0)
-          new=$(jq '[.findings[]? | select((.Severity=="critical" or .Severity=="high") and (.Status!="baselined"))] | length' "$f" 2>/dev/null || echo 0)
-          echo "net-new critical/high: $new (baselined findings: $baselined)"
-          if [ "$baselined" -eq 0 ]; then
-            echo "::notice::No nox baseline established — security gate is report-only. Run 'nox baseline add' and commit .nox/ to enforce net-new critical/high."
-            exit 0
-          fi
-          if [ "$new" -gt 0 ]; then
-            echo "::error::Net-new critical/high findings. Run 'nox baseline add' or remediate."
-            jq '.findings[] | select((.Severity=="critical" or .Severity=="high") and (.Status!="baselined")) | {severity:.Severity, rule:.RuleID, file:.Location.FilePath, line:.Location.StartLine}' "$f"
-            exit 1
-          fi
-      - name: Upload nox artifacts
-        if: always() && hashFiles('nox-results/**') != ''
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: nox-results
-          path: nox-results/
-          retention-days: 7
+  nox:
+    uses: klarlabs-studio/.github/.github/workflows/nox.yml@main
