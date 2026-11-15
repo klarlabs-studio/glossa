@@ -36,7 +36,13 @@
       "undici": "^8.12.2",
       "zod": "^4.6.6",
       "source-map-js": "^1.2.2",
-      "sharp": "^0.35.5"
+      "sharp": "^0.35.5",
+      "glob@10": "^14.0.6",
+      "glob@13": "^14.0.6",
+      "minimatch@9": "^11.0.8",
+      "minimatch@10": "^11.0.8",
+      "@emnapi/core": "1.11.3",
+      "@emnapi/runtime": "1.11.3"
     },
     "auditConfig": {
       "ignoreGhsas": [

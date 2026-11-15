@@ -62,7 +62,7 @@
   "devDependencies": {
     "@astrojs/vue": "7.1.2",
     "@types/node": "26.6.6",
-    "astro": "7.4.4",
+    "astro": "7.4.12",
     "typescript": "6.0.3",
     "vitest": "5.0.5",
     "vue": "3.5.44"
