@@ -1,0 +1,2645 @@
+{
+  "schema_version": "1.0.0",
+  "entries": [
+    {
+      "fingerprint": "569dd549977d525d683960a524f0110964d6d439af73829b6301e5a85f3de280",
+      "rule_id": "AI-006",
+      "file_path": "platform/cmd/glossa/main.go",
+      "severity": "medium",
+      "reason": "False positive: readSecret prompts for a CLI password without echo; nothing is logged.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e35d531ca1890a2b33c8b63a9f90cc000da4f9c38849736bd22b4b6ed1a25041",
+      "rule_id": "CONT-001",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "medium",
+      "reason": "Advisory: base images are tag-pinned to a maintained minor line and rebuilt on release; digest pinning is tracked separately.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9f38533a513f892a4e91d108c77e7c72b86e886604927daae95c8e8d40ff2c5d",
+      "rule_id": "CONT-001",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "medium",
+      "reason": "Advisory: base images are tag-pinned to a maintained minor line and rebuilt on release; digest pinning is tracked separately.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "677c803768e36ffc7f7237a2be6dc5d7e3348bb2212ee87a5693e82cb304d937",
+      "rule_id": "IAC-001",
+      "file_path": "studio/Dockerfile",
+      "severity": "high",
+      "reason": "Reviewed false positive / advisory.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cf77e09c9a2b0bf0fec32fbc4cf65b40bae3143ac2c585deacd20145c0cba8aa",
+      "rule_id": "IAC-121",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "medium",
+      "reason": "Advisory: health is checked by Kubernetes liveness/readiness probes (distroless/static images have no shell or wget).",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "03774850336b75e7997ff6db009bb9898c61e4f38f614e366d91be8b99bc246b",
+      "rule_id": "IAC-121",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "medium",
+      "reason": "Advisory: health is checked by Kubernetes liveness/readiness probes (distroless/static images have no shell or wget).",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "30ead01a1d16684bab942b79848698af0512c89dbf05b5f97764e67617024a91",
+      "rule_id": "IAC-121",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "medium",
+      "reason": "Advisory: health is checked by Kubernetes liveness/readiness probes (distroless/static images have no shell or wget).",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1b35fea20c4d91bcb8688bd372b170f776a18c545dd85792d1e0f56e6b2f9141",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "95340486cfeb1ba6de1c499ce83f2aab86fc79b30254a96832eb8deee01bd1fd",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "86ee1c20340608091bf71160cec1fb6ab87ca21fd26fd6a4102bad991a139aee",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6bd7032e7494384d8a2d90970e258f335783f2ba91cfca7cd343e1b5f63c9585",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6bd7032e7494384d8a2d90970e258f335783f2ba91cfca7cd343e1b5f63c9585",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6bd7032e7494384d8a2d90970e258f335783f2ba91cfca7cd343e1b5f63c9585",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6bd7032e7494384d8a2d90970e258f335783f2ba91cfca7cd343e1b5f63c9585",
+      "rule_id": "IAC-123",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2a49f551615e2ade687e69c81116d626f367e54a5f8af215e834f99d11f1a00d",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d5815bc7e32dc63b68ce69635d8a38503115f5222b6ce0505354163e52329990",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e0502f0b178d2269c5a8866e019ea12c35f3db5db7961f836584d015067347ee",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "10963363bc7531d2b26c31cf671f214e4772b36138469e36c3961371c1ca92e9",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c3e219a0f6c8f37acc66d0e46e3ca08b6ef8ce3d76ef5c072d119b118851176b",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "04c920f28d35efff00f70cfcdaa4baaf87ac3a0d0f0174d6e0c17e06f705dc0f",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "fd4deb43ebc0a87f3604f04d245a1650e97acf384f72f3e34e82a57a34d5fbea",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e033eba9023b3c9e12b956eabe516849f6fa60f2eaf23ca34a97082a4248c951",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "11ff942a31c9521ad4dd936431bc368b553eb6879e7fa2fd081e7dcd38628335",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "fa1e45d81e9bc025399fdccc09d9631b78fffc20f21981f9405f09f8161fda4d",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c13d366458d723f07eda8e13fbe1dd8bccf2d91a6982498caf90ef1433af541c",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7360a13b0b1470a0d76c902436a2f211b11a5264f42a7b3bfb76d00b4feff343",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1cb6db2eb26aac00e9161b25ec3fa1a8ec664f3098fcb08bf9dfd8062f07539a",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1206d3c22a9bcd2fa1218fda6827690d2adca0bc4d375034bee13ff74f345506",
+      "rule_id": "IAC-123",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "417f38ea125f8c9b51636366ccabc212b33cc405a0b4cdbd22d89dea51d8d508",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "70593512a8b5ba21d1215c7fe40da40ed3b691d6fd016ad84b6ae4477a663782",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "eb879034518af6f1ae70e08aa4f4be3839c0115e47ff3194006cabdd0e75eb15",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "48955ba7d367b71b4fb1c317f7076f120d0a5e54164ba8b635e190abd456029b",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "4c4cd89ebd28ad683e2353dcdc5ce14694bee4c78ec9c37e4e4a82614a139a7c",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e684a189280f744295d7d4b9537ed278a8065fe7fc25009e3c51f5fe09bc72ee",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "aca12b914c4a9acb3df52f50d59d1945d599bcba67dfc1a35a3db151fd03a523",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "73592e56b518b7e5bd5d3bfd5ddfdb387c571c30beaada0697314c9931b05019",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9bd4dabb4ca5fa2e87f513e1f04e853812782430f9545c07c2de36e96c57b3c0",
+      "rule_id": "IAC-123",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "4e165954ad0ae52dc3ce659b5583c9a3a63ca6680c68700203f29f25c7dd4480",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5dfc7ebcc31f5d6da02b17e44366a1d9060d8b5714f7dfe4868b10ca947c23c3",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d49ac3ee9e551716a83930bd86b3fb1d02a056a96d37c320af37c82f52d5b13c",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a4bbe03d68eda7bc7c5c8af98fa63c6f9402b9cdaf6060efa86fc56417260ea3",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b911ce0d97424d42d0312e8012bcf52d29faad97f856c93d0fa08d52809d3329",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e17fc74c7d0575773172939aad698fdbe11f8822c770b7ba394bc3092ef6c714",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "41fd8c05c2aea292b1973d09bad07528c4693dd88317862cda0ea479eaeeaa80",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "407f738feb73eae3fdce35c05ec25573e8358815bea3cad3c6c774303518fcdf",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b5e3d55a5b7f58d733598394973f33589928408ac65cc9558381d0a97349acaa",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0f0824971fb706f6b99b7680f47122d5e521607da4acf23cea0596e0db9cce04",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d17d995a9d7bcee359debe2954342eec642bc24599b01e08cc1391da46e81716",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6741f75edbff5d38be2b95c0059ccdb3c90c6da04f70d0c6f33abafca2c5478b",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a502fa55ca593619e47b5aa620308a5e19429a1f82751defb1d7de9e8a3de0b3",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "85a4254df24d261b400a58a00e26a97e8082312c4f74b65744562a4e376593e2",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ca8b5395b7ed79a74e046e145b854c908cafea64fa943cfd8a2cbe3deeb9cf1a",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f9dfc31a2ca6f7e14cb42bcf9ef24ea8086c6f7f7331a22b7743c36d8a9c0329",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "282133230f31094415f55e18e776c98d285c892d264d493d7b8b9041069daea4",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "df0219b02b70608e12fd6c3f69772de2b67046cda7a6eafab54678687bcc0f48",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "eb4211f746a30971d6b129df0e08f4554392cb96020df14b6948619ab7a5d5dc",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "78e208a1243b27acb2e80f267a252669c2a14bd9d88b01acee44050616fcf017",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "31fde77ac936d7982c8f58cf034475139069905242d86f9f2ad36ff2531f26fa",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "28acc0e4a1f65ea3ca2765e29a96925c5b1f4124eb3e3b1e714893b81a100f52",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "40decc3c322b0bc8f21bfd59ebb476d870c8c530587401bfad2b56a41af9a7db",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6055e8289b90461d28f091e1403f9a1ec2b2016c0715aad6aa2665a6c18c08ce",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "fdb1ed3bc8c83fb3df004e3d2d6a274fed7784388a912e0e47fb97626b57e16f",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0aa7273b200cd1e067e4067faddc3468c6779cab23bb9b73191ec1ef904d4454",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5f7cead38b466b8a6bbf550c3bda65872a1aaa62ce57d751c409c20e489ba06c",
+      "rule_id": "IAC-123",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Dockerfile hardening advisory: files copied as root into read-only runtime layers; processes run as a non-root user and cannot modify them.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "369b4fdb08a05621394938176f36a3c3d385792d7bd88c757b50d03aa483fceb",
+      "rule_id": "IAC-124",
+      "file_path": "apps/api/Dockerfile",
+      "severity": "low",
+      "reason": "Advisory: image authors/vendor labelled through org.opencontainers.image labels policy, not a security defect.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d64dd919ffe6cf835a79a8368d34195ab4ce1cb99e41ce01a59c8726350927ca",
+      "rule_id": "IAC-124",
+      "file_path": "platform/Dockerfile.edge",
+      "severity": "low",
+      "reason": "Advisory: image authors/vendor labelled through org.opencontainers.image labels policy, not a security defect.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "15a7c96dd19143dba4c1c190057a1c689a7d8cfe3e96507fc01746d1a7302e6a",
+      "rule_id": "IAC-124",
+      "file_path": "platform/Dockerfile.server",
+      "severity": "low",
+      "reason": "Advisory: image authors/vendor labelled through org.opencontainers.image labels policy, not a security defect.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0c90b54b57211778313beef8c2c0938451f37650ae12f4207e814634d6a36e21",
+      "rule_id": "IAC-124",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Advisory: image authors/vendor labelled through org.opencontainers.image labels policy, not a security defect.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a910d209635ea7a9b5b1eedd4a36bf0ca2532c3066f2f6c163690e99ddfd0b97",
+      "rule_id": "IAC-124",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Advisory: image authors/vendor labelled through org.opencontainers.image labels policy, not a security defect.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e2ddc7a3827dc595b357254e8ab36ce919b6735bfcd97889b3116d12065b9df9",
+      "rule_id": "IAC-125",
+      "file_path": "site/Dockerfile",
+      "severity": "low",
+      "reason": "Advisory: shell-form CMD intentionally used for env expansion; no untrusted input.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "bc103cc0f64071c14e713a5462f79bb01410fbf66b95bf5f471a30be29fb165f",
+      "rule_id": "IAC-125",
+      "file_path": "studio/Dockerfile",
+      "severity": "low",
+      "reason": "Advisory: shell-form CMD intentionally used for env expansion; no untrusted input.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3e767abbb9b87a3120e7ef6618f9665734f177f847e9de2f10d6f795faf254de",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ee946e04da6e2912938a196f65d33bb9e40588a60516061a43a6e8e7bd00340b",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7d8913fca7cba5d4f46e908e6b1eb806d6b3a750bbaf10c8abec132a9665fd50",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7cbbd297db828aaae28c09db9226789a36a6c37115fc51254e27dd39edc6ebc8",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "02f87ace393697093db8483ce8f6a419bd2f1115fa75df7c41bfcf754c0568c7",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a1b36d1d37f113fd694a884fcb26e2113bf0e911bb2440636df718d05cdc8409",
+      "rule_id": "IAC-131",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cd932efe29417da558e7a3f373781b2f3713355f8c18412b7a13a1573ba15954",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c285ed19afcd20e288fc0fd848ef6d8bf9f1abecdfc9ef34ca78680a47cbabe1",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c285ed19afcd20e288fc0fd848ef6d8bf9f1abecdfc9ef34ca78680a47cbabe1",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "318816c7cc832a1202184111619e3fcd334b4e28f888c4a3b3453a62705122d3",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "318816c7cc832a1202184111619e3fcd334b4e28f888c4a3b3453a62705122d3",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "318816c7cc832a1202184111619e3fcd334b4e28f888c4a3b3453a62705122d3",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8c54cb332cd7fc108c524bc1d3791bfa4e60a77349f1925ed7e824870bd1fd73",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8c54cb332cd7fc108c524bc1d3791bfa4e60a77349f1925ed7e824870bd1fd73",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1995f9fe0b9c069de3f0bccdc2fe91e882aba2569256536093e80238f616c9e2",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1995f9fe0b9c069de3f0bccdc2fe91e882aba2569256536093e80238f616c9e2",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "127f558be388cc692022dfb83ba20a7346a9b54ff8440a444c4eec1691e7e3a3",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "127f558be388cc692022dfb83ba20a7346a9b54ff8440a444c4eec1691e7e3a3",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2dd772208d645fdb89fec7dba1847e9f7452a6620194aa77eef6afbbe8f2e1b5",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2dd772208d645fdb89fec7dba1847e9f7452a6620194aa77eef6afbbe8f2e1b5",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8ed02040e03a06f7599beb2d3234a8b8946ab7e8f62275e60a49b469eb1d7751",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8ed02040e03a06f7599beb2d3234a8b8946ab7e8f62275e60a49b469eb1d7751",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f720f667b41a694ad5ad0eefcc88700505c758d2d47328f5f55a9e5918f68285",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f720f667b41a694ad5ad0eefcc88700505c758d2d47328f5f55a9e5918f68285",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "07174aed30f1b5559b89e90a9dd512bbdbfaa3c6db69b50c8fd4b9ed97771703",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "07174aed30f1b5559b89e90a9dd512bbdbfaa3c6db69b50c8fd4b9ed97771703",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5c82d05772b8f5a913da3955dcb72e864318480119b23de8b1301df4b2222c4c",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5c82d05772b8f5a913da3955dcb72e864318480119b23de8b1301df4b2222c4c",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3c6b52e5cd3650fce5f84117e752f44e4444f8f545fc5dc42f54d76f13432667",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3c6b52e5cd3650fce5f84117e752f44e4444f8f545fc5dc42f54d76f13432667",
+      "rule_id": "IAC-135",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "68db608004b78b7fff9ca67f4dac6dfd4f11d09a9c3c7510f1860b2d13463b66",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9844903b7c6e16f80180b39819e72f0421cf95059c094cf7d1e892b1f0b481c7",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9844903b7c6e16f80180b39819e72f0421cf95059c094cf7d1e892b1f0b481c7",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "68db608004b78b7fff9ca67f4dac6dfd4f11d09a9c3c7510f1860b2d13463b66",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9844903b7c6e16f80180b39819e72f0421cf95059c094cf7d1e892b1f0b481c7",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0d6197cb47b437e13b7b0d4b6ceba8bd3245809c3dbf87874cc9da1418a67b75",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f9d30cb8add929538587f02d160e6232f67472f927317f8959d024c371f5dd0e",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0cee93fe1ba7779280cfaa646eff23a585c638c017166a7bd1e2ff36c3b67bb5",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7c7ea4a58afe570677e58105d88d212db4a0d462e42ef14d0199fc1e825ead91",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "35775667274fb3e234aa977af7cbb7fd22851624d907866292491f4ea6d0239a",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ecb75fa9c9223c9893e24ba0e5cdeeafef5458f64129b578739fb217bda21460",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9f5d9c6cbddc7d846e144e88b68771304623b84d4a81d6b0baca0793edbdfb5a",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ffb8849364ca6fb3099bdd9858de38be1ecde6966c93c5db5f5756c680961be7",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "162eba77463644d4ce503159804c0f1d378ca2808412ed5c3843e56d6dcb8937",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "88530ca9b17af1f483b1006a588e49c776c6fcaacdbaa708304e91cd41db1d1a",
+      "rule_id": "IAC-137",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7146003b86d5837fed3e7e444ed07c9d6875007be5789c2bc54d07c83fe735a3",
+      "rule_id": "IAC-137",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7146003b86d5837fed3e7e444ed07c9d6875007be5789c2bc54d07c83fe735a3",
+      "rule_id": "IAC-137",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2af8b8fa821cb531479c1f0496c2cb84828e7a80d41587fdba98b826f5e7ca6c",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5c062658f03bfbe8f88ae35a952e48fea8c7da9bc436dddf8b92c8c6aae8eb4c",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5c062658f03bfbe8f88ae35a952e48fea8c7da9bc436dddf8b92c8c6aae8eb4c",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2af8b8fa821cb531479c1f0496c2cb84828e7a80d41587fdba98b826f5e7ca6c",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5c062658f03bfbe8f88ae35a952e48fea8c7da9bc436dddf8b92c8c6aae8eb4c",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ec69367895f0516e23e02010338dcfa0a18c3e65c8fc97a22650ce911b266485",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3355362426a26f5bd4d8790fb541cbff530683d09d799541dd3dfba052b98bd2",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f76adc99435f8eabaa631a2b9466b2e5a099573ba3fb27cfe6ec47bdf96c1bbe",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ddfffee7e7ea35771304b8b7a9c101c0843082511b778819bb1f79ba9a5815ab",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8f39dbc706d9bf592c01857f16ee79e3328f3b2f984316a59a7f16ec1cc93f89",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "96742a08cce28d5c178b87eadfcc0e5e905d70fd41d063c95beb379708e356ad",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c44dd052e779301c6df91ec438ee6f1a0c3b16603e66ee3cac803b9f7e5e39ab",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b035639c1aa49fd3f57cf28c926764191011c9b860f6190c831be7fe90a65174",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "427cd5f75a0a0da9af6b727536fc8c29dcbc260d13b32b4c3eb25e20c27c944a",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f10981085235fad2e20a8097f30a63fa231383ac9d400cdaeddff87719270e6f",
+      "rule_id": "IAC-138",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "058bc56533edd2f25e023407f4eab8bce3d094eb25a8f341365a78751459c821",
+      "rule_id": "IAC-138",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "058bc56533edd2f25e023407f4eab8bce3d094eb25a8f341365a78751459c821",
+      "rule_id": "IAC-138",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8fb535290fa040428c22e8753f79778f56157c8bceb5dc89a71d8ba192b30e91",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e430a488ea92aa8e757a04303b7260be99b52a53f16e79a416b7cc66a44ac930",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e430a488ea92aa8e757a04303b7260be99b52a53f16e79a416b7cc66a44ac930",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8fb535290fa040428c22e8753f79778f56157c8bceb5dc89a71d8ba192b30e91",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e430a488ea92aa8e757a04303b7260be99b52a53f16e79a416b7cc66a44ac930",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2f42c4ed1f831f379cbdb70e7ad4d3c2339c659419bf9ec39c01f0a35f4828c9",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "510e94068d1c3e86cad4a2db9ec4716c8daf89b8e8850682b8f2627afbca0355",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "227c0ce425fe50ff3196d59dbd08e69bbd71987fd1864d4f17b4a074189683f8",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8ecad6b46d457bf461b515cc8d1bc0d431bca85ceb889f12d34103db302e3990",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "849faa97b874869fbbb39b111f18c47bc10db47583c94fce5c3cdba44c36fad7",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f604399e27c5f12f3c48823edbcb77fe7af3553ba6532d8767a9bcc1f811351f",
+      "rule_id": "IAC-139",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9069feb8d038dadb6e85c923447685e0adba400bf0aa38e4095e6ed456fc4a9e",
+      "rule_id": "IAC-139",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9069feb8d038dadb6e85c923447685e0adba400bf0aa38e4095e6ed456fc4a9e",
+      "rule_id": "IAC-139",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3c4b53dc09754e7df840262078b50d9f809881d5959145d9137965285d1749b4",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "82efdaa27e95f78994968cbe8d9091f705c72b799d448a8790a35f2de6740dde",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "82efdaa27e95f78994968cbe8d9091f705c72b799d448a8790a35f2de6740dde",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3c4b53dc09754e7df840262078b50d9f809881d5959145d9137965285d1749b4",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "82efdaa27e95f78994968cbe8d9091f705c72b799d448a8790a35f2de6740dde",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3e7c4a377de75ea69c5d7f34f41645015afa4c3a824c757acdf29c1c57452549",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "69cb3d4f13369e4293c8dc14a9fafd384ca8880eb35b2099d00455308264602a",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "14647201ed3856bc159a758008884e760b5eb7ed18395a9ccd51ca29ac0cadaa",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "85a9b8a9085bb61f54204e6d822dbe7f61ac12b1afba96c6edbce9aaa52701c9",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b458caa8c64d077550f6c4ad77773eefb3a4d59193cf6ecb6f7dadec34bfe9c7",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "26d66134f78f2f7eb4589bdc147ee355eeea451f3d14a210d98b526bf97960c0",
+      "rule_id": "IAC-140",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1fd0cc2a490cdf25756b4509342d190b924b8f2fb93c863bb593f99d6828bacd",
+      "rule_id": "IAC-140",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1fd0cc2a490cdf25756b4509342d190b924b8f2fb93c863bb593f99d6828bacd",
+      "rule_id": "IAC-140",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "713dfef7bfcac5a60b09f43207eb047c59ddfe4652a5974499141e08bce7eda6",
+      "rule_id": "IAC-141",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "498c93aef7ff386fe4db156af70e4b67816baea3d884799e836e37857bde37b1",
+      "rule_id": "IAC-141",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7ad8de8043b65f32b6467ea6e8292d4d5c3901725f217983a79443a93708d25a",
+      "rule_id": "IAC-142",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d98aba8842ca7d1b0ea18d64fd86184266d5354749746bcb2ad3bc2a6e2a4a10",
+      "rule_id": "IAC-142",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a9063c752e0f844b6b1cf0780b7aa1b8775288ba8296277f3b9031fb90f3d2a4",
+      "rule_id": "IAC-142",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0207bb2f0b557fe12c8f54c63cf88f7dc53ddf3f424f33f3497bee3bbc895711",
+      "rule_id": "IAC-142",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "340f4f7f3ef7ecee37f60e8f7509b367ef68b12a8daa5079f9dbb363ba3e40eb",
+      "rule_id": "IAC-145",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "340f4f7f3ef7ecee37f60e8f7509b367ef68b12a8daa5079f9dbb363ba3e40eb",
+      "rule_id": "IAC-145",
+      "file_path": "pnpm-lock.yaml",
+      "severity": "medium",
+      "reason": "False positive: pnpm-lock.yaml matched as a Kubernetes manifest by keyword heuristic; lockfile must stay scanned for dependency CVEs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "efffd45e45bdf218052ebd23a0a2fc2295219290f6341d868fed455c871b6993",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/nox-remediate.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "69abe117055f6b0a94a75f8803be46347983c18528057ccd114cbc3623d801f0",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/platform.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b8d558579841a321da911eec993d0eb8aac08ac17d82f6e7fe4b104dc84674a4",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/release-packages.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a43e50de813e2169f74a1802b570aa914c2c541325a5a673c5b480effc8e6301",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/release-platform.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "81d871b7356007284f96c10e9c978abc2cd9f566a619af8688ccae3b1ab579d7",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/system-m4.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "924e477cd6ea621138c21afc29cd9dd231eedbabad447534192f20cfa3cea267",
+      "rule_id": "IAC-155",
+      "file_path": ".github/workflows/system-m5.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "56787d5d6928bec8d9e3953a8b01ae1f23ff215263d8e15e268e44e66401e195",
+      "rule_id": "IAC-212",
+      "file_path": "deploy/charts/glossa-platform/ci/full-values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a7226318a0789b82457172a8a4ea6e493a3d91655b760af682be1505b5d9864e",
+      "rule_id": "IAC-239",
+      "file_path": "deploy/charts/glossa-platform/ci/full-values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b852cc517d92c75267b416a9499065b216cb200f8321c57e37ace215af328f26",
+      "rule_id": "IAC-239",
+      "file_path": "deploy/charts/glossa-platform/examples/values-klarlabs.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b9d39d6fc3cb5225b94e6fba8033384063af9196a4bc0f8392cb508dd1dbe4a4",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "df0650630cdc06e8f4a2e1e2cd900c42189b3826b9daa3669695ee19024ad414",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5a8b51cdbdc72940541cb6a34d184882b7d2affba5f948ec16c1eb28c034d123",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a28e5404490c07854da83b204a5efb4b9a28a070074a5138bdd3da797dda6fd0",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d04056ab167c17ff9213f6faf66e086a256f46caf44f3ad1cb55a11d4ef37db3",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ed8b67c024736373066f4e15d9c28cbf01e51ae48e81290bf416d9fb476523cb",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a3941e1fdd61af8031addb897db2762f5c61ca4a459ae602c13641b608ef65a7",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a3941e1fdd61af8031addb897db2762f5c61ca4a459ae602c13641b608ef65a7",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "61000fcf98dbc318b4024e858186fd6520d4f672b66cc474950ddee62c837bc7",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "efcafce9778a6a2d7cc12a095d24257f55708b78771c2f28481e20961a427925",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "07496af532ce6516bdb960f306c939adec1be824d4751023011f6d906f9997bb",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f044ab5e1e8c27a79f00fb58bb36c6d7b13847a27866eb9544ca9e54b5869d87",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c114ff10bb50ecabc97f5124d379d9a658ec25df300e82d628761e92184aa31a",
+      "rule_id": "IAC-294",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "da973d4cdab70d508e3b77ed01673d3cfae0d94aa8a8c403c8d3ea8f4961ac7f",
+      "rule_id": "IAC-306",
+      "file_path": ".github/workflows/release-packages.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a30c1c8c66ec2bb818b835df5809e367680d0bf5636dc2409ce8780e1e5fc28d",
+      "rule_id": "IAC-306",
+      "file_path": ".github/workflows/release-platform.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "52922952e40b8c5ebd4fef0969dd782d57266e9ecccc4e9bddc9be74f0f6daa2",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/nox-remediate.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "694472a30cc89e9473f7085f5adf2dee127ef423698ea6afd99d19234e8076e0",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/platform.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b43028ad9e21da848133241ccd5f1621da6152857dc0c7603f3c68da47eede0d",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/release-packages.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3983089e78176e34721b1db7cf578b18d20e24cac6fe323cacfc8d070068b226",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/release-platform.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "83240ec39ecc52a36c4006c921d846cc372ef610e3e7a9d5cea091c757949c1f",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/system-m4.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0afdb841f7051e030ee4db4e8cb6f8961df5a8d3a271648910b143d4aa35056c",
+      "rule_id": "IAC-308",
+      "file_path": ".github/workflows/system-m5.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8c9a05e7d0c8a05b61d4c18aefce8e2dc91a85c3456246a1c92bea30dbb416d8",
+      "rule_id": "IAC-309",
+      "file_path": ".github/workflows/ci.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "530e8464b73bb94d797aa233bcd4b2ea933dd8644a2b0a15d0bb6b7ba128980d",
+      "rule_id": "IAC-309",
+      "file_path": ".github/workflows/nox-scan.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "975c6386cb7bb8524fffa9042cfc047b70510adb2e6f848d582d407d23bd99ba",
+      "rule_id": "IAC-309",
+      "file_path": ".github/workflows/platform.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8378df7a1d4adb5806616a668bc89e456b48fe9b7212ca5799b5b8eddbe0ae9c",
+      "rule_id": "IAC-314",
+      "file_path": ".github/workflows/nox-remediate.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "374479cceb84663b75d4d7f2e31ac858f33046ebd50891a60479220a57246dd0",
+      "rule_id": "IAC-314",
+      "file_path": ".github/workflows/release-packages.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "84612e10f52bb7fd1bbf9df96c257bc843982084742db7212aa009f5614c94f2",
+      "rule_id": "IAC-315",
+      "file_path": ".github/workflows/release-packages.yml",
+      "severity": "medium",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "033ec37147efb7fef3b5d06d064368770eb871be2e690be93507e2514216135a",
+      "rule_id": "IAC-315",
+      "file_path": ".github/workflows/release-platform.yml",
+      "severity": "low",
+      "reason": "Reviewed workflow permission/trigger: needed for release publishing (OIDC/packages/contents) or manual dispatch by maintainers; scoped to the job, not triggered by untrusted PRs.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "95ee9cb53241ccb0399790a45eadcf5488dfd97a50892dbc7dff651062e1cee4",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "95ee9cb53241ccb0399790a45eadcf5488dfd97a50892dbc7dff651062e1cee4",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "95ee9cb53241ccb0399790a45eadcf5488dfd97a50892dbc7dff651062e1cee4",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/backup-cronjobs.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5544888748486a665895992abafeaa466ff5767432b9ee11b405af35d3b87c19",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/migrate-job.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b820f17260b95dc13d18a2fe953477a1d1bc81650e0525063806fa3b0f5372cb",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/minio-bootstrap-job.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "bd86b6f4943c1180bba45ccd0aecdb26ee5f62eecdc8befdbef208f99c22533c",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres-bootstrap-job.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8921441b05781bdbfc8b6b424a83903896164f9ef44ada76eb999505d343fcc3",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/minio-test.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "43247a409cc34f5c855274a67fa4bee4e0d11d298e57dbdf1549f9428d2eadf3",
+      "rule_id": "IAC-360",
+      "file_path": "deploy/charts/glossa-platform/templates/tests/postgres-test.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "98f4b6754e7feb0a1889f3026d0c4e1b498fd6534d7ec890217bbae50edaf2ca",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "56a22ed64d1ad1123bfd9c951734f31201aaef28df44678d2c087305cfb9c407",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f7b236b358cbf9856570741f5d105245eb607b209cda2097e0257e7582520a2c",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3bc921e14f3111581daa9dc196c0569491d674362585fbe4251968f8e083d502",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "570c86ec1c76c1bdfd10c55725900f557b0ad2608b027fd6e3789aaf6a3634bf",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "570c86ec1c76c1bdfd10c55725900f557b0ad2608b027fd6e3789aaf6a3634bf",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "570c86ec1c76c1bdfd10c55725900f557b0ad2608b027fd6e3789aaf6a3634bf",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "570c86ec1c76c1bdfd10c55725900f557b0ad2608b027fd6e3789aaf6a3634bf",
+      "rule_id": "IAC-364",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "7819b4d7fc3c43da34c2448b59991cc3a792a1092092e10dd577601701907d28",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6347082bbccf0358ee5a1ca47acd4a30f6b6553392a9c5c74ddb3868e9e67143",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6792568f78e4e008d08eefd6d749cee80bf895c0bcf51ab3fd4a8897e7bdd37f",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6792568f78e4e008d08eefd6d749cee80bf895c0bcf51ab3fd4a8897e7bdd37f",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6792568f78e4e008d08eefd6d749cee80bf895c0bcf51ab3fd4a8897e7bdd37f",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6347082bbccf0358ee5a1ca47acd4a30f6b6553392a9c5c74ddb3868e9e67143",
+      "rule_id": "IAC-375",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e09c859ecf75202b7f03a32588f4dcb4d4087a09ba1d9345db16ecd48972e4f2",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/examples/values-klarlabs.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e9fee2434757f6642a5cd8ba770a949348f5a8ff8914868e2599f6025e5507cb",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/examples/values-klarlabs.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "9400b7fe0174328c739dfe6224321bfd1c72c038211aaa9eb90b79dd5f5212ee",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/examples/values-klarlabs.yaml",
+      "severity": "info",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a6534932a191f4f6e53dae7e3bc678bafd4f7acfa1de5c11aa7717f4710cffef",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0e4345ebefb7993991bfa61fa6ee20f88b5e0aad5ada7d58c9d67b93e1ddec5e",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3e23a209704235082e582e661625a64a666aa84006059d55e3a9810dfcccbc74",
+      "rule_id": "IAC-379",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "5068e98b17518be1b5d90996d364f1fbb070b13d90bf292eda364726a25df22e",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "fe507b777f8319540253afdaaa73d08ab88401f4439a063886293698a65353fa",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/minio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "4257d757b627bb76afe9f4dbd521a58ce86ff092bd358d2238b4911deccb9618",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/postgres.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "827e04a26008149e7737cc349c43b60c4028bc711abbf3aaf892581387173c59",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c65fe910d55bfccfedba7630f0373bf954ca959267bfc95c3ddd70787468e0be",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f84e6ea0c306576a1a099289b2db7722021dace0f4308d9cb55b081ac16917db",
+      "rule_id": "IAC-395",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "medium",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e64e93cd2319eb893b9cf4fa7c923901e77b3fae834ab15a0aec06554b70e0cc",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "17b1e29e0a7b16965c794f7664f7c93aa0c7d33e45ec7a412e14cad6559fe5bb",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/templates/server.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "39271c36b05fd1f9590b632799462f40f5c657646304b133c838873ccb1c0777",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/templates/site.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "8fd66c9538d9fa67e4c782c1e84a82efeca621bc5159e8cbb5e1b702450ef2c2",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/templates/studio.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "66e2871d4f979b34c315e5753e30cd93a3c3ac929f591392f798ec2a27b4a03b",
+      "rule_id": "IAC-397",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d937d4043532c2ba80176bd6338e0c4959b11ed3e51d8496c92a35faf0e71b89",
+      "rule_id": "IAC-398",
+      "file_path": "deploy/charts/glossa-platform/templates/edge.yaml",
+      "severity": "high",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d5b62e8e14ffd21c63b3bbc40574ef164c0ebf96bdb0e14300f94eb90d32d5df",
+      "rule_id": "IAC-400",
+      "file_path": "deploy/charts/glossa-platform/values.yaml",
+      "severity": "low",
+      "reason": "Helm chart advisory reviewed: chart exposes these knobs (resources, probes, security contexts, PDB/HPA/job settings, emptyDir sizes) as configurable values or has them set by design; findings are heuristics on templates and informational/positive-pattern rules.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6b26e6e5c478a1815c9754580fea767a9a30b44e63c4126da2f5f7283cf6a7a3",
+      "rule_id": "IAC-406",
+      "file_path": "platform/api/openapi.yaml",
+      "severity": "low",
+      "reason": "False positive: OpenAPI spec matched as Kubernetes HPA by keyword heuristic.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6b26e6e5c478a1815c9754580fea767a9a30b44e63c4126da2f5f7283cf6a7a3",
+      "rule_id": "IAC-406",
+      "file_path": "platform/api/openapi.yaml",
+      "severity": "low",
+      "reason": "False positive: OpenAPI spec matched as Kubernetes HPA by keyword heuristic.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "6b26e6e5c478a1815c9754580fea767a9a30b44e63c4126da2f5f7283cf6a7a3",
+      "rule_id": "IAC-406",
+      "file_path": "platform/api/openapi.yaml",
+      "severity": "low",
+      "reason": "False positive: OpenAPI spec matched as Kubernetes HPA by keyword heuristic.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "81d3f732c3b56d3fd9eda705a43ed93e357b0513061013b5191f45e1e9ff09d7",
+      "rule_id": "SEC-073",
+      "file_path": "apps/api/internal/infra/sqlcadapter/rls_integration_test.go",
+      "severity": "critical",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "cf69a4e8ff6f1bbcb799589f64b2adbc26df6e520581b737574f847b11b64f9f",
+      "rule_id": "SEC-073",
+      "file_path": "platform/internal/cli/cmd_import_v0db_test.go",
+      "severity": "critical",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1998ae39e06209cbab23cc9e7a7fdf8cd9b8d11b3157651c571520f9b5d8be09",
+      "rule_id": "SEC-073",
+      "file_path": "platform/internal/kernel/config/config_test.go",
+      "severity": "critical",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "69dad57c5d9992144e580c335e7ef0471088b2127a98f5cfbdb7eab7d4d1307e",
+      "rule_id": "SEC-073",
+      "file_path": "platform/internal/kernel/config/config_test.go",
+      "severity": "critical",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f0c3613bdbc079c5658992f35a40c0c851214b989b44bc2fd881e2cdee3e8def",
+      "rule_id": "SEC-080",
+      "file_path": "apps/api/internal/app/auth/auth_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3677f37998f9ab5a25584385de8e879941a63e15170937af9ec2f379edb26685",
+      "rule_id": "SEC-080",
+      "file_path": "apps/api/internal/app/auth/auth_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2c369ed21596a56abc4b26a1c1fd1cb8d641e5441e0618d46970700b2facd967",
+      "rule_id": "SEC-080",
+      "file_path": "apps/api/internal/app/auth/auth_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c24942456d586927ce13de4609d4a9526375a061bc0ab0c5e4652d57f3257ff5",
+      "rule_id": "SEC-080",
+      "file_path": "deploy/charts/glossa-platform/files/postgres-bootstrap.sh",
+      "severity": "medium",
+      "reason": "False positive: shell variable assignment reading a password from the environment, no literal secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "517fd8331f95d6eed13a9f9d9995728d209b638fa5815516b50d524e4bda0667",
+      "rule_id": "SEC-080",
+      "file_path": "deploy/charts/glossa-platform/files/postgres-bootstrap.sh",
+      "severity": "medium",
+      "reason": "False positive: shell variable assignment reading a password from the environment, no literal secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2f37ad37d1bc9ff2070ae385c98567e538221ff2ce805b4c0750d1cfb401a59e",
+      "rule_id": "SEC-080",
+      "file_path": "platform/internal/cli/v0/v0test/v0test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e87aeccac89a6c7a00c11fc1622a6c05fe348d636092edbeeaece9288b65f36d",
+      "rule_id": "SEC-080",
+      "file_path": "platform/internal/systemtest/m5/fixture_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e0a9dbe035e5d1872c6baff11199a86a6a233fd336d2e61b6f2b692c0af346a5",
+      "rule_id": "SEC-080",
+      "file_path": "platform/internal/systemtest/m5/mailer_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "885f02fbbca8108f8a35e3964778a42b2a968168736cfd3fe5c2d85bff1139bb",
+      "rule_id": "SEC-080",
+      "file_path": "platform/internal/systemtest/m5/v03_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "0fb2deaaed4811a16ee5c302cd74109a5edc156e536be20ff0d1cd5f011aa1c9",
+      "rule_id": "SEC-080",
+      "file_path": "studio/e2e/harness.ts",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "e80d07fdf420a6a3ff55dc355a938fbd0995ac4a74cabaf08e7e1b418308489e",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/strings.ts",
+      "severity": "medium",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1e7093ff45bf7a3a99a015bfa660ed4e64e8d73d60f138efbf13ed4cb76839be",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/strings.ts",
+      "severity": "medium",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "109f8544b76127592e851c199e9fd8d29f7632e06414d48bc6f2522866a20276",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/strings.ts",
+      "severity": "medium",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a3165097deadc56e93195ad56baf7c7b218bfb825c8cfb4f0b44a9ea2946b92a",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/strings.ts",
+      "severity": "medium",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d1948b0b0d129f9022c15cd2b5e0a18dd8e2829c6a5e5e54354f6c8b54e8f033",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/views/auth/auth.test.ts",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "d1948b0b0d129f9022c15cd2b5e0a18dd8e2829c6a5e5e54354f6c8b54e8f033",
+      "rule_id": "SEC-080",
+      "file_path": "studio/src/views/auth/auth.test.ts",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "77c6e12e9775f1f2e2b2f7932396c380e2acd2f3a1404c4a78373d725d38bcb7",
+      "rule_id": "SEC-081",
+      "file_path": "platform/cmd/glossa-server/identity_integration_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1f857f071b5bc6157853f8158601e613d8e4a887d897673a638388d49393b104",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/cli/integration_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "82fa66c8324a3dd60aa5c6bd82c4e13fb799a010b1ecf7dc351aacd6c096a172",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/kernel/config/config_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "391521ed39c747f3e0fb0fe803c239ea5d0f7a1c1ae6011571fe7a25b569e73b",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/systemtest/m2/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "55556aeeae32654228f632a52e33b5f7bac25f8cac6a55bd0edbe2458582a204",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/systemtest/m3/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "4c0bc1dfc548babdb130b03ad10693236aba2934797966e5aa1a74a8eb646e82",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/systemtest/m4/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3ab65bb011e914ce13888f4e3de12e318cf43587983ad1572a6baad6514df7e2",
+      "rule_id": "SEC-081",
+      "file_path": "platform/internal/systemtest/m5/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "945c62fe144139850600c30f51201b584fd97e4eceeb419f26f4063904ed97e9",
+      "rule_id": "SEC-085",
+      "file_path": "deploy/charts/glossa-platform/ci/e2e-database.sh",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "541b620c039243706b87bf71984cdeabf0602af7bdfa4f0dfdd0b0c897db94a0",
+      "rule_id": "SEC-085",
+      "file_path": "platform/internal/cli/config/capture_test.go",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2c913fdb1866c77d1753c3389b9f1b1aab7951c033d48bf0df6ef7a7f28e0162",
+      "rule_id": "SEC-161",
+      "file_path": "apps/api/internal/app/auth/auth.go",
+      "severity": "medium",
+      "reason": "False positive: dummy bcrypt hash used for constant-time comparison on unknown users, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "83d99a7df845797ffbe16432be3de348334c020e39dac7c33dbe606bd57cb28e",
+      "rule_id": "SEC-161",
+      "file_path": "deploy/charts/glossa-platform/ci/e2e-database.sh",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "098d184fe9a5db56742d660756e5c5bba3e6b13f1c32225a669a2c9a6e738b67",
+      "rule_id": "SEC-161",
+      "file_path": "platform/internal/audit/app/audit_integration_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "dd2a8697df633414a223e41bb670f5ed1f36438e07e1aa7abf745aa8bfb2e6b7",
+      "rule_id": "SEC-162",
+      "file_path": "platform/internal/audit/app/audit_integration_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c5d6516f792cf7c71f1351f6e10026490dc1fc8225ecc50128a05da1b6b447c0",
+      "rule_id": "SEC-240",
+      "file_path": "platform/internal/cli/v0/v0test/v0test.go",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2c6ad49ef319de70d4b6310c4b3739b4b2c4dc6441d73866ecbdbb6f053d6d86",
+      "rule_id": "SEC-240",
+      "file_path": "platform/internal/identity/adapters/postgres/authgo.go",
+      "severity": "high",
+      "reason": "False positive: constant name PurposePasswordReset, not a secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "75a862009d9190ce9010b619978d1b8edd201f7c4fe4cec836e35686452f04fb",
+      "rule_id": "SEC-240",
+      "file_path": "platform/internal/systemtest/m5/mailer_test.go",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ba5c3282f75f50cca0490590c9b9d784e66d0dead42fc05a4f0db62fff3ed582",
+      "rule_id": "SEC-240",
+      "file_path": "studio/e2e/harness.ts",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "454f8cb2f3eb7afc73b97b37142caf036afc9d7ad1bf1af1f28930679ddc667f",
+      "rule_id": "SEC-351",
+      "file_path": "studio/src/components/project/CheckPolicyCard.vue",
+      "severity": "high",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "1e1485664067b9c4e19cdd3239219b905603352a4ab7bb6b9a0d96cc5e73debe",
+      "rule_id": "SEC-469",
+      "file_path": "platform/internal/cli/integration_test.go",
+      "severity": "high",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "334df7d0e57dfeafc234e09d1289c8fbbab0ca6f3a60cd530e7d28c85f1d135f",
+      "rule_id": "SEC-896",
+      "file_path": "studio/src/strings.ts",
+      "severity": "high",
+      "reason": "False positive: UI copy / form label text, not a credential.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "4e6f8fb2e715011e8bc7d1b2c0b23d952e580fcc77d9180fea9c3b542f5ee809",
+      "rule_id": "SEC-951",
+      "file_path": "platform/internal/systemtest/m3/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3c012b2ce28fc1bcd7c7e27c3bd28cdff644308ffbcc97aba7b4466f0e7deeb4",
+      "rule_id": "SEC-951",
+      "file_path": "platform/internal/systemtest/m4/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "477ddaffc5dd637f4b443afd8c2a71cfeab8f2293cdcd648fcf0fca8d6cdceb0",
+      "rule_id": "SEC-951",
+      "file_path": "platform/internal/systemtest/m5/harness_test.go",
+      "severity": "medium",
+      "reason": "Test or CI fixture with a throwaway local credential for ephemeral test databases/services; not a real secret.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "22f04bc5933a95cb3daad8eca0e0a4d927609661db1094f4023c11cf4793b5ad",
+      "rule_id": "SLOP-001",
+      "file_path": "runtimes/testdata/gen/check_usages.py",
+      "severity": "low",
+      "reason": "False positive: jsonschema/referencing/cryptography are PyPI packages used by an offline test-data generator script; \"test\" is the Node built-in node:test module.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2529b0323bf389af03cac198f0c1f3e31ed212eca1ca1fe31ab286df78c8850e",
+      "rule_id": "SLOP-001",
+      "file_path": "runtimes/testdata/gen/check_usages.py",
+      "severity": "low",
+      "reason": "False positive: jsonschema/referencing/cryptography are PyPI packages used by an offline test-data generator script; \"test\" is the Node built-in node:test module.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "162aa7b3ee66ed61f88a634063527893dee4e5b98425cda5c6518b6bfb97f7ce",
+      "rule_id": "SLOP-001",
+      "file_path": "runtimes/testdata/gen/generate.py",
+      "severity": "low",
+      "reason": "False positive: jsonschema/referencing/cryptography are PyPI packages used by an offline test-data generator script; \"test\" is the Node built-in node:test module.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "f7527b014745cf5a474dc6a70a729e108f62ea130a6bcd3a860bd0236dbd09d5",
+      "rule_id": "SLOP-001",
+      "file_path": "runtimes/testdata/gen/generate.py",
+      "severity": "low",
+      "reason": "False positive: jsonschema/referencing/cryptography are PyPI packages used by an offline test-data generator script; \"test\" is the Node built-in node:test module.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "3be3cd8bc6714831730f2cad4c7599f088241ea9a43fe981379c680751079239",
+      "rule_id": "SLOP-001",
+      "file_path": "site/test/dist.test.mjs",
+      "severity": "low",
+      "reason": "False positive: jsonschema/referencing/cryptography are PyPI packages used by an offline test-data generator script; \"test\" is the Node built-in node:test module.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b5f6210e8f70a4ddf8508733dba7ce850af4873d852290adad6edd46c66d59dc",
+      "rule_id": "TAINT-003",
+      "file_path": "studio/e2e/fake-github.ts",
+      "severity": "medium",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c655e3cb00a135b8eac6a30f2f603f0dead601744b7247f4d25e0e81e3fc11ae",
+      "rule_id": "TAINT-006",
+      "file_path": "deploy/charts/glossa-platform/ci/image-digests.sh",
+      "severity": "high",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "c655e3cb00a135b8eac6a30f2f603f0dead601744b7247f4d25e0e81e3fc11ae",
+      "rule_id": "TAINT-006",
+      "file_path": "deploy/charts/glossa-platform/ci/image-digests.sh",
+      "severity": "high",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ed81999cdccc4f5b7b4f4146caa8e70e3e4c262d00c0554679d08886b8d17c05",
+      "rule_id": "TAINT-006",
+      "file_path": "platform/internal/systemtest/m5/testdata/rollout/go/main.go",
+      "severity": "medium",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "55d04f34a1e4c7676376fe9e8d7a31ab4ba1d9492d785db83e3f9c0fe145f4de",
+      "rule_id": "TAINT-006",
+      "file_path": "runtimes/go/examples/pdf/fonts/build.sh",
+      "severity": "medium",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ca5c9dba8567f44ec171cb36961d6b38397621b68f1519beab73e50bc6e9ab54",
+      "rule_id": "TAINT-006",
+      "file_path": "runtimes/js/overlay/e2e/loader.spec.ts",
+      "severity": "high",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "a862419bf1292f4a1cfc8e94d9e0c3ba4583f090a1635c3a103a34f90187dc16",
+      "rule_id": "TAINT-006",
+      "file_path": "runtimes/js/overlay/src/api.ts",
+      "severity": "high",
+      "reason": "False positive or test/dev tooling: input is a CLI argument or test fixture for a developer-run script, a browser client request path built from fixed API routes, or a test server; no untrusted production data flows to the sink.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "2cd247165ed2567a9dd163b1f349a68954346245fdda100e290966e2064a7113",
+      "rule_id": "VULN-001",
+      "file_path": "apps/api/go.mod",
+      "severity": "info",
+      "reason": "Reviewed advisory with no fixed release available yet; see klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "83fa0c03b50bbb1fbc13895c4f51314010ced92cc1ecb9d008755a43edc15234",
+      "rule_id": "VULN-001",
+      "file_path": "platform/go.mod",
+      "severity": "medium",
+      "reason": "github.com/docker/docker v28.5.2 has no fixed release on the docker/docker module path (fix ships only in moby/moby/v2); pulled in test-only by golang-migrate dktest. Tracked in klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "86b14eb3d4c86737c800a2d42cd8f1c36838faba919b1ea48968f6c59fe64d6d",
+      "rule_id": "VULN-001",
+      "file_path": "platform/go.mod",
+      "severity": "info",
+      "reason": "github.com/docker/docker v28.5.2 has no fixed release on the docker/docker module path (fix ships only in moby/moby/v2); pulled in test-only by golang-migrate dktest. Tracked in klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "92d63382ff4ac6464106c7681c3e723d1e1d7b69983813cb62707a89224c101f",
+      "rule_id": "VULN-001",
+      "file_path": "platform/go.mod",
+      "severity": "medium",
+      "reason": "github.com/docker/docker v28.5.2 has no fixed release on the docker/docker module path (fix ships only in moby/moby/v2); pulled in test-only by golang-migrate dktest. Tracked in klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "b6ddde53d28f07875434c75ed9f8a0a92520d6a0936fb12fef871e8e556fc45b",
+      "rule_id": "VULN-001",
+      "file_path": "platform/go.mod",
+      "severity": "info",
+      "reason": "github.com/docker/docker v28.5.2 has no fixed release on the docker/docker module path (fix ships only in moby/moby/v2); pulled in test-only by golang-migrate dktest. Tracked in klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "dc84ee13dbed89bb24abea5487e2afb8af19f3e606d6eb01556b41c06b78899b",
+      "rule_id": "VULN-001",
+      "file_path": "platform/go.mod",
+      "severity": "info",
+      "reason": "github.com/docker/docker v28.5.2 has no fixed release on the docker/docker module path (fix ships only in moby/moby/v2); pulled in test-only by golang-migrate dktest. Tracked in klarlabs-studio/glossa#120.",
+      "created_at": "2026-11-15T11:19:07.14203Z"
+    },
+    {
+      "fingerprint": "ea4a8a448812b745a9ad835a485806fd7a420b03dc610299a4933c0cabd05906",
+      "rule_id": "TAINT-003",
+      "file_path": "platform/internal/edge/edge.go",
+      "severity": "high",
+      "reason": "False positive: edge serves stored JSON blobs; path values are validated (ValidKey/ValidDigest/ValidEnvironment) and the response is Content-Type application/json, not HTML.",
+      "created_at": "2026-11-15T12:09:43.12288Z"
+    },
+    {
+      "fingerprint": "b69b027e7d45cc90e595bda9208740428f7de9801f719d40a61efe17bc90c0be",
+      "rule_id": "TAINT-003",
+      "file_path": "platform/internal/edge/edge.go",
+      "severity": "high",
+      "reason": "False positive: edge serves stored JSON blobs; path values are validated (ValidKey/ValidDigest/ValidEnvironment) and the response is Content-Type application/json, not HTML.",
+      "created_at": "2026-11-15T12:09:43.12288Z"
+    }
+  ]
+}
