@@ -4,6 +4,7 @@
 
 **Build once. Speak everywhere.** Where Glossa is going and why: [`docs/product-intent.md`](./docs/product-intent.md). How it gets there: [RFC 0002 — Platform architecture](./docs/rfcs/0002-platform-architecture.md), a rewrite. v0.3, the service this repository started as, was retired on 2026-10-09.
 
+[![nox security grade](.github/nox-badge.svg)](.github/workflows/nox-scan.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white)
 ![Postgres](https://img.shields.io/badge/Postgres-16-336791?logo=postgresql&logoColor=white)

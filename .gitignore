@@ -40,3 +40,6 @@ pnpm-debug.log*
 
 # Kiln run ledger (local)
 .kiln/
+
+# Built example binaries
+/runtimes/go/examples/pdf/pdf

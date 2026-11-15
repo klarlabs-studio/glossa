@@ -27,6 +27,12 @@ scan:
     # the unpacked tree would double-count and re-trip heuristics on vendored code.
     # Classification: Acceptable Pattern (vendored). Last reviewed: 2026-07-11
     - node_modules/
+    # Generated Go code (oapi-codegen output, "DO NOT EDIT"). 1500+ entropy
+    # hits on embedded base64 spec blobs; the source of truth is
+    # platform/api/openapi.yaml, which is scanned.
+    # Classification: Acceptable Pattern (generated). Last reviewed: 2026-11-15
+    - "*.gen.go"
+    - "**/*.gen.go"
     # Go build output / test binaries (see .gitignore). Generated, not source.
     # Classification: Acceptable Pattern (generated). Last reviewed: 2026-07-11
     - apps/api/bin/
